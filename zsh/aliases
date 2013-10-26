@@ -1,0 +1,23 @@
+alias ll='ls -halF'
+alias l='ls -la'
+alias today='date +"%A, %B %-d, %Y"'
+alias please=sudo
+alias plow='plowdown -m ~/Dropbox/ddl.txt'
+alias repackmc='jar uf ~/Library/Application\ Support/minecraft/bin/minecraft.jar ./'
+alias extractmc='jar xf ~/Library/Application\ Support/minecraft/bin/minecraft.jar'
+alias mcsaves='tar czf ~/Library/Application\ Support/minecraft/saves_$(date '+%F_%H%M%S').tar.gz ~/Library/Application\ Support/minecraft/saves'
+
+alias n4backup='adb pull /mnt/shell/emulated/clockworkmod/backup ~/Android/Nexus4/NANDroids/'
+alias n7backup='adb pull /mnt/shell/emulated/clockworkmod/backup ~/Android/Nexus7/NANDroids/'
+
+alias preview='qlmanage -p'
+alias mou='open -a Mou'
+
+alias wmbwebpull='ssh nessus "cd /opt/hub/wurstmineberg/wurstmineberg-web/ && git pull origin master"'
+
+alias imgurlatest='imgur $(ls -t | tail -1)'
+
+alias quantenbrotpull='ssh uberspace "cd html/web; git pull origin master"'
+alias gpush='git push origin master'
+alias gpull='git pull origin master'
+alias blogpush='cd ~/repos/quantenbrot-blog/octopress; rake gen_deploy; ssh uberspace "cd html/blog; ln -s blog/archives archives"'

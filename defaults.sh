@@ -85,6 +85,9 @@ chflags nohidden ~/Library
 # General
 ##########
 
+# Save to disk (not to iCloud) by default
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
 # Don’t show Dashboard as a Space
 defaults write com.apple.dock dashboard-in-overlay -bool true
 
@@ -103,3 +106,7 @@ defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 
 # Allow closing the ‘new tweet’ window by pressing `Esc` in Twitter.app
 defaults write com.twitter.twitter-mac ESCClosesComposeWindow -bool true
+
+# Enable Disk Utility debug menu
+defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
+

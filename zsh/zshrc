@@ -13,16 +13,20 @@ alias zshconfig="nano ~/.zshrc"
 
 if [[ $(whoami) == "Lukas" ]]; then 
 
-	source /Users/Lukas/repos/jemus42/syncbin/zsh/aliases;
+	SYNCBIN="/Users/Lukas/repos/jemus42/syncbin";
 
 		elif [[ $(hostname) == "wurstmineberg.de" ]]; then
 
-			source /home/jemus42/syncbin/zsh/aliases;
+			SYNCBIN="/home/jemus42/syncbin";
 
 		elif [[ $(hostname) == "wurstmannberg.de" ]]; then
 
-			source /home/jemus/syncbin/zsh/aliases;
+			SYNCBIN="/home/jemus/syncbin";
+
 fi
+
+source $SYNCBIN/zsh/aliases;
+source $SYNCBIN/zsh/functions;
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -53,7 +57,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rsync osx ruby zsh-syntax-highlighting)
+plugins=(git rsync osx ruby extract zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -67,4 +71,4 @@ export LANG=en_US.UTF-8
 export GEM_HOME=~/.gem
 export PATH=$PATH:~/.gem/bin
 
-if [[ -f ~/.path.local ]]; then source ~/.path.local
+if [[ -f ~/.path.local ]]; then source ~/.path.local; else touch ~/.path.local; fi

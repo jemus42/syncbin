@@ -10,7 +10,19 @@ ZSH_THEME="jemus42"
 # Example aliases
 alias zshconfig="nano ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source /Users/Lukas/repos/jemus42/syncbin/zsh/aliases
+
+if [[ $(whoami) == "Lukas" ]]; then 
+
+	source /Users/Lukas/repos/jemus42/syncbin/zsh/aliases;
+
+		elif [[ $(hostname) == "wurstmineberg.de" ]]; then
+
+			source /home/jemus42/syncbin/zsh/aliases;
+
+		elif [[ $(hostname) == "wurstmannberg.de" ]]; then
+
+			source /home/jemus/syncbin/zsh/aliases;
+fi
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -54,3 +66,5 @@ export LANG=en_US.UTF-8
 # Make system ruby work
 export GEM_HOME=~/.gem
 export PATH=$PATH:~/.gem/bin
+
+if [[ -f ~/.path.local ]]; then source ~/.path.local

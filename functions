@@ -1,0 +1,36 @@
+
+# Create new octopress blogpost and open with Mou.app
+# Usage example: newpost "Let's talk about anthropomorphism in frozen yoghurt"
+ME=$(whoami)
+
+function newpost() {
+
+	POSTDIR="$HOME/repos/jemus42/quantenbrot/qblog/source/_posts"
+
+	cd $HOME/repos/jemus42/quantenbrot/qblog
+
+	rake "new_post[$@]"
+
+	POST=$(ls -t $POSTDIR | head -1)
+
+	open -a Mou $POSTDIR/$POST
+}
+
+if [[ $(whoami) == "Lukas" ]]; then
+
+	function mcscreen() {
+		
+		builtin cd $HOME/Library/Application\ Support/minecraft/screenshots
+		SCREENSHOT=$(ls -t | head -1)
+
+		scp $SCREENSHOT strato:/srv/dump.quantenbrot.de/mc
+		echo "http://dump.quantenbrot.de/mc/$SCREENSHOT" | pbcopy
+
+	}
+
+fi
+
+# Create a new directory and enter it
+function mkd() {
+        mkdir -p "$@" && cd "$@"
+}

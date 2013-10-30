@@ -23,3 +23,5 @@ alias gpull='git pull origin master'
 alias mou='open -a Mou'
 alias vlc='open -a VLC'
 # subl should already be in place
+
+alias blog='cd ~/repos/jemus42/quantenbrot/qblog'

@@ -8,6 +8,7 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 ## Change system screenshot location and disable shadow under windows
 ## (And set the format to png)
 # First test if the desired folder exist (won't autocreate)
+
 if [ ! -d "~/Pictures/Screenshots" ]; then
     mkdir ~/Pictures/Screenshots;
 fi
@@ -25,9 +26,11 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 ## Make changes take effect
 killall SystemUIServer
 
-###############
-# Preview/QuickLook – It should display plaintextfiles, so yeah. (via https://coderwall.com/p/dlithw)
-###############
+#######################
+## Preview/QuickLook ##
+#######################
+# It should display plaintextfiles, so yeah. (via https://coderwall.com/p/dlithw)
+
 if [ ! -d "/Library/QuickLook/QLStephen.qlgenerator" ]; then
 	## Download latest version of QLStephen
 	cd ~/Downloads;
@@ -44,9 +47,9 @@ fi
 # in the login window
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
-##################
-## Finder stuff
-##################
+###################
+##  Finder stuff ##
+###################
 
 # Finder: show hidden files by default
 defaults write com.apple.finder AppleShowAllFiles -bool true
@@ -81,9 +84,9 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
-##########
-# General
-##########
+###############
+##  General  ##
+###############
 
 # Save to disk (not to iCloud) by default
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false

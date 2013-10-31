@@ -19,12 +19,14 @@ function newpost() {
 if [[ $(whoami) == "Lukas" ]]; then
 
 	function mcscreen() {
-		
+
 		builtin cd $HOME/Library/Application\ Support/minecraft/screenshots
 		SCREENSHOT=$(ls -t | head -1)
 
 		scp $SCREENSHOT strato:/srv/dump.quantenbrot.de/mc
-		echo "http://dump.quantenbrot.de/mc/$SCREENSHOT" | pbcopy
+		echo "http://dump.quantenbrot.de/mc/$SCREENSHOT" | pbcopy;
+
+		cd -;
 
 	}
 

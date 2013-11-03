@@ -11,23 +11,6 @@ ZSH_THEME="jemus42"
 alias zshconfig="nano ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if [[ $(whoami) == "Lukas" ]]; then 
-
-	SYNCBIN="/Users/Lukas/repos/jemus42/syncbin";
-
-		elif [[ $(hostname) == "wurstmineberg.de" ]]; then
-
-			SYNCBIN="/home/jemus42/syncbin";
-
-		elif [[ $(hostname) == "wurstmannberg.de" ]]; then
-
-			SYNCBIN="/home/jemus/syncbin";
-
-fi
-
-source $SYNCBIN/zsh/aliases;
-source $SYNCBIN/zsh/functions;
-
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
 
@@ -70,5 +53,22 @@ export LANG=en_US.UTF-8
 # Make system ruby work
 export GEM_HOME=~/.gem
 export PATH=$PATH:~/.gem/bin
+
+if [[ $(whoami) == "Lukas" ]]; then 
+
+	SYNCBIN="/Users/Lukas/repos/jemus42/syncbin";
+
+		elif [[ $(hostname) == "wurstmineberg.de" ]]; then
+
+			SYNCBIN="/home/jemus42/syncbin";
+
+		elif [[ $(hostname) == "wurstmannberg.de" ]]; then
+
+			SYNCBIN="/home/jemus/syncbin";
+
+fi
+
+source $SYNCBIN/zsh/aliases;
+source $SYNCBIN/functions;
 
 if [[ -f ~/.path.local ]]; then source ~/.path.local; else touch ~/.path.local; fi

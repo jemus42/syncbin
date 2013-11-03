@@ -1,5 +1,5 @@
 alias ll='ls -halF'
-alias l='ls -la'
+alias l='ls -l'
 alias today='date +"%A, %B %-d, %Y"'
 alias please=sudo
 alias repackmc='jar uf ~/Library/Application\ Support/minecraft/bin/minecraft.jar ./'

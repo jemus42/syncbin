@@ -16,7 +16,7 @@ function newpost() {
 	open -a Mou $POSTDIR/$POST
 }
 
-if [[ $(whoami) == "Lukas" ]]; then
+if [[ $ME == "Lukas" ]]; then
 
 	function mcscreen() {
 
@@ -36,3 +36,23 @@ fi
 function mkd() {
         mkdir -p "$@" && cd "$@"
 }
+
+# Is it raining on Wurstmineberg?
+function isitraining() {
+
+	STATUS=$(curl http://api.wurstmineberg.de/server/level.json 2&>0 | jq .Data.raining)
+
+	echo "Value: $STATUS";
+
+	if [ "$STATUS" -eq "0" ]; then 
+
+		echo "nope"; 
+	else 
+		echo "yes"; 
+	fi
+
+}
+
+
+
+

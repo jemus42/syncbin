@@ -37,21 +37,15 @@ function mkd() {
         mkdir -p "$@" && cd "$@"
 }
 
-# Is it raining on Wurstmineberg?
-function isitraining() {
+# Dump files to my filedump, because dump
+function dump {
 
-	STATUS=$(curl http://api.wurstmineberg.de/server/level.json 2&>0 | jq .Data.raining)
-
-	echo "Value: $STATUS";
-
-	if [ "$STATUS" -eq "0" ]; then 
-
-		echo "nope"; 
-	else 
-		echo "yes"; 
-	fi
+	rsync-copy "$1" strato:/srv/dump.quantenbrot.de
+	FILE=$(basename $1)
+	echo "http://dump.quantenbrot.de/$FILE" | pbcopy
 
 }
+
 
 
 

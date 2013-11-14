@@ -3,20 +3,19 @@
 # Usage example: newpost "Let's talk about anthropomorphism in frozen yoghurt"
 ME=$(whoami)
 
-function newpost() {
-
-	POSTDIR="$HOME/repos/jemus42/quantenbrot/qblog/source/_posts"
-
-	cd $HOME/repos/jemus42/quantenbrot/qblog
-
-	rake "new_post[$@]"
-
-	POST=$(ls -t $POSTDIR | head -1)
-
-	open -a Mou $POSTDIR/$POST
-}
-
 if [[ $ME == "Lukas" ]]; then
+
+	function newpost() {
+
+		POSTDIR="$HOME/repos/jemus42/quantenbrot/qblog/source/_posts"
+		cd $HOME/repos/jemus42/quantenbrot/qblog
+		rake "new_post[$@]"
+		POST=$(ls -t $POSTDIR | head -1)
+		open -a Mou $POSTDIR/$POST
+
+	}
+
+
 
 	function mcscreen() {
 
@@ -42,11 +41,14 @@ function dump {
 
 	rsync-copy "$1" strato:/srv/dump.quantenbrot.de
 	FILE=$(basename $1)
-	echo "http://dump.quantenbrot.de/$FILE" | pbcopy
+	if [[ $ME == "Lukas" ]]; then 
+		echo "http://dump.quantenbrot.de/$FILE" | pbcopy
+	else echo "http://dump.quantenbrot.de/$FILE"
+	fi
 
 }
 
-
+source ~/.functions.local
 
 
 

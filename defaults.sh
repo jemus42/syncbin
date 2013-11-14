@@ -52,7 +52,7 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 ###################
 
 # Finder: show hidden files by default
-defaults write com.apple.finder AppleShowAllFiles -bool true
+defaults write com.apple.finder AppleShowAllFiles -bool false
 
 # Finder: show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
@@ -112,4 +112,7 @@ defaults write com.twitter.twitter-mac ESCClosesComposeWindow -bool true
 
 # Enable Disk Utility debug menu
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
+
+# Disable system startup sound
+sudo nvram SystemAudioVolume=%80
 

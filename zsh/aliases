@@ -25,3 +25,6 @@ alias vlc='open -a VLC'
 # subl should already be in place
 
 alias blog='cd ~/repos/jemus42/quantenbrot/qblog'
+
+alias sha1sum='openssl sha1'
+alias sha256sum='shasum -a 256'

@@ -45,7 +45,8 @@ function dump {
 		echo "http://dump.quantenbrot.de/$FILE" | pbcopy
 	else echo "http://dump.quantenbrot.de/$FILE"
 	fi
-
+	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.quantenbrot.de/$FILE" >> $HOME/.dumplog
+	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog
 }
 
 source ~/.functions.local

@@ -18,6 +18,8 @@ alias gpush='git push origin master'
 alias gpull='git pull origin master'
 
 alias timestamp='date +%Y-%m-%d_%H-%M'
+alias funfact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
+
 ##########
 # Fake binaries via aliases
 #########

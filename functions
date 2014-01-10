@@ -49,6 +49,25 @@ function dump {
 	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog
 }
 
+function dumpwmb {
+
+	FILE=$(basename $1)
+	if [[ -z "$2" ]] ; then 
+		DEST="$FILE"
+			else DEST="$2"
+	fi
+	URL="http://i.wurstmineberg.de/$DEST"
+
+	if [[ $ME == "Lukas" ]]; then 
+		echo $URL | pbcopy
+	else echo $URL
+	fi
+
+	rsync-copy "$1" nessus:"pics/$DEST"
+	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – $URL" >> $HOME/.dumplog
+	terminal-notifier -title "Dump to WMB" -message "$FILE – $URL" -execute subl $HOME/.dumplog
+}
+
 source ~/.functions.local
 
 

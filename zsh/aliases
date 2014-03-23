@@ -16,6 +16,7 @@ alias imgurlatest='imgur $(ls -t | tail -1)'
 alias quantenbrotpull='ssh uberspace "cd html/web; git pull origin master"'
 alias gpush='git push origin master'
 alias gpull='git pull origin master'
+alias git-reset-to-remote='git fetch && git reset --hard'
 
 alias timestamp='date +%Y-%m-%d_%H-%M'
 alias funfact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"

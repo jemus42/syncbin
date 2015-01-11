@@ -1,0 +1,48 @@
+\documentclass[a4paper, 12pt, bibtotoc]{scrartcl} % bibtotoc für Literaturverzeichnis in ToC
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[square]{natbib}
+\usepackage{pdfpages}
+\usepackage{scrpage2}
+\usepackage[hyphens]{url} % Für URLs (duh.)
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{microtype} % Macht Typographievodoo ¯\_(ツ)_/¯
+%\setlength{\headheight}{1.1\baselineskip}
+\usepackage{hyperref} % Immer erst am Ende der Pakete
+%\usepackage[babel,german=quotes]{csquotes} 
+\clubpenalty = 10000
+\widowpenalty = 10000
+%\setlength{\headheight}{15pt}
+
+%% META %%
+\titlehead{University - Fachbereich ?? - Blah, B.A.}
+%\subject{}
+\title{Title}
+%\subtitle{}
+\date{21.07.13 \\ }
+\author{Name \\ BA  \\ Matrikelnr. xxxxxxx \\ mail &&}
+\publishers{&& Seminar:  (WiSe XX/XY) \\ Date \\ VAK  \\ Seminarleitung:}
+
+%% Doc options
+\onehalfspacing
+
+%% Content %%
+\begin{document}
+\pagestyle{scrheadings} 
+\maketitle 
+#\includepdf{Deckblatt} %% Word-Deckblatt statt LaTeX-Deckblatt, the shame.
+\clearpage
+\tableofcontents
+\thispagestyle{empty}  % Anscheinend nötig um Seitenzahlen erst später beginnen zu lassen
+\pagebreak 
+\setcounter{page}{1}
+
+
+
+%% Bibliography %%
+\clearpage
+\bibliography{sources} 
+\bibliographystyle{apalike-url.bst}
+\end{document}

@@ -39,11 +39,11 @@ function mkd() {
 # Dump files to my filedump, because dump
 function dump {
 
-	rsync-copy "$1" strato:/srv/dump.quantenbrot.de
+	rsync-copy --partial "$1" strato:/srv/dump.quantenbrot.de
 	FILE=$(basename $1)
 	if [[ $ME == "Lukas" ]]; then 
-		echo "http://dump.quantenbrot.de/$FILE" | pbcopy
-	else echo "http://dump.quantenbrot.de/$FILE"
+		echo "http://dump.jemu.name/$FILE" | pbcopy
+	else echo "http://dump.jemu.name/$FILE"
 	fi
 	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.quantenbrot.de/$FILE" >> $HOME/.dumplog
 	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog

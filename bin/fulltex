@@ -4,37 +4,40 @@
  
 while getopts ":f::c;p:" opt; do
   case $opt in
-    f)  FILE=$(echo $OPTARG | sed -e s/.tex//g)
-        echo "1) Processing $FILE.tex with pdflatex (x2)…";
-        echo '                     (0%)\r\c'
-        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex > .texlog;
-        echo '##########           (50%)\r\c'
-        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog; 
-        echo '#################### (100%)\r\c'
-        echo "\nDone."
+    f) 
+       FILE=$(echo $OPTARG | sed -e s/.tex//g)
+       echo "1) Processing $FILE.tex with pdflatex (x2)…";
+       echo '                     (0%)\r\c'
+       /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex > .texlog;
+       echo '##########           (50%)\r\c'
+       /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog; 
+       echo '#################### (100%)\r\c'
+       echo "\nDone."
 
-        echo "2) Starting bibtex processing… (bibtex - pdflatex - bibtex)";
-        echo '                     (0%)\r\c'
-        /usr/texbin/bibtex $FILE.aux >> .texlog;
-        echo '#######              (33%)\r\c'
-        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog;
-        echo '##############       (66%)\r\c'
-        /usr/texbin/bibtex $FILE.aux >> .texlog;
-        echo '#################### (100%)\r\c'
-        echo "\nDone."
+       echo "2) Starting bibtex processing… (bibtex - pdflatex - bibtex)";
+       echo '                     (0%)\r\c'
+       /usr/texbin/bibtex $FILE.aux >> .texlog;
+       echo '#######              (33%)\r\c'
+       /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog;
+       echo '##############       (66%)\r\c'
+       /usr/texbin/bibtex $FILE.aux >> .texlog;
+       echo '#################### (100%)\r\c'
+       echo "\nDone."
 
-        echo "3) Starting second processing with pdflatex (x2)…";
-        echo '                     (0%)\r\c'
-        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog;
-        echo '##########           (50%)\r\c'
-        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog;
-        echo '#################### (100%)\r\c'
-        echo "\n"
+       echo "3) Starting second processing with pdflatex (x2)…";
+       echo '                     (0%)\r\c'
+       /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog;
+       echo '##########           (50%)\r\c'
+       /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog;
+       echo '#################### (100%)\r\c'
+       echo "\nDone processing."
        ;;
-    c) echo "Done processing, removing garbage… (.aux, .synctex.gz, .out, …)";
+    c) 
+       echo "Removing garbage… (.aux, .synctex.gz, .out, …)";
        rm *.aux *.synctex.gz *.out *.blg *.toc *.bbl *.log;
        ;;
-    p) echo "Pushing to filedump";
+    p) 
+       echo "Pushing to filedump";
        scp $FILE.pdf strato:"~/dumpdir/Hausarbeiten/";
        ;;
     \?)

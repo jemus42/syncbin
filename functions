@@ -9,9 +9,9 @@ if [[ $ME == "Lukas" ]]; then
 
 		POSTDIR="$HOME/repos/jemus42/quantenbrot/qblog/source/_posts"
 		cd $HOME/repos/jemus42/quantenbrot/qblog
-		rake "new_post[$@]"
+		bundle exec rake "new_post[$@]"
 		POST=$(ls -t $POSTDIR | head -1)
-		open -a Mou $POSTDIR/$POST
+		atom $POSTDIR/$POST
 
 	}
 
@@ -41,7 +41,7 @@ function dump {
 
 	rsync-copy --partial "$1" strato:/srv/dump.quantenbrot.de
 	FILE=$(basename $1)
-	if [[ $ME == "Lukas" ]]; then 
+	if [[ $ME == "Lukas" ]]; then
 		echo "http://dump.jemu.name/$FILE" | pbcopy
 	else echo "http://dump.jemu.name/$FILE"
 	fi
@@ -52,13 +52,13 @@ function dump {
 function dumpwmb {
 
 	FILE=$(basename $1)
-	if [[ -z "$2" ]] ; then 
+	if [[ -z "$2" ]] ; then
 		DEST="$FILE"
 			else DEST="$2"
 	fi
 	URL="http://i.wurstmineberg.de/$DEST"
 
-	if [[ $ME == "Lukas" ]]; then 
+	if [[ $ME == "Lukas" ]]; then
 		echo $URL | pbcopy
 	else echo $URL
 	fi
@@ -69,6 +69,3 @@ function dumpwmb {
 }
 
 source ~/.functions.local
-
-
-

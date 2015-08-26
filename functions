@@ -15,8 +15,6 @@ if [[ $ME == "Lukas" ]]; then
 
 	}
 
-
-
 	function mcscreen() {
 
 		builtin cd $HOME/Library/Application\ Support/minecraft/screenshots
@@ -46,6 +44,14 @@ function dump {
 	else echo "http://dump.jemu.name/$FILE"
 	fi
 	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.quantenbrot.de/$FILE" >> $HOME/.dumplog
+	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog
+}
+
+function qmdump {
+
+	rsync-copy --partial "$1" strato:/srv/stats.jemu.name/qm/
+	FILE=$(basename $1)
+	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://stats.jemu.name/qm/$FILE" >> $HOME/.dumplog
 	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog
 }
 

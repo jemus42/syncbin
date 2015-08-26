@@ -7,6 +7,7 @@ suggested_packages <- read.table(sep = ",", strip.white = T, header = T, strings
                                    "name, src, github
                                     plyr, CRAN, NA
                                     dplyr, CRAN, NA
+                                    magrittr, CRAN, NA
                                     ryouready, CRAN, NA
                                     car, CRAN, NA
                                     foreign, CRAN, NA
@@ -15,13 +16,13 @@ suggested_packages <- read.table(sep = ",", strip.white = T, header = T, strings
                                     vcd, CRAN, NA
                                     ggplot2, CRAN, NA
                                     sjPlot, CRAN, NA
-                                    reshape2, CRAN, NA,
+                                    reshape2, CRAN, NA
                                     ppcor, CRAN, NA,
-                                    QuantPsyc, CRAN, NA,
-                                    lsr, CRAN, NA,
-                                    nortest, CRAN, NA,
-                                    broom, CRAN, NA,
-                                    tidyr, CRAN, NA,
+                                    QuantPsyc, CRAN, NA
+                                    lsr, CRAN, NA
+                                    nortest, CRAN, NA
+                                    broom, CRAN, NA
+                                    tidyr, CRAN, NA
                                     haven, CRAN, NA")
 
 # Define a function to check for packages, install if necessary and load afterwards

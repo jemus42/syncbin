@@ -7,30 +7,30 @@ while getopts ":f::c;p:" opt; do
     f) 
        FILE=$(echo $OPTARG | sed -e s/.tex//g)
        echo "1) Processing $FILE.tex with pdflatex (x2)…";
-       echo '                     (0%)\r\c'
+       echo -e '                     (0%)\r\c'
        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex > .texlog;
-       echo '##########           (50%)\r\c'
+       echo -e '##########           (50%)\r\c'
        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog; 
-       echo '#################### (100%)\r\c'
-       echo "\nDone."
+       echo -e '#################### (100%)\r\c'
+       echo -e "\nDone."
 
        echo "2) Starting bibtex processing… (bibtex - pdflatex - bibtex)";
-       echo '                     (0%)\r\c'
+       echo -e '                     (0%)\r\c'
        /usr/texbin/bibtex $FILE.aux >> .texlog;
-       echo '#######              (33%)\r\c'
+       echo -e '#######              (33%)\r\c'
        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog;
-       echo '##############       (66%)\r\c'
+       echo -e '##############       (66%)\r\c'
        /usr/texbin/bibtex $FILE.aux >> .texlog;
-       echo '#################### (100%)\r\c'
-       echo "\nDone."
+       echo -e '#################### (100%)\r\c'
+       echo -e "\nDone."
 
        echo "3) Starting second processing with pdflatex (x2)…";
-       echo '                     (0%)\r\c'
+       echo -e '                     (0%)\r\c'
        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog;
-       echo '##########           (50%)\r\c'
+       echo -e '##########           (50%)\r\c'
        /usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $FILE.tex >> .texlog;
-       echo '#################### (100%)\r\c'
-       echo "\nDone processing."
+       echo -e '#################### (100%)\r\c'
+       echo -e "\nDone processing."
        ;;
     c) 
        echo "Removing garbage… (.aux, .synctex.gz, .out, …)";

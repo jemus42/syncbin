@@ -40,6 +40,7 @@ while getopts ":f::c;p:" opt; do
        echo "Pushing to filedump";
        scp $FILE.pdf strato:"~/dumpdir/Hausarbeiten/$OPTARG" > /dev/null;
        echo "http://dump.jemu.name/Hausarbeiten/$OPTARG";
+       cp $FILE.pdf /Users/Lukas/Google\ Drive/Nasenbär/
        ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2

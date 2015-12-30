@@ -1,4 +1,3 @@
-
 # Create new octopress blogpost and open with Mou.app
 # Usage example: newpost "Let's talk about anthropomorphism in frozen yoghurt"
 ME=$(whoami)
@@ -15,18 +14,6 @@ if [[ $ME == "Lukas" ]]; then
 
 	}
 
-	function mcscreen() {
-
-		builtin cd $HOME/Library/Application\ Support/minecraft/screenshots
-		SCREENSHOT=$(ls -t | head -1)
-
-		scp $SCREENSHOT strato:/srv/dump.quantenbrot.de/mc
-		echo "http://dump.quantenbrot.de/mc/$SCREENSHOT" | pbcopy;
-
-		cd -;
-
-	}
-
 fi
 
 # Create a new directory and enter it
@@ -37,7 +24,7 @@ function mkd() {
 # Dump files to my filedump, because dump
 function dump {
 
-	rsync-copy --partial "$1" strato:/srv/dump.quantenbrot.de
+	rsync-copy --partial "$@" -e ssh strato:/srv/dump.quantenbrot.de
 	FILE=$(basename $1)
 	if [[ $ME == "Lukas" ]]; then
 		echo "http://dump.jemu.name/$FILE" | pbcopy
@@ -47,13 +34,6 @@ function dump {
 	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog
 }
 
-function qmdump {
-
-	rsync-copy --partial "$1" strato:/srv/stats.jemu.name/qm/
-	FILE=$(basename $1)
-	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://stats.jemu.name/qm/$FILE" >> $HOME/.dumplog
-	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog
-}
 
 function dumpwmb {
 
@@ -72,6 +52,20 @@ function dumpwmb {
 	rsync-copy "$1" nessus:"pics/$DEST"
 	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – $URL" >> $HOME/.dumplog
 	terminal-notifier -title "Dump to WMB" -message "$FILE – $URL" -execute subl $HOME/.dumplog
+}
+
+function render2 {
+	Rscript -e "rmarkdown::render(input = $1, output_format = $3,
+       output_file = $2)"
+}
+
+function wmv2mp4 {
+
+   FILE=$(echo $1 | sed -e 's/.wmv//');
+   echo "Converting $FILE.wmv";
+
+   HandBrakeCLI -i $FILE.wmv -o $FILE.mp4 -e x264 -q 20 -B 160;
+   echo "Done."
 }
 
 source ~/.functions.local

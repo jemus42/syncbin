@@ -2,18 +2,8 @@ alias ll='ls -halF'
 alias l='ls -l'
 alias today='date +"%A, %B %-d, %Y"'
 alias please=sudo
-alias repackmc='jar uf ~/Library/Application\ Support/minecraft/bin/minecraft.jar ./'
-alias extractmc='jar xf ~/Library/Application\ Support/minecraft/bin/minecraft.jar'
-alias mcsaves='tar czf ~/Library/Application\ Support/minecraft/saves_$(date '+%F_%H%M%S').tar.gz ~/Library/Application\ Support/minecraft/saves'
-
-alias n4backup='adb pull /mnt/shell/emulated/clockworkmod/backup ~/Android/Nexus4/NANDroids/'
-alias n7backup='adb pull /mnt/shell/emulated/clockworkmod/backup ~/Android/Nexus7/NANDroids/'
-
 alias preview='qlmanage -p'
 
-alias imgurlatest='imgur $(ls -t | tail -1)'
-
-alias quantenbrotpull='ssh uberspace "cd html/web; git pull origin master"'
 alias gpush='git push origin master'
 alias gpull='git pull origin master'
 alias git-reset-to-remote='git fetch && git reset --hard'
@@ -27,10 +17,16 @@ alias cleanDS="find . -name '.DS_Store' | sed -e 's/\ /\\\ /g' | xargs rm"
 # Fake binaries via aliases
 #########
 alias mou='open -a Mou'
+alias macdown='open -a MacDown'
 alias vlc='open -a VLC'
+
 # subl should already be in place
 
 alias blog='cd ~/repos/jemus42/quantenbrot/qblog'
+alias be='bundle exec'
+alias genblog='bundle exec jekyll build'
+alias pushblog='bundle exec octopress deploy'
+alias gendeploy='genblog; pushblog'
 
 alias sha1sum='openssl sha1'
 alias sha256sum='shasum -a 256'

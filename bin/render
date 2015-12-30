@@ -1,4 +1,4 @@
-#! /usr/bin/rscript
+#! /usr/bin/env rscript
 
 arg <- commandArgs(trailingOnly = T)
 

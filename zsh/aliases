@@ -22,7 +22,6 @@ alias vlc='open -a VLC'
 
 # subl should already be in place
 
-alias blog='cd ~/repos/jemus42/quantenbrot/qblog'
 alias be='bundle exec'
 alias genblog='bundle exec jekyll build'
 alias pushblog='bundle exec octopress deploy'

@@ -2,20 +2,6 @@
 # Usage example: newpost "Let's talk about anthropomorphism in frozen yoghurt"
 ME=$(whoami)
 
-if [[ $ME == "Lukas" ]]; then
-
-	function newpost() {
-
-		POSTDIR="$HOME/repos/jemus42/quantenbrot/qblog/source/_posts"
-		cd $HOME/repos/jemus42/quantenbrot/qblog
-		bundle exec rake "new_post[$@]"
-		POST=$(ls -t $POSTDIR | head -1)
-		atom $POSTDIR/$POST
-
-	}
-
-fi
-
 # Create a new directory and enter it
 function mkd() {
         mkdir -p "$@" && cd "$@"
@@ -23,7 +9,6 @@ function mkd() {
 
 # Dump files to my filedump, because dump
 function dump {
-
 	rsync-copy --partial "$@" -e ssh strato:/srv/dump.quantenbrot.de
 	FILE=$(basename $1)
 	if [[ $ME == "Lukas" ]]; then
@@ -32,31 +17,6 @@ function dump {
 	fi
 	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.quantenbrot.de/$FILE" >> $HOME/.dumplog
 	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog
-}
-
-
-function dumpwmb {
-
-	FILE=$(basename $1)
-	if [[ -z "$2" ]] ; then
-		DEST="$FILE"
-			else DEST="$2"
-	fi
-	URL="http://i.wurstmineberg.de/$DEST"
-
-	if [[ $ME == "Lukas" ]]; then
-		echo $URL | pbcopy
-	else echo $URL
-	fi
-
-	rsync-copy "$1" nessus:"pics/$DEST"
-	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – $URL" >> $HOME/.dumplog
-	terminal-notifier -title "Dump to WMB" -message "$FILE – $URL" -execute subl $HOME/.dumplog
-}
-
-function render2 {
-	Rscript -e "rmarkdown::render(input = $1, output_format = $3,
-       output_file = $2)"
 }
 
 function wmv2mp4 {

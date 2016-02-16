@@ -1,0 +1,43 @@
+Sys.setenv(R_LIBS_USER = "~/Library/R/shared")
+
+.First <- function() {
+  library("devtools")
+  options(
+    repos = c(CRAN = "https://cran.rstudio.com/"),
+    browserNLdisabled = TRUE,
+    deparse.max.lines = 2)
+}
+
+options(error = DYM::DYM())
+options(width = 100)
+options(stringsAsFactors = FALSE)
+
+### Prompt
+options(prompt = "☁ ", continue = "➜ ")
+
+
+### Devtools options
+options(devtools.desc.author = "person('Lukas', 'Burk', email = 'lukas@quantenbrot.de', role = c('aut', 'cre'))")
+options(devtools.desc.license = "MIT")
+options(devtools.name = "Lukas Burk")
+
+### Startup
+
+startup <- function(){
+  version     <- R.Version()
+  date_string <- Sys.Date()
+
+  ddate <- utils::capture.output(ddateR::ddate())
+
+  msg1 <- sprintf("Hello there.\nThis is %s.\nToday is %s, %s.\nOr like the Discordians like to say:\n%s",
+                  version$version.string,
+                  format(date_string, "%A"),
+                  date_string,
+                  ddate)
+  cat(msg1, "\n\n")
+  fortunes::fortune()
+}
+
+startup()
+
+rm(startup)

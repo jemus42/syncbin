@@ -26,8 +26,7 @@ options(devtools.name = "Lukas Burk")
 startup <- function(){
   version     <- R.Version()
   date_string <- Sys.Date()
-
-  ddate <- utils::capture.output(ddateR::ddate())
+  ddate       <- ddateR::ddate()
 
   msg1 <- sprintf("Hello there.\nThis is %s.\nToday is %s, %s.\nOr like the Discordians like to say:\n%s",
                   version$version.string,

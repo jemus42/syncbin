@@ -1,13 +1,8 @@
 ### Setting a personal library
 Sys.setenv(R_LIBS_USER = "~/Library/R/shared")
 
-### This is .First. It's shy. Leave it be.
-.First <- function() {
- 
-}
-
 ### Misc options
-options(repos = c(CRAN = "https://cran.rstudio.com/"))
+options(repos = c(CRAN = "https://cloud.r-project.org"))
 options(browserNLdisabled = TRUE)         # I forgot what this does
 options(deparse.max.lines = 2)            # same
 options(error = DYM::DYM())               # For "did you mean" on errors
@@ -23,23 +18,26 @@ options(devtools.desc.license = "MIT")
 options(devtools.name = "Lukas Burk")
 
 ### Startup
-startup <- function(){
+.First <- function() {
   version     <- R.Version()
   date_string <- Sys.Date()
-  ddate       <- ddateR::ddate()
 
-  msg1 <- sprintf("Hello there.\nThis is %s.\nToday is %s, %s.\nOr like the Discordians like to say:\n%s",
+  msg1 <- sprintf("Hello there.\nThis is %s.\nToday is %s.",
                   version$version.string,
-                  format(date_string, "%A"),
-                  date_string,
-                  ddate)
+                  date_string)
   cat(msg1, "\n")
-  fortunes::fortune()
 }
 
-startup()
-rm(startup)
-
 ### Packages
-suppressPackageStartupMessages(library("devtools"))
-suppressPackageStartupMessages(library("dplyr"))
+sshhh <- function(package){
+  suppressWarnings(suppressPackageStartupMessages(
+    library(package, character.only = TRUE)))
+}
+
+# list of packages to auto-load if interactive
+autoloads <-c("dplyr", "ggplot2", "magrittr", "tidyr", "broom")
+
+# auto-load stuff but only interactively, should keep scripts clean
+if(interactive()){
+  invisible(sapply(autoloads, sshhh))
+}; rm(sshhh, autoloads)

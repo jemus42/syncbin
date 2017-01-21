@@ -9,13 +9,13 @@ function mkd() {
 
 # Dump files to my filedump, because dump
 function dump {
-	rsync-copy --partial "$@" -e ssh strato:/srv/dump.quantenbrot.de
+	rsync-copy --partial "$@" -e ssh mercy:/srv/dump.jemu.name
 	FILE=$(basename $1)
 	if [[ $ME == "Lukas" ]]; then
 		echo "http://dump.jemu.name/$FILE" | pbcopy
 	else echo "http://dump.jemu.name/$FILE"
 	fi
-	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.quantenbrot.de/$FILE" >> $HOME/.dumplog
+	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.jemu.name/$FILE" >> $HOME/.dumplog
 	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog
 }
 

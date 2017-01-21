@@ -12,10 +12,18 @@ alias timestamp='date +%Y-%m-%d_%H-%M'
 alias funfact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 
 alias cleanDS="find . -name '.DS_Store' | sed -e 's/\ /\\\ /g' | xargs rm"
+alias cleanAD="find . -name '._*' | sed -e 's/\ /\\\ /g' | xargs rm"
+
+alias tadaa_haste="HASTE_SERVER=https://hastebin.tadaa-data.de haste"
+
+## Homebrew
+
+alias brewup="brew update && brew upgrade && brew cleanup && brew cask cleanup"
 
 ##########
 # Fake binaries via aliases
 #########
+
 alias mou='open -a Mou'
 alias macdown='open -a MacDown'
 alias vlc='open -a VLC'
@@ -29,3 +37,9 @@ alias gendeploy='genblog; pushblog'
 
 alias sha1sum='openssl sha1'
 alias sha256sum='shasum -a 256'
+
+# yt-dl
+
+alias yt-channel="youtube-dl -o -i '%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
+alias yt-playlist="youtube-dl -o -i '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
+

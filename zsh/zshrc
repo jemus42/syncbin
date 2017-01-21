@@ -72,3 +72,8 @@ source $SYNCBIN/zsh/aliases;
 source $SYNCBIN/functions;
 
 if [[ -f ~/.path.local ]]; then source ~/.path.local; else touch ~/.path.local; fi
+
+# added by travis gem
+[ -f /Users/Lukas/.travis/travis.sh ] && source /Users/Lukas/.travis/travis.sh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

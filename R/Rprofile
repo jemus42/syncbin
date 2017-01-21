@@ -21,9 +21,11 @@ options(devtools.name = "Lukas Burk")
 .First <- function() {
   version     <- R.Version()
   date_string <- Sys.Date()
+  #rs_version  <- rstudio::versionInfo()$version
 
-  msg1 <- sprintf("Hello there.\nThis is %s.\nToday is %s.",
+  msg1 <- sprintf("Hello there.\nThis is %s\nToday is %s.",
                   version$version.string,
+                #  rs_version,
                   date_string)
   cat(msg1, "\n")
 }
@@ -35,9 +37,14 @@ sshhh <- function(package){
 }
 
 # list of packages to auto-load if interactive
-autoloads <-c("dplyr", "ggplot2", "magrittr", "tidyr", "broom")
+autoloads <-c("ggplot2", "magrittr", "broom")
 
 # auto-load stuff but only interactively, should keep scripts clean
-if(interactive()){
+if (interactive()){
   invisible(sapply(autoloads, sshhh))
 }; rm(sshhh, autoloads)
+
+## drat
+
+# Add cloudyr repo
+drat::addRepo("cloudyr", "http://cloudyr.github.io/drat")

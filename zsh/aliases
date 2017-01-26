@@ -40,6 +40,6 @@ alias sha256sum='shasum -a 256'
 
 # yt-dl
 
-alias yt-channel="youtube-dl -o -i '%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
-alias yt-playlist="youtube-dl -o -i '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
+alias yt-channel="youtube-dl -i -o '%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
+alias yt-playlist="youtube-dl -i -o '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
 

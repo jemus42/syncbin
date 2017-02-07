@@ -28,4 +28,13 @@ function wmv2mp4 {
    echo "Done."
 }
 
+function avi2mp4 {
+
+   FILE=$(echo $1 | sed -e 's/.avi//');
+   echo "Converting $FILE.avi";
+
+   HandBrakeCLI -i $FILE.avi -o $FILE.mp4 -e x264 -q 20 -B 160;
+   echo "Done."
+}
+
 source ~/.functions.local

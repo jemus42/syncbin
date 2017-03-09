@@ -47,4 +47,7 @@ if (interactive()){
 ## drat
 
 # Add cloudyr repo
+if (!require("drat")) {
+    install.packages("drat")
+}
 drat::addRepo("cloudyr", "http://cloudyr.github.io/drat")

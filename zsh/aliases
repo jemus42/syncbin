@@ -1,7 +1,7 @@
 alias ll='ls -halF'
 alias l='ls -l'
 alias today='date +"%A, %B %-d, %Y"'
-alias please=sudo
+alias please='sudo !!'
 alias preview='qlmanage -p'
 
 alias gpush='git push origin master'
@@ -11,14 +11,14 @@ alias git-reset-to-remote='git fetch && git reset --hard'
 alias timestamp='date +%Y-%m-%d_%H-%M'
 alias funfact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 
-alias cleanDS="find . -name '.DS_Store' | sed -e 's/\ /\\\ /g' | xargs rm"
-alias cleanAD="find . -name '._*' | sed -e 's/\ /\\\ /g' | xargs rm"
+alias cleanDS="find . -name '.DS_Store' -delete"
+alias cleanAD="find . -name '._*' -delete"
 
-alias tadaa_haste="HASTE_SERVER=https://hastebin.tadaa-data.de haste"
+# alias tadaa_haste="HASTE_SERVER=https://hastebin.tadaa-data.de haste"
 
 ## Homebrew
 
-alias brewup="brew update && brew upgrade && brew cleanup && brew cask cleanup"
+alias brewup="brew update && brew upgrade && brew cleanup"
 
 ##########
 # Fake binaries via aliases

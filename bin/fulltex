@@ -38,7 +38,7 @@ while getopts ":f::c;p:" opt; do
        ;;
     p) 
        echo "Pushing to filedump";
-       scp $FILE.pdf strato:"~/dumpdir/Hausarbeiten/$OPTARG" > /dev/null;
+       scp $FILE.pdf mercy:"~/dumpdir/Hausarbeiten/$OPTARG" > /dev/null;
        echo "http://dump.jemu.name/Hausarbeiten/$OPTARG";
        ;;
     \?)

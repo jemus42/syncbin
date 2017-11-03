@@ -5,9 +5,13 @@ Sys.setenv(R_LIBS_USER = "~/Library/R/shared")
 options(repos = c(CRAN = "https://cloud.r-project.org"))
 options(browserNLdisabled = TRUE)         # I forgot what this does
 options(deparse.max.lines = 2)            # same
-options(error = DYM::DYM())               # For "did you mean" on errors
 options(width = 100)                      # More width
-options(stringsAsFactors = FALSE)         # Because.
+options("digits" = 12)                    # I like my digits
+options(menu.graphics = FALSE)            # Only required for graphical console stuff, so disable it
+
+# Possibly fix various locale issues
+# Sys.setlocale('LC_ALL','C')
+# options(encoding = "utf-8")
 
 ### Prompt
 options(prompt = "☁ ", continue = "➜ ")
@@ -17,37 +21,16 @@ options(devtools.desc.author = "person('Lukas', 'Burk', email = 'lukas@quantenbr
 options(devtools.desc.license = "MIT")
 options(devtools.name = "Lukas Burk")
 
+### Blogdown
+options(servr.daemon = FALSE, blogdown.author = "Jemus42")
+
 ### Startup
 .First <- function() {
   version     <- R.Version()
   date_string <- Sys.Date()
-  #rs_version  <- rstudio::versionInfo()$version
 
   msg1 <- sprintf("Hello there.\nThis is %s\nToday is %s.",
                   version$version.string,
-                #  rs_version,
                   date_string)
   cat(msg1, "\n")
 }
-
-### Packages
-sshhh <- function(package){
-  suppressWarnings(suppressPackageStartupMessages(
-    library(package, character.only = TRUE)))
-}
-
-# list of packages to auto-load if interactive
-autoloads <-c("ggplot2", "magrittr", "broom")
-
-# auto-load stuff but only interactively, should keep scripts clean
-if (interactive()){
-  invisible(sapply(autoloads, sshhh))
-}; rm(sshhh, autoloads)
-
-## drat
-
-# Add cloudyr repo
-if (!require("drat")) {
-    install.packages("drat")
-}
-drat::addRepo("cloudyr", "http://cloudyr.github.io/drat")

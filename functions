@@ -1,5 +1,3 @@
-# Create new octopress blogpost and open with Mou.app
-# Usage example: newpost "Let's talk about anthropomorphism in frozen yoghurt"
 ME=$(whoami)
 
 # Create a new directory and enter it
@@ -12,11 +10,11 @@ function dump {
 	rsync-copy --partial "$@" -e ssh mercy:/srv/dump.jemu.name
 	FILE=$(basename $1)
 	if [[ $ME == "Lukas" ]]; then
-		echo "http://dump.jemu.name/$FILE" | pbcopy
-	else echo "http://dump.jemu.name/$FILE"
+		echo "https://dump.jemu.name/$FILE" | pbcopy
+	else echo "https://dump.jemu.name/$FILE"
 	fi
 	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.jemu.name/$FILE" >> $HOME/.dumplog
-	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog
+	terminal-notifier -title "Filedump" -message "$FILE" -execute subl $HOME/.dumplog;
 }
 
 function wmv2mp4 {

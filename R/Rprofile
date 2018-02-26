@@ -1,36 +1,56 @@
-### Setting a personal library
-Sys.setenv(R_LIBS_USER = "~/Library/R/shared")
+# Ensure R uses the pandoc version bundled with RStudio
+Sys.setenv(PATH = paste0("/Applications/RStudio.app/Contents/MacOS/pandoc:", Sys.getenv("PATH")))
 
 ### Misc options
 options(repos = c(CRAN = "https://cloud.r-project.org"))
-options(browserNLdisabled = TRUE)         # I forgot what this does
-options(deparse.max.lines = 2)            # same
+options(browserNLdisabled = TRUE)         # Modifies browser()
+options(deparse.max.lines = 2)            # Modifies traceback()
 options(width = 100)                      # More width
-options("digits" = 12)                    # I like my digits
+options("digits" = 8)                     # I like my digits
 options(menu.graphics = FALSE)            # Only required for graphical console stuff, so disable it
 
 # Possibly fix various locale issues
 # Sys.setlocale('LC_ALL','C')
-# options(encoding = "utf-8")
+# options(encoding = "UTF-8")
+# Also check via l10n_info()
+
+# Disable default saving of workspace in CLI
+formals(quit)$save <- "no"
 
 ### Prompt
-options(prompt = "☁ ", continue = "➜ ")
+#options(prompt = "☁ ", continue = "➜ ")
+#options(prompt = "★ ", continue = " ↳ " )
+options(prompt = "\033[32m★\033[39m ", continue = " ↳ " )
 
 ### Devtools options
-options(devtools.desc.author = "person('Lukas', 'Burk', email = 'lukas@quantenbrot.de', role = c('aut', 'cre'))")
+options(devtools.desc.author = "person('Lukas', 'Burk',
+                                       email = 'lukas@quantenbrot.de',
+                                       role = c('aut', 'cre'))")
 options(devtools.desc.license = "MIT")
 options(devtools.name = "Lukas Burk")
+options(github.user = "jemus42")
 
 ### Blogdown
 options(servr.daemon = FALSE, blogdown.author = "Jemus42")
 
 ### Startup
 .First <- function() {
-  version     <- R.Version()
+  version     <- R.Version()$version.string
   date_string <- Sys.Date()
+  utf8        <- l10n_info()$`UTF-8`
+  utf8        <- ifelse(utf8, "enabled", "disabled!")
 
-  msg1 <- sprintf("Hello there.\nThis is %s\nToday is %s.",
-                  version$version.string,
-                  date_string)
-  cat(msg1, "\n")
+  msg1 <- paste0("Hello there.\n",
+                 "This is ", crayon::bold(version), "\n",
+                 date_string, "\nUTF-8: ", utf8)
+
+  cat(msg1, "\n\n\n")
+}
+
+### Load stuff interactively
+
+if (interactive()) {
+  suppressMessages(require(usethis))
+  suppressMessages(require(prettycode))
+  suppressMessages(require(remotes))
 }

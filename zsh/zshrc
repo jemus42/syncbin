@@ -18,7 +18,7 @@ alias zshconfig="nano ~/.zshrc"
 DISABLE_AUTO_UPDATE="true"
 
 # Uncomment to change how often before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=13
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -77,3 +77,11 @@ if [[ -f ~/.path.local ]]; then source ~/.path.local; else touch ~/.path.local; 
 [ -f /Users/Lukas/.travis/travis.sh ] && source /Users/Lukas/.travis/travis.sh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+## Autosuggestions
+# https://github.com/zsh-users/zsh-autosuggestions
+# brew install zsh-autosuggestions
+#source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+## Init antigen
+source /usr/local/share/antigen/antigen.zsh

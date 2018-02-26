@@ -18,7 +18,7 @@ alias cleanAD="find . -name '._*' -delete"
 
 ## Homebrew
 
-alias brewup="brew update && brew upgrade && brew cleanup"
+alias brewup="brew update && brew upgrade && brew cleanup && brew cask upgrade && brew cask cleanup"
 
 ##########
 # Fake binaries via aliases
@@ -26,14 +26,9 @@ alias brewup="brew update && brew upgrade && brew cleanup"
 
 alias mou='open -a Mou'
 alias macdown='open -a MacDown'
-alias vlc='open -a VLC'
+#alias vlc='open -a VLC'
 
 # subl should already be in place
-
-alias be='bundle exec'
-alias genblog='bundle exec jekyll build'
-alias pushblog='bundle exec octopress deploy'
-alias gendeploy='genblog; pushblog'
 
 alias sha1sum='openssl sha1'
 alias sha256sum='shasum -a 256'

@@ -2,7 +2,7 @@
 # fulltex
 # Usage: fulltex -f filename.tex [-c] [-p] filename (without extension)
  
-while getopts ":f::c;p:" opt; do
+while getopts ":f::c;p:o::" opt; do
   case $opt in
     f) 
        FILE=$(echo $OPTARG | sed -e s/.tex//g)
@@ -34,13 +34,17 @@ while getopts ":f::c;p:" opt; do
        ;;
     c) 
        echo "Removing garbage… (.aux, .synctex.gz, .out, …)";
-       rm *.aux *.synctex.gz *.out *.blg *.toc *.bbl *.log;
+       rm *.aux *.synctex.gz *.out *.blg *.toc *.bbl *.log *.lof *.lot;
        ;;
     p) 
-       echo "Pushing to filedump";
-       scp $FILE.pdf mercy:"~/dumpdir/Hausarbeiten/$OPTARG" > /dev/null;
-       echo "http://dump.jemu.name/Hausarbeiten/$OPTARG";
+#       echo "Pushing to filedump";
+#       scp $FILE.pdf mercy:"~/dumpdir/Hausarbeiten/$OPTARG" > /dev/null;
+#       echo "http://dump.jemu.name/Hausarbeiten/$OPTARG";
        ;;
+    o)
+        echo "Renaming $FILE to $OPTARG.pdf";
+        mv $FILE.pdf $OPTARG.pdf;
+        ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       ;;

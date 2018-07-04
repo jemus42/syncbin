@@ -9,6 +9,9 @@ options(width = 100)                      # More width
 options("digits" = 8)                     # I like my digits
 options(menu.graphics = FALSE)            # Only required for graphical console stuff, so disable it
 
+# Source file with credentials for limer
+source("~/.R/credentials.R")
+
 # Possibly fix various locale issues
 # Sys.setlocale('LC_ALL','C')
 # options(encoding = "UTF-8")
@@ -29,6 +32,15 @@ options(devtools.desc.author = "person('Lukas', 'Burk',
 options(devtools.desc.license = "MIT")
 options(devtools.name = "Lukas Burk")
 options(github.user = "jemus42")
+
+options(
+  usethis.name = "Lukas Burk",
+  usethis.description = list(
+    `Authors@R` = "person('Lukas', 'Burk', email = 'lukas@quantenbrot.de', role = c('aut', 'cre'))",
+    License = "MIT + file LICENSE",
+    Version = "0.0.0.9000"
+  )
+)
 
 ### Blogdown
 options(servr.daemon = FALSE, blogdown.author = "Jemus42")

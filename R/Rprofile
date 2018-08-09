@@ -1,5 +1,5 @@
 # Ensure R uses the pandoc version bundled with RStudio
-Sys.setenv(PATH = paste0("/Applications/RStudio.app/Contents/MacOS/pandoc:", Sys.getenv("PATH")))
+#Sys.setenv(PATH = paste0("/Applications/RStudio.app/Contents/MacOS/pandoc:", Sys.getenv("PATH")))
 
 ### Misc options
 options(repos = c(CRAN = "https://cloud.r-project.org"))
@@ -27,8 +27,9 @@ options(prompt = "\033[32m★\033[39m ", continue = " ↳ " )
 
 ### Devtools options
 options(devtools.desc.author = "person('Lukas', 'Burk',
-                                       email = 'lukas@quantenbrot.de',
-                                       role = c('aut', 'cre'))")
+                                       email = 'lukas@tadaa-data.de',
+                                       role = c('aut', 'cre'),
+                                       comment = c(ORCID = 'https://orcid.org/0000-0001-7528-3795'))")
 options(devtools.desc.license = "MIT")
 options(devtools.name = "Lukas Burk")
 options(github.user = "jemus42")
@@ -36,7 +37,7 @@ options(github.user = "jemus42")
 options(
   usethis.name = "Lukas Burk",
   usethis.description = list(
-    `Authors@R` = "person('Lukas', 'Burk', email = 'lukas@quantenbrot.de', role = c('aut', 'cre'))",
+    `Authors@R` = "person('Lukas', 'Burk', email = 'lukas@quantenbrot.de', role = c('aut', 'cre'), comment = c(ORCID = 'https://orcid.org/0000-0001-7528-3795'))",
     License = "MIT + file LICENSE",
     Version = "0.0.0.9000"
   )

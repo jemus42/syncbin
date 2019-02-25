@@ -1,13 +1,20 @@
 # Ensure R uses the pandoc version bundled with RStudio
-#Sys.setenv(PATH = paste0("/Applications/RStudio.app/Contents/MacOS/pandoc:", Sys.getenv("PATH")))
+# Sys.setenv(PATH = paste0("/Applications/RStudio.app/Contents/MacOS/pandoc:", Sys.getenv("PATH")))
 
-### Misc options
+# More repos ----
+# options(repos = c("http://packages.ropensci.org", getOption("repos")))
+
+#Misc options ----
 options(repos = c(CRAN = "https://cloud.r-project.org"))
 options(browserNLdisabled = TRUE)         # Modifies browser()
 options(deparse.max.lines = 2)            # Modifies traceback()
 options(width = 100)                      # More width
 options("digits" = 8)                     # I like my digits
 options(menu.graphics = FALSE)            # Only required for graphical console stuff, so disable it
+
+# if (requireNamespace("rlang", quietly = TRUE)) {
+#   options(error = rlang::entrace)
+# }
 
 # Source file with credentials for limer
 source("~/.R/credentials.R")
@@ -18,52 +25,40 @@ source("~/.R/credentials.R")
 # Also check via l10n_info()
 
 # Disable default saving of workspace in CLI
-formals(quit)$save <- "no"
+# formals(quit)$save <- "no"
 
-### Prompt
+# Prompt ----
 #options(prompt = "☁ ", continue = "➜ ")
 #options(prompt = "★ ", continue = " ↳ " )
 options(prompt = "\033[32m★\033[39m ", continue = " ↳ " )
 
-### Devtools options
-options(devtools.desc.author = "person('Lukas', 'Burk',
-                                       email = 'lukas@tadaa-data.de',
-                                       role = c('aut', 'cre'),
-                                       comment = c(ORCID = 'https://orcid.org/0000-0001-7528-3795'))")
-options(devtools.desc.license = "MIT")
-options(devtools.name = "Lukas Burk")
+# Devtools ----
 options(github.user = "jemus42")
 
 options(
   usethis.name = "Lukas Burk",
   usethis.description = list(
-    `Authors@R` = "person('Lukas', 'Burk', email = 'lukas@quantenbrot.de', role = c('aut', 'cre'), comment = c(ORCID = 'https://orcid.org/0000-0001-7528-3795'))",
+    `Authors@R` = "person('Lukas', 'Burk', email = 'lukas@tadaa-data.de',
+    role = c('aut', 'cre'), comment = c(ORCID = '0000-0001-7528-3795'))",
     License = "MIT + file LICENSE",
     Version = "0.0.0.9000"
   )
 )
 
 ### Blogdown
-options(servr.daemon = FALSE, blogdown.author = "Jemus42")
+options(servr.daemon = FALSE, blogdown.author = "jemus42")
 
-### Startup
+# Startup ----
 .First <- function() {
+  cat("\f")
   version     <- R.Version()$version.string
-  date_string <- Sys.Date()
+  date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
   utf8        <- l10n_info()$`UTF-8`
-  utf8        <- ifelse(utf8, "enabled", "disabled!")
+  utf8        <- ifelse(utf8, crayon::bgGreen("enabled"), crayon::bgRed("disabled!"))
 
   msg1 <- paste0("Hello there.\n",
                  "This is ", crayon::bold(version), "\n",
                  date_string, "\nUTF-8: ", utf8)
 
-  cat(msg1, "\n\n\n")
-}
-
-### Load stuff interactively
-
-if (interactive()) {
-  suppressMessages(require(usethis))
-  suppressMessages(require(prettycode))
-  suppressMessages(require(remotes))
+  cat(msg1, "\n\n")
 }

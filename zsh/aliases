@@ -1,7 +1,8 @@
 alias ll='ls -halF'
 alias l='ls -l'
+alias la="exa -abghl --git"
 alias today='date +"%A, %B %-d, %Y"'
-alias please='sudo !!'
+alias pls='sudo !!'
 alias preview='qlmanage -p'
 
 alias gpush='git push origin master'
@@ -14,22 +15,18 @@ alias funfact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias cleanDS="find . -name '.DS_Store' -delete"
 alias cleanAD="find . -name '._*' -delete"
 
-# alias tadaa_haste="HASTE_SERVER=https://hastebin.tadaa-data.de haste"
-
 ## Homebrew
 
-alias brewup="brew update && brew upgrade && brew cleanup && brew cask upgrade && brew cask cleanup"
-
+alias brewup="brew update && brew upgrade && brew cleanup && brew cask upgrade"
+#alias upall="brewup; mas upgrade"
 ##########
 # Fake binaries via aliases
 #########
 
-alias mou='open -a Mou'
 alias macdown='open -a MacDown'
 #alias vlc='open -a VLC'
 
 # subl should already be in place
-
 alias sha1sum='openssl sha1'
 alias sha256sum='shasum -a 256'
 

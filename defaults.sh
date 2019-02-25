@@ -26,6 +26,10 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 ## Make changes take effect
 killall SystemUIServer
 
+
+# Disable dock bounce
+defaults write com.apple.dock no-bouncing -bool TRUE; killall Dock
+
 #######################
 ## Preview/QuickLook ##
 #######################

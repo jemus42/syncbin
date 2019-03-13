@@ -3,8 +3,6 @@ ZSH=$HOME/.oh-my-zsh
 SYNCBIN=$HOME/syncbin
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
 ZSH_THEME="jemus42"
 
 # Uncomment this to disable bi-weekly auto-update checks
@@ -48,20 +46,6 @@ export LANG=en_US.UTF-8
 export GEM_HOME=~/.gem
 export PATH=~/.gem/bin:$PATH
 
-if [[ $(whoami) == "Lukas" ]]; then 
-
-	SYNCBIN="/Users/Lukas/repos/jemus42/syncbin";
-
-		elif [[ $(hostname) == "wurstmineberg.de" ]]; then
-
-			SYNCBIN="/home/jemus42/syncbin";
-
-		elif [[ $(hostname) == "wurstmannberg.de" ]]; then
-
-			SYNCBIN="/home/jemus/syncbin";
-
-fi
-
 source $SYNCBIN/zsh/aliases;
 source $SYNCBIN/functions;
 
@@ -77,3 +61,5 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # https://github.com/zsh-users/zsh-autosuggestions
 # brew install zsh-autosuggestions
 
+# Colors
+export TERM='xterm-256color'

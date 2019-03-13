@@ -3,3 +3,15 @@ startup_message off
 hardstatus on
 hardstatus alwayslastline
 hardstatus string '%{gk}[%{G}%H%{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}]%{=b C}[%m/%d/%y %C %A]%{W}'
+
+# Enable 256-color mode when screen is started with TERM=xterm-256color
+# Taken from: http://frexx.de/xterm-256-notes/
+#
+# Note that TERM != "xterm-256color" within a screen window. Rather it is
+# "screen" or "screen-bce"
+# 
+# terminfo and termcap for nice 256 color terminal
+# allow bold colors - necessary for some reason
+attrcolor b ".I"
+# tell screen how to set colors. AB = background, AF=foreground
+termcapinfo xterm-256color 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'

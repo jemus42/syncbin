@@ -1,5 +1,6 @@
-#! /bin/sh
+#! /usr/bin/env zsh
 
+SYNCBIN=$HOME/syncbin
 
 ln -sf $SYNCBIN/zsh/zshrc $HOME/.zshrc
 ln -fs $SYNCBIN/zsh/jemus42.zsh-theme ~/.oh-my-zsh/themes/jemus42.zsh-theme

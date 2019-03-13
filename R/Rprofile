@@ -50,7 +50,7 @@ options(servr.daemon = FALSE, blogdown.author = "jemus42")
 
 # Startup ----
 .First <- function() {
-  cat("\f")
+  # cat("\f")
   version     <- R.Version()$version.string
   date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
   utf8        <- l10n_info()$`UTF-8`

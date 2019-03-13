@@ -7,13 +7,6 @@ SYNCBIN=$HOME/syncbin
 # time that oh-my-zsh is loaded.
 ZSH_THEME="jemus42"
 
-# Example aliases
-alias zshconfig="nano ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
 # Uncomment this to disable bi-weekly auto-update checks
 DISABLE_AUTO_UPDATE="true"
 
@@ -40,12 +33,13 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git github rsync osx extract zsh-syntax-highlighting)
+plugins=(rsync extract zsh-syntax-highlighting git-flow-completion zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin:$PATH
+
 # Setting locale to ensure UTF8
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
@@ -82,7 +76,4 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ## Autosuggestions
 # https://github.com/zsh-users/zsh-autosuggestions
 # brew install zsh-autosuggestions
-#source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-## Init antigen
-#source /usr/local/share/antigen/antigen.zsh

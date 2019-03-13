@@ -1,7 +1,6 @@
 #! /bin/bash
 
-brew update; brew upgrade;
+brew upgrade;
 brew cask upgrade;
-brew cleanup;
 mas upgrade;
 Rscript -e "update.packages(ask = FALSE, type = 'binary')"

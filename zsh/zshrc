@@ -4,7 +4,7 @@ SYNCBIN=$HOME/syncbin
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-ZSH_THEME="jemus42"
+# ZSH_THEME="jemus42"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
@@ -20,7 +20,7 @@ COMPLETION_WAITING_DOTS="true"
 # source $ZSH/oh-my-zsh.sh
 
 source $SYNCBIN/zsh/aliases;
-source $SYNCBIN/functions;
+source $SYNCBIN/zsh/functions;
 source $SYNCBIN/zsh/envars;
 
 test -e "${HOME}/.path.local" && source ~/.path.local
@@ -34,12 +34,16 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ###############
 ### Antigen ###
 ###############
+function source_if_possible() {
+    if [[ -r $1 ]]; then source $1; fi
+}
+
 case $( uname -s ) in
-Linux)  source /home/linuxbrew/.linuxbrew/share/antigen/antigen.zsh;;
-Darwin) source /usr/local/share/antigen/antigen.zsh
-;;
+Linux)  source $(brew --prefix)/share/antigen/antigen.zsh;;
+Darwin) source $(brew --prefix)/share/antigen/antigen.zsh;;
 esac
 
+# Only execute if antigen commend is present, i.e. skip on FreeBSD
 $(command -v antigen) init $SYNCBIN/zsh/antigen
 
 ### Prompt ###

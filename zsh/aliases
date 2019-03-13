@@ -11,7 +11,7 @@ alias push='git push origin master'
 alias pull='git pull origin master'
 alias git-reset-to-remote='git fetch && git reset --hard'
 
-# why not
+## why not
 alias timestamp='date +%Y-%m-%d_%H-%M'
 alias funfact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 

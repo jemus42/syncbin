@@ -2,7 +2,6 @@ alias ll='ls -halF'
 alias l='ls -l'
 alias la="exa -abghl --git"
 alias today='date +"%A, %B %-d, %Y"'
-alias pls='sudo !!'
 alias preview='qlmanage -p'
 alias rot13="tr 'a-zA-Z' 'n-za-mN-ZA-M'"
 

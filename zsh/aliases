@@ -17,16 +17,13 @@ alias cleanAD="find . -name '._*' -delete"
 
 ## Homebrew
 
-alias brewup="brew update && brew upgrade && brew cleanup && brew cask upgrade"
-#alias upall="brewup; mas upgrade"
+alias brewup="brew upgrade && brew cask upgrade"
+
 ##########
 # Fake binaries via aliases
 #########
 
 alias macdown='open -a MacDown'
-#alias vlc='open -a VLC'
-
-# subl should already be in place
 alias sha1sum='openssl sha1'
 alias sha256sum='shasum -a 256'
 

@@ -1,0 +1,21 @@
+source /usr/local/share/antigen/antigen.zsh
+
+# default repo
+antigen use oh-my-zsh
+
+antigen bundles <<EOBUNDLES
+    # Bundles from the default repo (robbyrussell's oh-my-zsh)
+    extract
+    command-not-found
+
+    zsh-users/zsh-syntax-highlighting
+    zsh-users/zsh-autosuggestions
+    zsh-users/zsh-completions
+EOBUNDLES
+
+
+# liquidprompt
+antigen bundle nojhan/liquidprompt
+
+# apply, I guess?
+antigen apply

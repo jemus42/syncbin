@@ -1,10 +1,8 @@
 startup_message off
 
-# hardstatus on
-# hardstatus alwayslastline
-# hardstatus string '%{gk}[%{G}%H%{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}]%{=b C}[%m/%d/%y %C %A]%{W}'
-
-hardstatus alwayslastline "[%D, %F %C %a]  %-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
+hardstatus on
+hardstatus alwayslastline
+hardstatus string '%{gk}[%{G}%H%{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}]%{=b C}[%m/%d/%y %C %A]%{W}'
 
 # Enable 256-color mode when screen is started with TERM=xterm-256color
 # Taken from: http://frexx.de/xterm-256-notes/

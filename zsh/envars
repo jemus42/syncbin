@@ -1,0 +1,17 @@
+# Colors, especially for gray autosuggestions
+export TERM='xterm-256color'
+
+export EDITOR=nano
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
+# Unused: /opt/X11/bin /usr/texbin
+
+# Setting locale to ensure UTF-8
+export LC_ALL=en_US.UTF-8  
+export LANG=en_US.UTF-8
+
+# Make system ruby work
+export GEM_HOME=~/.gem
+export PATH=~/.gem/bin:$PATH
+
+# R without startup
+export RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'

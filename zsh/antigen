@@ -1,21 +1,24 @@
-source /usr/local/share/antigen/antigen.zsh
-
-# default repo
+### default repo
 antigen use oh-my-zsh
 
 antigen bundles <<EOBUNDLES
     # Bundles from the default repo (robbyrussell's oh-my-zsh)
     extract
     command-not-found
+    rsync
+    git-flow
+    z
 
     zsh-users/zsh-syntax-highlighting
     zsh-users/zsh-autosuggestions
     zsh-users/zsh-completions
+
+    # Prompt
+    nojhan/liquidprompt
+
+    # mafredri/zsh-async
+    # sindresorhus/pure
 EOBUNDLES
 
-
-# liquidprompt
-antigen bundle nojhan/liquidprompt
-
-# apply, I guess?
+### apply, I guess?
 antigen apply

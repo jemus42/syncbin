@@ -41,6 +41,7 @@ function source_if_possible() {
 case $( uname -s ) in
 Linux)  source $(brew --prefix)/share/antigen/antigen.zsh;;
 Darwin) source $(brew --prefix)/share/antigen/antigen.zsh;;
+FreeBSD) source /usr/local/share/zsh-antigen/antigen.zsh;;
 esac
 
 # Only execute if antigen commend is present, i.e. skip on FreeBSD

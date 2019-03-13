@@ -15,3 +15,10 @@ export PATH=~/.gem/bin:$PATH
 
 # R without startup
 export RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'
+
+
+# Leaving linuxbrew linkage here until I figure out a better way
+# test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+# test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+# test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+# echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile

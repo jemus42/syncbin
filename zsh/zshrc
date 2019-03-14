@@ -9,14 +9,8 @@ SYNCBIN=$HOME/syncbin
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-# Uncomment following line if you want to disable marking untracked files under
-# VCS as dirty. This makes repository status check for large repositories much,
-# much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
 # ~/.oh-my-zsh/plugins/* –– Custom plugins ~/.oh-my-zsh/custom/plugins/
 # plugins=(rsync extract zsh-syntax-highlighting git-flow-completion zsh-autosuggestions z)
-
 # source $ZSH/oh-my-zsh.sh
 
 source $SYNCBIN/zsh/aliases;
@@ -39,14 +33,18 @@ function source_if_possible() {
 }
 
 case $( uname -s ) in
-Linux)  case $( hostname ) in
-            kitchensink) source $HOME/.antigen.zsh;;
-            pfannkuchen) source $HOME/.antigen.zsh;;
-            *) source $(brew --prefix)/share/antigen/antigen.zsh;;
-        esac;;
-Darwin) source $(brew --prefix)/share/antigen/antigen.zsh;;
-FreeBSD) source /usr/local/share/zsh-antigen/antigen.zsh;;
-*) source $HOME/.antigen.zsh;;
+Linux)  
+    case $( hostname ) in
+        kitchensink) source $HOME/.antigen.zsh;;
+        pfannkuchen) source $HOME/.antigen.zsh;;
+        *) source $(brew --prefix)/share/antigen/antigen.zsh;;
+    esac;;
+Darwin) 
+    source $(brew --prefix)/share/antigen/antigen.zsh;;
+FreeBSD) 
+    source /usr/local/share/zsh-antigen/antigen.zsh;;
+*) 
+    source $HOME/.antigen.zsh;;
 esac
 
 
@@ -58,6 +56,3 @@ $(command -v antigen) init $SYNCBIN/zsh/antigen
 ## In case of pure prompt:
 # autoload -U promptinit; promptinit
 # prompt pure
-
-# Liquidprompt, only load in interactive shell
-[[ $- = *i* ]] && source $HOME/syncbin/zsh/liquidpromptrc

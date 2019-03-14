@@ -7,7 +7,7 @@ antigen bundles <<EOBUNDLES
     command-not-found
     rsync
     git-flow
-    z
+    # z
 
     zsh-users/zsh-syntax-highlighting
     zsh-users/zsh-autosuggestions
@@ -15,9 +15,6 @@ antigen bundles <<EOBUNDLES
 
     # Prompt
     nojhan/liquidprompt
-
-    # mafredri/zsh-async
-    # sindresorhus/pure
 EOBUNDLES
 
 ### apply, I guess?

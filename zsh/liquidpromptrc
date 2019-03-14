@@ -28,7 +28,7 @@ LP_TEMP_THRESHOLD=60
 # Use the shorten path feature if the path is too long to fit in the prompt
 # line.
 # Recommended value is 1
-LP_ENABLE_SHORTEN_PATH=1
+LP_ENABLE_SHORTEN_PATH=0
 
 # The maximum percentage of the screen width used to display the path before
 # removing the center portion of the path and replacing with '...'.
@@ -140,12 +140,13 @@ LP_TIME_ANALOG=0
 # See LP_TITLE_OPEN and LP_TITLE_CLOSE to change escape characters to adapt this
 # feature to your specific terminal.
 LP_ENABLE_TITLE=0
+# DISABLE_AUTO_TITLE="false"
 
 # Enable Title for screen and byobu
-LP_ENABLE_SCREEN_TITLE=0
+LP_ENABLE_SCREEN_TITLE=1
 
 # Use different colors for the different hosts you SSH to
-LP_ENABLE_SSH_COLORS=0
+LP_ENABLE_SSH_COLORS=1
 
 # Specify a list of complete and colon (":") separated paths in which, all vcs
 # will be disabled

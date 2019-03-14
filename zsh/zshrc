@@ -1,19 +1,11 @@
+# For profiling
+# zmodload zsh/zprof
+
 # Path to your oh-my-zsh configuration.
 export SYNCBIN=$HOME/syncbin
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
 # Red dots displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
-# Disable marking untracked files under VCS as dirty
-# This makes repository status check for large repositories
-# much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
 
 ########################
 ### oh-my-zsh config ###
@@ -62,3 +54,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ## In case of pure prompt:
 # autoload -U promptinit; promptinit
 # prompt pure
+
+# For profiling
+# zprof

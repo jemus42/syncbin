@@ -17,11 +17,10 @@ source $SYNCBIN/zsh/aliases;
 source $SYNCBIN/zsh/functions;
 source $SYNCBIN/zsh/envars;
 
-test -e "${HOME}/.path.local" && source ~/.path.local
-test -e "${HOME}/.functions.local" && source ~/.functions.local
+test -e "${HOME}/.path.local" && source ${HOME}/.path.local
+test -e "${HOME}/.functions.local" && source${HOME}/.functions.local
 
-# added by travis gem
-[ -f /Users/Lukas/.travis/travis.sh ] && source /Users/Lukas/.travis/travis.sh
+test -e "${HOME}/.travis/travis.sh" && source "${HOME}/.travis/travis.sh"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 

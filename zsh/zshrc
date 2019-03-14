@@ -27,6 +27,7 @@ source $SYNCBIN/zsh/functions;
 #######################
 
 test -e "${HOME}/.path.local" && source "${HOME}/.path.local"
+test -e "${HOME}/.env.local" && source "${HOME}/.env.local"
 test -e "${HOME}/.functions.local" && source "${HOME}/.functions.local"
 
 ################################

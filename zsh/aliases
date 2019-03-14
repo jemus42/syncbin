@@ -17,14 +17,13 @@ alias git-reset-to-remote='git fetch && git reset --hard'
 
 ## why not
 alias timestamp='date +%Y-%m-%d_%H-%M'
-alias funfact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 
 ## cleaning macos shit
 alias cleanDS="find . -name '.DS_Store' -delete"
 alias cleanAD="find . -name '._*' -delete"
 
 ## R, but clean
-alias R='R --no-save'
+alias R='R --no-save --quiet'
 
 ## Homebrew
 alias brewup="brew upgrade && brew cask upgrade"

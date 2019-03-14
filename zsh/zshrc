@@ -52,6 +52,8 @@ $(command -v antigen) init $SYNCBIN/zsh/antigen
 
 ### Prompt ###
 
+source $SYNCBIN/zsh/jemus42.zsh-theme
+
 ## In case of pure prompt:
 # autoload -U promptinit; promptinit
 # prompt pure

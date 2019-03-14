@@ -14,7 +14,7 @@ antigen bundles <<EOBUNDLES
     zsh-users/zsh-completions
 
     # Prompt
-    nojhan/liquidprompt
+    # nojhan/liquidprompt
 EOBUNDLES
 
 ### apply, I guess?

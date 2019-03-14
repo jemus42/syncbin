@@ -1,12 +1,13 @@
-# https://github.com/nojhan/liquidprompt/blob/master/liquidpromptrc-dist
 ####################################
 # LIQUID PROMPT CONFIGURATION FILE #
 ####################################
 
+# https://github.com/nojhan/liquidprompt/blob/master/liquidpromptrc-dist
+
 # If you want to use different themes and features,
 # you can load the corresponding files here:
-#source ~/.config/liquidprompt/nojhan.theme
-#LP_PS1_FILE=~/.config/liquidprompt/nojhan.ps1
+source $SYNCBIN/zsh/jemus42.theme
+LP_PS1_FILE=$SYNCBIN/zsh/jemus42.ps1
 
 #############
 # BEHAVIOUR #

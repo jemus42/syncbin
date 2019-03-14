@@ -140,7 +140,6 @@ LP_TIME_ANALOG=0
 # See LP_TITLE_OPEN and LP_TITLE_CLOSE to change escape characters to adapt this
 # feature to your specific terminal.
 LP_ENABLE_TITLE=0
-# DISABLE_AUTO_TITLE="false"
 
 # Enable Title for screen and byobu
 LP_ENABLE_SCREEN_TITLE=1

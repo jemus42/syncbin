@@ -45,11 +45,10 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ##############
 
 ## my zsh theme, either the OMZSH way or the manual way
-# ZSH_THEME="jemus42"
 # source $SYNCBIN/zsh/jemus42.zsh-theme
 
 # liquidprompt, only if interactive shell
-[[ $- = *i* ]] && source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/liquidprompt/liquidprompt
+# [[ $- = *i* ]] && source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/liquidprompt/liquidprompt
 
 ## In case of pure prompt:
 # autoload -U promptinit; promptinit

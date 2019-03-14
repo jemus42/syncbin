@@ -28,12 +28,15 @@
 # Remember that most features come with their corresponding colors,
 # see the README.
 
-# add time, jobs, load and battery
-LP_PS1="${LP_PS1_PREFIX}${LP_TIME}${LP_BATT}${LP_LOAD}${LP_JOBS}"
-# add user, host and permissions colon
-LP_PS1="${LP_PS1}${LP_BRACKET_OPEN}${LP_USER}${LP_HOST}${LP_PERM}"
+# Change LP_TIME to remove the trailing whitespace
+LP_TIME="${LP_COLOR_TIME}${_LP_TIME_SYMBOL}${NO_COL}"
 
-LP_PS1="${LP_PS1}${LP_PWD}${LP_BRACKET_CLOSE}${LP_VENV}${LP_PROXY}"
+# add time, jobs, load and battery
+LP_PS1="${LP_PS1_PREFIX}${LP_BRACKET_OPEN}${LP_BATT}${LP_LOAD}${LP_JOBS}"
+# add user, host and permissions colon
+LP_PS1="${LP_PS1}${LP_USER}${LP_HOST}${LP_PERM}"
+
+LP_PS1="${LP_PS1}${LP_PWD}${LP_BRACKET_CLOSE} ${LP_BRACKET_OPEN}${LP_TIME}${LP_BRACKET_CLOSE}${LP_VENV}${LP_PROXY}"
 
 # Add VCS infos
 # If root, the info has not been collected unless LP_ENABLE_VCS_ROOT
@@ -48,6 +51,6 @@ LP_PS1="${LP_PS1}${LP_RUNTIME}${LP_ERR}${LP_MARK_PREFIX}${LP_MARK}${LP_PS1_POSTF
 LP_TITLE="$(_lp_title "$LP_PS1")"
 
 # Insert it in the prompt
-LP_PS1="${LP_TITLE}${LP_PS1}"
+# LP_PS1="${LP_TITLE}${LP_PS1}"
 
 # vim: set et sts=4 sw=4 tw=120 ft=sh:

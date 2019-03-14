@@ -33,3 +33,10 @@ fi
 if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/liquidprompt ] ; then
     git clone https://github.com/nojhan/liquidprompt.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/liquidprompt;
 fi
+
+
+# powerlevel9k theme
+
+if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel9k ] ; then
+    git clone https://github.com/bhilburn/powerlevel9k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel9k;
+fi

@@ -2,6 +2,10 @@
 
 export ZSH=$HOME/.oh-my-zsh
 
+# ZSH_THEME="jemus42"
+# ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
+
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -28,8 +32,10 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
-plugins=(rsync extract zsh-syntax-highlighting 
-         git-flow zsh-autosuggestions 
-         z zsh-completions command-not-found)
+plugins=(rsync extract git-flow z 
+         zsh-syntax-highlighting 
+         zsh-completions
+         zsh-autosuggestions
+         )
 
 source $ZSH/oh-my-zsh.sh

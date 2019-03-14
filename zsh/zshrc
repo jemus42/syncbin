@@ -4,6 +4,9 @@
 # Path to your oh-my-zsh configuration.
 export SYNCBIN=$HOME/syncbin
 
+# Some stuff needs to be exported before other stuff
+source $SYNCBIN/zsh/envars;
+
 # Red dots displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
@@ -18,7 +21,6 @@ source $SYNCBIN/zsh/oh-my-zsh-init;
 
 source $SYNCBIN/zsh/aliases;
 source $SYNCBIN/zsh/functions;
-source $SYNCBIN/zsh/envars;
 
 #######################
 ### Local overrides ###

@@ -1,5 +1,5 @@
 ## shellstuff
-alias reload='cd $SYNCBIN; git pull; $SYNCBIN/zsh/link.sh; source ~/.zshrc; cd -'
+alias reload='cd $SYNCBIN; git pull; $SYNCBIN/install.sh; source ~/.zshrc; cd -'
 
 ## common
 #alias ll='ls -halF'

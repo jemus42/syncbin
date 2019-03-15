@@ -5,4 +5,20 @@ POWERLEVEL9K_IGNORE_TERM_COLORS=true
 
 
 # Segments
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs anaconda virtualenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+    os_icon 
+    context 
+    dir 
+    vcs 
+    anaconda 
+    virtualenv
+    )
+
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+    status 
+    command_execution_time 
+    root_indicator 
+    background_jobs 
+    #history
+    time
+    )

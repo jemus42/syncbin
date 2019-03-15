@@ -18,6 +18,9 @@ test ! -d $HOME/.config/zsh && mkdir $HOME/.config/zsh
 # Don't clutter ~/
 ZSH_COMPDUMP="${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
+# Less highlighting maybe?
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
 # Defaults
 export EDITOR=nano
 export PATH=$HOME/bin:$SYNCBIN/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH

@@ -38,7 +38,7 @@ function dump {
 ## Updating ##
 ##############
 
-function update_all() {
+function upall() {
 	echo "################################"
 	echo "## Updating platform packages ##"
 	echo "################################"

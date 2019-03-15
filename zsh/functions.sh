@@ -52,11 +52,13 @@ function upall() {
 	Darwin) 
 		brew upgrade
 		brew cask upgrade
-		mas upgrade
+		(( $+commands[mas] )) && mas upgrade
 		;;
 	FreeBSD) 
 		pkg update
-		pkg upgrade
+		pkg upgrade -y
+		pkg clean
+		pkg autoremove
 		;;
 	*) 
 		echo "Don't know how to update on this platform: $(uname -s)"

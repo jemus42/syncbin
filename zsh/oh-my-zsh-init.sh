@@ -41,11 +41,12 @@ plugins=(rsync extract git-flow z
          color-man-pages
          common-aliases
          encode64
-         screen
+         #screen
+         systemadmin
          )
 
 # Platform-specific plugins
 (( $+commands[systemctl] )) && plugins+=(systemd)
-[ $(uname -s) = "Darwin" ] && plugins+=(osx)
+[ $(uname -s) = "Darwin" ] && plugins+=(scw osx)
 
 source $ZSH/oh-my-zsh.sh

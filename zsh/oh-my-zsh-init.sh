@@ -38,7 +38,7 @@ plugins=(rsync extract git-flow z
          zsh-completions
          zsh-autosuggestions
          catimg # preview images via cat
-         color-man-pages
+         colored-man-pages
          common-aliases
          encode64
          #screen

@@ -5,4 +5,4 @@ POWERLEVEL9K_IGNORE_TERM_COLORS=true
 
 
 # Segments
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs anconda virtualenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs anaconda virtualenv)

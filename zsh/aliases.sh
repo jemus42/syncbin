@@ -2,12 +2,12 @@
 alias reload='cd $SYNCBIN; git pull; $SYNCBIN/zsh/link.sh; source ~/.zshrc; cd -'
 
 ## common
-alias ll='ls -halF'
-alias l='ls -l'
-alias la="exa -abghl --git"
+#alias ll='ls -halF'
+#alias l='ls -l'
+#alias la="exa -abghl --git"
 alias today='date +"%A, %B %-d, %Y"'
 
-alias preview='qlmanage -p'
+#alias preview='qlmanage -p' # Use quick-look() instead
 alias rot13="tr 'a-zA-Z' 'n-za-mN-ZA-M'"
 
 ## git
@@ -25,10 +25,7 @@ alias cleanAD="find . -name '._*' -delete"
 ## R, but clean
 alias R='R --no-save --quiet'
 
-## Homebrew
-alias brewup="brew upgrade && brew cask upgrade"
-
-## Fake binaries via aliases
+## Misc helpers
 alias macdown='open -a MacDown'
 alias sha1sum='openssl sha1'
 alias sha256sum='shasum -a 256'

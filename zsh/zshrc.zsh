@@ -1,7 +1,10 @@
 #################
 ### Profiling ###
 #################
-# zmodload zsh/zprof
+# execute 'ZSH_PROFILE_RC=1 zsh' for profiling
+if [[ $ZSH_PROFILE_RC -gt 0 ]] ; then
+    zmodload zsh/zprof
+fi
 
 # Path to oh-my-zsh configuration.
 export SYNCBIN=$HOME/syncbin
@@ -62,4 +65,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 #################
 ### Profiling ###
 #################
-# zprof
+if [[ $ZSH_PROFILE_RC -gt 0 ]] ; then
+    zprof
+fi

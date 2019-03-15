@@ -1,5 +1,7 @@
 startup_message off
 
+# use screen-* over xterm-* 
+# apparently some screen-specific stuff fails otherwise
 term screen-256color
 
 hardstatus on
@@ -12,9 +14,6 @@ hardstatus string '%{gk}[%{G}%H%{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)
 # allow bold colors - necessary for some reason
 attrcolor b ".I"
 # tell screen how to set colors. AB = background, AF=foreground
-
-# termcapinfo xterm-256color 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-
-termcapinfo screen-256color 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+# termcapinfo screen-256color 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 
 # caption always "%?%F%{-b bc}%:%{-b bb}%?%C|%D|%M %d|%H%?%F%{+u wb}%? %L=%-Lw%45>%{+b by}%n%f* %t%{-}%+Lw%-0<"

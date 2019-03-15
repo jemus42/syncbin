@@ -37,11 +37,10 @@ plugins=(rsync extract git-flow z
          zsh-syntax-highlighting 
          zsh-completions
          zsh-autosuggestions
-         catimg # preview images via cat
+         catimg
          colored-man-pages
          common-aliases
          encode64
-         #screen
          systemadmin
          zsh_reload
          )

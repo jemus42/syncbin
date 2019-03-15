@@ -111,9 +111,6 @@ defaults write com.apple.TextEdit RichText -int 0
 defaults write com.apple.TextEdit PlainTextEncoding -int 4
 defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 
-# Allow closing the ‘new tweet’ window by pressing `Esc` in Twitter.app
-defaults write com.twitter.twitter-mac ESCClosesComposeWindow -bool true
-
 # Enable Disk Utility debug menu
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 

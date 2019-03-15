@@ -20,12 +20,17 @@ ZSH_COMPDUMP="${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump-${SHORT_HOST}-${ZSH_VERSI
 
 # Defaults
 export EDITOR=nano
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
+export PATH=$HOME/bin:$SYNCBIN/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 # Unused: /opt/X11/bin /usr/texbin
 
+# Anaconda / Python
+# Need conda to find path... to conda m)
+# export PATH=$(conda info --base)/bin:"$PATH"
+test -d /usr/local/anaconda3 && export PATH=/usr/local/anaconda3/bin:"$PATH"
+
 # Make system ruby work
-export GEM_HOME=~/.gem
-test -d ~/.gem && export PATH=~/.gem/bin:$PATH
+# export GEM_HOME=~/.gem
+# test -d ~/.gem && export PATH=~/.gem/bin:$PATH
 
 # R without startup
 export RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'

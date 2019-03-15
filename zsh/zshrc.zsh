@@ -1,11 +1,13 @@
-# For profiling
+#################
+### Profiling ###
+#################
 # zmodload zsh/zprof
 
-# Path to your oh-my-zsh configuration.
+# Path to oh-my-zsh configuration.
 export SYNCBIN=$HOME/syncbin
 
 # Some stuff needs to be exported before other stuff
-source $SYNCBIN/zsh/envars;
+source $SYNCBIN/zsh/envars.sh
 
 # Red dots displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
@@ -13,14 +15,14 @@ COMPLETION_WAITING_DOTS="true"
 ########################
 ### oh-my-zsh config ###
 ########################
-source $SYNCBIN/zsh/oh-my-zsh-init;
+source $SYNCBIN/zsh/oh-my-zsh-init.sh
 
 #########################
 ### Syncbin additions ###
 #########################
 
-source $SYNCBIN/zsh/aliases;
-source $SYNCBIN/zsh/functions;
+source $SYNCBIN/zsh/aliases.sh
+source $SYNCBIN/zsh/functions.sh
 
 #######################
 ### Local overrides ###
@@ -41,14 +43,14 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ### Antigen ###
 ###############
 
-# source $SYNCBIN/zsh/antigen-pre-init
+# source $SYNCBIN/zsh/antigen-pre-init.sh
 
 ##############
 ### Prompt ###
 ##############
 
 ## my zsh theme, either the OMZSH way or the manual way
-# source $SYNCBIN/zsh/jemus42.zsh-theme
+# source $SYNCBIN/zsh/theme/jemus42.zsh-theme
 
 # liquidprompt, only if interactive shell
 # [[ $- = *i* ]] && source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/liquidprompt/liquidprompt
@@ -57,5 +59,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # autoload -U promptinit; promptinit
 # prompt pure
 
-# For profiling
+#################
+### Profiling ###
+#################
 # zprof

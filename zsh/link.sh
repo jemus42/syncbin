@@ -7,7 +7,7 @@ export SYNCBIN=$HOME/syncbin
 if [ ! -d "$HOME/.config" ]; then mkdir $HOME/.config; fi
 
 # Link stuff into place
-ln -sf $SYNCBIN/zsh/zshrc $HOME/.zshrc
+ln -sf $SYNCBIN/zsh/zshrc.zsh $HOME/.zshrc
 ln -sf $SYNCBIN/screenrc $HOME/.screenrc
 ln -sf $SYNCBIN/zsh/liquidpromptrc $HOME/.config/liquidpromptrc
 

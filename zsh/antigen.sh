@@ -4,10 +4,9 @@ antigen use oh-my-zsh
 antigen bundles <<EOBUNDLES
     # Bundles from the default repo (robbyrussell's oh-my-zsh)
     extract
-    command-not-found
     rsync
     git-flow
-    # z
+    z
 
     zsh-users/zsh-syntax-highlighting
     zsh-users/zsh-autosuggestions

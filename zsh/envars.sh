@@ -1,10 +1,8 @@
 # Fonts, themes, stuff like that
 export TERM='xterm-256color'
 
-POWERLEVEL9K_MODE="nerdfont-complete"
-
-# Hide false-positive(?) warning on FreeBSD
-POWERLEVEL9K_IGNORE_TERM_COLORS=true
+# powerlevel9k config must be done before theme is set
+source $SYNCBIN/zsh/theme/powerlevel9k-env.sh
 
 # ENCODIIING
 export LC_ALL=en_US.UTF-8  

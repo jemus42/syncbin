@@ -21,4 +21,4 @@ esac
 
 
 # Only execute if antigen commend is present, i.e. skip on FreeBSD
-$(command -v antigen) init $SYNCBIN/zsh/antigen
+$(command -v antigen) init $SYNCBIN/zsh/antigen.sh

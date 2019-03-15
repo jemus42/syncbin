@@ -6,8 +6,8 @@
 
 # If you want to use different themes and features,
 # you can load the corresponding files here:
-source $SYNCBIN/zsh/jemus42.theme
-LP_PS1_FILE=$SYNCBIN/zsh/jemus42.ps1
+source $SYNCBIN/zsh/theme/jemus42-LP.theme
+LP_PS1_FILE=$SYNCBIN/zsh/theme/jemus42-LP.ps1
 
 #############
 # BEHAVIOUR #

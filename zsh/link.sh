@@ -4,7 +4,7 @@
 export SYNCBIN=$HOME/syncbin
 
 # Create .config dir if needed
-if [ ! -d "$HOME/.config" ]; then mkdir $HOME/.config; fi
+test ! -d ~/.config/zsh && mkdir $HOME/.config
 
 # Link stuff into place
 ln -sf $SYNCBIN/zsh/zshrc.zsh $HOME/.zshrc

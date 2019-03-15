@@ -43,6 +43,7 @@ plugins=(rsync extract git-flow z
          encode64
          #screen
          systemadmin
+         zsh_reload
          )
 
 # Platform-specific plugins

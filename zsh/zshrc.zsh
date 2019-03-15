@@ -1,8 +1,8 @@
 #################
 ### Profiling ###
 #################
-# execute 'ZSH_PROFILE_RC=1 zsh' for profiling
-if [[ $ZSH_PROFILE_RC -gt 0 ]] ; then
+# execute 'zsh_prof=1 zsh' for profiling
+if [[ $zsh_prof -gt 0 ]] ; then
     zmodload zsh/zprof
 fi
 
@@ -65,6 +65,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 #################
 ### Profiling ###
 #################
-if [[ $ZSH_PROFILE_RC -gt 0 ]] ; then
+if [[ $zsh_prof -gt 0 ]] ; then
     zprof
 fi

@@ -1,4 +1,8 @@
-POWERLEVEL9K_MODE="nerdfont-complete"
+if [[ $(uname -s) = FreeBSD ]] ; then
+    POWERLEVEL9K_MODE=""
+else
+    POWERLEVEL9K_MODE="nerdfont-complete"
+fi
 
 # Hide false-positive(?) warning on FreeBSD
 POWERLEVEL9K_IGNORE_TERM_COLORS=true

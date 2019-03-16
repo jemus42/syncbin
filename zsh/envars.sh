@@ -1,5 +1,5 @@
 # Fonts, themes, stuff like that
-if [[ "$TERM" != *256color ]]; then export TERM='xterm-256color'; fi
+[[ "$TERM" != *256color ]] && export TERM='xterm-256color'
 
 # powerlevel9k config must be done before theme is set
 source $SYNCBIN/zsh/theme/powerlevel9k-env.sh
@@ -7,6 +7,9 @@ source $SYNCBIN/zsh/theme/powerlevel9k-env.sh
 # ENCODIIING
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
+
+# Possibly sometimes relevant
+# LC_COLLATE=C
 
 # ZSH-specifics
 test ! -d $HOME/.config/zsh && mkdir $HOME/.config/zsh
@@ -35,5 +38,6 @@ test -d /usr/local/anaconda3 && export PATH=/usr/local/anaconda3/bin:"$PATH"
 # export GEM_HOME=~/.gem
 # test -d ~/.gem && export PATH=~/.gem/bin:$PATH
 
-# R without startup
-export RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'
+# RStudio without startup message, but only if RStudio exists, 
+# but I don't know how to portably test for RStudio, soooo Rscript it is.
+ (( $+commands[Rscript] )) && export RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'

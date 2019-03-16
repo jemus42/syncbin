@@ -43,10 +43,10 @@ plugins=(rsync extract git-flow z
          encode64
          systemadmin
          zsh_reload
+         systemd # Technically platform-specific, not sure how to (quickly) test for it tho
          )
 
 # Platform-specific plugins
-(( $+commands[systemctl] )) && plugins+=(systemd)
 [ $(uname -s) = "Darwin" ] && plugins+=(scw osx)
 
 source $ZSH/oh-my-zsh.sh

@@ -38,6 +38,5 @@ test -d /usr/local/anaconda3 && export PATH=/usr/local/anaconda3/bin:"$PATH"
 # export GEM_HOME=~/.gem
 # test -d ~/.gem && export PATH=~/.gem/bin:$PATH
 
-# RStudio without startup message, but only if RStudio exists, 
-# but I don't know how to portably test for RStudio, soooo Rscript it is.
- (( $+commands[Rscript] )) && export RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'
+# RStudio without startup message
+RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'

@@ -16,7 +16,7 @@ ln -sf $SYNCBIN/zsh/liquidpromptrc $HOME/.config/liquidpromptrc
 
 # Link ZSH theme to OMZSH custom theme dir
 if [ -d "$HOME/.oh-my-zsh" ]; then
-    ln -sf $SYNCBIN/zsh/jemus42.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/jemus42.zsh-theme
+    ln -sf $SYNCBIN/zsh/theme/jemus42.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/jemus42.zsh-theme
 fi
 
 #############################################

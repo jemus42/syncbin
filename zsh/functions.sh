@@ -1,5 +1,3 @@
-ME=$(whoami)
-
 ######################
 ## Setting stuff up ##
 ######################
@@ -22,7 +20,7 @@ function install_homebrew() {
 
 # Dump files to my filedump, because dump
 function dump {
-	rsync -avz --progress -h --partial "$@" -e ssh mercy:/srv/dump.jemu.name
+	rsync -avh --progress "$@" -e ssh mercy:/srv/dump.jemu.name
 	FILE=$(basename $1)
 	if [[ $ME == "Lukas" ]]; then
 		echo "https://dump.jemu.name/$FILE" | pbcopy
@@ -32,7 +30,6 @@ function dump {
 	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.jemu.name/$FILE" >> $HOME/.dumplog
 	terminal-notifier -title "Filedump" -message "$FILE" -execute code $HOME/.dumplog;
 }
-
 
 ##############
 ## Updating ##

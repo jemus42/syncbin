@@ -9,6 +9,7 @@ fi
 # Config vars for platform/host specific stuff later
 export host_short=${HOST/.*/}
 export host_os=$(uname -s)
+export ME=$(whoami)
 
 # Path to oh-my-zsh configuration.
 export SYNCBIN=$HOME/syncbin

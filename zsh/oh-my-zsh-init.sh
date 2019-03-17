@@ -48,7 +48,7 @@ plugins=(rsync extract git-flow z
          systemadmin
          zsh_reload
          systemd # Technically platform-specific, not sure how to (quickly) test for it tho
-         
+         perms
          # These go at the bottom
          zsh-completions
          zsh-syntax-highlighting 

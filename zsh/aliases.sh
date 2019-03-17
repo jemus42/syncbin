@@ -1,7 +1,12 @@
 ## shellstuff
 alias reload='cd $SYNCBIN; git pull; $SYNCBIN/install.sh; source ~/.zshrc; cd -'
 
-alias zsh_bench="zsh -xv 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log; echo DONE"
+# alias zsh_bench='zsh -xv 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log; echo DONE'
+
+function zsh_bench() {
+    zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log
+    echo DONE
+}
 
 ## common
 #alias ll='ls -halF'

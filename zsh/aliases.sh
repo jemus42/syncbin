@@ -1,13 +1,6 @@
 ## shellstuff
 alias reload='cd $SYNCBIN; git pull; $SYNCBIN/install.sh; source ~/.zshrc; cd -'
 
-# alias zsh_bench='zsh -xv 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log; echo DONE'
-
-function zsh_bench() {
-    zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log
-    echo DONE
-}
-
 ## common
 #alias ll='ls -halF'
 #alias l='ls -l'
@@ -23,7 +16,7 @@ alias pull='git pull origin master'
 alias git-reset-to-remote='git fetch && git reset --hard'
 
 ## why not
-alias timestamp='date +%Y-%m-%d_%H-%M'
+alias timestamp='date +%F_%T'
 
 ## cleaning macos shit
 alias cleanDS="find . -name '.DS_Store' -delete"

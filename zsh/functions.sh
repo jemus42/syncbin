@@ -81,7 +81,8 @@ function upall() {
 	    echo "#########################"
 		echo "## Updating R packages ##"
 		echo "#########################"
-		Rscript -e 'update.packages(lib.loc = "/Users/Lukas/Library/R/shared", ask = FALSE, type = "binary")'
+		Rscript --quiet --no-init-file -e \
+		'update.packages(lib.loc = "/Users/Lukas/Library/R/shared", repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
 		;;
 	FreeBSD) 
 		echo "################################"
@@ -98,4 +99,11 @@ function upall() {
 	esac
 
 	echo "#---- Done updating --- $(timestamp) ----#"
+}
+
+
+# Benachmarking ZSH startup
+function zsh_bench() {
+    zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log
+    echo DONE
 }

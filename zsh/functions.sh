@@ -39,12 +39,12 @@ function dump {
 ##############
 
 function upall() {
-	echo "################################"
-	echo "## Updating platform packages ##"
-	echo "################################"
 
 	case $( uname -s ) in
 	Linux)  
+		echo "################################"
+		echo "## Updating platform packages ##"
+		echo "################################"
 		sudo apt update
 		sudo apt upgrade -y
 		sudo apt autoremove
@@ -81,9 +81,12 @@ function upall() {
 	    echo "#########################"
 		echo "## Updating R packages ##"
 		echo "#########################"
-		Rscript -e "update.packages(ask = FALSE, type = 'binary')"
+		Rscript -e 'update.packages(lib.loc = "/Users/Lukas/Library/R/shared", ask = FALSE, type = "binary")'
 		;;
 	FreeBSD) 
+		echo "################################"
+		echo "## Updating platform packages ##"
+		echo "################################"
 		pkg update
 		pkg upgrade -y
 		pkg clean

@@ -9,6 +9,8 @@ if [[ $host_os != FreeBSD ]]; then
    ZSH_THEME="powerlevel9k/powerlevel9k"
 elif [[ $MOSH = 1 ]]; then
     ZSH_THEME="jemus42"
+else 
+    ZSH_THEME="powerlevel9k/powerlevel9k"
 fi
 
 # Would you like to use another custom folder than $ZSH/custom?

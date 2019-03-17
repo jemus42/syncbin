@@ -5,9 +5,9 @@ export ZSH=$HOME/.oh-my-zsh
 # ZSH_THEME="agnoster"
 # ZSH_THEME="powerlevel9k/powerlevel9k"
 
-if [[ $host_os != FreeBSD ]] ; then
+if [[ $host_os != FreeBSD ]]; then
    ZSH_THEME="powerlevel9k/powerlevel9k"
-else
+elif [[ $MOSH = 1 ]]; then
     ZSH_THEME="jemus42"
 fi
 
@@ -52,6 +52,6 @@ plugins=(rsync extract git-flow z
          )
 
 # Platform-specific plugins
-[ $(uname -s) = "Darwin" ] && plugins+=(scw osx)
+[ $host_os = "Darwin" ] && plugins+=(scw osx)
 
 source $ZSH/oh-my-zsh.sh

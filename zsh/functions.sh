@@ -48,11 +48,40 @@ function upall() {
 		sudo apt update
 		sudo apt upgrade -y
 		sudo apt autoremove
+
+		if (( $+commands[brew] )); then
+			echo "#######################"
+			echo "## Updating homebrew ##"
+			echo "#######################"
+			brew upgrade
+		fi
 		;;
 	Darwin) 
-		brew upgrade
-		brew cask upgrade
-		(( $+commands[mas] )) && mas upgrade
+
+		if (( $+commands[brew] )); then
+			echo "#######################"
+			echo "## Updating homebrew ##"
+			echo "#######################"
+			brew upgrade
+
+			echo "#############################"
+			echo "## Updating homebrew casks ##"
+			echo "#############################"
+			brew cask upgrade
+		fi
+
+		if (( $+commands[mas] )); then
+			echo "#######################"
+			echo "## Updating App Store ##"
+			echo "#######################"
+			echo "mas version $(mas version)"
+			mas upgrade
+		fi
+
+	    echo "#########################"
+		echo "## Updating R packages ##"
+		echo "#########################"
+		Rscript -e "update.packages(ask = FALSE, type = 'binary')"
 		;;
 	FreeBSD) 
 		pkg update
@@ -64,14 +93,6 @@ function upall() {
 		echo "Don't know how to update on this platform: $(uname -s)"
 		;;
 	esac
-
-	if (( $+commands[Rscript] )); then
-		echo "#########################################"
-		echo "## Updating R packages as current user ##"
-		echo "#########################################"
-		
-		Rscript -e "update.packages(ask = FALSE, type = 'binary')"
-	fi
 
 	echo "#---- Done updating --- $(timestamp) ----#"
 }

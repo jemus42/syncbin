@@ -2,9 +2,13 @@
 ### Profiling ###
 #################
 # execute 'zsh_prof=1 zsh' for profiling
-if [[ $zsh_prof -gt 0 ]] ; then
+if [[ $zsh_prof = 1 ]] ; then
     zmodload zsh/zprof
 fi
+
+# Config vars for platform/host specific stuff later
+export host_short=${HOST/.*/}
+export host_os=$(uname -s)
 
 # Path to oh-my-zsh configuration.
 export SYNCBIN=$HOME/syncbin
@@ -23,7 +27,6 @@ source $SYNCBIN/zsh/oh-my-zsh-init.sh
 #########################
 ### Syncbin additions ###
 #########################
-
 source $SYNCBIN/zsh/aliases.sh
 source $SYNCBIN/zsh/functions.sh
 
@@ -65,6 +68,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 #################
 ### Profiling ###
 #################
-if [[ $zsh_prof -gt 0 ]] ; then
+if [[ $zsh_prof = 1 ]] ; then
     zprof
 fi

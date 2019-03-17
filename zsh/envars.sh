@@ -26,7 +26,8 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 # Defaults
 export EDITOR=nano
-export PATH=$HOME/bin:$SYNCBIN/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
+export PATH=$HOME/bin:$SYNCBIN/bin:$PATH
+# export PATH=$HOME/bin:$SYNCBIN/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 # Unused: /opt/X11/bin /usr/texbin
 
 # Anaconda / Python

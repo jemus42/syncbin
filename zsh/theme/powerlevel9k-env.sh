@@ -105,8 +105,9 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     status 
     command_execution_time 
     background_jobs 
-    #disk_usage
-    #history
-    ram
-    time date
+    # disk_usage
+    # history
+    # ram
+    time
+    # date
     )

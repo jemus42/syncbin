@@ -14,6 +14,11 @@ export ME=$(whoami)
 # Path to oh-my-zsh configuration.
 export SYNCBIN=$HOME/syncbin
 
+# Add homebrew completions
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+fi
+
 # Some stuff needs to be exported before other stuff
 source $SYNCBIN/zsh/envars.sh
 

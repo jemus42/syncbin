@@ -19,8 +19,7 @@ alias git-reset-to-remote='git fetch && git reset --hard'
 alias timestamp='date +%F_%T'
 
 ## cleaning macos shit
-alias cleanDS="find . -name '.DS_Store' -delete"
-alias cleanAD="find . -name '._*' -delete"
+alias cleanDS="find . -name '.DS_Store' -delete; find . -name '._*' -delete"
 
 ## R, but clean
 alias R='R --no-save --quiet'

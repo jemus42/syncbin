@@ -103,6 +103,16 @@ function upall() {
 		;;
 	esac
 
+	echo
+	echo
+	echo "######################"
+	echo "## Updating syncbin ##"
+	echo "######################"
+	cd $SYNCBIN
+	git pull origin master
+	cd -
+
+
 	echo "#---- Done updating --- $(timestamp) ----#"
 }
 

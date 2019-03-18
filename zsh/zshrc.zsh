@@ -74,6 +74,18 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 #################
 ### Profiling ###
 #################
-if [[ $zsh_prof = 1 ]] ; then
-    zprof
-fi
+[[ $zsh_prof = 1 ]] && zprof
+
+#############################
+### At the very end: tmux ###
+#############################
+
+# Attach tmux session
+# If no session exists, it makes a new one 
+# (https://stackoverflow.com/questions/27613209/how-to-automatically-start-tmux-on-ssh-session#comment80012342_32818042)
+# Only runs if:
+# 1. Profiling is not enabled
+# 2. OS is Darwin, i.e my only macOS machine, i.e. my default local machine
+# 3. It's an interactive session
+# If conditions unmet, issue exit 0 to not start my local sessions with an error indicator
+[[ $zsh_prof != 1 && $host_os != "Darwin" ]] && [[ $- = *i* ]] && tmux new-session -A || exit 0

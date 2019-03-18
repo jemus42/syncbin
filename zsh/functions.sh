@@ -31,6 +31,20 @@ function dump {
 	terminal-notifier -title "Filedump" -message "$FILE" -execute code $HOME/.dumplog;
 }
 
+function reload() {
+	echo "Entering syncbin at $SYNCBIN..."
+	cd $SYNCBIN
+	git pull origin master
+	echo "Re-installing..."
+	$SYNCBIN/install.sh
+	echo "Nukung zcompdump..."
+	rm -f $ZSH_COMPDUMP
+	echo "Reloading ZSH via 'src' alias..."
+	src 
+	echo "Moving back"
+	cd -
+}
+
 ##############
 ## Updating ##
 ##############

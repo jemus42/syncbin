@@ -19,7 +19,7 @@ source $SYNCBIN/zsh/envars.sh
 test -e "${HOME}/.env.local" && source "${HOME}/.env.local"
 
 # Add homebrew completions
-if type brew &>/dev/null; then
+if (( $+commands[brew] )); then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
 

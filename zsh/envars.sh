@@ -47,7 +47,6 @@ test -d /usr/local/anaconda3 && export PATH=/usr/local/anaconda3/bin:"$PATH"
 # RStudio without startup message
 RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'
 
-
 # Is this mosh?
 # https://github.com/mobile-shell/mosh/issues/738#issuecomment-240961629
 ps -p $PPID | grep mosh-server > /dev/null

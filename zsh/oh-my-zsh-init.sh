@@ -41,8 +41,8 @@ DISABLE_AUTO_UPDATE="true"
 # Disabled because of false-positives that were starting to get annoying
 
 plugins=(rsync extract git-flow z 
-         catimg
-         colored-man-pages
+        # catimg
+        # colored-man-pages
          common-aliases
          encode64
          systemadmin

@@ -47,6 +47,8 @@ function upall() {
 		sudo apt autoremove -y
 
 		if (( $+commands[brew] )); then
+			echo
+			echo
 			echo "#######################"
 			echo "## Updating homebrew ##"
 			echo "#######################"
@@ -61,6 +63,8 @@ function upall() {
 			echo "#######################"
 			brew upgrade
 
+			echo
+			echo
 			echo "#############################"
 			echo "## Updating homebrew casks ##"
 			echo "#############################"
@@ -68,6 +72,8 @@ function upall() {
 		fi
 
 		if (( $+commands[mas] )); then
+		    echo
+			echo
 			echo "#######################"
 			echo "## Updating App Store ##"
 			echo "#######################"
@@ -75,6 +81,8 @@ function upall() {
 			mas upgrade
 		fi
 
+		echo
+		echo
 	    echo "#########################"
 		echo "## Updating R packages ##"
 		echo "#########################"

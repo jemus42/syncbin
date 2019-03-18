@@ -140,7 +140,7 @@ function upall() {
 	git pull origin master
 	cd -
 	echo ""
-	echo "## Syncbin updated. Use 'reload' to appyl changes ##"
+	echo "## Syncbin updated. Use 'reload' to apply changes ##"
     echo ""
 	echo "##---- Done updating --- $(timestamp) ----##"
 }

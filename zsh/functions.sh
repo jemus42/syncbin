@@ -107,10 +107,17 @@ function upall() {
 		echo "################################"
 		echo "## Updating platform packages ##"
 		echo "################################"
-		pkg update
-		pkg upgrade -y
-		pkg clean
-		pkg autoremove -y
+		if [[ $ME = root ]]; then
+			pkg update
+			pkg upgrade -y
+			pkg clean
+			pkg autoremove -y		
+		else 
+			sudo pkg update
+			sudo pkg upgrade -y
+			sudo pkg clean
+			sudo pkg autoremove -y
+		fi
 		;;
 	*) 
 		echo "Don't know how to update on this platform: $(uname -s)"
@@ -125,7 +132,7 @@ function upall() {
 	cd $SYNCBIN
 	git pull origin master
 	cd -
-
+	echo "## Syncbin updated. Use 'reload' to appyl changes ##"
 
 	echo "#---- Done updating --- $(timestamp) ----#"
 }

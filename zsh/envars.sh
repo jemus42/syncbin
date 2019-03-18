@@ -27,6 +27,11 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 # Defaults
 export EDITOR=nano
 export PATH=$HOME/bin:$SYNCBIN/bin:$PATH
+
+# Load iterm2 utils if they exist. 
+# See also: https://iterm2.com/documentation-utilities.html
+test -e "${HOME}/.iterm2/" && export PATH=$HOME/.iterm2:$PATH
+
 # export PATH=$HOME/bin:$SYNCBIN/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 # Unused: /opt/X11/bin /usr/texbin
 

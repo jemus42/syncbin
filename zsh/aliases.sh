@@ -5,6 +5,10 @@ alias reload='cd $SYNCBIN; git pull; $SYNCBIN/install.sh; src; cd -'
 #alias ll='ls -halF'
 #alias l='ls -l'
 #alias la="exa -abghl --git"
+
+alias du= du -h
+alias df=df -h
+
 alias today='date +"%A, %B %-d, %Y"'
 
 #alias preview='qlmanage -p' # Use quick-look() instead

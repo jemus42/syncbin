@@ -44,7 +44,7 @@ function upall() {
 		echo "################################"
 		sudo apt update
 		sudo apt upgrade -y
-		sudo apt autoremove
+		sudo apt autoremove -y
 
 		if (( $+commands[brew] )); then
 			echo "#######################"
@@ -88,7 +88,7 @@ function upall() {
 		pkg update
 		pkg upgrade -y
 		pkg clean
-		pkg autoremove
+		pkg autoremove -y
 		;;
 	*) 
 		echo "Don't know how to update on this platform: $(uname -s)"

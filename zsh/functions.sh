@@ -33,13 +33,20 @@ function dump {
 
 function reload() {
 	echo "Entering syncbin at $SYNCBIN..."
+	echo ""
 	cd $SYNCBIN
 	git pull origin master
+	echo ""
 	echo "Re-installing..."
+	echo ""
 	$SYNCBIN/install.sh
-	echo "Nukung zcompdump..."
+	echo ""
+	echo "Nuking zcompdump at $ZSH_COMPDUMP..."
+	echo ""
 	rm -f $ZSH_COMPDUMP
+	echo ""
 	echo "Reloading ZSH via 'src' alias..."
+	echo ""
 	src 
 	echo "Moving back"
 	cd -
@@ -61,8 +68,8 @@ function upall() {
 		sudo apt autoremove -y
 
 		if (( $+commands[brew] )); then
-			echo
-			echo
+			echo ""
+			echo ""
 			echo "#######################"
 			echo "## Updating homebrew ##"
 			echo "#######################"
@@ -77,8 +84,8 @@ function upall() {
 			echo "#######################"
 			brew upgrade
 
-			echo
-			echo
+			echo ""
+			echo ""
 			echo "#############################"
 			echo "## Updating homebrew casks ##"
 			echo "#############################"
@@ -86,8 +93,8 @@ function upall() {
 		fi
 
 		if (( $+commands[mas] )); then
-		    echo
-			echo
+		    echo ""
+			echo ""
 			echo "#######################"
 			echo "## Updating App Store ##"
 			echo "#######################"
@@ -95,8 +102,8 @@ function upall() {
 			mas upgrade
 		fi
 
-		echo
-		echo
+		echo ""
+		echo ""
 	    echo "#########################"
 		echo "## Updating R packages ##"
 		echo "#########################"
@@ -124,17 +131,18 @@ function upall() {
 		;;
 	esac
 
-	echo
-	echo
+	echo ""
+	echo ""
 	echo "######################"
 	echo "## Updating syncbin ##"
 	echo "######################"
 	cd $SYNCBIN
 	git pull origin master
 	cd -
+	echo ""
 	echo "## Syncbin updated. Use 'reload' to appyl changes ##"
-
-	echo "#---- Done updating --- $(timestamp) ----#"
+    echo ""
+	echo "##---- Done updating --- $(timestamp) ----##"
 }
 
 

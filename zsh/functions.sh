@@ -82,22 +82,23 @@ function upall() {
 			echo "#######################"
 			echo "## Updating homebrew ##"
 			echo "#######################"
+			echo ""
 			brew upgrade
 
-			echo ""
 			echo ""
 			echo "#############################"
 			echo "## Updating homebrew casks ##"
 			echo "#############################"
+			echo ""
 			brew cask upgrade
 		fi
 
 		if (( $+commands[mas] )); then
 		    echo ""
-			echo ""
 			echo "#######################"
 			echo "## Updating App Store ##"
 			echo "#######################"
+			echo ""
 			echo "mas version $(mas version)"
 			mas upgrade
 		fi
@@ -107,6 +108,7 @@ function upall() {
 	    echo "#########################"
 		echo "## Updating R packages ##"
 		echo "#########################"
+		echo ""
 		Rscript --quiet --no-init-file -e \
 		'update.packages(lib.loc = "/Users/Lukas/Library/R/shared", repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
 		;;
@@ -114,6 +116,7 @@ function upall() {
 		echo "################################"
 		echo "## Updating platform packages ##"
 		echo "################################"
+		echo ""
 		if [[ $ME = root ]]; then
 			pkg update
 			pkg upgrade -y
@@ -132,15 +135,13 @@ function upall() {
 	esac
 
 	echo ""
-	echo ""
 	echo "######################"
 	echo "## Updating syncbin ##"
 	echo "######################"
 	cd $SYNCBIN
 	git pull origin master
 	cd -
-	echo ""
-	echo "## Syncbin updated. Use 'reload' to apply changes ##"
+	echo "## Syncbin updated. Use 'reload' to apply changes or relog ##"
     echo ""
 	echo "##---- Done updating --- $(timestamp) ----##"
 }

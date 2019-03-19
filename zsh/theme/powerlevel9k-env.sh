@@ -138,3 +138,6 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     time
     # date
     )
+
+# For debugging etc, to manually print specific segments/characters
+# echo $(print_icon 'LEFT_SEGMENT_SEPARATOR')

@@ -25,7 +25,7 @@ ZSH_COMPDUMP="${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump-${SHORT_HOST}-${ZSH_VERSI
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 # Defaults
-export EDITOR=nano
+(( $+commands[micro] )) && export EDITOR=micro || export EDITOR=nano
 export PATH=$HOME/bin:$SYNCBIN/bin:$PATH
 
 # Load iterm2 utils if they exist. 

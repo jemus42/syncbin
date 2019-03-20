@@ -34,3 +34,7 @@ alias sha256sum='shasum -a 256'
 alias yt-channel="youtube-dl -i -o '%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s_%(id)s.%(ext)s'"
 alias yt-playlist="youtube-dl -i -o '%(playlist)s/%(playlist_index)s - %(title)s_%(id)s.%(ext)s'"
 alias yt-chronological="youtube-dl -i -o '%(upload_date)s - %(title)s_%(id)s.%(ext)s'"
+
+####
+#### Thefuck
+ (( $+commands[brew] )) && eval $(thefuck --alias)

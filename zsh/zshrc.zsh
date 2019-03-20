@@ -6,13 +6,12 @@ if [[ $zsh_prof = 1 ]] ; then
     zmodload zsh/zprof
 fi
 
+export SYNCBIN=$HOME/syncbin
+
 # Config vars for platform/host specific stuff later
 export host_short=${HOST/.*/}
 export host_os=$(uname -s)
 export ME=$(whoami)
-
-# Path to oh-my-zsh configuration.
-export SYNCBIN=$HOME/syncbin
 
 # Some stuff needs to be exported before other stuff
 source $SYNCBIN/zsh/envars.sh
@@ -37,27 +36,23 @@ source $SYNCBIN/zsh/functions.sh
 #######################
 ### Local overrides ###
 #######################
-
 test -e "${HOME}/.path.local" && source "${HOME}/.path.local"
 test -e "${HOME}/.functions.local" && source "${HOME}/.functions.local"
 
 ################################
 ### Third-Party integrations ###
 ################################
-
 test -e "${HOME}/.travis/travis.sh" && source "${HOME}/.travis/travis.sh"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 ###############
 ### Antigen ###
 ###############
-
 # source $SYNCBIN/zsh/antigen-pre-init.sh
 
 ##############
 ### Prompt ###
 ##############
-
 ## my zsh theme, either the OMZSH way or the manual way
 # source $SYNCBIN/zsh/theme/jemus42.zsh-theme
 
@@ -77,15 +72,14 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ### At the very end: tmux ###
 #############################
 
-# Attach tmux session
-# If no session exists, it makes a new one 
+# Auto-attach tmux session over ssh
+# If no session exists, it makes a new one named after the host
 # https://stackoverflow.com/a/43819740/409362
 # Only runs if:
+# 0. tmux is installed (do nothing otherwise)
 # 1. Profiling is not enabled
 # 2. It's a SSH connection
 # 3. It's an interactive shell
-# If conditions unmet, issue exit 0 to not start my local sessions with an error indicator
-
 if (( $+commands[tmux] )) && [ -z $zsh_prof ] && [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
     tmux new-session -A -s $host_short
     # exit

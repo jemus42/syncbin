@@ -32,24 +32,17 @@ function dump {
 }
 
 function reload() {
-	echo "Entering syncbin at $SYNCBIN..."
-	echo ""
-	cd $SYNCBIN
-	git pull origin master
+	echo "Updating syncbin at $SYNCBIN..."
+	git -C $SYNCBIN git pull origin master
 	echo ""
 	echo "Re-installing..."
-	echo ""
 	$SYNCBIN/install.sh
 	echo ""
 	echo "Nuking zcompdump at $ZSH_COMPDUMP..."
-	echo ""
 	rm -f $ZSH_COMPDUMP
-	echo ""
 	echo "Reloading ZSH via 'src' alias..."
 	echo ""
-	src 
-	echo "Moving back"
-	cd -
+	src
 }
 
 ##############
@@ -138,9 +131,7 @@ function upall() {
 	echo "######################"
 	echo "## Updating syncbin ##"
 	echo "######################"
-	cd $SYNCBIN
-	git pull origin master
-	cd -
+	git -C $SYNCBIN git pull origin master
 	echo "## Syncbin updated. Use 'reload' to apply changes or relog ##"
     echo ""
 	echo "##---- Done updating --- $(timestamp) ----##"

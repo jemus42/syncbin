@@ -30,7 +30,8 @@ export PATH=$HOME/bin:$SYNCBIN/bin:$PATH
 
 # Load iterm2 utils if connected via iterm2 
 # See also: https://iterm2.com/documentation-utilities.html
-$SYNCBIN/bin/iterm2-utils/it2check && export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
+# $SYNCBIN/bin/iterm2-utils/it2check && 
+export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 
 # export PATH=$HOME/bin:$SYNCBIN/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 # Unused: /opt/X11/bin /usr/texbin

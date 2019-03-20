@@ -13,6 +13,13 @@ ln -sf $SYNCBIN/zsh/zshrc.zsh $HOME/.zshrc
 ln -sf $SYNCBIN/screenrc $HOME/.screenrc
 ln -sf $SYNCBIN/tmux.conf $HOME/.tmux.conf
 ln -sf $SYNCBIN/zsh/liquidpromptrc $HOME/.config/liquidpromptrc
+
+
+# Install OMZSH if not present
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+fi
+
 # Link ZSH theme to OMZSH custom theme dir only if already doing the OMZ thing
 test -d "$HOME/.oh-my-zsh" && ln -sf $SYNCBIN/zsh/theme/jemus42.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/jemus42.zsh-theme
 

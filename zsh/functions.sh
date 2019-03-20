@@ -33,7 +33,7 @@ function dump {
 
 function reload() {
 	echo "Updating syncbin at $SYNCBIN..."
-	git -C $SYNCBIN git pull origin master
+	git -C $SYNCBIN pull origin master
 	echo ""
 	echo "Re-installing..."
 	$SYNCBIN/install.sh
@@ -131,7 +131,7 @@ function upall() {
 	echo "######################"
 	echo "## Updating syncbin ##"
 	echo "######################"
-	git -C $SYNCBIN git pull origin master
+	git -C $SYNCBIN pull origin master
 	echo "## Syncbin updated. Use 'reload' to apply changes or relog ##"
     echo ""
 	echo "##---- Done updating --- $(timestamp) ----##"

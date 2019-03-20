@@ -37,4 +37,4 @@ alias yt-chronological="youtube-dl -i -o '%(upload_date)s - %(title)s_%(id)s.%(e
 
 ####
 #### Thefuck
- (( $+commands[brew] )) && eval $(thefuck --alias)
+ (( $+commands[thefuck] )) && eval $(thefuck --alias)

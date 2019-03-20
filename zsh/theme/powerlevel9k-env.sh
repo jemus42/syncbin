@@ -47,7 +47,7 @@ DEFAULT_USER=Lukas
 ###
 ### Folder truncation
 ###
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_first_and_last" # "truncate_to_unique"  # "truncate_middle"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 
 ####

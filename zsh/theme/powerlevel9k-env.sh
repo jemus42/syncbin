@@ -118,31 +118,31 @@ POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND="black"
 ###
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     os_icon 
-    root_indicator
     # ssh
     context_joined 
+    root_indicator_joined
+
     # user_joined host_joined
     dir_writable dir
     
-    #newline
+    # newline
     
     vcs 
-    anaconda 
-    virtualenv
-
     # newline
     # os_icon
     # battery
 )
 
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-    # status 
+    status 
     command_execution_time 
+    anaconda 
+    virtualenv
     background_jobs 
     # disk_usage
     # ram
     time
-    date
+    # date
 )
 
 # For debugging etc, to manually print specific segments/characters

@@ -4,7 +4,7 @@
 export SYNCBIN=$HOME/syncbin
 
 # Create .config dir if needed
-test ! -d ~/.config/zsh && mkdir $HOME/.config
+test ! -d ~/.config/zsh && mkdir -p $HOME/.config/zsh
 
 #########################
 ## Installing dotfiles ##
@@ -14,8 +14,8 @@ ln -sf $SYNCBIN/screenrc $HOME/.screenrc
 ln -sf $SYNCBIN/tmux.conf $HOME/.tmux.conf
 ln -sf $SYNCBIN/zsh/liquidpromptrc $HOME/.config/liquidpromptrc
 
-
 # Install OMZSH if not present
+# After this is executed, the rest of the script doesn't run anymore :(
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi

@@ -121,7 +121,7 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     #ssh
     context_joined 
     # user_joined host_joined
-    dir dir_writable
+    dir
     
     #newline
     
@@ -132,6 +132,7 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     newline
     #os_icon
     battery
+    dir_writable
     root_indicator
     )
 
@@ -142,7 +143,7 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # disk_usage
     # ram
     time
-    # date
+    date
     )
 
 # For debugging etc, to manually print specific segments/characters

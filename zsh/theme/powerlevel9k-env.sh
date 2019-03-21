@@ -54,7 +54,7 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 #### Multiline
 ####
 
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
 
 #POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="╭─"
@@ -62,7 +62,10 @@ POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
 # POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%{%F{249}%}\u250f"
 # POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%F{249}%}\u2517%{%F{default}%} "
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}\u256D\u2500%F{white}"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
+#POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
+
+ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
+
 
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
@@ -125,15 +128,18 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     vcs 
     anaconda 
     virtualenv
+
+    newline
+    #os_icon
+    battery
+    root_indicator
     )
 
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-    root_indicator
-    status 
+    # status 
     command_execution_time 
     background_jobs 
     # disk_usage
-    # history
     # ram
     time
     # date

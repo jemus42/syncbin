@@ -54,8 +54,9 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 #### Multiline
 ####
 
-#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+# POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
+# POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
 
 #POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="╭─"
 #POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─ "
@@ -64,11 +65,11 @@ POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}\u256D\u2500%F{white}"
 #POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
 
- POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
-
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
 
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
+# POWERLEVEL9K_LEFT_SEGMENT_END_SEPARATOR=""
 
 ###
 ### colors
@@ -110,7 +111,6 @@ POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND="black"
 #POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$''
 #POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$''
 
-POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=''
 #POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=''
 
 ###
@@ -118,10 +118,11 @@ POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=''
 ###
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     os_icon 
-    #ssh
+    root_indicator
+    # ssh
     context_joined 
     # user_joined host_joined
-    dir
+    dir_writable dir
     
     #newline
     
@@ -129,12 +130,10 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     anaconda 
     virtualenv
 
-    newline
-    #os_icon
-    battery
-    dir_writable
-    root_indicator
-    )
+    # newline
+    # os_icon
+    # battery
+)
 
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # status 
@@ -144,7 +143,7 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # ram
     time
     date
-    )
+)
 
 # For debugging etc, to manually print specific segments/characters
 # echo $(print_icon 'LEFT_SEGMENT_SEPARATOR')

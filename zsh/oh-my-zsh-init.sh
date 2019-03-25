@@ -42,7 +42,6 @@ plugins=(
     extract 
     git-flow 
     z 
-    common-aliases
     encode64
     systemadmin
     zsh_reload
@@ -55,8 +54,8 @@ plugins=(
 
 # These go at the bottom
 plugins+=(
-    zsh-completions
     zsh-syntax-highlighting 
+    zsh-completions
     zsh-autosuggestions
 )
 

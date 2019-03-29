@@ -5,7 +5,7 @@
 # options(repos = c("http://packages.ropensci.org", getOption("repos")))
 
 #Misc options ----
-options(repos = c(CRAN = "https://cloud.r-project.org"))
+options(repos = c(CRAN = "https://cloud.r-project.org", CINC = "https://cinc.rud.is/"))
 options(browserNLdisabled = TRUE)         # Modifies browser()
 options(deparse.max.lines = 2)            # Modifies traceback()
 options(width = 100)                      # More width

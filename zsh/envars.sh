@@ -11,6 +11,9 @@ export LANG=en_US.UTF-8
 # Possibly sometimes relevant
 # LC_COLLATE=C
 
+# LS_COLORS via vivid: https://github.com/sharkdp/vivid
+export LS_COLORS="$(cat $SYNCBIN/colors/molokai.lscolors)"
+
 # ZSH-specifics
 test ! -d $HOME/.config/zsh && mkdir $HOME/.config/zsh
 

@@ -39,9 +39,12 @@ alias yt-chronological="youtube-dl -i -o '%(upload_date)s - %(title)s_%(id)s.%(e
 #### Thefuck
  (( $+commands[thefuck] )) && eval $(thefuck --alias)
 
- ##########################################
- ## Copypasta from common-aliases plugin ##
- ##########################################
+ #######################################################
+ ## Copypasta from common-aliases plugin, with tweaks ##
+ #######################################################
+
+# If GNU ls is there, make ls be gls
+(( $+commands[gls] )) && alias ls='gls --color=tty'
 
 # ls, the common ones I use a lot shortened for rapid fire usage
 alias l='ls -lFh'     #size,show type,human readable

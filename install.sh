@@ -51,13 +51,6 @@ if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions ] ; then
 fi
 
 ###############################
-## liquidprompt prompt theme ##
-###############################
-# if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/liquidprompt ] ; then
-#     git clone https://github.com/nojhan/liquidprompt.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/liquidprompt;
-# fi
-
-###############################
 ## powerlevel9k prompt theme ##
 ###############################
 if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel9k ] ; then

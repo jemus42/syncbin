@@ -141,3 +141,13 @@ function zsh_bench() {
     zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log
     echo DONE
 }
+####################################################################################
+### Combining PDFs using gs because I needed it once and want to never forget it ###
+####################################################################################
+# Using gs because it keeps outline items and bookmarks, which pdfunite did not keep.
+function pdfcombine () {
+	echo "Output: $1"
+	echo "Input: $@[2,-1]"
+	gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$1 $@[2,-1]
+}
+

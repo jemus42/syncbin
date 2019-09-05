@@ -1,20 +1,54 @@
-# Ensure R uses the pandoc version bundled with RStudio
-# Sys.setenv(PATH = paste0("/Applications/RStudio.app/Contents/MacOS/pandoc:", Sys.getenv("PATH")))
+# Misc options ----
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+#options(browserNLdisabled = TRUE)         # Modifies browser()
+#options(deparse.max.lines = 2)            # Modifies traceback()
+#options(width = 100)                      # More width
+#options(digits = 8)                       # I like my digits
+options(menu.graphics = FALSE)             # Only required for graphical console stuff, so disable it
+options(max.print = 250)                   # Orig: 1000; Less risk of console flood
 
-# More repos ----
-# options(repos = c("http://packages.ropensci.org", getOption("repos")))
+# warn on partial matches
+# options(warnPartialMatchAttr = TRUE,
+#         warnPartialMatchDollar = TRUE,
+#         warnPartialMatchArgs = TRUE)
 
-#Misc options ----
-options(repos = c(CRAN = "https://cloud.r-project.org", CINC = "https://cinc.rud.is/"))
-options(browserNLdisabled = TRUE)         # Modifies browser()
-options(deparse.max.lines = 2)            # Modifies traceback()
-options(width = 100)                      # More width
-options("digits" = 8)                     # I like my digits
-options(menu.graphics = FALSE)            # Only required for graphical console stuff, so disable it
+# enable autocompletions for package names in require(), library()
+# utils::rc.settings(ipck = TRUE)
 
-# if (requireNamespace("rlang", quietly = TRUE)) {
-#   options(error = rlang::entrace)
-# }
+
+# warnings are errors
+# options(warn = 2)
+
+# fancy quotes are annoying and lead to
+# 'copy + paste' bugs / frustrations
+options(useFancyQuotes = FALSE)
+
+if (requireNamespace("rlang", quietly = TRUE)) {
+  options(error = rlang::entrace)
+}
+
+# New conflict resolution thing needs to be shut up somehow.
+# options(conflicts.policy = list(
+#   error = FALSE,
+#   warn = FALSE,
+#   depends.ok = TRUE,
+#   can.mask = c("base", "methods", "utils",
+#                "grDevices", "graphics",
+#                "stats", "xml2", "rlang"))
+# )
+
+# Drat repos ----
+if (!("drat") %in% utils::installed.packages()) utils::install.packages("drat")
+
+# For limer (no macos binaries though)
+# drat::addRepo("cloudyr", "http://cloudyr.github.io/drat")
+
+# For the hrbrverse
+drat::addRepo("cinc", alturl = "https://cinc.rud.is")
+
+# For travis
+# drat::addRepo("ropensci")
+# drat::addRepo("ropensci", alturl = "http://packages.ropensci.org")
 
 # Source file with credentials for limer
 source("~/.R/credentials.R")
@@ -23,9 +57,6 @@ source("~/.R/credentials.R")
 # Sys.setlocale('LC_ALL','C')
 # options(encoding = "UTF-8")
 # Also check via l10n_info()
-
-# Disable default saving of workspace in CLI
-# formals(quit)$save <- "no"
 
 # Prompt ----
 #options(prompt = "☁ ", continue = "➜ ")
@@ -36,13 +67,15 @@ options(prompt = "\033[32m★\033[39m ", continue = " ↳ " )
 options(github.user = "jemus42")
 
 options(
+  usethis.full_name = "Lukas Burk",
   usethis.name = "Lukas Burk",
   usethis.description = list(
     `Authors@R` = "person('Lukas', 'Burk', email = 'lukas@tadaa-data.de',
     role = c('aut', 'cre'), comment = c(ORCID = '0000-0001-7528-3795'))",
     License = "MIT + file LICENSE",
     Version = "0.0.0.9000"
-  )
+  ),
+  usethis.protocol  = "ssh"
 )
 
 ### Blogdown

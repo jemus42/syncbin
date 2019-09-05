@@ -1,4 +1,6 @@
 # Fonts, themes, stuff like that
+echo "Dealing with colors"
+echo "TERM is $TERM"
 # [[ "$TERM" != *256color ]] && export TERM='xterm-256color'
 export TERM='xterm-256color'
 

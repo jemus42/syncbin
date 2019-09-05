@@ -1,5 +1,6 @@
 # Fonts, themes, stuff like that
-[[ "$TERM" != *256color ]] && export TERM='xterm-256color'
+# [[ "$TERM" != *256color ]] && export TERM='xterm-256color'
+export TERM='xterm-256color'
 
 # powerlevel9k config must be done before theme is set
 # source $SYNCBIN/zsh/theme/powerlevel9k-env.sh

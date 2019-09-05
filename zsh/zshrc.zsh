@@ -63,6 +63,9 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # autoload -U promptinit; promptinit
 # prompt pure
 
+# starship
+eval "$(starship init zsh)"
+
 #################
 ### Profiling ###
 #################

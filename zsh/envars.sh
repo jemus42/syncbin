@@ -2,7 +2,7 @@
 [[ "$TERM" != *256color ]] && export TERM='xterm-256color'
 
 # powerlevel9k config must be done before theme is set
-source $SYNCBIN/zsh/theme/powerlevel9k-env.sh
+# source $SYNCBIN/zsh/theme/powerlevel9k-env.sh
 
 # ENCODIIING
 export LC_ALL=en_US.UTF-8  

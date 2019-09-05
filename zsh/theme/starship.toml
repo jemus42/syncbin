@@ -1,0 +1,10 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]
+symbol = "➜" 
+
+# Disable nodejs module because any .js file triggers it
+[nodejs]
+disabled = true

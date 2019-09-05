@@ -13,6 +13,7 @@ ln -sf $SYNCBIN/zsh/zshrc.zsh $HOME/.zshrc
 ln -sf $SYNCBIN/screenrc $HOME/.screenrc
 ln -sf $SYNCBIN/tmux.conf $HOME/.tmux.conf
 ln -sf $SYNCBIN/zsh/liquidpromptrc $HOME/.config/liquidpromptrc
+ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
 
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(

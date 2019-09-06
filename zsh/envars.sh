@@ -1,8 +1,8 @@
 # Fonts, themes, stuff like that
-echo "Dealing with colors"
-echo "TERM is $TERM"
-# [[ "$TERM" != *256color ]] && export TERM='xterm-256color'
-export TERM='xterm-256color'
+# This still yields warning on FreeBSD for starship, but not for other prompts
+# echo "Dealing with colors"
+# echo "TERM is $TERM"
+[[ "$TERM" != *256color ]] && export TERM='xterm-256color'
 
 # powerlevel9k config must be done before theme is set
 # source $SYNCBIN/zsh/theme/powerlevel9k-env.sh

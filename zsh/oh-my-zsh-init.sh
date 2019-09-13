@@ -5,10 +5,12 @@ export ZSH=$HOME/.oh-my-zsh
 # ZSH_THEME="agnoster"
 # ZSH_THEME="powerlevel9k/powerlevel9k"
 
-if [[ $host_os = FreeBSD ]] && [[ $MOSH = 1 ]]; then
-    ZSH_THEME="jemus42"
-else 
-    ZSH_THEME="powerlevel9k/powerlevel9k"
+if (( ! $+commands[starship] )); then
+    if [[ $host_os = FreeBSD ]] && [[ $MOSH = 1 ]]; then
+        ZSH_THEME="jemus42"
+    else 
+        ZSH_THEME="powerlevel9k/powerlevel9k"
+    fi
 fi
 
 # Would you like to use another custom folder than $ZSH/custom?

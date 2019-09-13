@@ -4,7 +4,16 @@ add_newline = false
 # Replace the "❯" symbol in the prompt with "➜"
 [character]
 symbol = "➜" 
+error_symbol = "✖"
+use_symbol_for_status = true
+style_success = "bold green"
+style_error = "bold red"
 
 # Disable nodejs module because any .js file triggers it
 [nodejs]
 disabled = true
+
+[time]
+disabled = false
+style = "white"
+format = "%H:%M"

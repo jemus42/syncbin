@@ -56,15 +56,10 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ## my zsh theme, either the OMZSH way or the manual way
 # source $SYNCBIN/zsh/theme/jemus42.zsh-theme
 
-# liquidprompt, only if interactive shell
-# [[ $- = *i* ]] && source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/liquidprompt/liquidprompt
-
-## In case of pure prompt:
-# autoload -U promptinit; promptinit
-# prompt pure
-
 # starship
-eval "$(starship init zsh)"
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+fi
 
 #################
 ### Profiling ###

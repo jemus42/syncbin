@@ -1,5 +1,5 @@
-# Don't print a new line at the start of the prompt
-add_newline = false
+# New line at the start of the prompt?
+add_newline = true
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character]
@@ -15,5 +15,5 @@ disabled = true
 
 [time]
 disabled = false
-style = "white"
+style = "bright-green"
 format = "%H:%M"

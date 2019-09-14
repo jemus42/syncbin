@@ -131,18 +131,7 @@ function upall() {
 	echo "######################"
 
 	git -C $SYNCBIN pull origin master
-
-    echo "## Updating oh-my-zsh plugins ##"
-    for i in $(find $HOME/.oh-my-zsh/custom/plugins/ -maxdepth 1 -type d); do 
-	  cd $i
-	  git pull
-	done
-
-    echo "## Updating oh-my-zsh themes ##"
-	for i in $(find $HOME/.oh-my-zsh/custom/themes/ -maxdepth 1 -type d); do 
-	  cd $i
-	  git pull
-	done
+    git -C $SYNCBIN submodule update --recursive --remote
 
 	echo "## Syncbin updated. Use 'reload' to apply changes or relog ##"
     echo ""

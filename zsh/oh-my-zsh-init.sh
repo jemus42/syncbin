@@ -14,7 +14,7 @@ if (( ! $+commands[starship] )); then
 fi
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=$SYNCBIN/ohmyzsh_custom
 
 # Reduce startup time by not giving a fuck
 ZSH_DISABLE_COMPFIX=true
@@ -24,13 +24,13 @@ ZSH_DISABLE_COMPFIX=true
 HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="false"
 
 # Red dots displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=69
+export UPDATE_ZSH_DAYS=30
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -52,7 +52,7 @@ plugins=(
 
 # Platform-specific plugins
 (( $+commands[systemctl] )) && plugins+=(systemd)
-[ $host_os = "Darwin" ] && plugins+=(scw osx)
+[ $host_os = "Darwin" ] && plugins+=(scw osx vscode)
 
 # These go at the bottom
 plugins+=(

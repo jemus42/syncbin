@@ -12,8 +12,10 @@ test ! -d ~/.config/zsh && mkdir -p $HOME/.config/zsh
 ln -sf $SYNCBIN/zsh/zshrc.zsh $HOME/.zshrc
 ln -sf $SYNCBIN/screenrc $HOME/.screenrc
 ln -sf $SYNCBIN/tmux.conf $HOME/.tmux.conf
-ln -sf $SYNCBIN/zsh/liquidpromptrc $HOME/.config/liquidpromptrc
 ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
+
+# Unused
+# ln -sf $SYNCBIN/zsh/liquidpromptrc $HOME/.config/liquidpromptrc
 
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(

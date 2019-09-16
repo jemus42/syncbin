@@ -79,7 +79,7 @@ options(
 )
 
 ### Blogdown
-options(servr.daemon = FALSE, blogdown.author = "jemus42")
+options(servr.daemon = TRUE, blogdown.author = "jemus42")
 
 # Startup ----
 .First <- function() {

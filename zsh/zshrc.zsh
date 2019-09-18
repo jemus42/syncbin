@@ -61,6 +61,12 @@ if (( $+commands[starship] )); then
   eval "$(starship init zsh)"
 fi
 
+########################
+## Path deduplication ##
+########################
+# Via https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
+typeset -aU path
+
 #################
 ### Profiling ###
 #################

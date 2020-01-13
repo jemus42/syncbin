@@ -3,6 +3,8 @@ add_newline = true
 
 [username]
 disabled = false
+style_user = "bold green"
+show_always = false
 
 [hostname]
 ssh_only = false
@@ -27,4 +29,8 @@ disabled = true
 [time]
 disabled = false
 style = "bright-green"
-format = "%H:%M"
+format = "[%H:%M]"
+
+[jobs]
+symbol = "+ "
+threshold = 1

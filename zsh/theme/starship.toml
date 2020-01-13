@@ -1,6 +1,17 @@
 # New line at the start of the prompt?
 add_newline = true
 
+[username]
+disabled = false
+
+[hostname]
+ssh_only = false
+prefix = "⟪"
+suffix = "⟫"
+# trim_at = ".companyname.com"
+style = "bright-red"
+disabled = false
+
 # Replace the "❯" symbol in the prompt with "➜"
 [character]
 symbol = "➜" 

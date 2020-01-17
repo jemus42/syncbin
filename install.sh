@@ -37,28 +37,3 @@ if [[ $host_os == Darwin ]]; then
   # Symlink syncbin settings into place
   ln -s $SYNCBIN/com.googlecode.iterm2.plist $itermpref
 fi
-
-#############################################
-## General ZSH plugins not included by OMZ ##
-#############################################
-
-# These are submodules of the syncbin now, requiring ZSH_CUSTOM to be set appropriately
-
-# if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting ] ; then
-#     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting;
-# fi
-
-# if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ] ; then
-#     git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions;
-# fi
-
-# if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions ] ; then
-#     git clone https://github.com/zsh-users/zsh-completions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions;
-# fi
-
-# ###############################
-# ## powerlevel9k prompt theme ##
-# ###############################
-# if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel9k ] ; then
-#     git clone https://github.com/bhilburn/powerlevel9k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel9k;
-# fi

@@ -5,7 +5,9 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 #options(width = 100)                      # More width
 #options(digits = 8)                       # I like my digits
 options(menu.graphics = FALSE)             # Only required for graphical console stuff, so disable it
-options(max.print = 250)                   # Orig: 1000; Less risk of console flood
+options(max.print = 100)                   # Orig: 1000; Less risk of console flood
+options(Ncpus = max(1L, parallel::detectCores() - 1L))    # CPU core detection
+options(mc.cores = max(1L, parallel::detectCores() - 1L))
 
 # warn on partial matches
 # options(warnPartialMatchAttr = TRUE,
@@ -13,7 +15,7 @@ options(max.print = 250)                   # Orig: 1000; Less risk of console fl
 #         warnPartialMatchArgs = TRUE)
 
 # enable autocompletions for package names in require(), library()
-# utils::rc.settings(ipck = TRUE)
+utils::rc.settings(ipck = TRUE)
 
 
 # warnings are errors

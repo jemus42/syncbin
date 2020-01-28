@@ -1,4 +1,6 @@
 #! /usr/bin/env bash
+# Note: I wrote this script before I learned about latexmk.
+# There is no reason to use this script anymore.
 # fulltex
 # Usage: fulltex -f filename.tex [-c] [-p] filename (without extension)
  

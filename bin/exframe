@@ -1,0 +1,21 @@
+#! /bin/bash
+# Depends: f.sh
+# Purpose: Extract a set of uncompressed frames at specified timecodes from n
+# video files and name them for easy comparion between files
+# Usage: exframe video1 video2 ... videon
+
+TIMES=(00:05:00 00:10:00 00:15:00 00:20:00 00:25:00 00:30:00)
+
+
+for MINUTE in {01..30}; do
+  for FILE in $@; do 
+     f.sh "$FILE" $(printf "00:%02d:00" $MINUTE) "M$(printf "%02d" $MINUTE)_$(basename $FILE).png"
+  done
+done
+
+# for TIME in "${TIMES[@]}"; do
+#   for FILE in $@; do 
+#      f.sh "$FILE" $TIME "T$(echo $TIME | cut -d':' -f2)_${FILE}.bmp"
+#   done
+# done
+

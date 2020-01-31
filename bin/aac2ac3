@@ -5,4 +5,4 @@ OUTFILE=$(echo $INFILE | sed -e "s/AAC/AC3/")
 
 echo "$INFILE --> $OUTFILE"
 
-ffmpeg -i $INFILE -map 0 -vcodec copy -scodec copy -acodec ac3 -b:a 640k $OUTFILE
+ffmpeg -i $INFILE -map 0 -vcodec copy -scodec copy -acodec ac3 -b:a 448k $OUTFILE

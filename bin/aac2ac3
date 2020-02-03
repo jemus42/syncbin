@@ -3,6 +3,11 @@
 INFILE=$1
 OUTFILE=$(echo $INFILE | sed -e "s/AAC/AC3/")
 
+if [ -z "$OUTFILE" ]; then
+        echo "Input file doesn't seem to contain 'AAC'. Doing nothing."
+        exit 1
+fi
+
 echo "$INFILE --> $OUTFILE"
 
 ffmpeg -i $INFILE -map 0 -vcodec copy -scodec copy -acodec ac3 -b:a 448k $OUTFILE

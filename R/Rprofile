@@ -91,9 +91,12 @@ options(servr.daemon = TRUE, blogdown.author = "jemus42")
   utf8        <- l10n_info()$`UTF-8`
   utf8        <- ifelse(utf8, crayon::bgGreen("enabled"), crayon::bgRed("disabled!"))
 
-  msg1 <- paste0("Hello there.\n",
-                 "This is ", crayon::bold(version), "\n",
-                 date_string, "\nUTF-8: ", utf8)
+  msg1 <- paste0(
+    "Hello there.\n",
+    "This is ", crayon::bold(version), "\n",
+    date_string, "\n",
+    "UTF-8: ", utf8
+  )
 
   cat(msg1, "\n\n")
 }

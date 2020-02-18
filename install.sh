@@ -36,4 +36,9 @@ if [[ $host_os == Darwin ]]; then
 
   # Symlink syncbin settings into place
   ln -s $SYNCBIN/com.googlecode.iterm2.plist $itermpref
+
+  # Install RStudio prefs symlink
+  mkdir -p $HOME/.config/rstudio
+  ln -s $SYNCBIN/R/rstudio-prefs-Dufte.json $HOME/.config/rstudio/rstudio-prefs.json
+
 fi

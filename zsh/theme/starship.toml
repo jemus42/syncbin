@@ -8,8 +8,8 @@ show_always = false
 
 [hostname]
 ssh_only = false
-prefix = "⟪"
-suffix = "⟫"
+prefix = "{"
+suffix = "}"
 # trim_at = ".companyname.com"
 style = "bright-red"
 disabled = false

@@ -4,12 +4,14 @@
 #alias la="exa -abghl --git"
 
 alias du="du -h"
-alias df="df -h"
-
 alias today='date +"%A, %B %-d, %Y"'
 
 #alias preview='qlmanage -p' # Use quick-look() instead
 alias rot13="tr 'a-zA-Z' 'n-za-mN-ZA-M'"
+
+
+# Speedometer
+alias speedo='speedometer -l  -r eth0 -t eth0 -m $(( 1024 * 1024 * 3 / 2 ))'
 
 ## git
 alias push='git push origin master'

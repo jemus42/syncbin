@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+
+URL=$(curl -s https://api.github.com/repos/go-gitea/gitea/releases/latest | egrep "browser_download_url.*linux-amd64\"" | cut -d\" -f4)
+
+wget $URL -O $(basename $URL)
+ln -sf gitea $(basename $URL)

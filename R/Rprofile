@@ -1,5 +1,5 @@
 # Misc options ----
-options(repos = c(CRAN = "https://cran.uni-muenster.de/"))
+options(repos = c(CRAN = "https://cran.rstudio.com"))
 #options(browserNLdisabled = TRUE)         # Modifies browser()
 #options(deparse.max.lines = 2)            # Modifies traceback()
 #options(width = 100)                      # More width
@@ -40,13 +40,13 @@ if (requireNamespace("rlang", quietly = TRUE)) {
 # )
 
 # Drat repos ----
-if (!("drat") %in% utils::installed.packages()) utils::install.packages("drat")
+# if (!("drat") %in% utils::installed.packages()) utils::install.packages("drat")
 
 # For limer (no macos binaries though)
 # drat::addRepo("cloudyr", "http://cloudyr.github.io/drat")
 
 # For the hrbrverse
-drat::addRepo("cinc", alturl = "https://cinc.rud.is")
+# drat::addRepo("cinc", alturl = "https://cinc.rud.is")
 
 # For travis
 # drat::addRepo("ropensci")

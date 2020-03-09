@@ -48,6 +48,7 @@ plugins=(
     systemadmin
     zsh_reload
     perms
+    docker docker-compose
 )
 
 # Platform-specific plugins

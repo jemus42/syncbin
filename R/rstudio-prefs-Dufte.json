@@ -63,5 +63,6 @@
     "console_double_click_select": true,
     "style_diagnostics": true,
     "background_diagnostics_delay_ms": 1500,
-    "use_tinytex": true
+    "use_tinytex": true,
+    "terminal_bell_style": "none"
 }

@@ -18,6 +18,7 @@ source $SYNCBIN/zsh/envars.sh
 test -e "${HOME}/.env.local" && source "${HOME}/.env.local"
 
 # Add homebrew completions
+# https://formulae.brew.sh/formula/zsh-completions
 if (( $+commands[brew] )); then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
@@ -85,6 +86,6 @@ typeset -aU path
 # 2. It's a SSH connection
 # 3. It's an interactive shell
 if (( $+commands[tmux] )) && [ -z $zsh_prof ] && [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
-    tmux new-session -A -s $host_short
+    tmux new-session -A -s ${host_short}$(date +%Y%M%d%H%M%S)
     # exit
 fi

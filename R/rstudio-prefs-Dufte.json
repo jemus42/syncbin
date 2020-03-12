@@ -14,13 +14,13 @@
     "font_size_points": 13,
     "editor_theme": "Monokai Spacegray Eighties",
     "default_encoding": "UTF-8",
-    "default_project_location": "~/repos",
+    "default_project_location": "~/repos/git.tadaa-data.de",
     "default_sweave_engine": "knitr",
     "default_latex_program": "XeLaTeX",
     "pdf_previewer": "rstudio",
     "insert_numbered_latex_sections": true,
     "document_author": "Lukas",
-    "rmd_preferred_template_path": "/Users/Lukas/Library/R/shared/learnr/rmarkdown/templates/tutorial",
+    "rmd_preferred_template_path": "/Users/Lukas/Library/R/3.6/jermd/rmarkdown/templates/masterthesis",
     "show_publish_diagnostics": true,
     "show_doc_outline_rmd": true,
     "show_rmd_render_command": true,
@@ -32,7 +32,6 @@
     "custom_shell_command": "/usr/local/bin/zsh",
     "shiny_viewer_type": "pane",
     "margin_column": 90,
-    "new_proj_git_init": true,
     "jobs_tab_visibility": "shown",
     "panes": {
         "quadrants": [

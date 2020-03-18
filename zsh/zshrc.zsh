@@ -86,6 +86,6 @@ typeset -aU path
 # 2. It's a SSH connection
 # 3. It's an interactive shell
 if (( $+commands[tmux] )) && [ -z $zsh_prof ] && [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
-    tmux new-session -A -s ${host_short}$(date +%Y%M%d%H%M%S)
+    tmux new-session -A -s ${host_short}
     # exit
 fi

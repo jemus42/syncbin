@@ -32,9 +32,10 @@ alias sha1='openssl sha1'
 alias sha256='shasum -a 256'
 
 ## yt-dl
-alias yt-channel="youtube-dl -i -o '%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s_%(id)s.%(ext)s'"
-alias yt-playlist="youtube-dl -i -o '%(playlist)s/%(playlist_index)s - %(title)s_%(id)s.%(ext)s'"
-alias yt-chronological="youtube-dl -i -o '%(upload_date)s - %(title)s_%(id)s.%(ext)s'"
+alias yt-channel="youtube-dl -i -o '%(uploader)s/%(playlist)s/%(title)s [%(id)s].%(ext)s'"
+#alias yt-playlist="youtube-dl -i -o '%(playlist)s/%(playlist_index)s - %(title)s_%(id)s.%(ext)s'"
+alias yt-playlist='youtube-dl -i -o "%(uploader)s [%(channel_id)s]/%(playlist_index)s - %(title)s [%(id)s].%(ext)s"'
+alias yt-chronological="youtube-dl -i -o '%(upload_date)s -  %(title)s [%(id)s].%(ext)s'"
 
 ####
 #### Thefuck

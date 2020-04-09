@@ -17,7 +17,6 @@ options(mc.cores = max(1L, parallel::detectCores() - 1L))
 # enable autocompletions for package names in require(), library()
 utils::rc.settings(ipck = TRUE)
 
-
 # warnings are errors
 # options(warn = 2)
 

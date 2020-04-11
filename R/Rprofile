@@ -1,9 +1,9 @@
 # Misc options ----
 options(repos = c(CRAN = "https://cloud.r-project.org/"))
-#options(browserNLdisabled = TRUE)         # Modifies browser()
-#options(deparse.max.lines = 2)            # Modifies traceback()
-#options(width = 100)                      # More width
-#options(digits = 8)                       # I like my digits
+# options(browserNLdisabled = TRUE)         # Modifies browser()
+# options(deparse.max.lines = 2)            # Modifies traceback()
+# options(width = 100)                      # More width
+# options(digits = 8)                       # I like my digits
 options(menu.graphics = FALSE)             # Only required for graphical console stuff, so disable it
 options(max.print = 100)                   # Orig: 1000; Less risk of console flood
 options(Ncpus = max(1L, parallel::detectCores() - 1L))    # CPU core detection

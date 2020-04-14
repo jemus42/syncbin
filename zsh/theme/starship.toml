@@ -4,7 +4,7 @@ add_newline = true
 [username]
 disabled = false
 style_user = "bold green"
-show_always = false
+show_always = true
 
 [hostname]
 ssh_only = false

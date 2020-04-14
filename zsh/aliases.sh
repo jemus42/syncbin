@@ -17,6 +17,7 @@ alias speedo='speedometer -l  -r eth0 -t eth0 -m $(( 1024 * 1024 * 3 / 2 ))'
 alias push='git push origin master'
 alias pull='git pull origin master'
 alias git-reset-to-remote='git fetch && git reset --hard'
+alias git-amend='git commit --amend --no-edit'
 
 ## why not
 alias timestamp='date +%F_%T'

@@ -60,8 +60,8 @@ source("~/.R/credentials.R")
 # Also check via l10n_info()
 
 # Prompt ----
-#options(prompt = "☁ ", continue = "➜ ")
-#options(prompt = "★ ", continue = " ↳ " )
+# options(prompt = "☁ ", continue = "➜ ")
+# options(prompt = "★ ", continue = " ↳ " )
 options(prompt = "\033[32m★\033[39m ", continue = " ↳ " )
 
 # Devtools ----
@@ -71,15 +71,17 @@ options(
   usethis.full_name = "Lukas Burk",
   usethis.name = "Lukas Burk",
   usethis.description = list(
-    `Authors@R` = "person('Lukas', 'Burk', email = 'lukas@tadaa-data.de',
-    role = c('aut', 'cre'), comment = c(ORCID = '0000-0001-7528-3795'))",
+    `Authors@R` = utils::person(
+      "Lukas", "Burk", email = "lukas@tadaa-data.de", 
+      role = c("aut", "cre"), comment = c(ORCID = '0000-0001-7528-3795')
+    ),
     License = "MIT + file LICENSE",
     Version = "0.0.0.9000"
   ),
   usethis.protocol  = "ssh"
 )
 
-### Blogdown
+# Blogdown ----
 options(servr.daemon = TRUE, blogdown.author = "jemus42")
 
 # Startup ----

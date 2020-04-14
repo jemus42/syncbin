@@ -4,43 +4,43 @@
 
 # Since Homebrew has linux support (v2.0), this shouldn't be necessary soonish
 function install_linuxbrew() {
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 
-	test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-	test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-	$(brew --prefix)/bin/brew shellenv >>~/.profile
-	$(brew --prefix)/bin/brew shellenv >>~/.env.local
+  test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+  test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  $(brew --prefix)/bin/brew shellenv >>~/.profile
+  $(brew --prefix)/bin/brew shellenv >>~/.env.local
 }
 
 function install_homebrew() {
-	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
 # Dump files to my filedump, because dump
 function dump {
-	rsync -avh --progress "$@" -e ssh mercy:/srv/dump.jemu.name
-	FILE=$(basename $1)
-	if [[ $ME == "Lukas" ]]; then
-		echo "https://dump.jemu.name/$FILE" | pbcopy
-	else 
+  rsync -avh --progress "$@" -e ssh mercy:/mnt/data/dump.jemu.name
+  FILE=$(basename $1)
+  if [[ $ME == "Lukas" ]]; then
+    echo "https://dump.jemu.name/$FILE" | pbcopy
+  else 
       echo "https://dump.jemu.name/$FILE"
-	fi
-	echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.jemu.name/$FILE" >> $HOME/.dumplog
-	terminal-notifier -title "Filedump" -message "$FILE" -execute code $HOME/.dumplog;
+  fi
+  echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.jemu.name/$FILE" >> $HOME/.dumplog
+  terminal-notifier -title "Filedump" -message "$FILE" -execute code $HOME/.dumplog;
 }
 
 function reload() {
-	echo "Updating syncbin at $SYNCBIN..."
-	git -C $SYNCBIN pull origin master
-	echo ""
-	echo "Re-installing..."
-	$SYNCBIN/install.sh
-	echo ""
-	echo "Nuking zcompdump at $ZSH_COMPDUMP..."
-	rm -f $ZSH_COMPDUMP
-	echo "Reloading ZSH via 'src' alias..."
-	echo ""
-	src
+  echo "Updating syncbin at $SYNCBIN..."
+  git -C $SYNCBIN pull origin master
+  echo ""
+  echo "Re-installing..."
+  $SYNCBIN/install.sh
+  echo ""
+  echo "Nuking zcompdump at $ZSH_COMPDUMP..."
+  rm -f $ZSH_COMPDUMP
+  echo "Reloading ZSH via 'src' alias..."
+  echo ""
+  src
 }
 
 ##############
@@ -49,99 +49,100 @@ function reload() {
 
 function upall() {
 
-	case $( uname -s ) in
-	Linux)  
-		echo "################################"
-		echo "## Updating platform packages ##"
-		echo "################################"
-		sudo apt update
-		sudo apt upgrade -y
-		sudo apt autoremove -y
+  case $( uname -s ) in
+  Linux)  
+    echo "################################"
+    echo "## Updating platform packages ##"
+    echo "################################"
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt autoremove -y
 
-		if (( $+commands[brew] )); then
-			echo ""
-			echo ""
-			echo "#######################"
-			echo "## Updating homebrew ##"
-			echo "#######################"
-			brew upgrade
-		fi
-		;;
-	Darwin) 
+    if (( $+commands[brew] )); then
+      echo ""
+      echo ""
+      echo "#######################"
+      echo "## Updating homebrew ##"
+      echo "#######################"
+      brew upgrade
+    fi
+    ;;
+  Darwin) 
 
-		if (( $+commands[brew] )); then
-			echo "#######################"
-			echo "## Updating homebrew ##"
-			echo "#######################"
-			echo ""
-			brew upgrade
+    if (( $+commands[brew] )); then
+      echo "#######################"
+      echo "## Updating homebrew ##"
+      echo "#######################"
+      echo ""
+      brew upgrade
 
-			echo ""
-			echo "#############################"
-			echo "## Updating homebrew casks ##"
-			echo "#############################"
-			echo ""
-			brew cask upgrade
-		fi
+      echo ""
+      echo "#############################"
+      echo "## Updating homebrew casks ##"
+      echo "#############################"
+      echo ""
+      brew cask upgrade
+    fi
 
-		if (( $+commands[mas] )); then
-		    echo ""
-			echo "########################"
-			echo "## Updating App Store ##"
-			echo "########################"
-			echo ""
-			echo "mas version $(mas version)"
-			mas upgrade
-		fi
+    if (( $+commands[mas] )); then
+        echo ""
+      echo "########################"
+      echo "## Updating App Store ##"
+      echo "########################"
+      echo ""
+      echo "mas version $(mas version)"
+      mas upgrade
+    fi
 
-		echo "#########################"
-		echo "## Updating R packages ##"
-		echo "#########################"
-		echo ""
-		Rscript --quiet --no-init-file -e \
-		'update.packages(lib.loc = "/Users/Lukas/Library/R/shared", repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
+    echo "#########################"
+    echo "## Updating R packages ##"
+    echo "#########################"
+    echo ""
+    Rscript --quiet --no-init-file -e \
+    'update.packages(lib.loc = "/Users/Lukas/Library/R/shared", repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
 
-		echo ""
-		echo "#########################"
-		echo "Backing up iterm2 config"
-		cp $HOME/Library/Preferences/com.googlecode.iterm2.plist $SYNCBIN/com.googlecode.iterm2.plist
-		echo "#########################"
-		echo ""
+    echo ""
+    echo "#########################"
+    echo "Backing up iterm2 config"
+    cp $HOME/Library/Preferences/com.googlecode.iterm2.plist $SYNCBIN/com.googlecode.iterm2.plist
+    echo "#########################"
+    echo ""
 
-		;;
-	FreeBSD) 
-		echo "################################"
-		echo "## Updating platform packages ##"
-		echo "################################"
-		echo ""
-		if [[ $ME = root ]]; then
-			pkg update
-			pkg upgrade -y
-			pkg clean
-			pkg autoremove -y		
-		else 
-			sudo pkg update
-			sudo pkg upgrade -y
-			sudo pkg clean
-			sudo pkg autoremove -y
-		fi
-		;;
-	*) 
-		echo "Don't know how to update on this platform: $(uname -s)"
-		;;
-	esac
+    ;;
+  FreeBSD) 
+    echo "################################"
+    echo "## Updating platform packages ##"
+    echo "################################"
+    echo ""
+    if [[ $ME = root ]]; then
+      pkg update
+      pkg upgrade -y
+      pkg clean
+      pkg autoremove -y    
+    else 
+      sudo pkg update
+      sudo pkg upgrade -y
+      sudo pkg clean
+      sudo pkg autoremove -y
+    fi
+    ;;
+  *) 
+    echo "Don't know how to update on this platform: $(uname -s)"
+    ;;
+  esac
 
-	echo ""
-	echo "######################"
-	echo "## Updating syncbin ##"
-	echo "######################"
+  echo ""
+  echo "######################"
+  echo "## Updating syncbin ##"
+  echo "######################"
 
-	git -C $SYNCBIN pull origin master
+  git -C $SYNCBIN pull origin master
     git -C $SYNCBIN submodule update --recursive --remote
 
-	echo "## Syncbin updated. Use 'reload' to apply changes or relog ##"
+  echo ""
+  echo "## Syncbin updated. Use 'reload' to apply changes or relog ##"
     echo ""
-	echo "##---- Done updating --- $(timestamp) ----##"
+  echo "##---- Done updating --- $(timestamp) ----##"
 }
 
 
@@ -155,8 +156,7 @@ function zsh_bench() {
 ####################################################################################
 # Using gs because it keeps outline items and bookmarks, which pdfunite did not keep.
 function pdfcombine () {
-	echo "Output: $1"
-	echo "Input: $@[2,-1]"
-	gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$1 $@[2,-1]
+  echo "Output: $1"
+  echo "Input: $@[2,-1]"
+  gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$1 $@[2,-1]
 }
-

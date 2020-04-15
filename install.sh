@@ -20,7 +20,7 @@ ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" &
 fi
 
 # Link ZSH theme to OMZSH custom theme dir only if already doing the OMZ thing
@@ -41,4 +41,8 @@ if [[ $host_os == Darwin ]]; then
   mkdir -p $HOME/.config/rstudio
   ln -s $SYNCBIN/R/rstudio-prefs-Dufte.json $HOME/.config/rstudio/rstudio-prefs.json
 
+  # VSCode User settings
+  ln -sf $SYNCBIN/vscode/keybindings.json $HOME/Library/Application\ Support/Code/User/keybindings.json
+  ln -sf $SYNCBIN/vscode/settings.json $HOME/Library/Application\ Support/Code/User/settings.json
+  ln -sf $SYNCBIN/vscode/snippets $HOME/Library/Application\ Support/Code/User/snippets
 fi

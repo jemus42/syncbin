@@ -92,9 +92,9 @@
     "files.associations": {
         "Caddyfile": "caddyfile",
         "*.tpl": "html",
-        // "*.rmd": "markdown",
         "Rprofile": "r",
-        "*.json": "jsonc"
+        "*.json": "jsonc",
+        "*.Rmd": "rmd"
     },
     "latex-workshop.latex.autoBuild.interval": 10000,
     "latex-workshop.latex.autoBuild.run": "never",
@@ -125,5 +125,8 @@
     
     },
     "workbench.settings.openDefaultKeybindings": true,
+    "[rmd]": {
+    
+    },
 
 }

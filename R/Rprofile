@@ -72,7 +72,7 @@ options(
   usethis.name = "Lukas Burk",
   usethis.description = list(
     `Authors@R` = utils::person(
-      "Lukas", "Burk", email = "lukas@tadaa-data.de", 
+      "Lukas", "Burk", email = "lukas@tadaa-data.de",
       role = c("aut", "cre"), comment = c(ORCID = '0000-0001-7528-3795')
     ),
     License = "MIT + file LICENSE",
@@ -90,14 +90,26 @@ options(servr.daemon = TRUE, blogdown.author = "jemus42")
   version     <- R.Version()$version.string
   date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
   utf8        <- l10n_info()$`UTF-8`
-  utf8        <- ifelse(utf8, crayon::bgGreen("enabled"), crayon::bgRed("disabled!"))
 
-  msg1 <- paste0(
-    "Hello there.\n",
-    "This is ", crayon::bold(version), "\n",
-    date_string, "\n",
+  if ("crayon" %in% utils::installed.packages()) {
+    utf8 <- ifelse(utf8, crayon::bgGreen("enabled"), crayon::bgRed("disabled!"))
+  }
+
+  startup_msg <- paste0(
+    crayon::bold(version), " on ", date_string, "\n",
     "UTF-8: ", utf8
   )
 
-  cat(msg1, "\n\n")
+  cat(startup_msg, "\n")
+
+  if (
+    interactive() 
+    & stats::runif(1) > 0.75
+    & "goodshirt" %in% utils::installed.packages()
+    ) {
+     print(goodshirt::soul_squad())
+     cat("\n")
+  }
+
+  cat("\n")
 }

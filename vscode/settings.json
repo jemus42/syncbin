@@ -1,0 +1,129 @@
+{
+    "window.zoomLevel": 1,
+    "latex-workshop.latex.recipes":[
+        {
+            "name": "latexmk 🔃",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
+            "name": "pdflatex ➞ bibtex ➞ pdflatex × 2",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "xelatex",
+            "tools": [
+                "xelatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools":[
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "%DOC%"
+            ],
+            "env": {}
+        }
+    ],
+    "latex-workshop.view.pdf.viewer": "tab",
+    "editor.wordWrap": "on",
+    "[r]": {},
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "gitlens.defaultDateStyle": "absolute",
+    "bracketPairColorizer.forceIterationColorCycle": true,
+    "files.autoSave": "onFocusChange",
+    "editor.renderWhitespace": "all",
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "extensions.ignoreRecommendations": false,
+    "terminal.integrated.fontFamily": "FuraMono Nerd Font Mono",
+    "terminal.external.osxExec": "iTerm2.app",
+    "terminal.integrated.cursorStyle": "line",
+    "editor.tabCompletion": "on",
+    "editor.minimap.enabled": true,
+    "workbench.colorTheme": "One Monokai",
+    "git.confirmSync": false,
+    "workbench.iconTheme": "Monokai Classic Icons",
+    "[plaintext]": {
+        
+    },
+    "files.associations": {
+        "Caddyfile": "caddyfile",
+        "*.tpl": "html",
+        // "*.rmd": "markdown",
+        "Rprofile": "r",
+        "*.json": "jsonc"
+    },
+    "latex-workshop.latex.autoBuild.interval": 10000,
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "markdown-preview-enhanced.liveUpdate": false,
+    "explorer.confirmDragAndDrop": false,
+    "git.autoRepositoryDetection": "openEditors",
+    "git.enableCommitSigning": true,
+    "git.ignoredRepositories": [
+        "/Users/Lukas/syncbin/ohmyzsh_custom/themes/powerlevel9k",
+        "/Users/Lukas/syncbin/ohmyzsh_custom/plugins/zsh-autosuggestions",
+        "/Users/Lukas/syncbin/ohmyzsh_custom/plugins/zsh-completions",
+        "/Users/Lukas/syncbin/ohmyzsh_custom/plugins/zsh-syntax-highlighting",
+        "/Users/Lukas/repos/github/jemus42/blog.jemu.name/themes/beautifulhugo"
+    ],
+    "git.smartCommitChanges": "tracked",
+    "files.insertFinalNewline": true,
+    "git.detectSubmodules": false,
+    "editor.trimAutoWhitespace": false,
+    "files.trimFinalNewlines": true,
+    "editor.tabSize": 2,
+    "editor.renderControlCharacters": true,
+    "workbench.statusBar.visible": true,
+    "workbench.activityBar.visible": true,
+    "mdmath.autosave": true,
+    "[markdown]": {
+    
+    
+    },
+    "workbench.settings.openDefaultKeybindings": true,
+
+}

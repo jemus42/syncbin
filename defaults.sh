@@ -116,4 +116,3 @@ defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 
 # Disable system startup sound
 sudo nvram SystemAudioVolume=%80
-

@@ -85,13 +85,14 @@ function upall() {
     fi
 
     if (( $+commands[mas] )); then
-        echo ""
+      echo ""
       echo "########################"
       echo "## Updating App Store ##"
       echo "########################"
       echo ""
       echo "mas version $(mas version)"
       mas upgrade
+      echo ""
     fi
 
     echo "#########################"
@@ -141,7 +142,7 @@ function upall() {
 
   echo ""
   echo "## Syncbin updated. Use 'reload' to apply changes or relog ##"
-    echo ""
+  echo ""
   echo "##---- Done updating --- $(timestamp) ----##"
 }
 

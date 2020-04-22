@@ -105,7 +105,8 @@ function upall() {
     echo ""
     echo "#########################"
     echo "Backing up iterm2 config"
-    cp $HOME/Library/Preferences/com.googlecode.iterm2.plist $SYNCBIN/com.googlecode.iterm2.plist
+    # cp $HOME/Library/Preferences/com.googlecode.iterm2.plist $SYNCBIN/com.googlecode.iterm2.plist
+    plutil -convert xml1 -o - $HOME/Library/Preferences/com.googlecode.iterm2.plist > $SYNCBIN/com.googlecode.iterm2-xml.plist 
     echo "#########################"
     echo ""
 

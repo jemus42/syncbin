@@ -86,20 +86,17 @@
     "workbench.colorTheme": "One Monokai",
     "git.confirmSync": false,
     "workbench.iconTheme": "Monokai Classic Icons",
-    "[plaintext]": {
-        
-    },
     "files.associations": {
         "Caddyfile": "caddyfile",
         "*.tpl": "html",
         "Rprofile": "r",
         "*.json": "jsonc",
-        "*.Rmd": "rmd"
+        "*.Rmd": "rmd",
+        ".Renviron": "shellscript"
     },
     "latex-workshop.latex.autoBuild.interval": 10000,
     "latex-workshop.latex.autoBuild.run": "never",
     "latex-workshop.latex.autoClean.run": "onBuilt",
-    "markdown-preview-enhanced.liveUpdate": false,
     "explorer.confirmDragAndDrop": false,
     "git.autoRepositoryDetection": "openEditors",
     "git.enableCommitSigning": true,
@@ -120,13 +117,8 @@
     "workbench.statusBar.visible": true,
     "workbench.activityBar.visible": true,
     "mdmath.autosave": true,
-    "[markdown]": {
-    
-    
-    },
     "workbench.settings.openDefaultKeybindings": true,
-    "[rmd]": {
-    
-    },
-
+    "editor.suggest.showSnippets": true,
+    "editor.snippetSuggestions": "top",
+    "window.newWindowDimensions": "maximized"
 }

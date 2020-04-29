@@ -100,15 +100,15 @@ function upall() {
     echo "#########################"
     echo ""
     Rscript --quiet --no-init-file -e \
-    'update.packages(lib.loc = "/Users/Lukas/Library/R/shared", repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
+    'update.packages(repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
 
-    echo ""
-    echo "#########################"
-    echo "Backing up iterm2 config"
-    # cp $HOME/Library/Preferences/com.googlecode.iterm2.plist $SYNCBIN/com.googlecode.iterm2.plist
-    plutil -convert xml1 -o - $HOME/Library/Preferences/com.googlecode.iterm2.plist > $SYNCBIN/com.googlecode.iterm2-xml.plist 
-    echo "#########################"
-    echo ""
+    # echo ""
+    # echo "#########################"
+    # echo "Backing up iterm2 config"
+    # # cp $HOME/Library/Preferences/com.googlecode.iterm2.plist $SYNCBIN/com.googlecode.iterm2.plist
+    # plutil -convert xml1 -o - $HOME/Library/Preferences/com.googlecode.iterm2.plist > $SYNCBIN/com.googlecode.iterm2-xml.plist 
+    # echo "#########################"
+    # echo ""
 
     ;;
   FreeBSD) 

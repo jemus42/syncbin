@@ -64,6 +64,5 @@
     "background_diagnostics_delay_ms": 1500,
     "use_tinytex": true,
     "terminal_bell_style": "none",
-    "new_proj_git_init": true,
     "source_with_echo": true
 }

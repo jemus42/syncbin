@@ -52,7 +52,7 @@ if (requireNamespace("rlang", quietly = TRUE)) {
 # drat::addRepo("ropensci", alturl = "http://packages.ropensci.org")
 
 # Source file with credentials for limer
-source("~/.R/credentials.R")
+if (file.exists("~/.R/credentials.R")) source("~/.R/credentials.R")
 
 # Possibly fix various locale issues
 # Sys.setlocale('LC_ALL','C')

@@ -93,10 +93,11 @@ options(servr.daemon = TRUE, blogdown.author = "jemus42")
 
   if ("crayon" %in% utils::installed.packages()) {
     utf8 <- ifelse(utf8, crayon::bgGreen("enabled"), crayon::bgRed("disabled!"))
+    version <- crayon::bold(version)
   }
 
   startup_msg <- paste0(
-    crayon::bold(version), " on ", date_string, "\n",
+    version, " on ", date_string, "\n",
     "UTF-8: ", utf8
   )
 

@@ -14,6 +14,8 @@ ln -sf $SYNCBIN/screenrc $HOME/.screenrc
 ln -sf $SYNCBIN/tmux.conf $HOME/.tmux.conf
 ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
 
+ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
+
 # Unused
 # ln -sf $SYNCBIN/zsh/liquidpromptrc $HOME/.config/liquidpromptrc
 

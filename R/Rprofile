@@ -107,13 +107,16 @@ if (!(.Platform$GUI == "RStudio")) {
 
   cat(startup_msg, "\n")
 
-  if (
-    interactive()
-    & stats::runif(1) > 0.75
-    & "goodshirt" %in% utils::installed.packages()
-    ) {
-     print(goodshirt::soul_squad())
-     cat("\n")
+  if (interactive()) {
+    random <- stats::runif(1)
+    
+    if (random > 0.7 & "goodshirt" %in% utils::installed.packages()) {
+      print(goodshirt::soul_squad())
+    }
+    
+    if (random < 0.3 & "statquotes" %in% utils::installed.packages()) {
+      print(statquotes::statquote())
+    }
   }
 
   cat("\n")

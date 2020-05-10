@@ -92,7 +92,8 @@
         "Rprofile": "r",
         "*.json": "jsonc",
         "*.Rmd": "rmd",
-        ".Renviron": "shellscript"
+        ".Renviron": "shellscript",
+        "radian_profile": "r"
     },
     "latex-workshop.latex.autoBuild.interval": 10000,
     "latex-workshop.latex.autoBuild.run": "never",
@@ -120,5 +121,11 @@
     "workbench.settings.openDefaultKeybindings": true,
     "editor.suggest.showSnippets": true,
     "editor.snippetSuggestions": "top",
-    "window.newWindowDimensions": "maximized"
+    "window.newWindowDimensions": "maximized",
+    "code-runner.runInTerminal": true,
+    "code-runner.saveFileBeforeRun": true,
+    "r.sessionWatcher": true,
+    "r.alwaysUseActiveTerminal": true,
+    "r.bracketedPaste": true,
+    "workbench.settings.useSplitJSON": true
 }

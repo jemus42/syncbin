@@ -14,7 +14,7 @@
     "font_size_points": 13,
     "editor_theme": "Monokai Spacegray Eighties",
     "default_encoding": "UTF-8",
-    "default_project_location": "~/repos/github/jemus42",
+    "default_project_location": "~/repos/github/tadaadata",
     "default_sweave_engine": "knitr",
     "default_latex_program": "XeLaTeX",
     "pdf_previewer": "rstudio",
@@ -31,7 +31,6 @@
     "posix_terminal_shell": "custom",
     "custom_shell_command": "/usr/local/bin/zsh",
     "shiny_viewer_type": "pane",
-    "margin_column": 90,
     "jobs_tab_visibility": "shown",
     "panes": {
         "quadrants": [
@@ -64,5 +63,6 @@
     "background_diagnostics_delay_ms": 1500,
     "use_tinytex": true,
     "terminal_bell_style": "none",
-    "source_with_echo": true
+    "source_with_echo": true,
+    "full_project_path_in_window_title": true
 }

@@ -28,15 +28,9 @@ if (requireNamespace("rlang", quietly = TRUE)) {
   options(error = rlang::entrace)
 }
 
-# New conflict resolution thing needs to be shut up somehow.
-# options(conflicts.policy = list(
-#   error = FALSE,
-#   warn = FALSE,
-#   depends.ok = TRUE,
-#   can.mask = c("base", "methods", "utils",
-#                "grDevices", "graphics",
-#                "stats", "xml2", "rlang"))
-# )
+# Load fonts automatically for hrbrthemes / tadaathemes
+options(hrbrthemes.loadfonts = TRUE)
+options(tadaathemes.loadfonts = TRUE)
 
 # Drat repos ----
 # if (!("drat") %in% utils::installed.packages()) utils::install.packages("drat")
@@ -84,6 +78,16 @@ options(
 # Blogdown ----
 options(servr.daemon = TRUE, blogdown.author = "jemus42")
 
+# VSCode ---
+
+if (!(.Platform$GUI == "RStudio")) {
+  Sys.setenv(TERM_PROGRAM = "vscode")
+  source(file.path(Sys.getenv(
+  if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"),
+    ".vscode-R", "init.R")
+  )
+}
+
 # Startup ----
 .First <- function() {
   # cat("\f")
@@ -104,7 +108,7 @@ options(servr.daemon = TRUE, blogdown.author = "jemus42")
   cat(startup_msg, "\n")
 
   if (
-    interactive() 
+    interactive()
     & stats::runif(1) > 0.75
     & "goodshirt" %in% utils::installed.packages()
     ) {

@@ -2,4 +2,5 @@ zsh/antigen.zwc
 grmp.zshrc
 syncbin.code-workspace
 
-vscode/settings.json
+#vscode/settings.json
+.vscode/vscode-R

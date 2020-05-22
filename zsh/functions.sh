@@ -145,7 +145,9 @@ function upall() {
   echo "######################"
 
   git -C $SYNCBIN pull origin master
-    git -C $SYNCBIN submodule update --recursive --remote
+    # git -C $SYNCBIN submodule update --recursive --remote
+    git -C $SYNCBIN submodule update --rebase --remote
+
 
   echo ""
   echo "## Syncbin updated. Use 'reload' to apply changes or relog ##"
@@ -153,12 +155,12 @@ function upall() {
   echo "##---- Done updating --- $(timestamp) ----##"
 }
 
-
 # Benachmarking ZSH startup
 function zsh_bench() {
     zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log
     echo DONE
 }
+
 ####################################################################################
 ### Combining PDFs using gs because I needed it once and want to never forget it ###
 ####################################################################################

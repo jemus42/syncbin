@@ -14,7 +14,7 @@
     "font_size_points": 13,
     "editor_theme": "Monokai Spacegray Eighties",
     "default_encoding": "UTF-8",
-    "default_project_location": "~/repos/github/tadaadata",
+    "default_project_location": "~/repos/github/jemus42",
     "default_sweave_engine": "knitr",
     "default_latex_program": "XeLaTeX",
     "pdf_previewer": "rstudio",
@@ -64,5 +64,6 @@
     "use_tinytex": true,
     "terminal_bell_style": "none",
     "source_with_echo": true,
-    "full_project_path_in_window_title": true
+    "full_project_path_in_window_title": true,
+    "new_proj_git_init": true
 }

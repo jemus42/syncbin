@@ -83,9 +83,7 @@
     "terminal.integrated.cursorStyle": "line",
     "editor.tabCompletion": "on",
     "editor.minimap.enabled": true,
-    "workbench.colorTheme": "One Monokai",
     "git.confirmSync": false,
-    "workbench.iconTheme": "Monokai Classic Icons",
     "files.associations": {
         "Caddyfile": "caddyfile",
         "*.tpl": "html",
@@ -95,7 +93,8 @@
         ".Renviron": "shellscript",
         "radian_profile": "r",
         "*.Rmarkdown": "rmd",
-        "*.env": "shellscript"
+        "*.env": "shellscript",
+        "*.mod": "go"
     },
     "latex-workshop.latex.autoBuild.interval": 10000,
     "latex-workshop.latex.autoBuild.run": "never",
@@ -119,7 +118,6 @@
     "editor.tabSize": 2,
     "editor.renderControlCharacters": true,
     "workbench.statusBar.visible": true,
-    "workbench.activityBar.visible": true,
     "mdmath.autosave": true,
     "workbench.settings.openDefaultKeybindings": true,
     "editor.suggest.showSnippets": true,
@@ -135,5 +133,12 @@
         "editor.quickSuggestions": true
     },
     "diffEditor.ignoreTrimWhitespace": true,
-    "liveshare.showInStatusBar": "whileCollaborating"
+    "liveshare.showInStatusBar": "whileCollaborating",
+    "window.autoDetectColorScheme": true,
+    "workbench.preferredLightColorTheme": "Monokai Light Theme",
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.preferredDarkColorTheme": "Monokai Vibrant",
+    "workbench.colorTheme": "Monokai Light Theme",
+    "workbench.fontAliasing": "antialiased",
+    "workbench.tree.indent": 10,
 }

@@ -19,7 +19,7 @@
     "default_latex_program": "XeLaTeX",
     "pdf_previewer": "rstudio",
     "insert_numbered_latex_sections": true,
-    "document_author": "@jemus42",
+    "document_author": "Lukas",
     "rmd_preferred_template_path": "/Users/Lukas/Library/Caches/R/renv/masterarbeit/R-3.6/x86_64-apple-darwin15.6.0/jermd/rmarkdown/templates/masterthesis",
     "show_publish_diagnostics": true,
     "show_doc_outline_rmd": true,

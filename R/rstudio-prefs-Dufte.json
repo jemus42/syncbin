@@ -14,7 +14,7 @@
     "font_size_points": 13,
     "editor_theme": "Monokai Spacegray Eighties",
     "default_encoding": "UTF-8",
-    "default_project_location": "~/repos/github/jemus42",
+    "default_project_location": "~/repos/git.tadaa-data.de",
     "default_sweave_engine": "knitr",
     "default_latex_program": "XeLaTeX",
     "pdf_previewer": "rstudio",

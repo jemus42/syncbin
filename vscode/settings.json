@@ -138,7 +138,7 @@
     "workbench.preferredLightColorTheme": "Monokai Light Theme",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.preferredDarkColorTheme": "Monokai Vibrant",
-    "workbench.colorTheme": "Monokai Light Theme",
+    "workbench.colorTheme": "Monokai Vibrant",
     "workbench.fontAliasing": "antialiased",
     "workbench.tree.indent": 10,
 }

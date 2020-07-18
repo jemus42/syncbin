@@ -90,6 +90,11 @@ alias ffile='find . -type f -name'
 # alias cp='cp -i'
 # alias mv='mv -i'
 
+# GPG stuff
+# show keys
+alias gpg-list-keys='gpg --list-secret-keys --keyid-format LONG'
+alias gpg-export='gpg --armor --export' # Supply key id afterwards
+
 # zsh is able to auto-do some kungfoo
 # depends on the SUFFIX :)
 if is-at-least 4.2.0; then

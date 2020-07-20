@@ -1,0 +1,31 @@
+#! /bin/bash
+# Doing pre-feierabend cleanup maybe
+
+# Define repo base dir
+if [[ $(hostname) -eq "dufte" ]]; then
+  base_dir="$HOME/repos/Uni";
+ elif [[ $(hostname) -eq "ml-titanws" ]]; then
+  base_dir="$HOME/projects";
+ fi
+
+# Repos to check
+declare -a repos=("acceleep" "masterarbeit")
+
+# Check all the repos and push, just in case. Goal would be no dirty local repos
+for repo in "${repos[@]}"; do
+
+  echo "############################################"
+  echo "Checking ${base_dir}/$repo"
+  echo "############################################"
+  # git -C ${base_dir}/$repo status --short
+
+  if [[ $(git -C ${base_dir}/$repo diff --stat) != '' ]]; then 
+    echo "-- Repository dirty, fix your shit there:"
+    git -C ${base_dir}/$repo status --short
+  fi
+
+  echo "Pushing..."
+  git -C ${base_dir}/$repo push origin master
+  echo ""
+  
+done

@@ -31,6 +31,10 @@ disabled = false
 style = "bright-green"
 format = "[%H:%M]"
 
+[conda]
+style = "green"
+symbol = "conda: "
+
 [jobs]
 symbol = "+ "
 threshold = 1

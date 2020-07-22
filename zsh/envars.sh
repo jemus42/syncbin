@@ -45,7 +45,8 @@ export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 # Anaconda / Python
 # Need conda to find path... to conda m)
 # export PATH=$(conda info --base)/bin:"$PATH"
-test -d /usr/local/anaconda3 && export PATH=/usr/local/anaconda3/bin:"$PATH"
+# test -d /usr/local/anaconda3 && export PATH=/usr/local/anaconda3/bin:"$PATH"
+# test -d /Users/Lukas/Library/r-miniconda && export PATH=$PATH:/Users/Lukas/Library/r-miniconda/bin
 
 # Make system ruby work
 # export GEM_HOME=~/.gem

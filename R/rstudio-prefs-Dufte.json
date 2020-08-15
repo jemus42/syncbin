@@ -30,7 +30,7 @@
     "doc_outline_show": "sections_and_chunks",
     "posix_terminal_shell": "custom",
     "custom_shell_command": "/usr/local/bin/zsh",
-    "shiny_viewer_type": "pane",
+    "shiny_viewer_type": "browser",
     "jobs_tab_visibility": "shown",
     "panes": {
         "quadrants": [
@@ -55,8 +55,10 @@
             "Help",
             "Viewer"
         ],
+        "hiddenTabSet": [],
         "console_left_on_top": false,
-        "console_right_on_top": true
+        "console_right_on_top": true,
+        "additional_source_columns": 0
     },
     "console_double_click_select": true,
     "style_diagnostics": true,
@@ -65,5 +67,9 @@
     "terminal_bell_style": "none",
     "source_with_echo": true,
     "full_project_path_in_window_title": true,
-    "load_workspace": false
+    "load_workspace": false,
+    "initial_working_directory": "~/repos/local/testing",
+    "graphics_backend": "ragg",
+    "rainbow_parentheses": true,
+    "console_line_length_limit": 500
 }

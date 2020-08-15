@@ -138,7 +138,10 @@
     "workbench.preferredLightColorTheme": "Monokai Light Theme",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.preferredDarkColorTheme": "Monokai Vibrant",
-    "workbench.colorTheme": "Monokai Vibrant",
+    "workbench.colorTheme": "Monokai Light Theme",
     "workbench.fontAliasing": "antialiased",
     "workbench.tree.indent": 10,
+    "eslint.run": "onSave",
+    "hediet.vscode-drawio.local-storage": "eyIuZHJhd2lvLWNvbmZpZyI6IntcImxhbmd1YWdlXCI6XCJcIixcImN1c3RvbUZvbnRzXCI6W3tcIm5hbWVcIjpcIlNvdXJjZSBTYW5zIFByb1wiLFwidXJsXCI6XCJodHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29tL2Nzcz9mYW1pbHk9U291cmNlK1NhbnMrUHJvXCJ9XSxcImxpYnJhcmllc1wiOlwiZ2VuZXJhbDtmbG93Y2hhcnRcIixcImN1c3RvbUxpYnJhcmllc1wiOltcIkwuc2NyYXRjaHBhZFwiXSxcInBsdWdpbnNcIjpbXSxcInJlY2VudENvbG9yc1wiOltcIkZGRkZGRlwiXSxcImZvcm1hdFdpZHRoXCI6XCIyNDBcIixcImNyZWF0ZVRhcmdldFwiOmZhbHNlLFwicGFnZUZvcm1hdFwiOntcInhcIjowLFwieVwiOjAsXCJ3aWR0aFwiOjgyNyxcImhlaWdodFwiOjExNjl9LFwic2VhcmNoXCI6dHJ1ZSxcInNob3dTdGFydFNjcmVlblwiOnRydWUsXCJncmlkQ29sb3JcIjpcIiNkMGQwZDBcIixcImRhcmtHcmlkQ29sb3JcIjpcIiM2ZTZlNmVcIixcImF1dG9zYXZlXCI6dHJ1ZSxcInJlc2l6ZUltYWdlc1wiOm51bGwsXCJvcGVuQ291bnRlclwiOjAsXCJ2ZXJzaW9uXCI6MTgsXCJ1bml0XCI6MSxcImlzUnVsZXJPblwiOmZhbHNlLFwidWlcIjpcIlwifSJ9",
+    "hediet.vscode-drawio.codeLinkActivated": true,
 }

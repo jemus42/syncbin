@@ -69,7 +69,6 @@
     "full_project_path_in_window_title": true,
     "load_workspace": false,
     "initial_working_directory": "~/repos/local/testing",
-    "graphics_backend": "ragg",
-    "rainbow_parentheses": true,
-    "console_line_length_limit": 500
+    "console_line_length_limit": 500,
+    "new_proj_git_init": true
 }

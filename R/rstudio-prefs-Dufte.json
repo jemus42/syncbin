@@ -70,5 +70,7 @@
     "load_workspace": false,
     "initial_working_directory": "~/repos/local/testing",
     "console_line_length_limit": 500,
-    "new_proj_git_init": true
+    "new_proj_git_init": true,
+    "graphics_backend": "ragg",
+    "graphics_antialiasing": "subpixel"
 }

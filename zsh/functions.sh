@@ -81,7 +81,7 @@ function upall() {
       echo "## Updating homebrew casks ##"
       echo "#############################"
       echo ""
-      brew cask upgrade
+      brew upgrade --cask
     fi
 
     if (( $+commands[mas] )); then

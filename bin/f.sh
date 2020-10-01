@@ -23,14 +23,20 @@ else
         exit 1
 fi
 
-# if we have a filename write to that, else imagemagick display
+if [ ! -z "$3" ]; then
+        outfile="$3"
+else
+        echo "Need out file!"
+        exit 1
+fi
 
-# if [ ! -z "$3" ]; then
-        echo "ffmpeg -i \"$video\" -ss $time  -vframes 1 -f image2 \"$3\""
-        ffmpeg -loglevel quiet -hide_banner -ss $time -i "$video" -vframes 1 -vf "scale=1080:-2" -f image2 "$3"
-        # ffmpeg -loglevel quiet -hide_banner -ss $time -i "$video" -vframes 1 -vf "scale=1080:810" -f image2 "$3"
 
-# else
-#         echo "ffmpeg -i \"$video\" -ss $3  -vframes 1 -f image2 - | display"
-#         ffmpeg -hide_banner -loglevel quiet -ss $time  -i "$video" -vframes 1 -f image2 - | display
-# fi
+
+echo "ffmpeg -i \"$video\" -ss $time  -vframes 1 -f image2 \"$outfile\""
+
+ffmpeg -loglevel quiet -hide_banner -ss $time -i "$video" -vframes 1 -vf "scale=720:-2" -f image2 "$outfile"
+
+# ffmpeg -loglevel quiet -hide_banner -ss $time -i "$video" -vframes 1 -vf "scale=1080:-2" -f image2 "$outfile"
+
+# Generically maintain aspect ratio, but doesn't quite fit
+# ffmpeg -loglevel quiet -hide_banner -ss $time -i "$video" -vframes 1 -vf "scale=640:trunc(ow/a/2)*2" -f image2 "$outfile"

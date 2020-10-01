@@ -5,22 +5,22 @@ add_newline = true
 disabled = false
 style_user = "bold green"
 show_always = true
+format = "[$user]($style) "
 
 [hostname]
 ssh_only = false
-prefix = "{"
-suffix = "}"
-# trim_at = ".companyname.com"
 style = "bright-red"
 disabled = false
+format = "on [{$hostname}]($style) in "
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character]
-symbol = "➜" 
-error_symbol = "✖"
+success_symbol = "[➜]($style_success)" 
+error_symbol = "[✖]($style_error)"
 use_symbol_for_status = true
 style_success = "bold green"
 style_error = "bold red"
+format = "$symbol "
 
 # Disable nodejs module because any .js file triggers it
 [nodejs]
@@ -29,7 +29,8 @@ disabled = true
 [time]
 disabled = false
 style = "bright-green"
-format = "[%H:%M]"
+time_format = "%H:%M"
+format = "[\\[$time\\]]($style)"
 
 [conda]
 style = "green"

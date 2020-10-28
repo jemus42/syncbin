@@ -99,14 +99,17 @@ function upall() {
     echo "## Updating R packages ##"
     echo "#########################"
     echo ""
-    if (( $+commands[rupdate] )); then
-      rupdate
-    else
-    #     Rscript --quiet --no-init-file -e \
-    # 'update.packages(repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
-     echo "Can't find rupdate, is rt installed?"
-     echo "Run remotes::install_github('rdatsci/rt')"
-    fi
+    # if (( $+commands[rupdate] )); then
+    #   rupdate
+    # else
+        # Rscript --quiet --no-init-file -e \
+        # 'update.packages(repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
+        
+        Rscript --quiet --no-init-file -e \
+        'remotes::update_packages(repos = "https://cloud.r-project.org", type = "binary")'
+    #  echo "Can't find rupdate, is rt installed?"
+    #  echo "Run remotes::install_github('rdatsci/rt')"
+    # fi
 
     # echo ""
     # echo "#########################"

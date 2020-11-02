@@ -18,12 +18,14 @@ alias push='git push origin master'
 alias pull='git pull origin master'
 alias git-reset-to-remote='git fetch && git reset --hard'
 alias git-amend='git commit --amend --no-edit'
+alias pushall='for remote in $(git remote show); do git push $remote; done'
 
 ## why not
 alias timestamp='date +%F_%T'
 
 ## cleaning macos shit
 alias cleanDS="find . -name '.DS_Store' -delete; find . -name '._*' -delete"
+alias cleanempty="find . -type f -empty -delete"
 
 ## R, but clean
 alias R='R --no-save --quiet'
@@ -38,7 +40,6 @@ alias yt-channel="youtube-dl -i -o '%(uploader)s/%(playlist)s/%(title)s [%(id)s]
 alias yt-playlist='youtube-dl -i -o "%(uploader)s [%(channel_id)s]/%(playlist_index)s - %(title)s [%(id)s].%(ext)s"'
 alias yt-chronological="youtube-dl -i -o '%(upload_date)s -  %(title)s [%(id)s].%(ext)s'"
 
-####
 #### Thefuck
  (( $+commands[thefuck] )) && eval $(thefuck --alias)
 

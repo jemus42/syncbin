@@ -10,4 +10,4 @@ fi
 
 echo "$INFILE --> $OUTFILE"
 
-ffmpeg -i $INFILE -map 0 -vcodec copy -scodec copy -acodec libfdk_aac -b:a 384k $OUTFILE
+ffmpeg -i $INFILE -map 0 -vcodec copy -scodec copy -acodec aac -b:a 160k $OUTFILE

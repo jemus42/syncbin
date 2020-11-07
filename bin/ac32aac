@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+
+INFILE=$1
+OUTFILE=$(echo $INFILE | sed -e "s/AC3/AAC/")
+
+if [ -z "$OUTFILE" ]; then
+        echo "Input file doesn't seem to contain 'AC3'. Doing nothing."
+        exit 1
+fi
+
+echo "$INFILE --> $OUTFILE"
+
+ffmpeg -i $INFILE -map 0 -vcodec copy -scodec copy -acodec libfdk_aac -b:a 384k $OUTFILE

@@ -10,4 +10,4 @@ fi
 
 echo "$INFILE --> $OUTFILE"
 
-ffmpeg -i $INFILE -map 0 -vcodec copy -scodec copy -acodec ac3 -b:a 448k $OUTFILE
+ffmpeg -i "$INFILE" -map 0 -vcodec copy -scodec copy -acodec ac3 -b:a 448k "$OUTFILE"

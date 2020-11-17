@@ -73,6 +73,10 @@ options(
   usethis.protocol  = "ssh"
 )
 
+if (interactive()) {
+  suppressMessages(credentials::set_github_pat())
+}
+
 # Blogdown ----
 options(servr.daemon = TRUE, blogdown.author = "jemus42")
 

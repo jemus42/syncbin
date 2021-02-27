@@ -173,3 +173,8 @@ function pdfcombine () {
   echo "Input: $@[2,-1]"
   gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$1 $@[2,-1]
 }
+
+# Compress video with fixed CRF 23, append suffix, make it an mp4
+compavc () {
+  ffmpeg -i $1 -vcodec libx264 -crf 23 $(echo $1 | sed -e 's/\.(mp4|mkv)//')-comp.mp4
+}

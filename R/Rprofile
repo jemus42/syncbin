@@ -1,5 +1,9 @@
 # Misc options ----
-options(repos = c(CRAN = "https://cloud.r-project.org/"))
+
+if (.Platform$pkgType == "mac.binary") {
+  options(repos = c(CRAN = "https://mac.r-project.org/"))
+}
+
 # options(browserNLdisabled = TRUE)         # Modifies browser()
 # options(deparse.max.lines = 2)            # Modifies traceback()
 # options(width = 100)                      # More width

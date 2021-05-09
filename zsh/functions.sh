@@ -178,3 +178,6 @@ function pdfcombine () {
 compavc () {
   ffmpeg -i $1 -vcodec libx264 -crf 23 $(echo $1 | sed -e 's/\.(mp4|mkv)//')-comp.mp4
 }
+
+# Silence a video
+function ffsilent { ffmpeg -i $1 -c copy -an "$1-nosound.${1#*.}" }

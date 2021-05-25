@@ -105,8 +105,8 @@ function upall() {
         # Rscript --quiet --no-init-file -e \
         # 'update.packages(repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
         
-        Rscript --quiet --no-init-file -e \
-        'remotes::update_packages(repos = "https://cloud.r-project.org", type = "binary")'
+        Rscript --quiet -e \
+        'remotes::update_packages(type = "binary")'
     #  echo "Can't find rupdate, is rt installed?"
     #  echo "Run remotes::install_github('rdatsci/rt')"
     # fi

@@ -97,16 +97,20 @@ options(servr.daemon = TRUE, blogdown.author = "jemus42")
 # Python / keras stuff
 
 # if ("reticulate" %in% utils::installed.packages()) {
-#   Sys.setenv("PATH" = paste0(Sys.getenv("PATH"), ":/usr/local/anaconda3/bin:"))
-#   # use_condaenv("r-reticulate")
-#
-#   # Giving up, just use defaults.
-#   # install_keras(method = "conda")
-#
 #   reticulate::conda_binary()
 #
 #   reticulate::use_condaenv("r-reticulate", required = TRUE)
 # }
+
+if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
+  rsthemes::set_theme_favorite(c(
+    "GitHub {rsthemes}", "Night Owl {rsthemes}",
+    "Yule RStudio (Reduced Motion) {rsthemes}", "Yule RStudio {rsthemes}"
+  ))
+
+  rsthemes::set_theme_light("GitHub {rsthemes}")
+  rsthemes::set_theme_dark("Monokai Spacegray Eighties")
+}
 
 # Startup ----
 .First <- function() {

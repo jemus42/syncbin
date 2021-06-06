@@ -31,16 +31,5 @@ test -d "$HOME/.oh-my-zsh" && ln -sf $SYNCBIN/zsh/theme/jemus42.zsh-theme ${ZSH_
 
 # Only for macOS
 if [[ $host_os == Darwin ]]; then
-  # store path to settings file for convenience
-  itermpref=$HOME/Library/Preferences/com.googlecode.iterm2.plist
-  
-  # Backup existing file only if it exists and isn't a symlink already
-  test ! -L $itermpref && mv $itermpref ${itermpref}_bak
 
-  # Symlink syncbin settings into place
-  # ln -s $SYNCBIN/com.googlecode.iterm2.plist $itermpref
-
-  # Install RStudio prefs symlink
-  #mkdir -p $HOME/.config/rstudio
-  #ln -s $SYNCBIN/R/rstudio-prefs-Dufte.json $HOME/.config/rstudio/rstudio-prefs.json
-  fi
+fi

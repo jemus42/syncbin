@@ -12,6 +12,7 @@ test ! -d ~/.config/zsh && mkdir -p $HOME/.config/zsh
 ln -sf $SYNCBIN/zsh/zshrc.zsh $HOME/.zshrc
 ln -sf $SYNCBIN/screenrc $HOME/.screenrc
 ln -sf $SYNCBIN/tmux.conf $HOME/.tmux.conf
+ln -sf $SYNCBIN/R/Rprofile $HOME/.Rprofile
 ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
 
 ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
@@ -37,14 +38,9 @@ if [[ $host_os == Darwin ]]; then
   test ! -L $itermpref && mv $itermpref ${itermpref}_bak
 
   # Symlink syncbin settings into place
-  ln -s $SYNCBIN/com.googlecode.iterm2.plist $itermpref
+  # ln -s $SYNCBIN/com.googlecode.iterm2.plist $itermpref
 
   # Install RStudio prefs symlink
-  mkdir -p $HOME/.config/rstudio
-  ln -s $SYNCBIN/R/rstudio-prefs-Dufte.json $HOME/.config/rstudio/rstudio-prefs.json
-
-  # VSCode User settings
-  ln -sf $SYNCBIN/vscode/keybindings.json $HOME/Library/Application\ Support/Code/User/keybindings.json
-  ln -sf $SYNCBIN/vscode/settings.json $HOME/Library/Application\ Support/Code/User/settings.json
-  ln -sf $SYNCBIN/vscode/snippets $HOME/Library/Application\ Support/Code/User/snippets
-fi
+  #mkdir -p $HOME/.config/rstudio
+  #ln -s $SYNCBIN/R/rstudio-prefs-Dufte.json $HOME/.config/rstudio/rstudio-prefs.json
+  fi

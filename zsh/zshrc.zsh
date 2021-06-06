@@ -43,7 +43,6 @@ test -e "${HOME}/.functions.local" && source "${HOME}/.functions.local"
 ################################
 ### Third-Party integrations ###
 ################################
-test -e "${HOME}/.travis/travis.sh" && source "${HOME}/.travis/travis.sh"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 ###############

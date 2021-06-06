@@ -15,11 +15,11 @@ format = "on [{$hostname}]($style) in "
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character]
-success_symbol = "[➜]($style_success)" 
-error_symbol = "[✖]($style_error)"
-use_symbol_for_status = true
-style_success = "bold green"
-style_error = "bold red"
+success_symbol = "[➜](bold green)" 
+error_symbol = "[✖](bold red)"
+#use_symbol_for_status = true
+#style_success = "bold green"
+#style_error = "bold red"
 format = "$symbol "
 
 # Disable nodejs module because any .js file triggers it
@@ -35,6 +35,7 @@ format = "[\\[$time\\]]($style)"
 [conda]
 style = "green"
 symbol = "conda: "
+ignore_base = true
 
 [jobs]
 symbol = "+ "

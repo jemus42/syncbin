@@ -25,7 +25,7 @@ alias timestamp='date +%F_%T'
 
 ## cleaning macos shit
 alias cleanDS="find . -name '.DS_Store' -delete; find . -name '._*' -delete"
-alias cleanempty="find . -type f -empty -delete"
+alias cleanempty="find . -type d -empty -delete"
 
 ## R, but clean
 alias R='R --no-save --quiet'

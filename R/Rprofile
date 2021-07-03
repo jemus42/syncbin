@@ -3,14 +3,15 @@
 # Set up default repos
 options(repos = c(
   CRAN = "https://cloud.r-project.org/",
-  gadenbuie = 'https://gadenbuie.r-universe.dev',
-  jemus42 = "https://jemus42.r-universe.dev"
+  gadenbuie = "https://gadenbuie.r-universe.dev",
+  jemus42 = "https://jemus42.r-universe.dev",
+  tadaadata = "https://tadaadata.r-universe.dev"
 ))
 
 # If on mac, add CRAN mac repo
 if (.Platform$pkgType == "mac.binary") {
   options(repos = c(
-    getOption("repos"), CRANMAC = "https://mac.r-project.org/"
+    CRANMAC = "https://mac.r-project.org/", getOption("repos")
   ))
   # If on Linux, add RSPM
 } else if (Sys.info()[["sysname"]] == "Linux") {

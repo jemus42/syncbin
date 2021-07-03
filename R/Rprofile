@@ -1,13 +1,31 @@
 # Misc options ----
 
+# Set up default repos
+options(repos = c(
+  CRAN = "https://cloud.r-project.org/",
+  gadenbuie = 'https://gadenbuie.r-universe.dev',
+  jemus42 = "https://jemus42.r-universe.dev"
+))
+
+# If on mac, add CRAN mac repo
 if (.Platform$pkgType == "mac.binary") {
-  options(repos = c(CRAN = "https://mac.r-project.org/"))
+  options(repos = c(
+    getOption("repos"), CRANMAC = "https://mac.r-project.org/"
+  ))
+  # If on Linux, add RSPM
+} else if (Sys.info()[["sysname"]] == "Linux") {
+  if (grepl("focal", system("lsb_release -c", intern = TRUE))) {
+    options(repos = c(
+      getOption("repos"), RSPM = "https://packagemanager.rstudio.com/all/__linux__/focal/latest"
+    ))
+  }
+  if (grepl("bionic", system("lsb_release -c", intern = TRUE))) {
+    options(repos = c(
+      getOption("repos"), RSPM = "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"
+    ))
+  }
 }
 
-# options(browserNLdisabled = TRUE)         # Modifies browser()
-# options(deparse.max.lines = 2)            # Modifies traceback()
-# options(width = 100)                      # More width
-# options(digits = 8)                       # I like my digits
 options(menu.graphics = FALSE)             # Only required for graphical console stuff, so disable it
 options(max.print = 100)                   # Orig: 1000; Less risk of console flood
 options(Ncpus = max(1L, parallel::detectCores() - 1L))    # CPU core detection
@@ -35,19 +53,6 @@ if (requireNamespace("rlang", quietly = TRUE)) {
 # Load fonts automatically for hrbrthemes / tadaathemes
 options(hrbrthemes.loadfonts = TRUE)
 options(tadaathemes.loadfonts = TRUE)
-
-# Drat repos ----
-# if (!("drat") %in% utils::installed.packages()) utils::install.packages("drat")
-
-# For limer (no macos binaries though)
-# drat::addRepo("cloudyr", "http://cloudyr.github.io/drat")
-
-# For the hrbrverse
-# drat::addRepo("cinc", alturl = "https://cinc.rud.is")
-
-# For travis
-# drat::addRepo("ropensci")
-# drat::addRepo("ropensci", alturl = "http://packages.ropensci.org")
 
 # Source file with credentials for limer
 if (file.exists("~/.R/credentials.R")) source("~/.R/credentials.R")
@@ -77,7 +82,7 @@ options(
   usethis.protocol  = "ssh"
 )
 
-if (interactive()) {
+if (interactive() & requireNamespace("credentials", quietly = TRUE)) {
   suppressMessages(credentials::set_github_pat())
 }
 
@@ -114,7 +119,6 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
 
 # Startup ----
 .First <- function() {
-  # cat("\f")
   version     <- R.version.string # R.Version()$version.string
   date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
   utf8        <- l10n_info()$`UTF-8`

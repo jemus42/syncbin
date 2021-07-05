@@ -181,3 +181,13 @@ compavc () {
 
 # Silence a video
 function ffsilent { ffmpeg -i $1 -c copy -an "$1-nosound.${1#*.}" }
+
+# From https://stackoverflow.com/a/42544963/409362
+function git-find-large-files () {
+  git rev-list --objects --all |
+  git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' |
+  sed -n 's/^blob //p' |
+  sort --numeric-sort --key=2 |
+  cut -c 1-12,41- |
+  $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
+}

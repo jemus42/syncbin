@@ -17,25 +17,23 @@ if (.Platform$pkgType == "mac.binary") {
 } else if (Sys.info()[["sysname"]] == "Linux") {
   if (grepl("focal", system("lsb_release -c", intern = TRUE))) {
     options(repos = c(
-      getOption("repos"), RSPM = "https://packagemanager.rstudio.com/all/__linux__/focal/latest"
+      getOption("repos"),
+      RSPM = "https://packagemanager.rstudio.com/all/__linux__/focal/latest"
     ))
   }
   if (grepl("bionic", system("lsb_release -c", intern = TRUE))) {
     options(repos = c(
-      getOption("repos"), RSPM = "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"
+      getOption("repos"),
+      RSPM = "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"
     ))
   }
 }
 
-options(menu.graphics = FALSE)             # Only required for graphical console stuff, so disable it
-options(max.print = 100)                   # Orig: 1000; Less risk of console flood
-options(Ncpus = max(1L, parallel::detectCores() - 1L))    # CPU core detection
+options(menu.graphics = FALSE)
+options(max.print = 100)       # Orig: 1000; Less risk of console flood
+options(Ncpus = max(1L, parallel::detectCores() - 1L))  # CPU core detection
 options(mc.cores = max(1L, parallel::detectCores() - 1L))
 
-# warn on partial matches
-# options(warnPartialMatchAttr = TRUE,
-#         warnPartialMatchDollar = TRUE,
-#         warnPartialMatchArgs = TRUE)
 
 # enable autocompletions for package names in require(), library()
 utils::rc.settings(ipck = TRUE)
@@ -91,14 +89,21 @@ if (interactive() & requireNamespace("credentials", quietly = TRUE)) {
 options(servr.daemon = TRUE, blogdown.author = "jemus42")
 
 # VSCode ---
-
-# if (!(.Platform$GUI == "RStudio")) {
-#   Sys.setenv(TERM_PROGRAM = "vscode")
-#   source(file.path(Sys.getenv(
-#   if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"),
-#     ".vscode-R", "init.R")
-#   )
-# }
+options(
+  # activate RStudio Addins on command pallet
+  vsc.rstudioapi = TRUE,
+  # interactive plots with {httpgd}
+  vsc.use_httpgd = TRUE,
+  # radian highlight scheme (choose what suits you)
+  radian.color_scheme = "native",
+  # code completion triggers
+  languageserver.server_capabilities = list(
+    signatureHelpProvider = list(triggerCharacters = list("(", ",", "$")),
+    completionProvider = list(
+      resolveProvider = TRUE, triggerCharacters = list(".", ":", "$")
+    )
+  )
+)
 
 # Python / keras stuff
 
@@ -120,7 +125,7 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
 
 # Startup ----
 .First <- function() {
-  version     <- R.version.string # R.Version()$version.string
+  version     <- R.version.string
   date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
   utf8        <- l10n_info()$`UTF-8`
 

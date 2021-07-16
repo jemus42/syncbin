@@ -55,3 +55,9 @@ options(radian.stderr_format = "\033[0;31m{}\033[0m")
 options(radian.suppress_reticulate_message = FALSE)
 # enable reticulate prompt and trigger `~`
 options(radian.enable_reticulate_prompt = TRUE)
+
+
+options(radian.escape_key_map = list(
+    list(key = "-", value = " <- "),
+    list(key = "m", value = " %>% ")
+))

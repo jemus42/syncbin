@@ -14,8 +14,8 @@ alias rot13="tr 'a-zA-Z' 'n-za-mN-ZA-M'"
 alias speedo='speedometer -l  -r eth0 -t eth0 -m $(( 1024 * 1024 * 3 / 2 ))'
 
 ## git
-alias push='git push origin master'
-alias pull='git pull origin master'
+alias push='git push'
+alias pull='git pull'
 alias git-reset-to-remote='git fetch && git reset --hard'
 alias git-amend='git commit --amend --no-edit'
 alias pushall='for remote in $(git remote show); do git push $remote; done'

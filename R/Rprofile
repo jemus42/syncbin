@@ -49,10 +49,6 @@ if (requireNamespace("rlang", quietly = TRUE)) {
   options(error = rlang::entrace)
 }
 
-# Load fonts automatically for hrbrthemes / tadaathemes
-options(hrbrthemes.loadfonts = TRUE)
-options(tadaathemes.loadfonts = TRUE)
-
 # Source file with credentials for limer
 if (file.exists("~/.R/credentials.R")) source("~/.R/credentials.R")
 
@@ -78,24 +74,22 @@ options(
     License = "MIT + file LICENSE",
     Version = "0.0.0.9000"
   ),
-  usethis.protocol  = "ssh"
+  usethis.protocol  = "https"
 )
 
-if (interactive() & requireNamespace("credentials", quietly = TRUE)) {
-  suppressMessages(credentials::set_github_pat())
-}
+# if (interactive() & requireNamespace("credentials", quietly = TRUE)) {
+#   suppressMessages(credentials::set_github_pat())
+# }
 
 # Blogdown ----
-options(servr.daemon = TRUE, blogdown.author = "jemus42")
+options(servr.daemon = TRUE, blogdown.author = "Lukas")
 
-# VSCode ---
+# VSCode ----
 options(
   # activate RStudio Addins on command pallet
   vsc.rstudioapi = TRUE,
   # interactive plots with {httpgd}
   vsc.use_httpgd = TRUE,
-  # radian highlight scheme (choose what suits you)
-  radian.color_scheme = "native",
   # code completion triggers
   languageserver.server_capabilities = list(
     signatureHelpProvider = list(triggerCharacters = list("(", ",", "$")),
@@ -104,14 +98,6 @@ options(
     )
   )
 )
-
-# Python / keras stuff
-
-# if ("reticulate" %in% utils::installed.packages()) {
-#   reticulate::conda_binary()
-#
-#   reticulate::use_condaenv("r-reticulate", required = TRUE)
-# }
 
 if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
   rsthemes::set_theme_favorite(c(
@@ -129,7 +115,7 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
   date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
   utf8        <- l10n_info()$`UTF-8`
 
-  if ("crayon" %in% utils::installed.packages()) {
+  if (requireNamespace("crayon", quietly = TRUE)) {
     utf8 <- ifelse(utf8, crayon::bgGreen("enabled"), crayon::bgRed("disabled!"))
     version <- crayon::bold(version)
   }
@@ -144,11 +130,14 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
   if (interactive()) {
     random <- stats::runif(1)
 
-    if (random > 0.7 & "goodshirt" %in% utils::installed.packages()) {
+    # The Good Place quotes
+    # remotes::install_github("adam-gruer/goodshirt")
+    if (random > 0.7 & requireNamespace("goodshirt", quietly = TRUE)) {
       print(goodshirt::soul_squad())
     }
 
-    if (random < 0.3 & "statquotes" %in% utils::installed.packages()) {
+    # install.packages("statquotes")
+    if (random < 0.3 & requireNamespace("statquotes", quietly = TRUE)) {
       print(statquotes::statquote())
     }
   }

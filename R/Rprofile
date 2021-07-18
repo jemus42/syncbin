@@ -90,6 +90,7 @@ options(
   vsc.rstudioapi = TRUE,
   # interactive plots with {httpgd}
   vsc.use_httpgd = TRUE,
+  vsc.rstudioapi = TRUE,
   # code completion triggers
   languageserver.server_capabilities = list(
     signatureHelpProvider = list(triggerCharacters = list("(", ",", "$")),

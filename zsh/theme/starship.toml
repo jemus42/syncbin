@@ -1,5 +1,67 @@
 # New line at the start of the prompt?
 add_newline = true
+# Default format included for reference
+format = """
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+$directory\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$red\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$custom\
+$cmd_duration\
+$line_break\
+$lua\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
 
 [username]
 disabled = false
@@ -13,29 +75,49 @@ style = "bright-red"
 disabled = false
 format = "on [{$hostname}]($style) in "
 
-# Replace the "❯" symbol in the prompt with "➜"
+# Replace the "❯" symbol in the prompt with "➜" // maybe └─>
 [character]
-success_symbol = "[➜](bold green)" 
-error_symbol = "[✖](bold red)"
-#use_symbol_for_status = true
-#style_success = "bold green"
-#style_error = "bold red"
 format = "$symbol "
+#success_symbol = "[➜](bold green)"
+success_symbol = ""
+error_symbol = "[✖](bold red)"
 
-# Disable nodejs module because any .js file triggers it
+[shell]
+bash_indicator = "[b](white)"
+fish_indicator = "[🐟](blue)"
+powershell_indicator = "ps_"
+zsh_indicator = "[➜](bright-green)"
+unknown_indicator = "mystery shell"
+disabled = false
+
+[shlvl]
+disabled = false
+format = "$shlvl level(s) down"
+threshold = 3
+
+# Disable any .js file triggering it
 [nodejs]
-disabled = true
+disabled = false
+detect_extensions = ["mjs", "cjs", "ts"]
 
 [time]
-disabled = false
+disabled = true
 style = "bright-green"
 time_format = "%H:%M"
 format = "[\\[$time\\]]($style)"
 
+[rlang]
+format = "with [$symbol($version)](blue bold) "
+symbol = "R "
+# Disable .Rprofile detection due to home dir
+detect_files = "DESCRIPTION"
+detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
+#version_format = "v${raw}"
+
 [conda]
 style = "green"
-symbol = "conda: "
-ignore_base = true
+symbol = "🅒 "
+ignore_base = false
 
 [jobs]
 symbol = "+ "

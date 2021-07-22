@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - defaults
+ssl_verify: true
+
+# Conda env should be shown in prompt (starship etc), not above prompt
+env_prompt: ""
+

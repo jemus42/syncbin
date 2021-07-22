@@ -4,7 +4,6 @@ add_newline = true
 format = """
 $username\
 $hostname\
-$shlvl\
 $kubernetes\
 $directory\
 $vcsh\
@@ -16,6 +15,7 @@ $git_status\
 $hg_branch\
 $docker_context\
 $package\
+${custom.rpkg}\
 $cmake\
 $dart\
 $deno\
@@ -34,7 +34,7 @@ $ocaml\
 $perl\
 $php\
 $purescript\
-$python\
+$rlang\
 $red\
 $ruby\
 $rust\
@@ -45,6 +45,7 @@ $vlang\
 $vagrant\
 $zig\
 $nix_shell\
+$python\
 $conda\
 $memory_usage\
 $aws\
@@ -55,6 +56,7 @@ $crystal\
 $custom\
 $cmd_duration\
 $line_break\
+$shlvl\
 $lua\
 $jobs\
 $battery\
@@ -75,6 +77,11 @@ style = "bright-red"
 disabled = false
 format = "on [{$hostname}]($style) in "
 
+[directory]
+truncate_to_repo = false
+truncation_length = 2
+truncation_symbol = "../"
+
 # Replace the "❯" symbol in the prompt with "➜" // maybe └─>
 [character]
 format = "$symbol "
@@ -83,17 +90,18 @@ success_symbol = ""
 error_symbol = "[✖](bold red)"
 
 [shell]
-bash_indicator = "[b](white)"
-fish_indicator = "[🐟](blue)"
-powershell_indicator = "ps_"
-zsh_indicator = "[➜](bright-green)"
-unknown_indicator = "mystery shell"
 disabled = false
+format = "$indicator"
+bash_indicator = "[bash ❯ ](bold white)"
+fish_indicator = "[🐟 ❯ ](blue)"
+powershell_indicator = "ps_"
+zsh_indicator = "[➜ ](bright-green)"
+unknown_indicator = "mystery shell"
 
 [shlvl]
 disabled = false
-format = "$shlvl level(s) down"
-threshold = 3
+format = "\\[$shlvl\\] "
+threshold = 2
 
 # Disable any .js file triggering it
 [nodejs]
@@ -107,17 +115,26 @@ time_format = "%H:%M"
 format = "[\\[$time\\]]($style)"
 
 [rlang]
-format = "with [$symbol($version)](blue bold) "
+format = "w/ [$symbol($version)](bold bright-blue) "
 symbol = "R "
 # Disable .Rprofile detection due to home dir
-detect_files = "DESCRIPTION"
+detect_files = ["DESCRIPTION"]
 detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
 #version_format = "v${raw}"
 
+[custom.rpkg]
+#command = "sed -n '/^Version:/,/([0-9]+\\.)/p' DESCRIPTION "  # shows output of command
+command = "cat DESCRIPTION | ggrep -Po '(?<=Version: )[^\\n]+'"
+files = ["DESCRIPTION"]       # can specify filters
+#when = """ test "$HOME" == "$PWD" """
+format = "📦 [v$output]($style) "
+style = "bold bright-blue"
+
 [conda]
+format = "w/ [$symbol$environment]($style) "
 style = "green"
 symbol = "🅒 "
-ignore_base = false
+ignore_base = true
 
 [jobs]
 symbol = "+ "

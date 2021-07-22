@@ -32,21 +32,12 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 # Defaults
 (( $+commands[micro] )) && export EDITOR=micro || export EDITOR=nano
-export PATH=$HOME/bin:$SYNCBIN/bin:$PATH
+export PATH=$PATH:$HOME/bin:$SYNCBIN/bin
 
 # Load iterm2 utils if connected via iterm2 
 # See also: https://iterm2.com/documentation-utilities.html
 # $SYNCBIN/bin/iterm2-utils/it2check && 
 export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
-
-# export PATH=$HOME/bin:$SYNCBIN/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
-# Unused: /opt/X11/bin /usr/texbin
-
-# Anaconda / Python
-# Need conda to find path... to conda m)
-# export PATH=$(conda info --base)/bin:"$PATH"
-# test -d /usr/local/anaconda3 && export PATH=/usr/local/anaconda3/bin:"$PATH"
-# test -d /Users/Lukas/Library/r-miniconda && export PATH=$PATH:/Users/Lukas/Library/r-miniconda/bin
 
 # Make system ruby work
 # export GEM_HOME=~/.gem

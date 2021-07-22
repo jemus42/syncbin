@@ -45,11 +45,6 @@ test -e "${HOME}/.functions.local" && source "${HOME}/.functions.local"
 ################################
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-###############
-### Antigen ###
-###############
-# source $SYNCBIN/zsh/antigen-pre-init.sh
-
 ##############
 ### Prompt ###
 ##############

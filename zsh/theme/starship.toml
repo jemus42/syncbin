@@ -124,7 +124,7 @@ detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
 
 [custom.rpkg]
 #command = "sed -n '/^Version:/,/([0-9]+\\.)/p' DESCRIPTION "  # shows output of command
-command = "cat DESCRIPTION | ggrep -Po '(?<=Version: )[^\\n]+'"
+command = "sed -n -e '/^Version:/p' DESCRIPTION | sed -e 's/Version: //'"
 files = ["DESCRIPTION"]       # can specify filters
 #when = """ test "$HOME" == "$PWD" """
 format = "📦 [v$output]($style) "

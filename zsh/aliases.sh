@@ -82,7 +82,6 @@ alias -g NUL="> /dev/null 2>&1"
 alias -g P="2>&1| pygmentize -l pytb"
 
 alias dud='du -d 1 -h'
-alias duf='du -sh *'
 alias fdir='find . -type d -name'
 alias ffile='find . -type f -name'
 

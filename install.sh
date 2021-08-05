@@ -5,6 +5,7 @@ export SYNCBIN=$HOME/syncbin
 
 # Create .config dir if needed
 test ! -d ~/.config/zsh && mkdir -p $HOME/.config/zsh
+test ! -d ~/.config/broot && mkdir -p $HOME/.config/broot
 
 #########################
 ## Installing dotfiles ##
@@ -14,7 +15,7 @@ ln -sf $SYNCBIN/screenrc $HOME/.screenrc
 ln -sf $SYNCBIN/tmux.conf $HOME/.tmux.conf
 ln -sf $SYNCBIN/R/Rprofile $HOME/.Rprofile
 ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
-
+ln -sf $SYNCBIN/broot_conf.hjson $HOME/.config/broot/conf.hjson
 ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
 
 # Unused
@@ -31,5 +32,6 @@ test -d "$HOME/.oh-my-zsh" && ln -sf $SYNCBIN/zsh/theme/jemus42.zsh-theme ${ZSH_
 
 # Only for macOS
 if [[ $host_os == Darwin ]]; then
-
+  test ! -d ~/.config/alacritty && mkdir -p $HOME/.config/alacritty
+  ln -sf $SYNCBIN/alacritty/alacritty.yml $HOME/.config/alacritty/alacritty.yml
 fi

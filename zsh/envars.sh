@@ -46,7 +46,7 @@ export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 (( $+commands[broot] )) && source $HOME/.config/broot/launcher/bash/br
 
 # If cargo is available
-test -e "${HOME}/.cargo/bin" $$ export PATH=$HOME/.cargo/bin:$PATH
+test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH
 
 # RStudio without startup message
 RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'

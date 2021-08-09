@@ -43,13 +43,14 @@ plugins=(
     rsync 
     extract 
     git-flow 
-    z 
     encode64
     systemadmin
     zsh_reload
     perms
     docker docker-compose
+    ripgrep fd
 )
+(( $+commands[zoxide] )) && plugins+=(zoxide) || plugins+=(z)
 
 # Platform-specific plugins
 (( $+commands[systemctl] )) && plugins+=(systemd)

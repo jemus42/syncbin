@@ -31,7 +31,10 @@ ZSH_COMPDUMP="${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump-${SHORT_HOST}-${ZSH_VERSI
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 # Defaults
+export MICRO_TRUECOLOR=1
 (( $+commands[micro] )) && export EDITOR=micro || export EDITOR=nano
+
+# Adding syncbinbin
 export PATH=$PATH:$HOME/bin:$SYNCBIN/bin
 
 # Load iterm2 utils if connected via iterm2 
@@ -39,9 +42,11 @@ export PATH=$PATH:$HOME/bin:$SYNCBIN/bin
 # $SYNCBIN/bin/iterm2-utils/it2check && 
 export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 
-# Make system ruby work
-# export GEM_HOME=~/.gem
-# test -d ~/.gem && export PATH=~/.gem/bin:$PATH
+# Other utilities
+(( $+commands[broot] )) && source $HOME/.config/broot/launcher/bash/br
+
+# If cargo is available
+test -e "${HOME}/.cargo/bin" $$ export PATH=$HOME/.cargo/bin:$PATH
 
 # RStudio without startup message
 RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'

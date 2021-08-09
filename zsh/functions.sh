@@ -1,21 +1,3 @@
-######################
-## Setting stuff up ##
-######################
-
-# Since Homebrew has linux support (v2.0), this shouldn't be necessary soonish
-function install_linuxbrew() {
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-
-  test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-  test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-  $(brew --prefix)/bin/brew shellenv >>~/.profile
-  $(brew --prefix)/bin/brew shellenv >>~/.env.local
-}
-
-function install_homebrew() {
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-}
-
 # Dump files to my filedump, because dump
 function dump {
   rsync -avh --progress "$@" -e ssh mercy:/mnt/data/dump.jemu.name
@@ -84,40 +66,23 @@ function upall() {
       brew upgrade --cask
     fi
 
-    if (( $+commands[mas] )); then
-      echo ""
-      echo "########################"
-      echo "## Updating App Store ##"
-      echo "########################"
-      echo ""
-      echo "mas version $(mas version)"
-      mas upgrade
-      echo ""
-    fi
+    # if (( $+commands[mas] )); then
+    #   echo ""
+    #   echo "########################"
+    #   echo "## Updating App Store ##"
+    #   echo "########################"
+    #   echo ""
+    #   echo "mas version $(mas version)"
+    #   mas upgrade
+    #   echo ""
+    # fi
 
     echo "#########################"
     echo "## Updating R packages ##"
     echo "#########################"
     echo ""
-    # if (( $+commands[rupdate] )); then
-    #   rupdate
-    # else
-        # Rscript --quiet --no-init-file -e \
-        # 'update.packages(repos = "https://cloud.r-project.org", ask = FALSE, type = "binary")'
-        
-        Rscript --quiet -e \
-        'remotes::update_packages(type = "binary")'
-    #  echo "Can't find rupdate, is rt installed?"
-    #  echo "Run remotes::install_github('rdatsci/rt')"
-    # fi
-
-    # echo ""
-    # echo "#########################"
-    # echo "Backing up iterm2 config"
-    # # cp $HOME/Library/Preferences/com.googlecode.iterm2.plist $SYNCBIN/com.googlecode.iterm2.plist
-    # plutil -convert xml1 -o - $HOME/Library/Preferences/com.googlecode.iterm2.plist > $SYNCBIN/com.googlecode.iterm2-xml.plist 
-    # echo "#########################"
-    # echo ""
+    Rscript --quiet -e \
+    'remotes::update_packages(type = "binary")'
 
     ;;
   FreeBSD) 

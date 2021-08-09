@@ -3,7 +3,7 @@
 # Set up default repos
 options(repos = c(
   CRAN = "https://cloud.r-project.org/",
-  gadenbuie = "https://gadenbuie.r-universe.dev",
+#  gadenbuie = "https://gadenbuie.r-universe.dev",
   jemus42 = "https://jemus42.r-universe.dev",
   tadaadata = "https://tadaadata.r-universe.dev"
 ))

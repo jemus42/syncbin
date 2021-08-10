@@ -101,7 +101,7 @@ unknown_indicator = "mystery shell"
 [shlvl]
 disabled = false
 format = "\\[$shlvl\\] "
-threshold = 2
+threshold = 3
 
 # Disable any .js file triggering it
 [nodejs]

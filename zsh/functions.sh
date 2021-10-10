@@ -20,9 +20,9 @@ function reload() {
   echo ""
   echo "Nuking zcompdump at $ZSH_COMPDUMP..."
   rm -f $ZSH_COMPDUMP
-  echo "Reloading ZSH via 'src' alias..."
+  echo "Reloading ZSH via omz reload..."
   echo ""
-  src
+  omz reload
 }
 
 ##############
@@ -114,11 +114,11 @@ function upall() {
 
   git -C $SYNCBIN pull origin master
     # git -C $SYNCBIN submodule update --recursive --remote
-    git -C $SYNCBIN submodule update --rebase --remote
-
+  git -C $SYNCBIN submodule update --rebase --remote
+  omz reload
 
   echo ""
-  echo "## Syncbin updated. Use 'reload' to apply changes or relog ##"
+  echo "## Syncbin updated ##"
   echo ""
   echo "##---- Done updating --- $(timestamp) ----##"
 }

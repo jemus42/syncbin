@@ -66,6 +66,7 @@ options(github.user = "jemus42")
 options(
   usethis.full_name = "Lukas Burk",
   usethis.name = "Lukas Burk",
+  usethis.destdir = "~/repos/github/",
   usethis.description = list(
     `Authors@R` = utils::person(
       "Lukas", "Burk", email = "github@quantenbrot.de",

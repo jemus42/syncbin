@@ -54,7 +54,7 @@ plugins=(
 
 # Platform-specific plugins
 (( $+commands[systemctl] )) && plugins+=(systemd)
-[ $host_os = "Darwin" ] && plugins+=(scw osx vscode)
+[ $host_os = "Darwin" ] && plugins+=(macos vscode)
 
 # These go at the bottom
 plugins+=(

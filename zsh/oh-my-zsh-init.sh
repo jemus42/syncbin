@@ -45,7 +45,7 @@ plugins=(
     git-flow 
     encode64
     systemadmin
-    zsh_reload
+    # zsh_reload
     perms
     docker docker-compose
     ripgrep fd

@@ -57,16 +57,25 @@ if (file.exists("~/.R/credentials.R")) source("~/.R/credentials.R")
 # options(encoding = "UTF-8")
 # Also check via l10n_info()
 
+# Path fix for homebrew/arm64 ----
+if (paste0(Sys.info()[c("sysname", "machine")], collapse = " ") == "Darwin arm64") {
+  Sys.setenv(PATH = paste0(c("/opt/homebrew/bin", Sys.getenv("PATH")), collapse = ":"))
+}
+
+
+# GitHub creds ----
+# https://usethis.r-lib.org/articles/articles/git-credentials.html#what-about-the-remotes-and-pak-packages-
+Sys.setenv(GITHUB_PAT = gitcreds::gitcreds_get(use_cache = FALSE)$password)
+
+
 # Prompt ----
 options(prompt = "\033[32m★\033[39m ", continue = " ↳ " )
 
-# Devtools ----
-options(github.user = "jemus42")
-
+# usethis ----
 options(
   usethis.full_name = "Lukas Burk",
-  usethis.name = "Lukas Burk",
-  usethis.destdir = "~/repos/github/",
+  usethis.destdir = "~/repos/github/jemus42",
+  usethis.protocol  = "https",
   usethis.description = list(
     `Authors@R` = utils::person(
       "Lukas", "Burk", email = "github@quantenbrot.de",
@@ -74,8 +83,7 @@ options(
     ),
     License = "MIT + file LICENSE",
     Version = "0.0.0.9000"
-  ),
-  usethis.protocol  = "https"
+  )
 )
 
 # if (interactive() & requireNamespace("credentials", quietly = TRUE)) {
@@ -101,6 +109,7 @@ options(
   )
 )
 
+# RS Themes ----
 if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
   rsthemes::set_theme_favorite(c(
     "GitHub {rsthemes}", "Night Owl {rsthemes}",

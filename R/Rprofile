@@ -65,7 +65,10 @@ if (paste0(Sys.info()[c("sysname", "machine")], collapse = " ") == "Darwin arm64
 
 # GitHub creds ----
 # https://usethis.r-lib.org/articles/articles/git-credentials.html#what-about-the-remotes-and-pak-packages-
-Sys.setenv(GITHUB_PAT = gitcreds::gitcreds_get(use_cache = FALSE)$password)
+# Does not work on Ubuntu still and it's driving me insane
+if (Sys.info()[["sysname"]] == "Darwin") {
+  Sys.setenv(GITHUB_PAT = gitcreds::gitcreds_get(use_cache = FALSE)$password)
+}
 
 
 # Prompt ----

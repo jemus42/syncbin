@@ -61,6 +61,8 @@ fi
 ########################
 # Via https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
 # typeset -aU path
+# or maybe
+# eval `/usr/libexec/path_helper -s`
 
 #################
 ### Profiling ###

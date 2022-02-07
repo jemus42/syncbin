@@ -1,6 +1,7 @@
 # see https://help.farbox.com/pygments.html
 # for a list of supported color schemes, default scheme is "native"
-options(radian.color_scheme = "monokai")
+# options(radian.color_scheme = "monokai")
+options(radian.color_scheme = "native")
 
 # either  `"emacs"` (default) or `"vi"`.
 # options(radian.editing_mode = "emacs")
@@ -40,7 +41,8 @@ options(radian.history_search_no_duplicates = FALSE)
 options(radian.history_search_ignore_case = FALSE)
 
 # custom prompt for different modes
-options(radian.prompt = "\033[32m★\033[39m ")
+# options(radian.prompt = "\033[32m★\033[39m ")
+options(radian.prompt = "\033[0;34mr$>\033[0m ")
 options(radian.shell_prompt = "\033[0;31m#!>\033[0m ")
 options(radian.browse_prompt = "\033[0;33mBrowse[{}]>\033[0m ")
 

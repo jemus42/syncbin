@@ -3,8 +3,9 @@
 args <- commandArgs(TRUE)
 
 if (length(args) == 0) {
-	cat("timesheet <start (hh:mm)> <end (hh:mm)> <breaks (hh:mm | mm)>\n")
-	cat("Example: timesheet 9:00 18:00 30\n")
+        print(bipstimesheet::current_carry())
+	#cat("timesheet <start (hh:mm)> <end (hh:mm)> <breaks (hh:mm | mm)>\n")
+	#cat("Example: timesheet 9:00 18:00 30\n")
 	quit()
 }
 

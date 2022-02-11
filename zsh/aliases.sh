@@ -67,6 +67,9 @@ alias lrt='ls -1Fcrt'
 alias grep='grep --color'
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 
+# exa: long by default with git
+(( $+commands[exa] )) && alias exa='exa -l --git --icons'
+
 alias t='tail -f'
 
 # Command line head / tail shortcuts
@@ -85,15 +88,20 @@ alias dud='du -d 1 -h'
 alias fdir='find . -type d -name'
 alias ffile='find . -type f -name'
 
-
-# alias rm='rm -i'
-# alias cp='cp -i'
-# alias mv='mv -i'
-
 # GPG stuff
 # show keys
 alias gpg-list-keys='gpg --list-secret-keys --keyid-format LONG'
 alias gpg-export='gpg --armor --export' # Supply key id afterwards
+
+# Rstudio server
+if (($+commands[rstudio-server])); then
+  alias rs="rstudio-server"
+  alias rs-status="rs status"
+  alias rs-active="rs active-sessions"
+  alias rs-restart="sudo rs restart"
+  alias rs-stop="sudo rs stop"
+  alias rs-kill="sudo rs kill-session"
+fi
 
 # zsh is able to auto-do some kungfoo
 # depends on the SUFFIX :)

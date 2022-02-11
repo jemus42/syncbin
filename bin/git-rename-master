@@ -1,0 +1,8 @@
+#! /bin/bash
+
+echo "renaming locall via git branch -m master main"
+git branch -m master main
+echo "pushing to origin via git push -u origin main"
+git push -u origin main
+echo "Set default branch on https://github.com/ORG/REPO/settings/branches now, then do"
+echo "git push origin --delete master"

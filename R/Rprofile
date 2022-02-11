@@ -45,7 +45,8 @@ utils::rc.settings(ipck = TRUE)
 options(useFancyQuotes = FALSE)
 
 if (requireNamespace("rlang", quietly = TRUE)) {
-  options(error = rlang::entrace)
+  # options(error = rlang::entrace)
+  rlang::global_entrace()
 }
 
 # Source file with credentials for limer

@@ -112,9 +112,9 @@ function upall() {
   echo "## Updating syncbin ##"
   echo "######################"
 
-  git -C $SYNCBIN pull origin master
+  git -C $SYNCBIN pull origin main
     # git -C $SYNCBIN submodule update --recursive --remote
-  git -C $SYNCBIN submodule update --rebase --remote
+  git -C $SYNCBIN submodule update --recursive --rebase --remote
   omz reload
 
   echo ""

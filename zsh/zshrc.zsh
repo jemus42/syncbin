@@ -81,7 +81,10 @@ fi
 # 1. Profiling is not enabled
 # 2. It's a SSH connection
 # 3. It's an interactive shell
-if (( $+commands[tmux] )) && [ -z $zsh_prof ] && [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
-    tmux new-session -A -s ${host_short}
-    # exit
-fi
+# if (( $+commands[tmux] )) && [ -z $zsh_prof ] && [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
+#    tmux new-session -A -s ${host_short}
+# fi
+
+# Nope, do it on demand
+alias tmn='tmux new-session -A -s ${host_short}'
+alias tma='tmux attach -t ${host_short}'

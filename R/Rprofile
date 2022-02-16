@@ -33,6 +33,15 @@ options(max.print = 100)       # Orig: 1000; Less risk of console flood
 options(Ncpus = max(1L, parallel::detectCores() - 1L))  # CPU core detection
 options(mc.cores = max(1L, parallel::detectCores() - 1L))
 
+# mlr style for appropriate repositories only
+if (grepl("mlr", getwd()) || grepl("paradox", getwd())) {
+  options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
+  
+  if (!requireNamespace("styler.mlr", quietly = TRUE)) {
+  	message("styler.mlr not installed: remotes::install_github(\"mlr-org/styler.mlr\")")
+  }
+}
+
 
 # enable autocompletions for package names in require(), library()
 utils::rc.settings(ipck = TRUE)

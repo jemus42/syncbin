@@ -7,6 +7,10 @@
 # powerlevel9k config must be done before theme is set
 # source $SYNCBIN/zsh/theme/powerlevel9k-env.sh
 
+# Finding homberew early
+test -x "/opt/homebrew/bin/brew" && eval $(/opt/homebrew/bin/brew shellenv)
+test -x "/home/linuxbrew/.linuxbrew/bin/brew" && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
 # ENCODIIING
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8

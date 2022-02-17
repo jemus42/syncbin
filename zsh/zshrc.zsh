@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 #################
 ### Profiling ###
 #################
@@ -5,6 +12,9 @@
 if [[ $zsh_prof = 1 ]] ; then
     zmodload zsh/zprof
 fi
+
+# Has to be set earlier than expected apparently
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 export SYNCBIN=$HOME/syncbin
 
@@ -53,7 +63,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # starship
 if (( $+commands[starship] )); then
-  eval "$(starship init zsh)"
+  #eval "$(starship init zsh)"
 fi
 
 ########################
@@ -88,3 +98,6 @@ fi
 # Nope, do it on demand
 alias tmn='tmux new-session -A -s ${host_short}'
 alias tma='tmux attach -t ${host_short}'
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f $SYNCBIN/zsh/theme/p10k.zsh ]] || source $SYNCBIN/zsh/theme/p10k.zsh

@@ -6,6 +6,7 @@ export SYNCBIN=$HOME/syncbin
 # Create .config dir if needed
 test ! -d ~/.config/zsh && mkdir -p $HOME/.config/zsh
 test ! -d ~/.config/broot && mkdir -p $HOME/.config/broot
+test ! -d ~/.config/conda && mkdir -p $HOME/.config/conda
 
 #########################
 ## Installing dotfiles ##
@@ -17,9 +18,7 @@ ln -sf $SYNCBIN/R/Rprofile $HOME/.Rprofile
 ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
 ln -sf $SYNCBIN/broot_conf.hjson $HOME/.config/broot/conf.hjson
 ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
-
-# Unused
-# ln -sf $SYNCBIN/zsh/liquidpromptrc $HOME/.config/liquidpromptrc
+ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
 
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(

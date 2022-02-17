@@ -7,3 +7,6 @@
 [submodule "ohmyzsh_custom/plugins/zsh-syntax-highlighting"]
 	path = ohmyzsh_custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "ohmyzsh_custom/themes/powerlevel10k"]
+	path = ohmyzsh_custom/themes/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git

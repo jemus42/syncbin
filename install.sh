@@ -29,6 +29,8 @@ fi
 # Link ZSH theme to OMZSH custom theme dir only if already doing the OMZ thing
 test -d "$HOME/.oh-my-zsh" && ln -sf $SYNCBIN/zsh/theme/jemus42.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/jemus42.zsh-theme
 
+git -C $SYNCBIN submodule update --init
+
 # Only for macOS
 if [[ $host_os == Darwin ]]; then
   test ! -d ~/.config/alacritty && mkdir -p $HOME/.config/alacritty

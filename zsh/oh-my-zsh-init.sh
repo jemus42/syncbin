@@ -9,7 +9,7 @@ if (( ! $+commands[starship] )); then
     if [[ $host_os = FreeBSD ]] && [[ $MOSH = 1 ]]; then
         ZSH_THEME="jemus42"
     else 
-        ZSH_THEME="powerlevel9k/powerlevel9k"
+        ZSH_THEME="powerlevel9k/powerlevel10k"
     fi
 fi
 
@@ -45,10 +45,10 @@ plugins=(
     git-flow 
     encode64
     systemadmin
-    # zsh_reload
     perms
     docker docker-compose
     ripgrep fd
+    command-not-found
 )
 (( $+commands[zoxide] )) && plugins+=(zoxide) || plugins+=(z)
 

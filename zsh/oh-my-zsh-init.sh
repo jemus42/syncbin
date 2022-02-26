@@ -49,6 +49,7 @@ plugins=(
     docker docker-compose
     ripgrep fd
     command-not-found
+    tmux
 )
 (( $+commands[zoxide] )) && plugins+=(zoxide) || plugins+=(z)
 

@@ -98,6 +98,7 @@ if (($+commands[rstudio-server])); then
   alias rs="rstudio-server"
   alias rs-status="rstudio-server status"
   alias rs-active="rstudio-server active-sessions"
+  alias rs-active-count="rstudio-server active-sessions | awk '{print $5}' | uniq -c"
   alias rs-restart="sudo rstudio-server restart"
   alias rs-stop="sudo rstudio-server stop"
   alias rs-kill="sudo rstudio-server kill-session"

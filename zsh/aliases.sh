@@ -103,7 +103,9 @@ if (($+commands[rstudio-server])); then
   alias rs-kill="sudo rstudio-server kill-session"
 
   rs-active-count () {
-    rstudio-server active-sessions | awk '{print $5}' | awk NF | uniq -c | sort -bgr
+    # Get active sessions, extract user field, remove empty line,
+    # sort to group users, count unique users, print descending
+    rstudio-server active-sessions | awk '{print $5}' | awk NF | sort | uniq -c | sort -bgr
   }
 fi
 

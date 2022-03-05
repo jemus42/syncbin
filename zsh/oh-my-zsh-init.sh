@@ -9,7 +9,7 @@ if (( ! $+commands[starship] )); then
     if [[ $host_os = FreeBSD ]] && [[ $MOSH = 1 ]]; then
         ZSH_THEME="jemus42"
     else 
-        ZSH_THEME="powerlevel9k/powerlevel10k"
+        ZSH_THEME="powerlevel10k/powerlevel10k"
     fi
 fi
 

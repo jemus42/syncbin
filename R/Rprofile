@@ -36,11 +36,13 @@ options(mc.cores = max(1L, parallel::detectCores() - 1L))
 # mlr style for appropriate repositories only
 if (grepl("mlr", getwd()) || grepl("paradox", getwd())) {
   options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
-  
+
   if (!requireNamespace("styler.mlr", quietly = TRUE)) {
   	message("styler.mlr not installed: remotes::install_github(\"mlr-org/styler.mlr\")")
   }
 }
+
+options(styler.cache_root = "styler-perm")
 
 
 # enable autocompletions for package names in require(), library()

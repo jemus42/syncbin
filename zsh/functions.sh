@@ -163,3 +163,8 @@ function prefer-conda () {
   export PATH="$HOME/Library/r-miniconda/bin:$PATH"
   typeset -aU path
 }
+
+
+# R stuff
+function upr-base () { R -e "update.packages(ask = FALSE)" }
+function upr-all () { R -e "remotes::update_packages()" }

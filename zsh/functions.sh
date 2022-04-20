@@ -37,9 +37,15 @@ function upall() {
     echo "################################"
     echo "## Updating platform packages ##"
     echo "################################"
-    sudo apt update
-    sudo apt upgrade -y
-    sudo apt autoremove -y
+    if (( $+commands[nala] )); then
+      sudo nala upgrade -y
+      sudo nala autoremove
+    else
+      sudo apt update
+      sudo apt upgrade -y
+      sudo apt autoremove -y
+    fi
+
 
     if (( $+commands[brew] )); then
       echo ""

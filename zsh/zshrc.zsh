@@ -1,10 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-export PATH="${PATH}:${HOME}/.local/bin"
-
-if (( $+commands[fig] )); then
-  eval "$(fig init zsh pre)"
-fi
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -107,8 +100,3 @@ alias tma='tmux attach -t ${host_short}'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f $SYNCBIN/zsh/theme/p10k.zsh ]] || source $SYNCBIN/zsh/theme/p10k.zsh
-
-if (( $+commands[fig] )); then
-  # Fig post block. Keep at the bottom of this file.
-  eval "$(fig init zsh post)"
-fi

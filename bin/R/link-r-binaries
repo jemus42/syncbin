@@ -7,7 +7,7 @@ fi
 
 
 echo "Linking /opt/R/$1/bin/R to /usr/local/bin/R"
-sudo ln -s /opt/R/$1/bin/R /usr/local/bin/R
+sudo ln -sf /opt/R/$1/bin/R /usr/local/bin/R
 
 echo "Linking /opt/R/$1/bin/Rscript to /usr/local/bin/Rscript"
-sudo ln -s /opt/R/$1/bin/Rscript /usr/local/bin/Rscript
+sudo ln -sf /opt/R/$1/bin/Rscript /usr/local/bin/Rscript

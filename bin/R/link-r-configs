@@ -19,7 +19,7 @@ echo ""
 
 for dir in $(ls -d /opt/R/[1-9]*); do 
   echo "Symlinking /opt/R/etc/Rprofile.site to $($dir/lib/R/etc/Rprofile.site)"
-  sudo ln -s  /opt/R/etc/Rprofile.site $dir/lib/R/etc/Rprofile.site
+  sudo ln -sf  /opt/R/etc/Rprofile.site $dir/lib/R/etc/Rprofile.site
   echo "Symlinking /opt/R/etc/Renviron.site to $($dir/lib/R/etc/Renviron.site)"
-  sudo ln -s  /opt/R/etc/Renviron.site $dir/lib/R/etc/Renviron.site
+  sudo ln -sf  /opt/R/etc/Renviron.site $dir/lib/R/etc/Renviron.site
 done

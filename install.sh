@@ -7,6 +7,7 @@ export SYNCBIN=$HOME/syncbin
 test ! -d ~/.config/zsh && mkdir -p $HOME/.config/zsh
 test ! -d ~/.config/broot && mkdir -p $HOME/.config/broot
 test ! -d ~/.config/conda && mkdir -p $HOME/.config/conda
+test ! -d ~/.config/zellij && mkdir -p $HOME/.config/zellij
 
 #########################
 ## Installing dotfiles ##
@@ -19,6 +20,7 @@ ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
 ln -sf $SYNCBIN/broot_conf.hjson $HOME/.config/broot/conf.hjson
 ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
 ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
+ln -sf $SYNCBIN/zellij $HOME/.config/zellij/config.yaml
 
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(
@@ -29,7 +31,7 @@ fi
 # Link ZSH theme to OMZSH custom theme dir only if already doing the OMZ thing
 test -d "$HOME/.oh-my-zsh" && ln -sf $SYNCBIN/zsh/theme/jemus42.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/jemus42.zsh-theme
 
-git -C $SYNCBIN submodule update --init
+git -C $SYNCBIN submodule update --init --recursive
 
 # Only for macOS
 if [[ $host_os == Darwin ]]; then

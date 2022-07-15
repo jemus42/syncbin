@@ -46,7 +46,6 @@ function upall() {
       sudo apt autoremove -y
     fi
 
-
     if (( $+commands[brew] )); then
       echo ""
       echo ""

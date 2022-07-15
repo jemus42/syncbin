@@ -1,12 +1,13 @@
 #! /bin/sh
 # Yes, yet another "make everything okay"-script. It's my first.
 # Partly taken from https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+# Partly from Quinn Nelson https://www.youtube.com/watch?v=psPgSN1bPLY
 
 ## No popup menu on keypress (umlauts)
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 ## Change system screenshot location and disable shadow under windows
-## (And set the format to png)
+## (And set the format to jpg)
 # First test if the desired folder exist (won't autocreate)
 
 if [ ! -d "~/Pictures/Screenshots" ]; then
@@ -15,7 +16,7 @@ fi
 
 defaults write com.apple.screencapture location ~/Pictures/Screenshots/
 defaults write com.apple.screencapture disable-shadow -bool true
-defaults write com.apple.screencapture type -string "png"
+defaults write com.apple.screencapture type -string "jpg"
 
 # Expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
@@ -29,6 +30,24 @@ killall SystemUIServer
 
 # Disable dock bounce
 defaults write com.apple.dock no-bouncing -bool TRUE; killall Dock
+
+# Faster dock hiding
+defaults write com.apple.dock autohide-delay -float 0; defaults write com.apple.dock autohide-time-modifier -int 0.1;killall Dock
+# Undo: 
+# defaults write com.apple.dock autohide-delay -float 0.5; defaults write com.apple.dock autohide-time-modifier -int 0.5 ;killall Dock
+
+# Add dock spacer (paste for each spacer): 
+# defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && killall Dock
+# Add half-height dock spacer (paste for each): #
+# defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="small-spacer-tile";}' && killall Dock
+
+# Disable DIsk eject warning (must restart Mac to take effect): 
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist DADisableEjectNotification -bool YES && sudo pkill diskarbitrationd
+# Re-enable warning: sudo defaults delete /Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist DADisableEjectNotification && sudo pkill diskarbitrationd
+# Alternatively, download ejectify: https://ejectify.app
+
+# Make hidden apps transparent: 
+defaults write com.apple.Dock showhidden -bool TRUE && killall Dock
 
 #######################
 ## Preview/QuickLook ##
@@ -96,7 +115,7 @@ chflags nohidden ~/Library
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
 # Don’t show Dashboard as a Space
-defaults write com.apple.dock dashboard-in-overlay -bool true
+# defaults write com.apple.dock dashboard-in-overlay -bool true
 
 # Don’t automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false

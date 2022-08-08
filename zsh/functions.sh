@@ -37,9 +37,14 @@ function upall() {
     echo "################################"
     echo "## Updating platform packages ##"
     echo "################################"
-    sudo apt update
-    sudo apt upgrade -y
-    sudo apt autoremove -y
+    if (( $+commands[nala] )); then
+      sudo nala upgrade -y
+      sudo nala autoremove
+    else
+      sudo apt update
+      sudo apt upgrade -y
+      sudo apt autoremove -y
+    fi
 
     if (( $+commands[brew] )); then
       echo ""
@@ -163,3 +168,8 @@ function prefer-conda () {
   export PATH="$HOME/Library/r-miniconda/bin:$PATH"
   typeset -aU path
 }
+
+
+# R stuff
+function upr-base () { R -e "update.packages(ask = FALSE)" }
+function upr-all () { R -e "remotes::update_packages()" }

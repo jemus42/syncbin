@@ -14,6 +14,12 @@ if (.Platform$pkgType == "mac.binary") {
   ))
   # If on Linux, add RSPM
 } else if (Sys.info()[["sysname"]] == "Linux") {
+  if (grepl("jammy", system("lsb_release -c", intern = TRUE))) {
+    options(repos = c(
+      RSPM = "https://packagemanager.rstudio.com/all/__linux__/jammy/latest",
+      getOption("repos")
+    ))
+  }
   if (grepl("focal", system("lsb_release -c", intern = TRUE))) {
     options(repos = c(
       RSPM = "https://packagemanager.rstudio.com/all/__linux__/focal/latest",
@@ -36,11 +42,13 @@ options(mc.cores = max(1L, parallel::detectCores() - 1L))
 # mlr style for appropriate repositories only
 if (grepl("mlr", getwd()) || grepl("paradox", getwd())) {
   options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
-  
+
   if (!requireNamespace("styler.mlr", quietly = TRUE)) {
-  	message("styler.mlr not installed: remotes::install_github(\"mlr-org/styler.mlr\")")
+    message("styler.mlr not installed: remotes::install_github(\"mlr-org/styler.mlr\")")
   }
 }
+
+options(styler.cache_root = "styler-perm")
 
 
 # enable autocompletions for package names in require(), library()
@@ -76,12 +84,17 @@ if (paste0(Sys.info()[c("sysname", "machine")], collapse = " ") == "Darwin arm64
 # https://usethis.r-lib.org/articles/articles/git-credentials.html#what-about-the-remotes-and-pak-packages-
 # Does not work on Ubuntu still and it's driving me insane
 if (Sys.info()[["sysname"]] == "Darwin") {
-  Sys.setenv(GITHUB_PAT = gitcreds::gitcreds_get(use_cache = FALSE)$password)
+  if (requireNamespace("gitcreds", quietly = TRUE)) {
+    Sys.setenv(GITHUB_PAT = gitcreds::gitcreds_get(use_cache = FALSE)$password)
+  } else {
+    message("package 'gitcreds' not found: install.packages('gitcreds')")
+  }
 }
 
 
 # Prompt ----
-options(prompt = "\033[32m★\033[39m ", continue = " ↳ " )
+# options(prompt = "\033[32m★\033[39m ", continue = " ↳ " )
+options(prompt = "#> ", continue = " ↳ ")
 
 # usethis ----
 options(
@@ -101,6 +114,10 @@ options(
 # if (interactive() & requireNamespace("credentials", quietly = TRUE)) {
 #   suppressMessages(credentials::set_github_pat())
 # }
+
+if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
+  suppressMessages(prettycode::prettycode())
+}
 
 # Blogdown ----
 options(servr.daemon = TRUE, blogdown.author = "Lukas")
@@ -150,7 +167,7 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
 
   cat(startup_msg, "\n")
 
-  if (interactive()) {
+  if (interactive() & stats::runif(1) < 0.2) {
     random <- stats::runif(1)
 
     # The Good Place quotes

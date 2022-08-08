@@ -18,7 +18,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 export SYNCBIN=$HOME/syncbin
 
-# Config vars for platform/host specific stuff later
 export host_short=${HOST/.*/}
 export host_os=$(uname -s)
 export ME=$(whoami)

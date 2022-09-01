@@ -61,6 +61,9 @@ utils::rc.settings(ipck = TRUE)
 # 'copy + paste' bugs / frustrations
 options(useFancyQuotes = FALSE)
 
+# data.table class printing pls
+options(datatable.print.class = TRUE)
+
 if (requireNamespace("rlang", quietly = TRUE)) {
   # options(error = rlang::entrace)
   rlang::global_entrace()
@@ -78,7 +81,6 @@ if (file.exists("~/.R/credentials.R")) source("~/.R/credentials.R")
 if (paste0(Sys.info()[c("sysname", "machine")], collapse = " ") == "Darwin arm64") {
   Sys.setenv(PATH = paste0(c("/opt/homebrew/bin", Sys.getenv("PATH")), collapse = ":"))
 }
-
 
 # GitHub creds ----
 # https://usethis.r-lib.org/articles/articles/git-credentials.html#what-about-the-remotes-and-pak-packages-

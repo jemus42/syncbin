@@ -40,16 +40,15 @@ options(Ncpus = max(1L, parallel::detectCores() - 1L))  # CPU core detection
 options(mc.cores = max(1L, parallel::detectCores() - 1L))
 
 # mlr style for appropriate repositories only
-if (grepl("mlr", getwd()) || grepl("paradox", getwd())) {
-  options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
+# if (grepl("mlr", getwd()) || grepl("paradox", getwd())) {
+#   options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
+#
+#   if (!requireNamespace("styler.mlr", quietly = TRUE)) {
+#     message("styler.mlr not installed: remotes::install_github(\"mlr-org/styler.mlr\")")
+#   }
+# }
 
-  if (!requireNamespace("styler.mlr", quietly = TRUE)) {
-    message("styler.mlr not installed: remotes::install_github(\"mlr-org/styler.mlr\")")
-  }
-}
-
-options(styler.cache_root = "styler-perm")
-
+options(styler.cache_root = "styler")
 
 # enable autocompletions for package names in require(), library()
 utils::rc.settings(ipck = TRUE)
@@ -174,13 +173,13 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
 
     # The Good Place quotes
     # remotes::install_github("adam-gruer/goodshirt")
-    if (random > 0.7 & requireNamespace("goodshirt", quietly = TRUE)) {
-      print(goodshirt::soul_squad())
+    if (random > 0.9 & requireNamespace("goodshirt", quietly = TRUE)) {
+#      print(goodshirt::soul_squad())
     }
 
     # install.packages("statquotes")
-    if (random < 0.3 & requireNamespace("statquotes", quietly = TRUE)) {
-      print(statquotes::statquote())
+    if (random < 0.1 & requireNamespace("statquotes", quietly = TRUE)) {
+#      print(statquotes::statquote())
     }
   }
 

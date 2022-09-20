@@ -8,7 +8,7 @@ options(repos = c(
 ))
 
 if (Sys.info()[["sysname"]] == "Linux") {
-  is_ubuntu <- grepl("Ubuntu", system("lsb_release -i'", intern = TRUE))
+  is_ubuntu <- grepl("Ubuntu", system("lsb_release -i", intern = TRUE))
 
   if (is_ubuntu) {
     # bionic, focal, jammy, ...

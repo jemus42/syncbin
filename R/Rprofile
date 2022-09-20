@@ -7,65 +7,83 @@ options(repos = c(
 #  jemus42 = "https://jemus42.r-universe.dev"
 ))
 
-# If on mac, add CRAN mac repo
-if (.Platform$pkgType == "mac.binary") {
-  options(repos = c(
-    CRANMAC = "https://mac.r-project.org/", getOption("repos")
-  ))
-  # If on Linux, add RSPM
-} else if (Sys.info()[["sysname"]] == "Linux") {
-  if (grepl("jammy", system("lsb_release -c", intern = TRUE))) {
-    options(repos = c(
-      RSPM = "https://packagemanager.rstudio.com/all/__linux__/jammy/latest",
-      getOption("repos")
-    ))
-  }
-  if (grepl("focal", system("lsb_release -c", intern = TRUE))) {
-    options(repos = c(
-      RSPM = "https://packagemanager.rstudio.com/all/__linux__/focal/latest",
-      getOption("repos")
-    ))
-  }
-  if (grepl("bionic", system("lsb_release -c", intern = TRUE))) {
-    options(repos = c(
-      RSPM = "https://packagemanager.rstudio.com/all/__linux__/bionic/latest",
-      getOption("repos")
-    ))
+if (Sys.info()[["sysname"]] == "Linux") {
+  is_ubuntu <- grepl("Ubuntu", system("lsb_release -i'", intern = TRUE))
+
+  if (is_ubuntu) {
+    # bionic, focal, jammy, ...
+    ubuntu_release <- system("lsb_release -c | awk -F ':\t' '{print $2}'", intern = TRUE)
+    rspm_url <- sprintf("https://packagemanager.rstudio.com/all/__linux__/%s/latest", ubuntu_release)
+
+    repos <- getOption("repos")
+    repos[[paste0("RSPM-", ubuntu_release)]] <- rspm_url
+    options(repos = repos)
   }
 }
 
-options(menu.graphics = FALSE)
-options(max.print = 100)       # Orig: 1000; Less risk of console flood
-options(Ncpus = max(1L, parallel::detectCores() - 1L))  # CPU core detection
-options(mc.cores = max(1L, parallel::detectCores() - 1L))
 
-# mlr style for appropriate repositories only
-# if (grepl("mlr", getwd()) || grepl("paradox", getwd())) {
-#   options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
-#
-#   if (!requireNamespace("styler.mlr", quietly = TRUE)) {
-#     message("styler.mlr not installed: remotes::install_github(\"mlr-org/styler.mlr\")")
-#   }
-# }
-
-options(styler.cache_root = "styler")
-
+# Options ---------------------------------------------------------------------------------------------------------
 # enable autocompletions for package names in require(), library()
 utils::rc.settings(ipck = TRUE)
 
-# warnings are errors
-# options(warn = 2)
+options(
+  menu.graphics = FALSE,
+  max.print = 100, # Orig: 1000; Less risk of console flood
+  Ncpus = max(1L, parallel::detectCores() - 1L), # CPU core detection, ensure minimum of 1
+  mc.cores = max(1L, parallel::detectCores() - 1L),
+  # styler complains about setting the option but it's like... right there.
+  styler.cache_root = "styler",
+  useFancyQuotes = FALSE, # fancy quotes are annoying and lead to 'copy + paste' bugs / frustrations
+  # data.table  -------------------------------------
+  datatable.print.class = TRUE,
+  datatable.print.keys = TRUE,
+  # prompt  ----------------------------------------
+  prompt = "#> ", continue = " ↳ ",
+  # usethis  ---------------------------------------
+  usethis.full_name = "Lukas Burk",
+  usethis.destdir = "~/repos/github/jemus42",
+  usethis.protocol  = "https",
+  usethis.description = list(
+    `Authors@R` = utils::person(
+      "Lukas", "Burk", email = "github@quantenbrot.de",
+      role = c("aut", "cre"), comment = c(ORCID = '0000-0001-7528-3795')
+    ),
+    License = "MIT + file LICENSE",
+    Version = "0.0.0.9000"
+  ),
+  # blogdown  ---------------------------------------
+  servr.daemon = TRUE, blogdown.author = "Lukas",
+  # VSCode ------------------------------------------
+  # activate RStudio Addins on command pallet
+  vsc.rstudioapi = TRUE,
+  # interactive plots with {httpgd}
+  vsc.use_httpgd = TRUE,
+  vsc.rstudioapi = TRUE,
+  # code completion triggers
+  languageserver.server_capabilities = list(
+    signatureHelpProvider = list(triggerCharacters = list("(", ",", "$")),
+    completionProvider = list(
+      resolveProvider = TRUE, triggerCharacters = list(".", ":", "$")
+    )
+  )
+)
 
-# fancy quotes are annoying and lead to
-# 'copy + paste' bugs / frustrations
-options(useFancyQuotes = FALSE)
+# mlr style for appropriate repositories only
+if (grepl("mlr", getwd()) || grepl("paradox", getwd())) {
+  options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
 
-# data.table class printing pls
-options(datatable.print.class = TRUE)
+  if (!requireNamespace("styler.mlr", quietly = TRUE)) {
+    message("styler.mlr not installed: remotes::install_github('mlr-org/styler.mlr')")
+  }
+}
 
 if (requireNamespace("rlang", quietly = TRUE)) {
   # options(error = rlang::entrace)
   rlang::global_entrace()
+}
+
+if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
+  suppressMessages(prettycode::prettycode())
 }
 
 # Source file with credentials for limer
@@ -84,6 +102,8 @@ if (paste0(Sys.info()[c("sysname", "machine")], collapse = " ") == "Darwin arm64
 # GitHub creds ----
 # https://usethis.r-lib.org/articles/articles/git-credentials.html#what-about-the-remotes-and-pak-packages-
 # Does not work on Ubuntu still and it's driving me insane
+# Git credentials have brought me nothing but pain.
+# So far using the `gh` cli utility for auth seems to be ok though? I gave up.
 if (Sys.info()[["sysname"]] == "Darwin") {
   if (requireNamespace("gitcreds", quietly = TRUE)) {
     Sys.setenv(GITHUB_PAT = gitcreds::gitcreds_get(use_cache = FALSE)$password)
@@ -92,66 +112,77 @@ if (Sys.info()[["sysname"]] == "Darwin") {
   }
 }
 
-
-# Prompt ----
-# options(prompt = "\033[32m★\033[39m ", continue = " ↳ " )
-options(prompt = "#> ", continue = " ↳ ")
-
-# usethis ----
-options(
-  usethis.full_name = "Lukas Burk",
-  usethis.destdir = "~/repos/github/jemus42",
-  usethis.protocol  = "https",
-  usethis.description = list(
-    `Authors@R` = utils::person(
-      "Lukas", "Burk", email = "github@quantenbrot.de",
-      role = c("aut", "cre"), comment = c(ORCID = '0000-0001-7528-3795')
-    ),
-    License = "MIT + file LICENSE",
-    Version = "0.0.0.9000"
-  )
-)
-
-# if (interactive() & requireNamespace("credentials", quietly = TRUE)) {
-#   suppressMessages(credentials::set_github_pat())
-# }
-
-if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
-  suppressMessages(prettycode::prettycode())
-}
-
-# Blogdown ----
-options(servr.daemon = TRUE, blogdown.author = "Lukas")
-
-# VSCode ----
-options(
-  # activate RStudio Addins on command pallet
-  vsc.rstudioapi = TRUE,
-  # interactive plots with {httpgd}
-  vsc.use_httpgd = TRUE,
-  vsc.rstudioapi = TRUE,
-  # code completion triggers
-  languageserver.server_capabilities = list(
-    signatureHelpProvider = list(triggerCharacters = list("(", ",", "$")),
-    completionProvider = list(
-      resolveProvider = TRUE, triggerCharacters = list(".", ":", "$")
-    )
-  )
-)
-
-# RS Themes ----
+# RS Themes -------------------------------------------------------------------------------------------------------
 if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
-  rsthemes::set_theme_favorite(c(
-    "GitHub {rsthemes}", "Night Owl {rsthemes}",
-    "Yule RStudio (Reduced Motion) {rsthemes}", "Yule RStudio {rsthemes}"
-  ))
+  # remotes::install_github("gadenbuie/rsthemes")
 
   rsthemes::set_theme_light("GitHub {rsthemes}")
   rsthemes::set_theme_dark("Monokai Spacegray Eighties")
 }
 
-# Startup ----
+# Startup ---------------------------------------------------------------------------------------------------------
 .First <- function() {
+
+  # Persistent history, shamelessly stolen from mllg/dotfiles
+  hist <- normalizePath("~/.Rhistory", mustWork = FALSE)
+  if (!dir.exists(dirname(hist)))
+    dir.create(dirname(hist), recursive = TRUE)
+
+  ok <- try(utils::loadhistory(hist))
+  if (inherits(ok, "try-error")) {
+    message("History could not be loaded: ", hist)
+  } else {
+    # message("Loaded history: ", hist)
+    assign(".Last", function() try(utils::savehistory(hist)), envir = .GlobalEnv)
+  }
+
+  ee = new.env()
+  ee$inspect = function(x) {
+    requireNamespace("crayon", quietly = TRUE)
+    header = crayon::combine_styles(crayon::bold, crayon::green)
+    cat(header("Internal:"), "\n", sep = "")
+    .Internal(inspect(x))
+    if (!is.function(x)) {
+      classes = class(x)
+      for (cl in classes) {
+        m = methods(class = cl)
+        tab = attr(m, "info")
+        if (nrow(tab) > 0L) {
+          cat("\n", header(paste0("Generics for `", cl, "`:")), "\n", sep = "")
+          cat(paste(tab$generic, collapse = ", "), "\n")
+        }
+      }
+    }
+    cat("\n", header("Structure:"), "\n", sep = "")
+    str(x)
+
+    cat("\n", header("Size:"), "\n", sep = "")
+    print(object.size(x), units = "auto")
+
+    invisible(x)
+  }
+
+  ee$bm = function(..., plot = FALSE) {
+    requireNamespace("bench")
+    requireNamespace("withr")
+
+    withr::local_options(list(datatable.verbose = FALSE))
+    bm = bench::mark(...)
+    if (plot)
+      print(ggplot2::autoplot(bm))
+    return(bm)
+  }
+
+  ee$pkgdeps = function(pkg) {
+    requireNamespace("pkgdepends")
+    x = pkgdepends::new_pkg_deps(pkg)
+    x$solve()
+    x$draw()
+  }
+
+  attach(ee, warn.conflicts = FALSE)
+
+  # Startup msg -----------------------------------------------------------------------------------------------------
   version     <- R.version.string
   date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
   utf8        <- l10n_info()$`UTF-8`
@@ -166,22 +197,5 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
     "UTF-8: ", utf8
   )
 
-  cat(startup_msg, "\n")
-
-  if (interactive() & stats::runif(1) < 0.2) {
-    random <- stats::runif(1)
-
-    # The Good Place quotes
-    # remotes::install_github("adam-gruer/goodshirt")
-    if (random > 0.9 & requireNamespace("goodshirt", quietly = TRUE)) {
-#      print(goodshirt::soul_squad())
-    }
-
-    # install.packages("statquotes")
-    if (random < 0.1 & requireNamespace("statquotes", quietly = TRUE)) {
-#      print(statquotes::statquote())
-    }
-  }
-
-  cat("\n")
+  cat(startup_msg, "\n\n")
 }

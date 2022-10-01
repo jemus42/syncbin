@@ -129,6 +129,15 @@ function upall() {
   echo "##---- Done updating --- $(timestamp) ----##"
 }
 
+upr () {
+  R -e "remotes::update_packages()"
+}
+
+upr-cran () {
+  R -e "update.packages(ask = FALSE)"
+}
+
+
 # Benachmarking ZSH startup
 function zsh_bench() {
     zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log

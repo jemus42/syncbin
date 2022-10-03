@@ -128,12 +128,14 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
   if (!dir.exists(dirname(hist)))
     dir.create(dirname(hist), recursive = TRUE)
 
-  ok <- try(utils::loadhistory(hist))
-  if (inherits(ok, "try-error")) {
-    message("History could not be loaded: ", hist)
-  } else {
-    # message("Loaded history: ", hist)
-    assign(".Last", function() try(utils::savehistory(hist)), envir = .GlobalEnv)
+  if (interactive()) {
+	  ok <- try(utils::loadhistory(hist))
+	  if (inherits(ok, "try-error")) {
+	    message("History could not be loaded: ", hist)
+	  } else {
+	    # message("Loaded history: ", hist)
+	    assign(".Last", function() try(utils::savehistory(hist)), envir = .GlobalEnv)
+	  }
   }
 
   ee = new.env()

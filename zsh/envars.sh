@@ -4,12 +4,11 @@
 # echo "TERM is $TERM"
 [[ "$TERM" != *256color ]] && export TERM='screen-256color' # TERM='xterm-256color'
 
-# powerlevel9k config must be done before theme is set
-# source $SYNCBIN/zsh/theme/powerlevel9k-env.sh
-
 # Finding homberew early
 test -x "/opt/homebrew/bin/brew" && eval $(/opt/homebrew/bin/brew shellenv)
-test -x "/home/linuxbrew/.linuxbrew/bin/brew" && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+# test -x "/home/linuxbrew/.linuxbrew/bin/brew" && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+# Moving linuxbrew later in the PATH to avoid conflicts on Linux
+test -x "/home/linuxbrew/.linuxbrew/bin/brew" && export PATH="${PATH}:/home/linuxbrew/.linuxbrew/bin"
 
 # ENCODIIING
 export LC_ALL=en_US.UTF-8  

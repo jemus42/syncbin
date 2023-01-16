@@ -109,6 +109,10 @@ if (($+commands[rstudio-server])); then
   }
 fi
 
+function whothere () {
+  ps -fuxa | awk '{print $1}' | awk NF | sort | uniq -c | sort -bgr
+}
+
 # zsh is able to auto-do some kungfoo
 # depends on the SUFFIX :)
 if is-at-least 4.2.0; then

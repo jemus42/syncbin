@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+base=${1%.*}
+ext=${1#$base.}
+
+ffmpeg -i $1 -c copy -map 0 -segment_time 00:30:00 -f segment -reset_timestamps 1 $base%03d.$ext
+

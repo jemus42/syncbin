@@ -4,7 +4,7 @@ function dump {
   FILE=$(basename $1)
   if [[ $ME == "Lukas" ]]; then
     echo "https://dump.jemu.name/$FILE" | pbcopy
-  else 
+  else
       echo "https://dump.jemu.name/$FILE"
   fi
   echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.jemu.name/$FILE" >> $HOME/.dumplog
@@ -33,7 +33,7 @@ function reload() {
 function upall() {
 
   case $( uname -s ) in
-  Linux)  
+  Linux)
     echo "################################"
     echo "## Updating platform packages ##"
     echo "################################"
@@ -55,7 +55,7 @@ function upall() {
       brew upgrade
     fi
     ;;
-  Darwin) 
+  Darwin)
 
     if (( $+commands[brew] )); then
       echo "#######################"
@@ -91,7 +91,7 @@ function upall() {
     'remotes::update_packages(type = "binary")'
 
     ;;
-  FreeBSD) 
+  FreeBSD)
     echo "################################"
     echo "## Updating platform packages ##"
     echo "################################"
@@ -99,16 +99,16 @@ function upall() {
     if [[ $ME = root ]]; then
       pkg update
       pkg upgrade -y
-      pkg clean
-      pkg autoremove -y    
-    else 
+      pkg clean -y
+      pkg autoremove -y
+    else
       sudo pkg update
       sudo pkg upgrade -y
-      sudo pkg clean
+      sudo pkg clean -y
       sudo pkg autoremove -y
     fi
     ;;
-  *) 
+  *)
     echo "Don't know how to update on this platform: $(uname -s)"
     ;;
   esac
@@ -173,3 +173,4 @@ function prefer-conda () {
 # R stuff
 function upr-base () { R -e "update.packages(ask = FALSE)" }
 function upr () { R -e "remotes::update_packages()" }
+function pak-install () {R -e "pak::pkg_install('$1')"}

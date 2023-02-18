@@ -25,7 +25,7 @@ ln -sf $SYNCBIN/zellij $HOME/.config/zellij/config.yaml
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" &
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
 # Link ZSH theme to OMZSH custom theme dir only if already doing the OMZ thing

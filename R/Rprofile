@@ -86,9 +86,6 @@ if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
   suppressMessages(prettycode::prettycode())
 }
 
-# Source file with credentials for limer
-if (file.exists("~/.R/credentials.R")) source("~/.R/credentials.R")
-
 # Possibly fix various locale issues
 # Sys.setlocale('LC_ALL','C')
 # options(encoding = "UTF-8")
@@ -180,6 +177,27 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
     x = pkgdepends::new_pkg_deps(pkg)
     x$solve()
     x$draw()
+  }
+
+  ee$ubuntu_sysdep <- function(pkgs, nala = FALSE, add_sudo = TRUE) {
+
+    reqs <- sapply(unique(pkgs), function(pkg) {
+      remotes::system_requirements("ubuntu-20.04", package = pkg)
+    })
+    reqs <- unique(unlist(reqs))
+
+    if (add_sudo) {
+      reqs <- sapply(reqs, function(x) {
+        paste0("sudo ", x)
+      })
+    }
+
+    if (nala) {
+      reqs <- sub("apt-get", replacement = "nala", reqs)
+    }
+
+    cat(reqs, sep = "\n")
+
   }
 
   attach(ee, warn.conflicts = FALSE)

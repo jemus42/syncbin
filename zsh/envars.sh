@@ -18,7 +18,8 @@ export LANG=en_US.UTF-8
 # LC_COLLATE=C
 
 # LS_COLORS via vivid: https://github.com/sharkdp/vivid
-export LS_COLORS="$(cat $SYNCBIN/colors/molokai.lscolors)"
+# This misbehaves for some clients in some settings, I don't quite get it
+# export LS_COLORS="$(cat $SYNCBIN/colors/molokai.lscolors)"
 
 # ZSH-specifics
 test ! -d $HOME/.config/zsh && mkdir $HOME/.config/zsh

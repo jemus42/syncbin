@@ -1,6 +1,6 @@
 # Dump files to my filedump, because dump
 function dump {
-  rsync -avh --progress "$@" -e ssh mercy:/mnt/data/dump.jemu.name
+  rsync -avh --progress "$@" -e ssh horst:"dump.jemu.name"
   FILE=$(basename $1)
   if [[ $ME == "Lukas" ]]; then
     echo "https://dump.jemu.name/$FILE" | pbcopy

@@ -3,11 +3,15 @@ if (( $+commands[fig] )); then
   [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 fi
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+prompt_theme="starship" # or pw10k
+
+if [[ $prompt_theme = "pw10k" ]]; then
+  # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+  # Initialization code that may require console input (password prompts, [y/n]
+  # confirmations, etc.) must go above this block; everything else may go below.
+  if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  fi
 fi
 
 #################
@@ -18,8 +22,10 @@ if [[ $zsh_prof = 1 ]] ; then
     zmodload zsh/zprof
 fi
 
-# Has to be set earlier than expected apparently
-ZSH_THEME="powerlevel10k/powerlevel10k"
+if [[ $prompt_theme = "pw10k" ]]; then
+  # Has to be set earlier than expected apparently
+  ZSH_THEME="powerlevel10k/powerlevel10k"
+fi
 
 export SYNCBIN=$HOME/syncbin
 
@@ -65,9 +71,11 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ## my zsh theme, either the OMZSH way or the manual way
 # source $SYNCBIN/zsh/theme/jemus42.zsh-theme
 
-# starship
-if (( $+commands[starship] )); then
-  #eval "$(starship init zsh)"
+if [[ $prompt_theme = "starship" ]]; then
+  # starship
+  if (( $+commands[starship] )); then
+    eval "$(starship init zsh)"
+  fi
 fi
 
 ########################

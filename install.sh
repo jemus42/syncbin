@@ -8,6 +8,7 @@ test ! -d ~/.config/zsh && mkdir -p $HOME/.config/zsh
 test ! -d ~/.config/broot && mkdir -p $HOME/.config/broot
 test ! -d ~/.config/conda && mkdir -p $HOME/.config/conda
 test ! -d ~/.config/zellij && mkdir -p $HOME/.config/zellij
+test ! -d ~/.config/lsd && mkdir -p $HOME/.config/lsd
 
 #########################
 ## Installing dotfiles ##
@@ -21,6 +22,7 @@ ln -sf $SYNCBIN/broot_conf.hjson $HOME/.config/broot/conf.hjson
 ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
 ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
 ln -sf $SYNCBIN/zellij $HOME/.config/zellij/config.yaml
+ln -sf $SYNCBIN/lsd.conf.yml $HOME/.config/lsd/config.yaml
 
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(

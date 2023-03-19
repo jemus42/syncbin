@@ -35,6 +35,7 @@ $perl\
 $php\
 $purescript\
 $rlang\
+$custom\
 $red\
 $ruby\
 $rust\
@@ -53,7 +54,6 @@ $gcloud\
 $openstack\
 $env_var\
 $crystal\
-$custom\
 $cmd_duration\
 $line_break\
 $shlvl\
@@ -72,7 +72,7 @@ show_always = true
 format = "[$user]($style) "
 
 [hostname]
-ssh_only = false
+ssh_only = true
 style = "bright-red"
 disabled = false
 format = "on [{$hostname}]($style) in "
@@ -95,7 +95,8 @@ format = "$indicator"
 bash_indicator = "[bash ❯ ](bold white)"
 fish_indicator = "[🐟 ❯ ](blue)"
 powershell_indicator = "ps_"
-zsh_indicator = "[➜ ](bright-green)"
+#zsh_indicator = "[➜ ](bright-green)"
+zsh_indicator = "[❯](bright-green)"
 unknown_indicator = "mystery shell"
 
 [shlvl]
@@ -118,7 +119,7 @@ format = "[\\[$time\\]]($style)"
 format = "w/ [$symbol($version)](bold bright-blue) "
 symbol = "R "
 # Disable .Rprofile detection due to home dir
-detect_files = ["DESCRIPTION"]
+detect_files = ["DESCRIPTION", "renv.lock"]
 detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
 #version_format = "v${raw}"
 
@@ -130,11 +131,18 @@ files = ["DESCRIPTION"]       # can specify filters
 format = "📦 [v$output]($style) "
 style = "bold bright-blue"
 
+[custom.renv]
+command = 'cat renv.lock | jq .R.Version | sed -e s/\"//g'
+files = ["renv.lock"]       # can specify filters
+#when = """ test "$HOME" == "$PWD" """
+format = "renv [v$output]($style) "
+style = "bold bright-blue"
+
 [conda]
 format = "w/ [$symbol$environment]($style) "
 style = "green"
 symbol = "🅒 "
-ignore_base = true
+ignore_base = false
 
 [jobs]
 symbol = "+ "

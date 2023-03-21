@@ -1,69 +1,9 @@
 # New line at the start of the prompt?
 add_newline = true
 # Default format included for reference
-format = """
-$username\
-$hostname\
-$kubernetes\
-$directory\
-$vcsh\
-$git_branch\
-$git_commit\
-$git_state\
-$git_metrics\
-$git_status\
-$hg_branch\
-$docker_context\
-$package\
-${custom.rpkg}\
-$cmake\
-$dart\
-$deno\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
-$golang\
-$helm\
-$java\
-$julia\
-$kotlin\
-$nim\
-$nodejs\
-$ocaml\
-$perl\
-$php\
-$purescript\
-$rlang\
-$custom\
-$red\
-$ruby\
-$rust\
-$scala\
-$swift\
-$terraform\
-$vlang\
-$vagrant\
-$zig\
-$nix_shell\
-$python\
-$conda\
-$memory_usage\
-$aws\
-$gcloud\
-$openstack\
-$env_var\
-$crystal\
-$cmd_duration\
-$line_break\
-$shlvl\
-$lua\
-$jobs\
-$battery\
-$time\
-$status\
-$shell\
-$character"""
+format = """$all"""
+
+right_format = """$cmd_duration$conda$time"""
 
 [username]
 disabled = false
@@ -111,9 +51,9 @@ detect_extensions = ["mjs", "cjs", "ts"]
 
 [time]
 disabled = true
-style = "bright-green"
+style = "blue"
 time_format = "%H:%M"
-format = "[\\[$time\\]]($style)"
+format = " 🕙 [\\[$time\\]]($style)"
 
 [rlang]
 format = "w/ [$symbol($version)](bold bright-blue) "
@@ -121,29 +61,41 @@ symbol = "R "
 # Disable .Rprofile detection due to home dir
 detect_files = ["DESCRIPTION", "renv.lock"]
 detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
+#when = """ test "$HOME" != "$PWD" """
 #version_format = "v${raw}"
 
 [custom.rpkg]
+description = "R package version"
 #command = "sed -n '/^Version:/,/([0-9]+\\.)/p' DESCRIPTION "  # shows output of command
 command = "sed -n -e '/^Version:/p' DESCRIPTION | sed -e 's/Version: //'"
-files = ["DESCRIPTION"]       # can specify filters
+detect_files = ["DESCRIPTION"]
 #when = """ test "$HOME" == "$PWD" """
+#detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
 format = "📦 [v$output]($style) "
 style = "bold bright-blue"
 
 [custom.renv]
+description = "renv.lock R version"
 command = 'cat renv.lock | jq .R.Version | sed -e s/\"//g'
-files = ["renv.lock"]       # can specify filters
-#when = """ test "$HOME" == "$PWD" """
+detect_files = ["renv.lock"]
 format = "renv [v$output]($style) "
 style = "bold bright-blue"
 
 [conda]
-format = "w/ [$symbol$environment]($style) "
+format = "[$symbol$environment]($style)"
 style = "green"
 symbol = "🅒 "
-ignore_base = false
+ignore_base = true
 
 [jobs]
 symbol = "+ "
 threshold = 1
+
+[os]
+format = "[($symbol )]($style)"
+style = "bold blue"
+disabled = true
+
+[os.symbols]
+Windows = " "
+#Macos = " "

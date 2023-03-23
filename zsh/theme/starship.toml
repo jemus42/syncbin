@@ -5,6 +5,8 @@ format = """$all"""
 
 right_format = """$cmd_duration$conda$time"""
 
+continuation_prompt = "[❯❯](bright-green) "
+
 [username]
 disabled = false
 style_user = "bold green"
@@ -60,8 +62,8 @@ format = "w/ [$symbol($version)](bold bright-blue) "
 symbol = "R "
 # Disable .Rprofile detection due to home dir
 detect_files = ["DESCRIPTION", "renv.lock"]
-detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
-#when = """ test "$HOME" != "$PWD" """
+detect_extensions = ["Rd", "Rmd", "Rproj"]
+when = """ test "$HOME" != "$PWD" """
 #version_format = "v${raw}"
 
 [custom.rpkg]

@@ -63,7 +63,6 @@ symbol = "R "
 # Disable .Rprofile detection due to home dir
 detect_files = ["DESCRIPTION", "renv.lock"]
 detect_extensions = ["Rd", "Rmd", "Rproj"]
-when = """ test "$HOME" != "$PWD" """
 #version_format = "v${raw}"
 
 [custom.rpkg]

@@ -59,6 +59,7 @@ time_format = "%H:%M"
 format = " 🕙 [\\[$time\\]]($style)"
 
 [rlang]
+disabled = false
 format = "w/ [$symbol($version)](bold bright-blue) "
 symbol = "R "
 # Disable .Rprofile detection due to home dir

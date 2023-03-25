@@ -20,7 +20,15 @@ else
   brew install bottom
 fi
 
-array=( fd sd dust diskus broot zoxide bat exa lsd delta duf choose jq yq tldr cheat procs curlie dog micro thefuck )
+echo "Checking if choose is available..."
+if [ -x "$(command -v choose)" ]; then
+  echo "Found choose"
+else
+  brew install choose-rust
+fi
+
+# The easy cases where binary == package name
+array=( fd sd dust diskus broot zoxide bat exa lsd delta duf jq yq tldr cheat procs curlie dog micro thefuck )
 for i in "${array[@]}"
 do
 	echo "Checking if $i is available..."

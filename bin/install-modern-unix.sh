@@ -27,16 +27,47 @@ else
   brew install choose-rust
 fi
 
+echo "Checking if delta is available..."
+if [ -x "$(command -v delta)" ]; then
+  echo "Found delta"
+else
+  brew install git-delta
+fi
+
 # The easy cases where binary == package name
-array=( fd sd dust diskus broot zoxide bat exa lsd delta duf jq yq tldr cheat procs curlie dog micro thefuck )
-for i in "${array[@]}"
+base_tools=( fd sd dust diskus broot zoxide bat exa lsd delta duf jq tldr procs micro )
+extra_tools=( yq cheat curlie dog thefuck zenith lazygit)
+docker_tools=( ctop lazydocker )
+
+for i in "${base_tools[@]}"
 do
-	echo "Checking if $i is available..."
+  echo "Checking if $i is available..."
   if [ -x "$(command -v $i)" ]; then
     echo "Found $i"
   else
     brew install $i
   fi
-
 done
 
+for i in "${extra_tools[@]}"
+do
+  echo "Checking if $i is available..."
+  if [ -x "$(command -v $i)" ]; then
+    echo "Found $i"
+  else
+    brew install $i
+  fi
+done
+
+if [ -x "$(command -v docker)" ]; then
+  echo "Found docker, installing docker-related tools"
+	for i in "${docker_tools[@]}"
+	do
+    echo "Checking if $i is available..."
+    if [ -x "$(command -v $i)" ]; then
+      echo "Found $i"
+    else
+      brew install $i
+    fi
+	done
+fi

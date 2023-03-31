@@ -11,7 +11,7 @@ test -x "/opt/homebrew/bin/brew" && eval $(/opt/homebrew/bin/brew shellenv)
 test -x "/home/linuxbrew/.linuxbrew/bin/brew" && export PATH="${PATH}:/home/linuxbrew/.linuxbrew/bin"
 
 # ENCODIIING
-export LC_ALL=en_US.UTF-8  
+export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Possibly sometimes relevant
@@ -24,7 +24,7 @@ export LANG=en_US.UTF-8
 # ZSH-specifics
 test ! -d $HOME/.config/zsh && mkdir $HOME/.config/zsh
 
-# ZDOTDIR would need move of .zshrc etc 
+# ZDOTDIR would need move of .zshrc etc
 # http://zsh.sourceforge.net/Doc/Release/Files.html
 # ZDOTDIR=$HOME/.config/zsh
 
@@ -41,13 +41,21 @@ export MICRO_TRUECOLOR=1
 # Adding syncbinbin
 export PATH=$PATH:$HOME/bin:$SYNCBIN/bin
 
-# Load iterm2 utils if connected via iterm2 
+# Load iterm2 utils if connected via iterm2
 # See also: https://iterm2.com/documentation-utilities.html
-# $SYNCBIN/bin/iterm2-utils/it2check && 
+# $SYNCBIN/bin/iterm2-utils/it2check &&
 export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 
 # Other utilities
 (( $+commands[broot] )) && source $HOME/.config/broot/launcher/bash/br
+
+# mcfly?
+if (( $+commands[mcfly] )); then
+  eval "$(mcfly init zsh)"
+  export MCFLY_FUZZY=2
+  export MCFLY_RESULTS_SORT=LAST_RUN
+  export MCFLY_PROMPT="❯"
+fi
 
 # If cargo is available
 test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH

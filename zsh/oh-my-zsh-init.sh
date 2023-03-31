@@ -8,7 +8,7 @@ export ZSH=$HOME/.oh-my-zsh
 if (( ! $+commands[starship] )); then
     if [[ $host_os = FreeBSD ]] && [[ $MOSH = 1 ]]; then
         ZSH_THEME="jemus42"
-    else 
+    else
         ZSH_THEME="powerlevel10k/powerlevel10k"
     fi
 fi
@@ -40,18 +40,24 @@ export UPDATE_ZSH_DAYS=30
 # Disabled because of false-positives that were starting to get annoying
 
 plugins=(
-    rsync 
-    extract 
-    git-flow 
+    rsync
+    extract
+    git-flow
     encode64
     systemadmin
     perms
     docker docker-compose
     ripgrep fd
     command-not-found
-    tmux
+    isodate
 )
+
+# Conditional plugins just in case? At least tmux plugin complains if tmux is not found
 (( $+commands[zoxide] )) && plugins+=(zoxide) || plugins+=(z)
+(( $+commands[gh] )) && plugins+=(gh)
+(( $+commands[tmux] )) && plugins+=(tmux)
+(( $+commands[httpie] )) && plugins+=(httpie)
+(( $+commands[rustc] )) && plugins+=(rust)
 
 # Platform-specific plugins
 (( $+commands[systemctl] )) && plugins+=(systemd)
@@ -60,7 +66,7 @@ plugins=(
 
 # These go at the bottom
 plugins+=(
-    zsh-syntax-highlighting 
+    zsh-syntax-highlighting
     zsh-completions
     zsh-autosuggestions
 )

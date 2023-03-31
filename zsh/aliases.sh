@@ -84,9 +84,13 @@ alias -g NE="2> /dev/null"
 alias -g NUL="> /dev/null 2>&1"
 alias -g P="2>&1| pygmentize -l pytb"
 
-alias dud='du -d 1 -h'
 alias fdir='find . -type d -name'
 alias ffile='find . -type f -name'
+
+# lazygit and lazydocker if installed
+(( $+commands[lazygit] )) && alias gg='lazygit'
+(( $+commands[lazydocker] )) && alias ldo='lazygit'
+
 
 # GPG stuff
 # show keys

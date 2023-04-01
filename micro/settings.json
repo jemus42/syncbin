@@ -1,0 +1,16 @@
+{
+    "autosu": true,
+    "colorscheme": "monokai",
+    "eofnewline": false,
+    "fastdirty": true,
+    "hidehelp": false,
+    "ignorecase": false,
+    "matchbrace": false,
+    "matchbraceleft": false,
+    "mkparents": true,
+    "pluginchannels": [
+        "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
+    ],
+    "pluginrepos": [],
+    "termtitle": false
+}

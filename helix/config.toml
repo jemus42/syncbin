@@ -1,0 +1,25 @@
+theme = "sonokai"
+
+[editor]
+line-number = "relative"
+mouse = true
+cursorline = true
+color-modes = true
+indent-guides.render = true
+
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+#[editor.statusline]
+#right = ["diagnostics", "position", "position-percentage", "total-line-numbers", "selections", "version-control"]
+
+##[editor.soft-wrap]
+#enable = true
+#wrap-indicator = ""
+#wrap-at-text-width = true

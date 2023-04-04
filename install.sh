@@ -24,7 +24,7 @@ ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
 ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
 ln -sf $SYNCBIN/zellij $HOME/.config/zellij/config.yaml
 ln -sf $SYNCBIN/lsd.conf.yml $HOME/.config/lsd/config.yaml
-ln -sf $SYNCBIN/helix $HOME/.config/helix
+test ! -d ~/.config/helix && ln -sf $SYNCBIN/helix $HOME/.config/helix
 ln -sf $SYNCBIN/micro/settings.json $HOME/.config/micro/settings.json
 ln -sf $SYNCBIN/micro/bindings.json $HOME/.config/micro/bindings.json
 
@@ -44,5 +44,5 @@ if [[ $host_os == Darwin ]]; then
   test ! -d ~/.config/alacritty && mkdir -p $HOME/.config/alacritty
   ln -sf $SYNCBIN/alacritty/alacritty.yml $HOME/.config/alacritty/alacritty.yml
 
-  ln -sf $SYNCBIN/zed $HOME/.config/zed
+  test ! -d ~/.config/zed && ln -sf $SYNCBIN/zed $HOME/.config/zed
 fi

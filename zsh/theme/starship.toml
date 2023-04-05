@@ -1,7 +1,7 @@
 # New line at the start of the prompt?
 add_newline = true
 # Default format included for reference
-format = """$all"""
+format = """$os$all"""
 
 right_format = """$cmd_duration$conda$time"""
 
@@ -35,11 +35,11 @@ error_symbol = "[✖](bold red)"
 [shell]
 disabled = false
 format = "$indicator"
-bash_indicator = "[bash ❯ ](bold white)"
-fish_indicator = "[🐟 ❯ ](blue)"
+bash_indicator = "[bash ❯](bold white) "
+fish_indicator = "[🐟 ❯](blue) "
 powershell_indicator = "ps_"
 #zsh_indicator = "[➜ ](bright-green)"
-zsh_indicator = "[❯](bright-green)"
+zsh_indicator = "[❯](bright-green) "
 unknown_indicator = "mystery shell"
 
 [shlvl]
@@ -95,10 +95,11 @@ symbol = "+ "
 threshold = 1
 
 [os]
-format = "[($symbol )]($style)"
-style = "bold blue"
-disabled = true
+format = "[$symbol]($style) "
+style = "bold white"
+disabled = false
 
 [os.symbols]
 Windows = " "
 #Macos = " "
+Macos = ""

@@ -18,7 +18,7 @@ format = "[$user]($style) "
 ssh_only = true
 style = "bright-red"
 disabled = false
-format = "on [{$hostname}]($style) in "
+format = "on [{$hostname}]($style):"
 
 [directory]
 truncate_to_repo = false
@@ -27,7 +27,7 @@ truncation_symbol = "../"
 
 # Replace the "❯" symbol in the prompt with "➜" // maybe └─>
 [character]
-format = "$symbol "
+format = " $symbol "
 #success_symbol = "[➜](bold green)"
 success_symbol = ""
 error_symbol = "[✖](bold red)"
@@ -35,11 +35,11 @@ error_symbol = "[✖](bold red)"
 [shell]
 disabled = false
 format = "$indicator"
-bash_indicator = "[bash ❯](bold white) "
-fish_indicator = "[🐟 ❯](blue) "
+bash_indicator = "[bash ❯](bold white)"
+fish_indicator = "[🐟 ❯](blue)"
 powershell_indicator = "ps_"
 #zsh_indicator = "[➜ ](bright-green)"
-zsh_indicator = "[❯](bright-green) "
+zsh_indicator = "[❯](bright-green)"
 unknown_indicator = "mystery shell"
 
 [shlvl]

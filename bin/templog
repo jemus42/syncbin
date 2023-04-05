@@ -1,0 +1,10 @@
+#! /usr/local/bin/bash
+cores=4
+# echo ""
+cores=$((cores - 1))
+for core in $(seq 0 $cores)
+do
+    temp="$(sysctl -a | grep "cpu.${core}.temp" | cut -c24-25 | tr -d '\n')"
+    printf "%s; %d; %d" "$(date +'%F %H:%M:%S')" "$core" "$temp"
+    echo ""
+done

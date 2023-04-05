@@ -101,5 +101,12 @@ disabled = false
 
 [os.symbols]
 Windows = " "
-#Macos = " "
-Macos = ""
+#Macos = " " # The private use area symbol isn't supported by nerd fonts until the next version apparently
+Macos = "" # This is the NF version, which is fine I guess
+Ubuntu = "\uf31b"
+FreeBSD = "\ueb99"
+Raspbian = "\uf315"
+
+[git_branch]
+format = 'on [$symbol$branch(:$remote_branch)]($style) '
+ignore_branches = ['main']

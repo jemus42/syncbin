@@ -106,6 +106,7 @@ Macos = "" # This is the NF version, which is fine I guess
 Ubuntu = "\uf31b"
 FreeBSD = "\ueb99"
 Raspbian = "\uf315"
+Linux = "\uebc6"
 
 [git_branch]
 format = 'on [$symbol$branch(:$remote_branch)]($style) '

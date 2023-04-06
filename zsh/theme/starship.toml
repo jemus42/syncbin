@@ -27,10 +27,10 @@ truncation_symbol = "../"
 
 # Replace the "❯" symbol in the prompt with "➜" // maybe └─>
 [character]
-format = " $symbol "
+format = " $symbol"
 #success_symbol = "[➜](bold green)"
 success_symbol = ""
-error_symbol = "[✖](bold red)"
+error_symbol = "[✖](bold red) "
 
 [shell]
 disabled = false

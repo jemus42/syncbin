@@ -1,14 +1,9 @@
 ## common
-#alias ll='ls -halF'
-#alias l='ls -l'
-#alias la="exa -abghl --git"
-
 alias du="du -h"
 alias today='date +"%A, %B %-d, %Y"'
 
 #alias preview='qlmanage -p' # Use quick-look() instead
 alias rot13="tr 'a-zA-Z' 'n-za-mN-ZA-M'"
-
 
 # Speedometer
 alias speedo='speedometer -l  -r eth0 -t eth0 -m $(( 1024 * 1024 * 3 / 2 ))'
@@ -35,10 +30,10 @@ alias sha1='openssl sha1'
 alias sha256='shasum -a 256'
 
 ## yt-dl
-alias yt-channel="youtube-dl -i -o '%(uploader)s/%(playlist)s/%(title)s [%(id)s].%(ext)s'"
+alias yt-channel="yt-dlp -i -o '%(uploader)s/%(playlist)s/%(title)s [%(id)s].%(ext)s'"
 #alias yt-playlist="youtube-dl -i -o '%(playlist)s/%(playlist_index)s - %(title)s_%(id)s.%(ext)s'"
-alias yt-playlist='youtube-dl -i -o "%(uploader)s [%(channel_id)s]/%(playlist_index)s - %(title)s [%(id)s].%(ext)s"'
-alias yt-chronological="youtube-dl -i -o '%(upload_date)s -  %(title)s [%(id)s].%(ext)s'"
+alias yt-playlist='yt-dlp -i -o "%(uploader)s [%(channel_id)s]/%(playlist_index)s - %(title)s [%(id)s].%(ext)s"'
+alias yt-chronological="yt-dlp -i -o '%(upload_date)s -  %(title)s [%(id)s].%(ext)s'"
 
 #### Thefuck
  (( $+commands[thefuck] )) && eval $(thefuck --alias)
@@ -89,7 +84,7 @@ alias ffile='find . -type f -name'
 
 # lazygit and lazydocker if installed
 (( $+commands[lazygit] )) && alias gg='lazygit'
-(( $+commands[lazydocker] )) && alias ldo='lazygit'
+(( $+commands[lazydocker] )) && alias ldo='lazydocker'
 
 
 # GPG stuff

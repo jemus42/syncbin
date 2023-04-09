@@ -5,5 +5,5 @@ ext=${1#$base.}
 duration=${2:-'00:30:00'}
 
 
-ffmpeg -i "$1" -c copy -map 0 -segment_time $duration -f segment -reset_timestamps 1 "$base-%03d.$ext"
+ffmpeg -i "$1" -c copy -map 0 -segment_time $duration -f segment -reset_timestamps 1 -segment_start_number 1 "$base-%03d.$ext"
 

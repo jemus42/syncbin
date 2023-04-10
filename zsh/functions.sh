@@ -163,14 +163,17 @@ function git-find-large-files () {
   $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
 }
 
+aria () {
+  aria2c --seed-time=0 --max-concurrent-downloads=5 $@	
+}
 
-function prefer-conda () {
+prefer-conda () {
   export PATH="$HOME/Library/r-miniconda/bin:$PATH"
   typeset -aU path
 }
 
 
 # R stuff
-function upr-base () { R -e "update.packages(ask = FALSE)" }
-function upr () { R -e "remotes::update_packages()" }
-function pak-install () {R -e "pak::pkg_install('$1')"}
+upr-base () { R -e "update.packages(ask = FALSE)" }
+upr () { R -e "remotes::update_packages()" }
+pak-install () {R -e "pak::pkg_install('$1')"}

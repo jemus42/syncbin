@@ -9,6 +9,7 @@ alias rot13="tr 'a-zA-Z' 'n-za-mN-ZA-M'"
 alias speedo='speedometer -l  -r eth0 -t eth0 -m $(( 1024 * 1024 * 3 / 2 ))'
 
 ## git
+alias g="git"
 alias push='git push'
 alias pull='git pull'
 alias git-reset-to-remote='git fetch && git reset --hard'
@@ -30,6 +31,8 @@ alias sha1='openssl sha1'
 alias sha256='shasum -a 256'
 
 ## yt-dl
+alias yt="yt-dlp"
+alias yt-list="yt-dlp --list-formats"
 alias yt-channel="yt-dlp -i -o '%(uploader)s/%(playlist)s/%(title)s [%(id)s].%(ext)s'"
 #alias yt-playlist="youtube-dl -i -o '%(playlist)s/%(playlist_index)s - %(title)s_%(id)s.%(ext)s'"
 alias yt-playlist='yt-dlp -i -o "%(uploader)s [%(channel_id)s]/%(playlist_index)s - %(title)s [%(id)s].%(ext)s"'

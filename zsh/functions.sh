@@ -176,4 +176,14 @@ prefer-conda () {
 # R stuff
 upr-base () { R -e "update.packages(ask = FALSE)" }
 upr () { R -e "remotes::update_packages()" }
-pak-install () {R -e "pak::pkg_install('$1')"}
+pak-install () {
+  args="c("
+  for arg in "$@"
+  do
+    args="$args\"$arg\", "
+  done
+  args="${args%, })"
+  echo "Installing packages $args, ..."
+  
+  R -e "pak::pkg_install($args)"
+}

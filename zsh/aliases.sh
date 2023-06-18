@@ -25,6 +25,8 @@ alias cleanempty="find . -type d -empty -delete"
 
 ## R, but clean
 alias R='R --no-save --quiet'
+alias rstudio='open -a RStudio.app'
+
 
 ## Misc helpers
 alias sha1='openssl sha1'

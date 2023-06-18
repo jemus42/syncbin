@@ -63,8 +63,9 @@ disabled = false
 format = "w/ [$symbol($version)](bold bright-blue) "
 symbol = "R "
 # Disable .Rprofile detection due to home dir
-detect_files = ["DESCRIPTION", "renv.lock"]
-detect_extensions = ["Rd", "Rmd", "Rproj"]
+#detect_files = ["DESCRIPTION", "renv.lock"]
+detect_files = ["!$HOME/.Rprofile"]
+#detect_extensions = ["Rd", "Rmd", "Rproj"]
 #version_format = "v${raw}"
 
 [custom.rpkg]
@@ -101,8 +102,7 @@ disabled = false
 
 [os.symbols]
 Windows = " "
-#Macos = " " # The private use area symbol isn't supported by nerd fonts until the next version apparently
-Macos = "" # This is the NF version, which is fine I guess
+Macos = "" # This is the NF version, which is fine I guess
 Ubuntu = "\uf31b"
 FreeBSD = "\ueb99"
 Raspbian = "\uf315"

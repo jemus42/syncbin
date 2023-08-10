@@ -200,6 +200,31 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
 
   }
 
+  ee$rstheme <- function(which = "auto") {
+    if (!requireNamespace("rsthemes")) {
+      message("rsthemes not installed, trying to install...")
+      if (!(requireNamespace("pak"))) {
+        install.packages("pak")
+      }
+      pak::pak("gadenbuie/rsthemes")
+    }
+    if (which == "auto") {
+      if (!(requireNamespace("ipapi"))) {
+        message("Need ipapi for automatic switching, trying to install...")
+        pak::pak("hrbrmstr/ipapi")
+      }
+    }
+
+    switch(which,
+      auto = rsthemes::use_theme_auto(),
+      light = rsthemes::use_theme_light(),
+      dark = rsthemes::use_theme_toggle(),
+      toggle = rsthemes::use_theme_toggle(),
+      default = rsthemes::use_theme_rstudio_default(),
+      favorite = rsthemes::use_theme_favorite()
+    )
+  }
+
   attach(ee, warn.conflicts = FALSE)
 
   # Startup msg -----------------------------------------------------------------------------------------------------

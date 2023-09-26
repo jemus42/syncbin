@@ -1,7 +1,6 @@
 {
     "autosu": true,
     "colorscheme": "monokai",
-    "eofnewline": false,
     "fastdirty": true,
     "hidehelp": false,
     "ignorecase": false,
@@ -12,5 +11,5 @@
         "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
     ],
     "pluginrepos": [],
-    "termtitle": false
+    "termtitle": true
 }

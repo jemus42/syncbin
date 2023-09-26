@@ -92,9 +92,14 @@ if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
 # Also check via l10n_info()
 
 # Path fix for homebrew/arm64 ----
-if (paste0(Sys.info()[c("sysname", "machine")], collapse = " ") == "Darwin arm64") {
-  Sys.setenv(PATH = paste0(c("/opt/homebrew/bin", Sys.getenv("PATH")), collapse = ":"))
-}
+# if (paste0(Sys.info()[c("sysname", "machine")], collapse = " ") == "Darwin arm64") {
+#   if (file.exists("/opt/homebrew/bin/brew")) {
+#     brew_dir <- "/opt/homebrew/bin/"
+#   } else {
+#     brew_dir <- fs::path_dir(Sys.which("brew"))
+#   }
+#   Sys.setenv(PATH = paste(Sys.getenv("PATH"), brew_dir, sep = ":"))
+# }
 
 # GitHub creds ----
 # https://usethis.r-lib.org/articles/articles/git-credentials.html#what-about-the-remotes-and-pak-packages-
@@ -228,19 +233,21 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
   attach(ee, warn.conflicts = FALSE)
 
   # Startup msg -----------------------------------------------------------------------------------------------------
-  version     <- R.version.string
-  date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
-  utf8        <- l10n_info()$`UTF-8`
+  if (interactive()) {
+	  version     <- R.version.string
+	  date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
+	  utf8        <- l10n_info()$`UTF-8`
 
-  if (requireNamespace("crayon", quietly = TRUE)) {
-    utf8 <- ifelse(utf8, crayon::bgGreen("enabled"), crayon::bgRed("disabled!"))
-    version <- crayon::bold(version)
+	  if (requireNamespace("crayon", quietly = TRUE)) {
+	    utf8 <- ifelse(utf8, crayon::bgGreen("enabled"), crayon::bgRed("disabled!"))
+	    version <- crayon::bold(version)
+	  }
+
+	  startup_msg <- paste0(
+	    version, " on ", date_string, "\n",
+	    "UTF-8: ", utf8
+	  )
+
+	  cat(startup_msg, "\n\n")
   }
-
-  startup_msg <- paste0(
-    version, " on ", date_string, "\n",
-    "UTF-8: ", utf8
-  )
-
-  cat(startup_msg, "\n\n")
 }

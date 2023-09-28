@@ -12,17 +12,17 @@ command_timeout = 900
 disabled = false
 style_user = "bold green"
 show_always = true
-format = "[$user]($style) "
+format = "[$user]($style)"
 
 [hostname]
 ssh_only = true
 style = "bright-red"
 disabled = false
-format = "on [{$hostname}]($style):"
+format = "::[{$hostname}]($style):"
 
 [directory]
-truncate_to_repo = false
-truncation_length = 2
+truncate_to_repo = true
+truncation_length = 3
 truncation_symbol = "../"
 
 # Replace the "❯" symbol in the prompt with "➜" // maybe └─>
@@ -66,7 +66,7 @@ symbol = "R "
 #detect_files = ["DESCRIPTION", "renv.lock"]
 detect_files = ["!$HOME/.Rprofile"]
 #detect_extensions = ["Rd", "Rmd", "Rproj"]
-#version_format = "v${raw}"
+version_format = "v${raw}"
 
 [custom.rpkg]
 description = "R package version"

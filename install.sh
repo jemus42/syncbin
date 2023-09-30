@@ -4,12 +4,15 @@
 export SYNCBIN=$HOME/syncbin
 
 # Create .config dir if needed
-test ! -d ~/.config/zsh && mkdir -p $HOME/.config/zsh
-test ! -d ~/.config/broot && mkdir -p $HOME/.config/broot
-test ! -d ~/.config/conda && mkdir -p $HOME/.config/conda
+test ! -d ~/.config/zsh    && mkdir -p $HOME/.config/zsh
+test ! -d ~/.config/broot  && mkdir -p $HOME/.config/broot
+test ! -d ~/.config/conda  && mkdir -p $HOME/.config/conda
 test ! -d ~/.config/zellij && mkdir -p $HOME/.config/zellij
-test ! -d ~/.config/lsd && mkdir -p $HOME/.config/lsd
-test ! -d ~/.config/micro && mkdir -p $HOME/.config/micro
+test ! -d ~/.config/lsd    && mkdir -p $HOME/.config/lsd
+test ! -d ~/.config/micro  && mkdir -p $HOME/.config/micro
+
+# entire helix dir is stored in syncbin and lns'd to .config
+#test ! -d ~/.config/helix  && mkdir -p $HOME/.config/helix
 
 #########################
 ## Installing dotfiles ##
@@ -22,16 +25,16 @@ ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
 ln -sf $SYNCBIN/broot_conf.hjson $HOME/.config/broot/conf.hjson
 ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
 ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
-ln -sf $SYNCBIN/zellij $HOME/.config/zellij/config.yaml
+ln -sf $SYNCBIN/zellij.kdl $HOME/.config/zellij/config.kdl
 ln -sf $SYNCBIN/lsd.conf.yml $HOME/.config/lsd/config.yaml
-test ! -d ~/.config/helix && ln -sf $SYNCBIN/helix $HOME/.config/helix
+ln -sf $SYNCBIN/helix $HOME/.config/helix
 ln -sf $SYNCBIN/micro/settings.json $HOME/.config/micro/settings.json
 ln -sf $SYNCBIN/micro/bindings.json $HOME/.config/micro/bindings.json
 
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" &
 fi
 
 # Link ZSH theme to OMZSH custom theme dir only if already doing the OMZ thing

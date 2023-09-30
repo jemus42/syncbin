@@ -219,3 +219,6 @@ pak-install () {
   
   R -e "pak::pkg_install($args)"
 }
+
+
+checkmake () {rg "^[^\S\t\n\r]" < Makefile}

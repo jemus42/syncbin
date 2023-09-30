@@ -222,3 +222,7 @@ pak-install () {
 
 
 checkmake () {rg "^[^\S\t\n\r]" < Makefile}
+
+gitit () {
+        git commit -am $(date +%Y%m%d%H%M%S) && git push
+}

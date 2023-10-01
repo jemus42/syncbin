@@ -12,13 +12,13 @@ command_timeout = 900
 disabled = false
 style_user = "bold green"
 show_always = true
-format = "[$user]($style)"
+format = "[$user]($style) "
 
 [hostname]
 ssh_only = true
 style = "bright-red"
 disabled = false
-format = "::[{$hostname}]($style):"
+format = "[{$hostname}]($style) "
 
 [directory]
 truncate_to_repo = true

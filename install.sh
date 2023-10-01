@@ -4,12 +4,13 @@
 export SYNCBIN=$HOME/syncbin
 
 # Create .config dir if needed
-test ! -d ~/.config/zsh    && mkdir -p $HOME/.config/zsh
-test ! -d ~/.config/broot  && mkdir -p $HOME/.config/broot
-test ! -d ~/.config/conda  && mkdir -p $HOME/.config/conda
-test ! -d ~/.config/zellij && mkdir -p $HOME/.config/zellij
-test ! -d ~/.config/lsd    && mkdir -p $HOME/.config/lsd
-test ! -d ~/.config/micro  && mkdir -p $HOME/.config/micro
+test ! -d $HOME/.config/zsh    && mkdir -p $HOME/.config/zsh
+test ! -d $HOME/.config/broot  && mkdir -p $HOME/.config/broot
+test ! -d $HOME/.config/conda  && mkdir -p $HOME/.config/conda
+test ! -d $HOME/.config/zellij && mkdir -p $HOME/.config/zellij
+test ! -d $HOME/.config/lsd    && mkdir -p $HOME/.config/lsd
+test ! -d $HOME/.config/micro  && mkdir -p $HOME/.config/micro
+test ! -d $HOME/.config/btop   && mkdir -p $HOME/.config/btop
 
 # entire helix dir is stored in syncbin and lns'd to .config
 #test ! -d ~/.config/helix  && mkdir -p $HOME/.config/helix
@@ -26,9 +27,12 @@ ln -sf $SYNCBIN/broot_conf.hjson $HOME/.config/broot/conf.hjson
 ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
 ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
 ln -sf $SYNCBIN/zellij/zellij.kdl $HOME/.config/zellij/config.kdl
+ln -sf $SYNCBIN/btop/btop.conf $HOME/.config/btop/btop.conf
 
+test ! -d ~/.config/btop/themes   && ln -sf $SYNCBIN/btop/themes   $HOME/.config/btop/themes
 test ! -d ~/.config/zellij/themes && ln -sf $SYNCBIN/zellij/themes $HOME/.config/zellij/themes
 test ! -d ~/.config/helix         && ln -sf $SYNCBIN/helix         $HOME/.config/helix
+
 
 ln -sf $SYNCBIN/lsd.conf.yml $HOME/.config/lsd/config.yaml
 ln -sf $SYNCBIN/micro/settings.json $HOME/.config/micro/settings.json

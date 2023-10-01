@@ -18,7 +18,7 @@ format = "[$user]($style) "
 ssh_only = true
 style = "bright-red"
 disabled = false
-format = "[{$hostname}]($style) "
+format = "[$hostname]($style) "
 
 [directory]
 truncate_to_repo = true

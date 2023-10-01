@@ -91,6 +91,7 @@ alias ffile='find . -type f -name'
 (( $+commands[lazygit] )) && alias gg='lazygit'
 (( $+commands[lazydocker] )) && alias ldo='lazydocker'
 
+(( $+commands[zellij] )) && alias zel='zellij'
 
 # GPG stuff
 # show keys

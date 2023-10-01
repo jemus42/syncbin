@@ -37,6 +37,11 @@ ln -sf $SYNCBIN/micro/bindings.json $HOME/.config/micro/bindings.json
 # Cleanup legacy zellij conf
 test -f $HOME/.config/zellij/config.yml && rm $HOME/.config/zellij/config.yml
 
+
+# Install tpb
+test ! -d $HOME/.tmux/plugins && mkdir -p  $HOME/.tmux/plugins
+git clone --depth 1 --single-branch https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then

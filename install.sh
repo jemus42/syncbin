@@ -29,6 +29,7 @@ ln -sf $SYNCBIN/R/radian_profile $HOME/.radian_profile
 ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
 ln -sf $SYNCBIN/zellij/zellij.kdl $HOME/.config/zellij/config.kdl
 ln -sf $SYNCBIN/btop/btop.conf $HOME/.config/btop/btop.conf
+ln -sf $SYNCBIN/bat/config $HOME/.config/bat/config
 
 test ! -d ~/.config/bat/themes   && ln -sf $SYNCBIN/bat/themes   $HOME/.config/bat/themes
 test ! -d ~/.config/btop/themes   && ln -sf $SYNCBIN/btop/themes   $HOME/.config/btop/themes

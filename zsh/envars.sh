@@ -49,6 +49,9 @@ export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 # Other utilities
 (( $+commands[broot] )) && source $HOME/.config/broot/launcher/bash/br
 
+# Using bat as pager for man pages
+(( $+commands[bat] )) && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 # mcfly?
 if (( $+commands[mcfly] )); then
   eval "$(mcfly init zsh)"

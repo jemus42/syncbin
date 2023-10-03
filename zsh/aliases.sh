@@ -93,6 +93,12 @@ alias ffile='find . -type f -name'
 
 (( $+commands[zellij] )) && alias zel='zellij'
 
+# using bat as a pager for --help output with a helper alias
+alias bathelp='bat --plain --language=help'
+help() {
+    "$@" --help 2>&1 | bathelp
+}
+
 # GPG stuff
 # show keys
 alias gpg-list-keys='gpg --list-secret-keys --keyid-format LONG'

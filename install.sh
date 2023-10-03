@@ -11,6 +11,7 @@ test ! -d $HOME/.config/zellij && mkdir -p $HOME/.config/zellij
 test ! -d $HOME/.config/lsd    && mkdir -p $HOME/.config/lsd
 test ! -d $HOME/.config/micro  && mkdir -p $HOME/.config/micro
 test ! -d $HOME/.config/btop   && mkdir -p $HOME/.config/btop
+test ! -d $HOME/.config/bat   && mkdir -p $HOME/.config/bat
 
 # entire helix dir is stored in syncbin and lns'd to .config
 #test ! -d ~/.config/helix  && mkdir -p $HOME/.config/helix
@@ -29,10 +30,10 @@ ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
 ln -sf $SYNCBIN/zellij/zellij.kdl $HOME/.config/zellij/config.kdl
 ln -sf $SYNCBIN/btop/btop.conf $HOME/.config/btop/btop.conf
 
+test ! -d ~/.config/bat/themes   && ln -sf $SYNCBIN/bat/themes   $HOME/.config/bat/themes
 test ! -d ~/.config/btop/themes   && ln -sf $SYNCBIN/btop/themes   $HOME/.config/btop/themes
 test ! -d ~/.config/zellij/themes && ln -sf $SYNCBIN/zellij/themes $HOME/.config/zellij/themes
 test ! -d ~/.config/helix         && ln -sf $SYNCBIN/helix         $HOME/.config/helix
-
 
 ln -sf $SYNCBIN/lsd.conf.yml $HOME/.config/lsd/config.yaml
 ln -sf $SYNCBIN/micro/settings.json $HOME/.config/micro/settings.json

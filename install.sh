@@ -39,6 +39,7 @@ test ! -d ~/.config/helix         && ln -sf $SYNCBIN/helix         $HOME/.config
 ln -sf $SYNCBIN/lsd.conf.yml $HOME/.config/lsd/config.yaml
 ln -sf $SYNCBIN/micro/settings.json $HOME/.config/micro/settings.json
 ln -sf $SYNCBIN/micro/bindings.json $HOME/.config/micro/bindings.json
+ln -sf $SYNCBIN/micro/syntax $HOME/.config/micro/syntax
 
 # Cleanup legacy zellij conf
 test -f $HOME/.config/zellij/config.yml && rm $HOME/.config/zellij/config.yml

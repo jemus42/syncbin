@@ -31,7 +31,7 @@ ln -sf $SYNCBIN/zellij/zellij.kdl $HOME/.config/zellij/config.kdl
 ln -sf $SYNCBIN/btop/btop.conf $HOME/.config/btop/btop.conf
 ln -sf $SYNCBIN/bat/config $HOME/.config/bat/config
 
-test ! -d ~/.config/bat/themes   && ln -sf $SYNCBIN/bat/themes   $HOME/.config/bat/themes
+test ! -d ~/.config/bat/themes    && ln -sf $SYNCBIN/bat/themes   $HOME/.config/bat/themes
 test ! -d ~/.config/btop/themes   && ln -sf $SYNCBIN/btop/themes   $HOME/.config/btop/themes
 test ! -d ~/.config/zellij/themes && ln -sf $SYNCBIN/zellij/themes $HOME/.config/zellij/themes
 test ! -d ~/.config/helix         && ln -sf $SYNCBIN/helix         $HOME/.config/helix
@@ -39,7 +39,7 @@ test ! -d ~/.config/helix         && ln -sf $SYNCBIN/helix         $HOME/.config
 ln -sf $SYNCBIN/lsd.conf.yml $HOME/.config/lsd/config.yaml
 ln -sf $SYNCBIN/micro/settings.json $HOME/.config/micro/settings.json
 ln -sf $SYNCBIN/micro/bindings.json $HOME/.config/micro/bindings.json
-ln -sf $SYNCBIN/micro/syntax $HOME/.config/micro/syntax
+test ! -d ~/.config/micro/syntax && ln -sf $SYNCBIN/micro/syntax $HOME/.config/micro/syntax
 
 # Cleanup legacy zellij conf
 test -f $HOME/.config/zellij/config.yml && rm $HOME/.config/zellij/config.yml

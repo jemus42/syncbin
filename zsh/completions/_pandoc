@@ -1,10 +1,9 @@
-# Source: https://gist.github.com/lukaskubanek/3934808
-_pandoc()
-{
-    typeset -A opt_args
-    local context state line
+#compdef pandoc
 
-    _arguments -s -S \
+typeset -A opt_args
+local context state line
+
+_arguments -s -S \
     '(-f+ --from=+)'{-r+,--read=+}'[Specify input format.]:FORMAT:(native json markdown textile rst html docbook latex)'\
     '(-r+,--read=+)'{-f+,--from=+}'[Specify input format.]:FORMAT:(native json markdown textile rst html docbook latex)'\
     '(-t+ --to=+)'{-w+,--write=+}'[Specify output format.]:FORMAT:(native json plain markdown rst html html5 latex beamer context man mediawiki textile org texinfo docbook opendocument odt docx epub asciidoc slidy slideous dzslides s5 rtf)'\
@@ -74,6 +73,3 @@ _pandoc()
     && return 0
 
     return 1
-}
-
-compdef _pandoc pandoc

@@ -67,7 +67,8 @@ plugins=(
 
 # These go at the bottom
 plugins+=(
-    zsh-syntax-highlighting
+    F-Sy-H
+    #zsh-syntax-highlighting
     zsh-completions
     zsh-autosuggestions
 )

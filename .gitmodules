@@ -10,3 +10,6 @@
 [submodule "ohmyzsh_custom/themes/powerlevel10k"]
 	path = ohmyzsh_custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "ohmyzsh_custom/plugins/F-Sy-H"]
+	path = ohmyzsh_custom/plugins/F-Sy-H
+	url = https://github.com/z-shell/F-Sy-H.git

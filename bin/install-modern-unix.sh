@@ -6,37 +6,14 @@ if ! [ -x "$(command -v brew)" ]; then
 fi
 
 # Binary name and package name differ
-echo "Checking if ripgrep is available..."
-if [ -x "$(command -v rg)" ]; then
-  echo "Found ripgrep"
-else
-  brew install ripgrep
-fi
-
-echo "Checking if bottom is available..."
-if [ -x "$(command -v btm)" ]; then
-  echo "Found bottom"
-else
-  brew install bottom
-fi
-
-echo "Checking if choose is available..."
-if [ -x "$(command -v choose)" ]; then
-  echo "Found choose"
-else
-  brew install choose-rust
-fi
-
-echo "Checking if delta is available..."
-if [ -x "$(command -v delta)" ]; then
-  echo "Found delta"
-else
-  brew install git-delta
-fi
+(( $+commands[rg] )) && echo "Found ripgrep" || brew install ripgrep
+(( $+commands[btm] )) && echo "Found bottom" || brew install bottom
+(( $+commands[choose] )) && echo "Found choose" || brew install choose-rust
+(( $+commands[delta] )) && echo "Found delta" || brew install git-delta
 
 # The easy cases where binary == package name
 base_tools=( fd sd dust diskus broot zoxide bat exa lsd delta duf jq tldr procs micro )
-extra_tools=( yq cheat curlie dog thefuck zenith lazygit)
+extra_tools=( yq cheat curlie dog thefuck zenith lazygit hwatch btop )
 docker_tools=( ctop lazydocker )
 
 for i in "${base_tools[@]}"

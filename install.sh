@@ -48,8 +48,8 @@ test -f $HOME/.config/zellij/config.yml && rm $HOME/.config/zellij/config.yml
 
 
 # Install tpb
-test ! -d $HOME/.config/tmux/plugins && mkdir -p  $HOME/.tmux/plugins
-test ! -d $HOME/.config/tmux/plugins/tpm && git clone --depth 1 --single-branch https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm &
+test ! -d $HOME/.config/tmux/plugins && mkdir -p  $HOME/.config/tmux/plugins
+test ! -d $HOME/.config/tmux/plugins/tpm && git clone --depth 1 --single-branch https://github.com/tmux-plugins/tpm $HOME/.config/tmux/plugins/tpm &
 
 # RStudio
 test -d $HOME/.config/rstudio/themes/ && ln -sf $SYNCBIN/rstudio/themes/*rstheme $HOME/.config/rstudio/themes

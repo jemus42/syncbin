@@ -11,7 +11,8 @@ test ! -d $HOME/.config/zellij && mkdir -p $HOME/.config/zellij
 test ! -d $HOME/.config/lsd    && mkdir -p $HOME/.config/lsd
 test ! -d $HOME/.config/micro  && mkdir -p $HOME/.config/micro
 test ! -d $HOME/.config/btop   && mkdir -p $HOME/.config/btop
-test ! -d $HOME/.config/bat   && mkdir -p $HOME/.config/bat
+test ! -d $HOME/.config/bat    && mkdir -p $HOME/.config/bat
+test ! -d $HOME/.config/tmux   && mkdir -p $HOME/.config/tmux
 
 # entire helix dir is stored in syncbin and lns'd to .config
 #test ! -d ~/.config/helix  && mkdir -p $HOME/.config/helix
@@ -21,7 +22,6 @@ test ! -d $HOME/.config/bat   && mkdir -p $HOME/.config/bat
 #########################
 ln -sf $SYNCBIN/zsh/zshrc.zsh $HOME/.zshrc
 ln -sf $SYNCBIN/screenrc $HOME/.screenrc
-ln -sf $SYNCBIN/tmux.conf $HOME/.tmux.conf
 ln -sf $SYNCBIN/R/Rprofile $HOME/.Rprofile
 ln -sf $SYNCBIN/zsh/theme/starship.toml $HOME/.config/starship.toml
 ln -sf $SYNCBIN/broot_conf.hjson $HOME/.config/broot/conf.hjson
@@ -30,6 +30,8 @@ ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
 ln -sf $SYNCBIN/zellij/zellij.kdl $HOME/.config/zellij/config.kdl
 ln -sf $SYNCBIN/btop/btop.conf $HOME/.config/btop/btop.conf
 ln -sf $SYNCBIN/bat/config $HOME/.config/bat/config
+
+ln -sf $SYNCBIN/tmux.conf $HOME/.config/tmux/tmux.conf
 
 test ! -d ~/.config/bat/themes    && ln -sf $SYNCBIN/bat/themes   $HOME/.config/bat/themes
 test ! -d ~/.config/btop/themes   && ln -sf $SYNCBIN/btop/themes   $HOME/.config/btop/themes
@@ -46,8 +48,11 @@ test -f $HOME/.config/zellij/config.yml && rm $HOME/.config/zellij/config.yml
 
 
 # Install tpb
-test ! -d $HOME/.tmux/plugins && mkdir -p  $HOME/.tmux/plugins
-test ! -d $HOME/.tmux/plugins/tpm && git clone --depth 1 --single-branch https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+test ! -d $HOME/.config/tmux/plugins && mkdir -p  $HOME/.tmux/plugins
+test ! -d $HOME/.config/tmux/plugins/tpm && git clone --depth 1 --single-branch https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm &
+
+# RStudio
+test -d $HOME/.config/rstudio/themes/ && ln -sf $SYNCBIN/rstudio/themes/*rstheme $HOME/.config/rstudio/themes
 
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(

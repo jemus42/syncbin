@@ -40,6 +40,11 @@ alias yt-channel="yt-dlp -i -o '%(uploader)s/%(playlist)s/%(title)s [%(id)s].%(e
 alias yt-playlist='yt-dlp -i -o "%(uploader)s [%(channel_id)s]/%(playlist_index)s - %(title)s [%(id)s].%(ext)s"'
 alias yt-chronological="yt-dlp -i -o '%(upload_date)s -  %(title)s [%(id)s].%(ext)s'"
 
+
+# pdf2htmlEX seems handy but a pain to install regularly
+# https://github.com/pdf2htmlEX/pdf2htmlEX/wiki/Download-Docker-Image
+alias pdf2htmlEX='docker run -ti --rm -v "`pwd`":/pdf -w /pdf pdf2htmlex/pdf2htmlex'
+
 #### Thefuck
  (( $+commands[thefuck] )) && eval $(thefuck --alias)
 

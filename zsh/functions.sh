@@ -34,9 +34,9 @@ function upall() {
 
   case $( uname -s ) in
   Linux)
-    echo "################################"
-    echo "## Updating platform packages ##"
-    echo "################################"
+    echo "####################################"
+    echo "##   Updating platform packages   ##"
+    echo "####################################"
     if (( $+commands[nala] )); then
       sudo nala upgrade -y
       sudo nala autoremove
@@ -49,25 +49,25 @@ function upall() {
     if (( $+commands[brew] )); then
       echo ""
       echo ""
-      echo "#######################"
-      echo "## Updating homebrew ##"
-      echo "#######################"
+      echo "####################################"
+      echo "##        Updating homebrew       ##"
+      echo "####################################"
       brew upgrade
     fi
     ;;
   Darwin)
 
     if (( $+commands[brew] )); then
-      echo "#######################"
-      echo "## Updating homebrew ##"
-      echo "#######################"
+      echo "####################################"
+      echo "##        Updating homebrew       ##"
+      echo "####################################"
       echo ""
       brew upgrade
 
       echo ""
-      echo "#############################"
-      echo "## Updating homebrew casks ##"
-      echo "#############################"
+      echo "####################################"
+      echo "##    Updating homebrew casks     ##"
+      echo "####################################"
       echo ""
       brew upgrade --cask
     fi
@@ -83,18 +83,18 @@ function upall() {
     #   echo ""
     # fi
 
-    echo "#########################"
-    echo "## Updating R packages ##"
-    echo "#########################"
+    echo "####################################"
+    echo "##      Updating R packages       ##"
+    echo "####################################"
     echo ""
     Rscript --quiet -e \
     'remotes::update_packages(type = "binary")'
 
     ;;
   FreeBSD)
-    echo "################################"
-    echo "## Updating platform packages ##"
-    echo "################################"
+    echo "####################################"
+    echo "##   Updating platform packages   ##"
+    echo "####################################"
     echo ""
     if [[ $ME = root ]]; then
       pkg update
@@ -114,9 +114,9 @@ function upall() {
   esac
 
   echo ""
-  echo "######################"
-  echo "## Updating syncbin ##"
-  echo "######################"
+  echo "####################################"
+  echo "##        Updating syncbin        ##"
+  echo "####################################"
 
   git -C $SYNCBIN pull origin main
     # git -C $SYNCBIN submodule update --recursive --remote
@@ -152,7 +152,7 @@ compavc () {
 
 function gif2mp4 {
     TEMPGIF=$(mktemp)
-    
+
     ffmpeg -stream_loop 10 -i "${1}" ${TEMPGIF}.gif -y;
 	ffmpeg -i ${TEMPGIF}.gif -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" "${1%.gif}.mp4"
 	#ffmpeg -i "${1}" -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" "${1%.gif}.mp4"
@@ -174,7 +174,7 @@ function git-find-large-files () {
 }
 
 aria () {
-  aria2c --seed-time=0 --max-concurrent-downloads=5 $@	
+  aria2c --seed-time=0 --max-concurrent-downloads=5 $@
 }
 
 prefer-conda () {
@@ -182,7 +182,7 @@ prefer-conda () {
   typeset -aU path
 }
 
-# Latex 
+# Latex
 cleantex () {
 	rm -rf *.out
 	rm -rf *.dvi
@@ -216,7 +216,7 @@ pak-install () {
   done
   args="${args%, })"
   echo "Installing packages $args, ..."
-  
+
   R -e "pak::pkg_install($args)"
 }
 

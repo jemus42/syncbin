@@ -2,7 +2,7 @@
 # This still yields warning on FreeBSD for starship, but not for other prompts
 # echo "Dealing with colors"
 # echo "TERM is $TERM"
-[[ "$TERM" != *256color ]] && export TERM='screen-256color' # TERM='xterm-256color'
+[[ "$TERM" != *256color ]] && export TERM='xterm-256color' # TERM='screen-256color'
 
 # Finding homberew early
 test -x "/opt/homebrew/bin/brew" && eval $(/opt/homebrew/bin/brew shellenv)

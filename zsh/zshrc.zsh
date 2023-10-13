@@ -1,6 +1,4 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# Fig pre block. Keep at the top of this file.
 if (( $+commands[fig] )); then
   fi
 
@@ -79,6 +77,14 @@ if [[ $prompt_theme = "starship" ]]; then
   fi
 fi
 
+# mcfly?
+if [ -x "$(command -v mcfly)" ]; then
+  # bindkey '^R' mcfly-history-widget
+  # eval $(mcfly init zsh)
+  # https://github.com/cantino/mcfly/issues/254
+  source <(mcfly init zsh)
+fi
+
 ########################
 ## Path deduplication ##
 ########################
@@ -120,6 +126,3 @@ fi
 # bit?
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/bit bit
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

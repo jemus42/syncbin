@@ -53,8 +53,7 @@ export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 (( $+commands[bat] )) && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # mcfly?
-if (( $+commands[mcfly] )); then
-  eval "$(mcfly init zsh)"
+if [ -x "$(command -v mcfly)" ]; then
   export MCFLY_FUZZY=2
   export MCFLY_RESULTS_SORT=LAST_RUN
   export MCFLY_PROMPT="❯"

@@ -52,8 +52,9 @@ export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 # Using bat as pager for man pages
 (( $+commands[bat] )) && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-# mcfly?
-if [ -x "$(command -v mcfly)" ]; then
+# mcfly
+if (( $+commands[mcfly] )); then
+# Enabling mcfly here would have lead to later overriding of ctrl+R for some reason
   export MCFLY_FUZZY=2
   export MCFLY_RESULTS_SORT=LAST_RUN
   export MCFLY_PROMPT="❯"

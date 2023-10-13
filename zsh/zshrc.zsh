@@ -77,8 +77,8 @@ if [[ $prompt_theme = "starship" ]]; then
   fi
 fi
 
-# mcfly?
-if [ -x "$(command -v mcfly)" ]; then
+# Enabling mcfly here to avoid later overriding of ctrl+R for some reason
+if (( $+commands[mcfly] )); then
   # bindkey '^R' mcfly-history-widget
   # eval $(mcfly init zsh)
   # https://github.com/cantino/mcfly/issues/254

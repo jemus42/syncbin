@@ -7,19 +7,19 @@ options(repos = c(
 #  jemus42 = "https://jemus42.r-universe.dev"
 ))
 
-if (Sys.info()[["sysname"]] == "Linux") {
-  is_ubuntu <- grepl("Ubuntu", system("lsb_release -i", intern = TRUE))
-
-  if (is_ubuntu) {
-    # bionic, focal, jammy, ...
-    ubuntu_release <- system("lsb_release -c | awk -F ':\t' '{print $2}'", intern = TRUE)
-    rspm_url <- sprintf("https://packagemanager.rstudio.com/all/__linux__/%s/latest", ubuntu_release)
-
-    repos <- getOption("repos")
-    repos[[paste0("RSPM-", ubuntu_release)]] <- rspm_url
-    options(repos = repos)
-  }
-}
+#if (Sys.info()[["sysname"]] == "Linux") {
+#  is_ubuntu <- grepl("Ubuntu", system("lsb_release -i", intern = TRUE))
+#
+#  if (is_ubuntu) {
+#    # bionic, focal, jammy, ...
+#    ubuntu_release <- system("lsb_release -c | awk -F ':\t' '{print $2}'", intern = TRUE)
+#    rspm_url <- sprintf("https://packagemanager.rstudio.com/all/__linux__/%s/latest", ubuntu_release)
+#
+#    repos <- getOption("repos")
+#    repos[[paste0("RSPM-", ubuntu_release)]] <- rspm_url
+#    options(repos = repos)
+#  }
+#}
 
 
 # Options ---------------------------------------------------------------------------------------------------------

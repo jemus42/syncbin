@@ -15,7 +15,7 @@ alias sqqc="sq -h --states=PD | wc -l"
 function sqstat () {
 
   echo ""
-  echo "Status as of $(date ''+%F %T'):"
+  echo "Status as of $(date '+%F %T'):"
   echo "$(sqc) jobs\t $(sqrc) running\t $(sqqc) queued"
   echo ""	
 } 

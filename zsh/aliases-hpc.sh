@@ -14,9 +14,13 @@ alias sqqc="sq -h --states=PD | wc -l"
 
 function sqstat () {
 
+  BLUE='\033[1;34m'
+  RED='\033[0;31m'
+  NC='\033[0m' # No Color
+
   echo ""
   echo "Status as of $(date '+%F %T'):"
-  echo "$(sqc) jobs\t $(sqrc) running\t $(sqqc) queued"
+  echo "${BLUE}$(sqc)${NC} jobs\t $(sqrc) running\t ${RED}$(sqqc)${NC} queued"
   echo ""	
 } 
 

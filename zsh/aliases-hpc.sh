@@ -12,5 +12,11 @@ alias sqc="sq -h | wc -l"
 alias sqrc="sq -h --states=R | wc -l"
 alias sqqc="sq -h --states=PD | wc -l"
 
+function sqstat () {
+ 
+  echo "$(sqc) jobs\t $(sqrc) running\t $(sqqc) queued"
+	
+} 
+
 # resource limits https://stackoverflow.com/a/61587377/409362
 alias slimits="sacctmgr list associations"

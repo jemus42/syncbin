@@ -4,7 +4,7 @@ alias tmn="tmux new-session -A -s hpc"
 alias tma="tmux attach -t hpc"
 
 
-function sq () { squeue --clusters=$CLUSTERS --me -l --sort=T $@; }
+function sq () { squeue --clusters=$CLUSTERS --me -l --sort=T --noheader $@; }
 function sqr () { sq --states="R" $@; }
 function sqq () { sq --states="PD" $@; }
 

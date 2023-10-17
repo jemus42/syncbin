@@ -14,10 +14,21 @@ alias sqqc="sq -h --states=PD | wc -l"
 
 function sqstat () {
 
-  BLUE='\033[1;34m'
-  GREEN='\033[0;32m'
-  RED='\033[0;31m'
-  NC='\033[0m' # No Color
+  # Set colors via SCII escape sequences by default
+  # but this can cause issues to allow escape hatch
+  if [[ "${1}" == "bw" ]]
+  then
+	  BLUE=''
+	  GREEN=''
+	  RED=''
+	  NC=''
+  else
+	  BLUE='\033[1;34m'
+	  GREEN='\033[0;32m'
+	  RED='\033[0;31m'
+	  NC='\033[0m' # No Color
+  fi
+
 
   echo ""
   echo "Status as of $(date '+%F %T'):"
@@ -26,8 +37,9 @@ function sqstat () {
   echo ""	
 } 
 
+
 # resource limits https://stackoverflow.com/a/61587377/409362
 alias slimits="sacctmgr list associations"
 
 alias smaxrunning="slimits | grep serial | grep ${USER} | awk '{print $6}'"
-alias smaxsubmit="slimits | grep serial | grep ${USER} | awk '{print $6}'"
+alias smaxsubmit="slimits | grep serial | grep ${USER} | awk '{print $5}'"

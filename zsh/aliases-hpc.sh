@@ -28,3 +28,6 @@ function sqstat () {
 
 # resource limits https://stackoverflow.com/a/61587377/409362
 alias slimits="sacctmgr list associations"
+
+alias smaxrunning="slimits | grep serial | grep ${USER} | awk '{print $6}'"
+alias smaxsubmit="slimits | grep serial | grep ${USER} | awk '{print $6}'"

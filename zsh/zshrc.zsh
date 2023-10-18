@@ -115,8 +115,26 @@ fi
 # fi
 
 # Nope, do it on demand
-alias tmn='tmux new-session -A -s ${host_short}'
-alias tma='tmux attach -t ${host_short}'
+# alias tmn='tmux new-session -A -s ${host_short}'
+# alias tma='tmux attach -t ${host_short}'
+
+function tmn () {
+  if [ -z "${1}" ]
+  then
+    tmux new-session -A -s hpc
+  else
+    tmux new-session -A -s "${1}"
+  fi
+}
+
+function tma () {
+  if [ -z "${1}" ]
+  then
+    tmux attach -t hpc
+  else
+    tmux attach -t "${1}"
+  fi
+}
 
 if [[ $prompt_theme = "pw10k" ]]; then
   # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

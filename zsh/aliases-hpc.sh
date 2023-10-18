@@ -1,32 +1,53 @@
 
 alias R="R --quiet --no-save"
-alias tmn="tmux new-session -A -s hpc"
-alias tma="tmux attach -t hpc"
+# alias tmn="tmux new-session -A -s hpc"
+# alias tma="tmux attach -t hpc"
+
+function tmn () {
+  if [ -z "${1}" ]
+  then
+    tmux new-session -A -s hpc
+  else
+    tmux new-session -A -s "${1}"
+  fi
+}
+
+function tma () {
+  if [ -z "${1}" ]
+  then
+    tmux attach -t hpc
+  else
+    tmux attach -t "${1}"
+  fi
+}
 
 
-function sq () { squeue --clusters=$CLUSTERS --me -l --sort=T --noheader $@; }
-function sqr () { sq --states="R" $@; }
-function sqq () { sq --states="PD" $@; }
+# See https://slurm.schedmd.com/squeue.html
+# and https://github.com/mllg/batchtools/blob/1196047ed5115d54bde2923848c1f3ec11fda6d2/R/clusterFunctionsSlurm.R
 
+alias sq="squeue --clusters=$CLUSTERS --me -l --sort=T"
+alias sqr="sq --states=R,S,CG,RS,SI,SO,ST"
+alias sqq="sq --states=PD,CF,RF,RH,RQ,SE"
+
+alias sqrc="sqr | wc -l"
+alias sqqc="sqq | wc -l"
 alias sqc="sq -h | wc -l"
-alias sqrc="sq -h --states=R | wc -l"
-alias sqqc="sq -h --states=PD | wc -l"
 
 function sqstat () {
 
-  # Set colors via SCII escape sequences by default
-  # but this can cause issues to allow escape hatch
+  # Set colors via ASCII escape sequences by default
+  # but this can cause issues so allow escape hatch
   if [[ "${1}" == "bw" ]]
   then
-	  BLUE=''
-	  GREEN=''
-	  RED=''
-	  NC=''
+    BLUE=''
+    GREEN=''
+    RED=''
+    NC=''
   else
-	  BLUE='\033[1;34m'
-	  GREEN='\033[0;32m'
-	  RED='\033[0;31m'
-	  NC='\033[0m' # No Color
+    BLUE='\033[1;34m'
+    GREEN='\033[0;32m'
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color
   fi
 
 
@@ -34,8 +55,8 @@ function sqstat () {
   echo "Status as of $(date '+%F %T'):"
   echo ""
   echo "${BLUE}$(sqc)${NC} jobs | ${GREEN}$(sqrc)${NC} running | ${RED}$(sqqc)${NC} queued"
-  echo ""	
-} 
+  echo ""
+}
 
 
 # resource limits https://stackoverflow.com/a/61587377/409362

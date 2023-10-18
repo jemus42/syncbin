@@ -6,15 +6,14 @@ pak() {
     then
 		Rscript --quiet -e "pak::${1}()"
 	else
-		Rscript --quiet -e "pak::${1}('${2}')"
+		Rscript --quiet -e "pak::${1}(\"${2}\")"
 	fi
 }
 
 install() {
     echo "Installing $1"
-    pak pak ${1}
-    # Add installation logic here
-    
+    pak pak "${1}"
+    # Add installation logic here   
 }
 
 install-local() {

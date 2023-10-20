@@ -121,7 +121,7 @@ fi
 function tmn () {
   if [ -z "${1}" ]
   then
-    tmux new-session -A -s hpc
+    tmux new-session -A -s "${host_short}"
   else
     tmux new-session -A -s "${1}"
   fi
@@ -130,7 +130,7 @@ function tmn () {
 function tma () {
   if [ -z "${1}" ]
   then
-    tmux attach -t hpc
+    tmux attach -t "${host_short}"
   else
     tmux attach -t "${1}"
   fi

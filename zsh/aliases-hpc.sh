@@ -29,11 +29,11 @@ alias sq="squeue --clusters=$CLUSTERS --me -l --sort=T"
 alias sqr="sq --states=R,S,CG,RS,SI,SO,ST"
 alias sqq="sq --states=PD,CF,RF,RH,RQ,SE"
 
-alias sqrc="sqr | wc -l"
-alias sqqc="sqq | wc -l"
-alias sqc="sq -h | wc -l"
+alias sqrc="sqr --noheader | wc -l"
+alias sqqc="sqq --noheader | wc -l"
+alias sqc="sq --noheader | wc -l"
 
-function sqstat () {
+function sqs () {
 
   # Set colors via ASCII escape sequences by default
   # but this can cause issues so allow escape hatch

@@ -1,14 +1,21 @@
 # Dump files to my filedump, because dump
 function dump {
-  rsync -avh --progress "$@" -e ssh horst:"dump.jemu.name"
-  FILE=$(basename $1)
-  if [[ $ME == "Lukas" ]]; then
-    echo "https://dump.jemu.name/$FILE" | pbcopy
-  else
+  for filearg in "$@"
+  do
+    rsync -avh --progress "${filearg}" -e ssh horst:"dump.jemu.name"
+    FILE=$(basename $filearg)
+    if [[ $ME == "Lukas" ]]; then
+      echo "https://dump.jemu.name/$FILE" | pbcopy
+    else
       echo "https://dump.jemu.name/$FILE"
-  fi
-  echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.jemu.name/$FILE" >> $HOME/.dumplog
-  terminal-notifier -title "Filedump" -message "$FILE" -execute code $HOME/.dumplog;
+    fi
+    echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.jemu.name/$FILE" >> $HOME/.dumplog
+    if (( $+commands[terminal-notifier] )); then
+      terminal-notifier -title "Filedump" -message "$FILE" -execute code $HOME/.dumplog;
+    fi
+  done
+
+
 }
 
 function reload() {
@@ -224,5 +231,29 @@ pak-install () {
 checkmake () {rg "^[^\S\t\n\r]" < Makefile}
 
 gitit () {
-        git commit -am $(date +%Y%m%d%H%M%S) && git push
+  git commit -am $(date +%Y%m%d%H%M%S) && git push
+}
+
+git-timetravel () {
+
+  # If first argument is empty you dun goof'd
+  if [ -z "${1}" ]
+  then
+      echo "Must provide a valid timestamp in roughly ISO 8601"
+      echo "Example: git-timetravel \"2022-10-01 12:00\" main"
+      exit 1
+  fi
+
+  # Guess branch if unset, use currently checked out branch
+  if [ -z "${2}" ]
+  then
+    BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    echo "Guessing branch: ${BRANCH}"
+  else
+    BRANCH=${2}
+  fi
+
+  # Via https://stackoverflow.com/questions/6990484/how-to-checkout-in-git-by-date
+  # git checkout 'master@{2022-10-01 18:30:00}' would only can go back 90 days max apparently.
+  git checkout $(git rev-list -n 1 --first-parent --before="${1}" ${BRANCH})
 }

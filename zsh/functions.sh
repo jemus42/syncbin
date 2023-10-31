@@ -50,6 +50,7 @@ function upall() {
     else
       sudo apt update
       sudo apt upgrade -y
+      sudo apt autoclean -y
       sudo apt autoremove -y
     fi
 
@@ -71,12 +72,12 @@ function upall() {
       echo ""
       brew upgrade
 
-      echo ""
-      echo "####################################"
-      echo "##    Updating homebrew casks     ##"
-      echo "####################################"
-      echo ""
-      brew upgrade --cask
+      # echo ""
+      # echo "####################################"
+      # echo "##    Updating homebrew casks     ##"
+      # echo "####################################"
+      # echo ""
+      # brew upgrade --cask
     fi
 
     # if (( $+commands[mas] )); then

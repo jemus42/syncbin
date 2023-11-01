@@ -6,10 +6,10 @@ if ! [ -x "$(command -v brew)" ]; then
 fi
 
 # Binary name and package name differ
-(( $+commands[rg] )) && echo "Found ripgrep" || brew install ripgrep
-(( $+commands[btm] )) && echo "Found bottom" || brew install bottom
-(( $+commands[choose] )) && echo "Found choose" || brew install choose-rust
-(( $+commands[delta] )) && echo "Found delta" || brew install git-delta
+test -x "$(command -v rg)" && echo "Found ripgrep" || brew install ripgrep
+test -x "$(command -v btm)" && echo "Found bottom" || brew install bottom
+test -x "$(command -v choose)" && echo "Found choose" || brew install choose-rust
+test -x "$(command -v delta)" && echo "Found delta" || brew install git-delta
 
 # The easy cases where binary == package name
 base_tools=( fd sd dust diskus broot zoxide bat exa lsd delta duf jq tldr procs micro )

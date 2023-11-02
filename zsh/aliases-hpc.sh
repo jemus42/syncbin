@@ -73,23 +73,23 @@ function notify_jobs () {
   test -x "$(command -v pushover)" && pushover -m "Jobs are done on $(hostname)" -T "Cluster"
 }
 
-function install_pushover_bash () {
-  wget https://raw.githubusercontent.com/akusei/pushover-bash/main/pushover.sh -O ~/bin/pushover
+# function install_pushover_bash () {
+#   wget https://raw.githubusercontent.com/akusei/pushover-bash/main/pushover.sh -O ~/bin/pushover
 
-  if [[ ! -f $HOME/.pushover/pushover-config ]]
-  then
-      cat << EOF > $HOME/.pushover/pushover-config
-api_token=
-user_key=
-device=
-url=
-url_title=
-priority=
-title=
-sound=
-      EOF
-  fi
-}
+#   if [[ ! -f $HOME/.pushover/pushover-config ]]
+#   then
+#       cat << EOF > $HOME/.pushover/pushover-config
+# api_token=
+# user_key=
+# device=
+# url=
+# url_title=
+# priority=
+# title=
+# sound=
+#       EOF
+#   fi
+# }
 
 # resource limits https://stackoverflow.com/a/61587377/409362
 alias slimits="sacctmgr list associations"

@@ -58,6 +58,38 @@ function sqs () {
   echo ""
 }
 
+function notify_jobs () {
+  # Assumes this version of pushover
+  # https://github.com/akusei/pushover-bash
+  # https://raw.githubusercontent.com/akusei/pushover-bash/main/pushover.sh
+  while [ $(sqc) != 0 ]
+  do
+    echo "Nothing yet! $(date '+%F %T')"
+    sleep 1800
+  done
+
+  echo "Done! $(date '+%F %T')"
+
+  test -x "$(command -v pushover)" && pushover -m "Jobs are done on $(hostname)" -T "Cluster"
+}
+
+function install_pushover_bash () {
+  wget https://raw.githubusercontent.com/akusei/pushover-bash/main/pushover.sh -O ~/bin/pushover
+
+  if [[ ! -f $HOME/.pushover/pushover-config ]]
+  then
+      cat << EOF > $HOME/.pushover/pushover-config
+api_token=
+user_key=
+device=
+url=
+url_title=
+priority=
+title=
+sound=
+      EOF
+  fi
+}
 
 # resource limits https://stackoverflow.com/a/61587377/409362
 alias slimits="sacctmgr list associations"

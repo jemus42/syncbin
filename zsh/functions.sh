@@ -14,8 +14,6 @@ function dump {
       terminal-notifier -title "Filedump" -message "$FILE" -execute code $HOME/.dumplog;
     fi
   done
-
-
 }
 
 function reload() {

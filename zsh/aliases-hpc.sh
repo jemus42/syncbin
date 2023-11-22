@@ -54,7 +54,7 @@ function sqs () {
   echo ""
   echo "Status as of $(date '+%F %T'):"
   echo ""
-  echo "${BLUE}$(sqc)${NC} jobs | ${GREEN}$(sqrc)${NC} running | ${RED}$(sqqc)${NC} queued"
+  printf "${BLUE}$(sqc)${NC} jobs | ${GREEN}$(sqrc)${NC} running | ${RED}$(sqqc)${NC} queued"
   echo ""
 }
 

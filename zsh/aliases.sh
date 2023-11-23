@@ -73,7 +73,8 @@ alias grep='grep --color'
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 
 # exa: long by default with git
-(( $+commands[exa] )) && alias exa='exa -l --git --icons'
+(( $+commands[eza] )) && alias eza='eza -l --git --icons'
+
 
 alias t='tail -f'
 

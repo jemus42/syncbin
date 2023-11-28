@@ -21,11 +21,22 @@ function tma () {
   fi
 }
 
+alias tl="tmux list-sessions"
 
 # See https://slurm.schedmd.com/squeue.html
 # and https://github.com/mllg/batchtools/blob/1196047ed5115d54bde2923848c1f3ec11fda6d2/R/clusterFunctionsSlurm.R
 
-alias sq="squeue --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
+# if [[ $(whoami) == "lburk" ]];
+# then
+#   # Beartooth is angry if --clusters is passed?
+#   alias sq="squeue --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
+# else
+#   # LRZ requires it though
+#   alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
+# fi
+
+alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
+
 #alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
 alias sqr="sq --states=R,S,CG,RS,SI,SO,ST"
 alias sqq="sq --states=PD,CF,RF,RH,RQ,SE"

@@ -25,13 +25,18 @@ function tma () {
 # See https://slurm.schedmd.com/squeue.html
 # and https://github.com/mllg/batchtools/blob/1196047ed5115d54bde2923848c1f3ec11fda6d2/R/clusterFunctionsSlurm.R
 
-alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %m %k' --sort=T"
+alias sq="squeue --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
+#alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
 alias sqr="sq --states=R,S,CG,RS,SI,SO,ST"
 alias sqq="sq --states=PD,CF,RF,RH,RQ,SE"
 
 alias sqrc="sqr --noheader | wc -l"
 alias sqqc="sqq --noheader | wc -l"
 alias sqc="sq --noheader | wc -l"
+
+# sacct aliases to check on recelty completed or failed jobs
+alias slac="sacct -M $CLUSTERS -X -u $USER --format=Comment,JobID,JobName%35,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem"
+alias slacf="slac --state=OOM,DL,TO"
 
 function sqs () {
 

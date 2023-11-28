@@ -1,4 +1,3 @@
-
 alias R="R --quiet --no-save"
 # alias tmn="tmux new-session -A -s hpc"
 # alias tma="tmux attach -t hpc"
@@ -26,16 +25,11 @@ alias tl="tmux list-sessions"
 # See https://slurm.schedmd.com/squeue.html
 # and https://github.com/mllg/batchtools/blob/1196047ed5115d54bde2923848c1f3ec11fda6d2/R/clusterFunctionsSlurm.R
 
-# if [[ $(whoami) == "lburk" ]];
-# then
-#   # Beartooth is angry if --clusters is passed?
-#   alias sq="squeue --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
-# else
-#   # LRZ requires it though
-#   alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
-# fi
 
-alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
+function sq () {
+  squeue --clusters="${CLUSTERS}" --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T
+}
+
 
 #alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
 alias sqr="sq --states=R,S,CG,RS,SI,SO,ST"
@@ -46,7 +40,9 @@ alias sqqc="sqq --noheader | wc -l"
 alias sqc="sq --noheader | wc -l"
 
 # sacct aliases to check on recelty completed or failed jobs
-alias slac="sacct -M $CLUSTERS -X -u $USER --format=Comment,JobID,JobName%35,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem"
+function slac () {
+  sacct -M "$CLUSTERS" -X -u "$USER" --format=Comment,JobID,JobName%35,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem
+}
 alias slacf="slac --state=OOM,DL,TO"
 
 function sqs () {
@@ -78,7 +74,7 @@ function notify_jobs () {
   # Assumes this version of pushover
   # https://github.com/akusei/pushover-bash
   # https://raw.githubusercontent.com/akusei/pushover-bash/main/pushover.sh
-  while [ $(sqc) != 0 ]
+  while [ "$(sqc)" != 0 ]
   do
     echo "Nothing yet! $(date '+%F %T')"
     sleep 1800
@@ -110,5 +106,13 @@ function notify_jobs () {
 # resource limits https://stackoverflow.com/a/61587377/409362
 alias slimits="sacctmgr list associations"
 
-alias smaxrunning="slimits | grep serial | grep ${USER} | awk '{print $6}'"
-alias smaxsubmit="slimits | grep serial | grep ${USER} | awk '{print $5}'"
+function smax () {
+  if [[ -z "$1" ]];
+  then
+    CLUSTERS="$1"
+  fi
+  slimits | grep "${CLUSTERS}" | grep "${USER}"
+}
+
+alias smaxrunning="slimits | grep $CLUSTERS | grep ${USER} | awk '{print $6}'"
+alias smaxsubmit="slimits | grep $CLUSTERS | grep ${USER} | awk '{print $5}'"

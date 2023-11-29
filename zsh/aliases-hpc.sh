@@ -27,7 +27,7 @@ alias tl="tmux list-sessions"
 
 
 function sq () {
-  squeue --clusters="${CLUSTERS}" --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T
+  squeue --clusters="${CLUSTERS}" --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T "$@"
 }
 
 

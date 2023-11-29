@@ -165,6 +165,13 @@ function gif2mp4 {
 	rm tmp-loop.gif
 }
 
+function alpha2white {
+  convert "$1" -background white -alpha remove -alpha off "$1"
+}
+
+function imgcrop {
+  magick mogrify -bordercolor white -fuzz 2% -trim -format png "$1"
+}
 
 # Silence a video
 function ffsilent { ffmpeg -i "$1" -c copy -an "$1-nosound.${1#*.}" }

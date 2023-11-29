@@ -137,8 +137,8 @@ function upall() {
 
 # Benachmarking ZSH startup
 function zsh_bench() {
-    zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log
-    echo DONE
+  zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log
+  echo DONE
 }
 
 ####################################################################################
@@ -157,9 +157,9 @@ compavc () {
 }
 
 function gif2mp4 {
-    TEMPGIF=$(mktemp)
+  TEMPGIF=$(mktemp)
 
-    ffmpeg -stream_loop 10 -i "${1}" ${TEMPGIF}.gif -y;
+  ffmpeg -stream_loop 10 -i "${1}" ${TEMPGIF}.gif -y;
 	ffmpeg -i ${TEMPGIF}.gif -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" "${1%.gif}.mp4"
 	#ffmpeg -i "${1}" -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" "${1%.gif}.mp4"
 	rm tmp-loop.gif
@@ -174,7 +174,9 @@ function imgcrop {
 }
 
 # Silence a video
-function ffsilent { ffmpeg -i "$1" -c copy -an "$1-nosound.${1#*.}" }
+function ffsilent {
+  ffmpeg -i "$1" -c copy -an "$1-nosound.${1#*.}"
+}
 
 # From https://stackoverflow.com/a/42544963/409362
 function git-find-large-files () {
@@ -219,9 +221,15 @@ cleantex () {
 }
 
 # R stuff
-upr-base () { R -e "update.packages(ask = FALSE)" }
-upr () { R -e "remotes::update_packages()" }
-pak-install () {
+function upr-base {
+  R -e "update.packages(ask = FALSE)"
+}
+
+function upr {
+  R -e "remotes::update_packages()"
+}
+
+function pak-install {
   args="c("
   for arg in "$@"
   do
@@ -232,7 +240,6 @@ pak-install () {
 
   R -e "pak::pkg_install($args)"
 }
-
 
 checkmake () {rg "^[^\S\t\n\r]" < Makefile}
 

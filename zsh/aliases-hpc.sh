@@ -45,6 +45,10 @@ function slac () {
 }
 alias slacf="slac --state=OOM,DL,TO"
 
+function nodecount () {
+  sq | awk -F' ' '{print $9}' | sort | uniq -c | grep -v 'NODELIST'
+ }
+
 function sqs () {
 
   # Set colors via ASCII escape sequences by default

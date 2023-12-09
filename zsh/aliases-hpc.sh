@@ -46,7 +46,11 @@ function slac () {
 alias slacf="slac --state=OOM,DL,TO"
 
 function nodecount () {
-  sq | awk -F' ' '{print $9}' | sort | uniq -c | grep -v 'NODELIST'
+  sq --noheader | awk -F' ' '{print $9}' | sort | uniq -c
+ }
+
+function partcount () {
+  sq --noheader | awk -F' ' '{print $2}' | sort | uniq -c
  }
 
 function sqs () {

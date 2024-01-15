@@ -41,9 +41,10 @@ alias sqc="sq --noheader | wc -l"
 
 # sacct aliases to check on recelty completed or failed jobs
 function slac () {
-  sacct -M "$CLUSTERS" -X -u "$USER" --format=Comment,JobID,JobName%35,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem
+  sacct -M "$CLUSTERS" -X -u "$USER" --format=Comment,JobID,JobName%36,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem
 }
 alias slacf="slac --state=OOM,DL,TO"
+alias slacoom="slac --state=OOM"
 
 function nodecount () {
   sq --noheader | awk -F' ' '{print $9}' | sort | uniq -c

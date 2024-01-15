@@ -11,8 +11,16 @@ test -x "/opt/homebrew/bin/brew" && eval $(/opt/homebrew/bin/brew shellenv)
 test -x "/home/linuxbrew/.linuxbrew/bin/brew" && export PATH="${PATH}:/home/linuxbrew/.linuxbrew/bin"
 
 # ENCODIIING
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
+if [[ "$(hostname)" =~ .*"blog".* ]]; then
+  # Edge case for beartooth / centOS I don't quite get
+  echo "Applying LC_LANG for beartooth"
+  export LC_ALL=en_US.utf8
+  export LANG=en_US.utf8
+else
+  # Regular case that appears to work as intended
+  export LC_ALL=en_US.UTF-8
+  export LANG=en_US.UTF-8
+fi
 
 # Possibly sometimes relevant
 # LC_COLLATE=C

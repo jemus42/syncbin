@@ -39,7 +39,7 @@ alias sqrc="sqr --noheader | wc -l"
 alias sqqc="sqq --noheader | wc -l"
 alias sqc="sq --noheader | wc -l"
 
-# sacct aliases to check on recelty completed or failed jobs
+# sacct aliases to check on recently completed or failed jobs
 function slac () {
   sacct -M "$CLUSTERS" -X -u "$USER" --format=Comment,JobID,JobName%36,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
 }

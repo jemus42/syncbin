@@ -166,6 +166,53 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
     invisible(x)
   }
 
+  #' Check memory usage
+  #'
+  #' Utility based on batchtools' method of estimating memory.
+  #' Needs to have called `gc(reset = TRUE)` before the task in question!
+  #'
+  #' @param unit (`"MB"`) Unit to return, one of `"B"`, `"MB"`, `"MiB"`, `"GB"`, `"GiB"`.
+  #'    No effect if `pretty = TRUE`.
+  #' @param pretty (`TRUE`) Uses `prettyunits::pretty_bytes()` to print result.
+  #' @param style (`"default"`) Passed to `prettyunits::pretty_bytes(..., style = style)`.
+  #'
+  #' @source https://github.com/mllg/batchtools/blob/1196047ed5115d54bde2923848c1f3ec11fda6d2/R/doJobCollection.R#L153
+  #'
+  #' @example
+  #' gc(reset = TRUE)
+  #' my_ram_heavy_function(painful = TRUE)
+  #' check_mem()
+  ee$check_mem = function(unit = "MB", pretty = TRUE, style = "default") {
+
+    memory.mult = c(if (.Machine$sizeof.pointer == 4L) 28L else 56L, 8L)
+    mem.used = sum(gc()[, 1L] * memory.mult)
+
+    if (!pretty) {
+      scalar = switch(
+        unit,
+        B = 1,
+        MB = 10^6,
+        MiB = (2^10)^2,
+        GB = 10^9,
+        GiB = (2^10)^3
+      )
+
+      mem.used = mem.used / scalar
+    } else {
+      prettyunits::pretty_bytes(mem.used, style = style)
+    }
+  }
+
+  #' Check memory before and after object creation, return difference
+  #' @examples
+  #' measure_memory({ rnorm(2^14) })
+  ee$measure_memory = function(expression, ...) {
+      before = check_mem(unit = "B", pretty = FALSE)
+      eval(expression)
+      after = check_mem(unit = "B", pretty = FALSE)
+      prettyunits::pretty_bytes(after - before)
+    }
+
   ee$bm = function(..., plot = FALSE) {
     requireNamespace("bench")
     requireNamespace("withr")

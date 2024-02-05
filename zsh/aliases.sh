@@ -127,17 +127,23 @@ if (($+commands[rstudio-server])); then
 fi
 
 function whothere () {
-  echo "Showing logged in users:"
+  echo "Logged in users:"
   echo ""
   whoc
-
-  echo "Showing active rstudio server sessions"
+  echo "----------------------"
   echo ""
-  rs-active-couunt
+
+  echo "rstudio server sessions:"
+  echo ""
+  rs-active-count
+  echo "----------------------"
+  echo ""
   
-  echo "Showing processes by user:"
+  echo "Processes by user:"
   echo ""
   ps -fuxa | awk '{print $1}' | awk NF | sort | uniq -c | sort -bgr
+  echo "----------------------"
+  echo ""
 }
 
 function whoc () {

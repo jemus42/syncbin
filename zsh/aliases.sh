@@ -127,7 +127,21 @@ if (($+commands[rstudio-server])); then
 fi
 
 function whothere () {
+  echo "Showing logged in users:"
+  echo ""
+  whoc
+
+  echo "Showing active rstudio server sessions"
+  echo ""
+  rs-active-couunt
+  
+  echo "Showing processes by user:"
+  echo ""
   ps -fuxa | awk '{print $1}' | awk NF | sort | uniq -c | sort -bgr
+}
+
+function whoc () {
+	who | awk '{print $1}' | sort | uniq -c | sort -bgr
 }
 
 # zsh is able to auto-do some kungfoo

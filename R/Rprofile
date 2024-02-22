@@ -7,8 +7,8 @@ options(repos = c(
 #  jemus42 = "https://jemus42.r-universe.dev"
 ))
 
-#if (Sys.info()[["sysname"]] == "Linux") {
-#  is_ubuntu <- grepl("Ubuntu", system("lsb_release -i", intern = TRUE))
+# if (Sys.info()[["sysname"]] == "Linux") {
+#  is_ubuntu <- try(grepl("Ubuntu", system("lsb_release -i || echo 'nope'", intern = TRUE)))
 #
 #  if (is_ubuntu) {
 #    # bionic, focal, jammy, ...
@@ -19,7 +19,7 @@ options(repos = c(
 #    repos[[paste0("RSPM-", ubuntu_release)]] <- rspm_url
 #    options(repos = repos)
 #  }
-#}
+# }
 
 
 # Options ---------------------------------------------------------------------------------------------------------

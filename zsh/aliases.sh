@@ -19,6 +19,8 @@ alias pushall='for remote in $(git remote show); do git push $remote; done'
 ## why not
 alias timestamp='date +%F_%T'
 
+alias esudo='sudo --preserve-env=PATH env'
+
 ## cleaning macos shit
 alias cleanDS="find . -name '.DS_Store' -delete; find . -name '._*' -delete"
 alias cleanempty="find . -type d -empty -delete"

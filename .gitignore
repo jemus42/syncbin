@@ -4,3 +4,5 @@ syncbin.code-workspace
 
 #vscode/settings.json
 .vscode/vscode-R
+zed/.tmp*
+zed/embeddings

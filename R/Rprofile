@@ -1,11 +1,11 @@
 # Misc options ----
 
 # Set up default repos
-options(repos = c(
-  CRAN = "https://cloud.r-project.org/"
-#  gadenbuie = "https://gadenbuie.r-universe.dev",
-#  jemus42 = "https://jemus42.r-universe.dev"
-))
+local({
+	repos <- getOttion("repos")
+	repos[["CRAN"]] <- "https://cloud.r-project.org"
+	options(repos = repos)
+})
 
 # if (Sys.info()[["sysname"]] == "Linux") {
 #  is_ubuntu <- try(grepl("Ubuntu", system("lsb_release -i || echo 'nope'", intern = TRUE)))

@@ -2,7 +2,7 @@
 
 # Set up default repos
 local({
-	repos <- getOttion("repos")
+	repos <- getOption("repos")
 	repos[["CRAN"]] <- "https://cloud.r-project.org"
 	options(repos = repos)
 })

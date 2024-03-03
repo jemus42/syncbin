@@ -95,6 +95,14 @@ alias -g P="2>&1| pygmentize -l pytb"
 alias fdir='find . -type d -name'
 alias ffile='find . -type f -name'
 
+
+vol() {osascript -e "set volume $1"}
+show() {osascript -e "tell application \"$1\" to activate"}
+alias ql="qlmanage -p"
+alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
+
+
+
 # lazygit and lazydocker if installed
 (( $+commands[lazygit] )) && alias gg='lazygit'
 (( $+commands[lazydocker] )) && alias ldo='lazydocker'

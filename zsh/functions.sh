@@ -136,7 +136,7 @@ function upall() {
 }
 
 # Benachmarking ZSH startup
-function zsh_bench() {
+zsh_bench() {
   zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log
   echo DONE
 }
@@ -145,7 +145,7 @@ function zsh_bench() {
 ### Combining PDFs using gs because I needed it once and want to never forget it ###
 ####################################################################################
 # Using gs because it keeps outline items and bookmarks, which pdfunite did not keep.
-function pdfcombine () {
+pdfcombine () {
   echo "Output: $1"
   echo "Input: $@[2,-1]"
   gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$1 $@[2,-1]
@@ -156,7 +156,7 @@ compavc () {
   ffmpeg -i "$1" -vcodec libx264 -crf 23 $(echo $1 | sed -e 's/\.(mp4|mkv)//')-comp.mp4
 }
 
-function gif2mp4 {
+gif2mp4 {
   TEMPGIF=$(mktemp)
 
   ffmpeg -stream_loop 10 -i "${1}" ${TEMPGIF}.gif -y;
@@ -165,21 +165,21 @@ function gif2mp4 {
 	rm tmp-loop.gif
 }
 
-function alpha2white {
+alpha2white {
   convert "$1" -background white -alpha remove -alpha off "$1"
 }
 
-function imgcrop {
+imgcrop {
   magick mogrify -bordercolor white -fuzz 2% -trim -format png "$1"
 }
 
 # Silence a video
-function ffsilent {
+ffsilent {
   ffmpeg -i "$1" -c copy -an "$1-nosound.${1#*.}"
 }
 
 # From https://stackoverflow.com/a/42544963/409362
-function git-find-large-files () {
+git-find-large-files () {
   git rev-list --objects --all |
   git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' |
   sed -n 's/^blob //p' |
@@ -187,6 +187,18 @@ function git-find-large-files () {
   cut -c 1-12,41- |
   $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
 }
+
+git-disk-usage () {
+  git for-each-ref --format='%(refname)' |
+  while read branch
+  do
+      size=$(git rev-list --disk-usage=human --objects HEAD..$branch)
+      echo "$size $branch"
+  done |
+  sort -h
+}
+
+
 
 aria () {
   aria2c --seed-time=0 --max-concurrent-downloads=5 $@

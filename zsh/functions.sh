@@ -136,7 +136,7 @@ function upall() {
 }
 
 # Benachmarking ZSH startup
-zsh_bench() {
+zsh_bench () {
   zsh -xvlic 'source ~/.zshrc' 2>&1 | ts -i '%.s' > zsh_startup_${HOST/.*/}_$(date +%F_%T).log
   echo DONE
 }
@@ -156,7 +156,7 @@ compavc () {
   ffmpeg -i "$1" -vcodec libx264 -crf 23 $(echo $1 | sed -e 's/\.(mp4|mkv)//')-comp.mp4
 }
 
-gif2mp4 {
+gif2mp4 () {
   TEMPGIF=$(mktemp)
 
   ffmpeg -stream_loop 10 -i "${1}" ${TEMPGIF}.gif -y;
@@ -165,16 +165,16 @@ gif2mp4 {
 	rm tmp-loop.gif
 }
 
-alpha2white {
+alpha2white () {
   convert "$1" -background white -alpha remove -alpha off "$1"
 }
 
-imgcrop {
+imgcrop () {
   magick mogrify -bordercolor white -fuzz 2% -trim -format png "$1"
 }
 
 # Silence a video
-ffsilent {
+ffsilent () {
   ffmpeg -i "$1" -c copy -an "$1-nosound.${1#*.}"
 }
 
@@ -253,10 +253,12 @@ function pak-install {
   R -e "pak::pkg_install($args)"
 }
 
-checkmake () {rg "^[^\S\t\n\r]" < Makefile}
+checkmake () {
+  rg "^[^\S\t\n\r]" < Makefile
+ }
 
 gitit () {
-  git commit -am $(date +%Y%m%d%H%M%S) && git push
+  git commit -am "$(date +%Y%m%d%H%M%S)" && git push
 }
 
 git-timetravel () {
@@ -280,5 +282,5 @@ git-timetravel () {
 
   # Via https://stackoverflow.com/questions/6990484/how-to-checkout-in-git-by-date
   # git checkout 'master@{2022-10-01 18:30:00}' would only can go back 90 days max apparently.
-  git checkout $(git rev-list -n 1 --first-parent --before="${1}" ${BRANCH})
+  git checkout "$(git rev-list -n 1 --first-parent --before=\"${1}\" ${BRANCH})"
 }

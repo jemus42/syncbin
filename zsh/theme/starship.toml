@@ -64,7 +64,7 @@ format = "w/ [$symbol($version)](bold bright-blue) "
 symbol = "R "
 # Disable .Rprofile detection due to home dir
 #detect_files = ["DESCRIPTION", "renv.lock"]
-detect_files = ["!$HOME/.Rprofile"]
+#detect_files = ["!$HOME/.Rprofile"] # no longer needed it seems
 #detect_extensions = ["Rd", "Rmd", "Rproj"]
 version_format = "v${raw}"
 

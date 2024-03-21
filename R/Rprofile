@@ -4,7 +4,36 @@
 local({
 	repos <- getOption("repos")
 	repos[["CRAN"]] <- "https://cloud.r-project.org"
-	options(repos = repos)
+
+  # Setting up P3M depending on platform for binaries
+  p3m_url <- NULL
+
+  # osVersion is created when loading utils which hasn't happened yet
+  # and these are identical apparently
+  os_version <- utils::sessionInfo()$running
+
+  if (grepl("^Ubuntu.*LTS$", os_version)) {
+    # bionic, focal, jammy, ...
+    release <- readLines("/etc/os-release")
+    release <- release[grepl("^UBUNTU_CODENAME", release)]
+    release <- strsplit(release, "=")[[1]][[2]]
+    p3m_url <- sprintf("https://packagemanager.posit.co/cran/__linux__/%s/latest", release)
+  }
+
+  if (grepl("^Red Hat", os_version)) {
+    release <- readLines("/etc/os-release")
+    release <- release[grepl("^VERSION_ID", release)]
+    release <- strsplit(release, "=")[[1]][[2]]
+    # I don't understand CentOS/Fedore/Red Hat
+    if (grepl("8\\.\\d", release)) {
+      p3m_url <- "https://packagemanager.posit.co/cran/__linux__/centos8/latest"
+    } else if (grepl("9\\.\\d", release)) {
+      p3m_url <- "https://packagemanager.posit.co/cran/__linux__/rhel9/latest"
+    }
+  }
+
+  if (!is.null(p3m_url)) repos[["P3M"]] <- p3m_url
+  options(repos = repos)
 })
 
 # if (Sys.info()[["sysname"]] == "Linux") {

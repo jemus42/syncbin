@@ -21,9 +21,12 @@ disabled = false
 format = "[$hostname]($style) "
 
 [directory]
-truncate_to_repo = true
+truncate_to_repo = false # true
 truncation_length = 3
 truncation_symbol = "../"
+style = "cyan"
+before_repo_root_style = "dimmed cyan"
+repo_root_style = "bold cyan"
 
 # Replace the "❯" symbol in the prompt with "➜" // maybe └─>
 [character]
@@ -77,6 +80,11 @@ detect_files = ["DESCRIPTION"]
 #detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
 format = "📦 [v$output]($style) "
 style = "bold bright-blue"
+disabled = true
+
+# package module appears to also pick up DESCRIPTION files so no need for custom module
+[package]
+disabled = false
 
 [custom.renv]
 description = "renv.lock R version"
@@ -111,3 +119,6 @@ Linux = "\uebc6"
 [git_branch]
 format = 'on [$symbol$branch(:$remote_branch)]($style) '
 ignore_branches = ['main']
+
+[docker_context]
+disabled = true

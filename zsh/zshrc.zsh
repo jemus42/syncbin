@@ -1,7 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-if (( $+commands[fig] )); then
-  fi
-
 prompt_theme="starship" # or pw10k
 
 if [[ $prompt_theme = "pw10k" ]]; then
@@ -28,8 +24,8 @@ fi
 
 export SYNCBIN=$HOME/syncbin
 
-export host_short=${HOST/.*/}
-export host_os=$(uname -s)
+export host_short="$(uname -n)"
+export host_os="$(uname -s)"
 export ME=$(whoami)
 
 # Some stuff needs to be exported before other stuff

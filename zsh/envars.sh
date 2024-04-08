@@ -8,7 +8,8 @@
 test -x "/opt/homebrew/bin/brew" && eval $(/opt/homebrew/bin/brew shellenv)
 # test -x "/home/linuxbrew/.linuxbrew/bin/brew" && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 # Moving linuxbrew later in the PATH to avoid conflicts on Linux
-test -x "/home/linuxbrew/.linuxbrew/bin/brew" && export PATH="${PATH}:/home/linuxbrew/.linuxbrew/bin"
+# test -x "/home/linuxbrew/.linuxbrew/bin/brew" && export PATH="${PATH}:/home/linuxbrew/.linuxbrew/bin"
+test -x "/home/linuxbrew/.linuxbrew/bin/brew" && eval $(/opt/homebrew/bin/brew shellenv)
 
 # ENCODIIING
 if [[ "$(hostname)" =~ .*"blog".* ]]; then

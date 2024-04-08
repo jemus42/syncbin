@@ -2,7 +2,12 @@
 
 pak() {
 
-    if [[ -z ${2} ]]
+    if [[ -z "$1" ]]
+    then
+    	Rscript --quiet -e "pak::pak()"
+    fi
+    
+    if [[ -z "$2" ]]
     then
 		Rscript --quiet -e "pak::${1}()"
 	else

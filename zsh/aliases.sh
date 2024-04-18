@@ -27,7 +27,22 @@ alias cleanempty="find . -type d -empty -delete"
 
 ## R, but clean
 alias R='R --no-save --quiet'
-alias rstudio='open -a RStudio.app'
+
+# Open Rstudio project in the current direction
+rstudio () {
+
+	# To do: if path is supplied, check for Rproj there
+	if [[ -z "$1" ]]
+	then
+	  FILE="$(find . -maxdepth 1 -iname '*.Rproj')"
+	else
+	  FILE="$1"
+	fi
+
+	echo "Opening $FILE with RStudio..."
+	open -a RStudio.app "$FILE"
+
+}
 
 
 ## Misc helpers
@@ -112,7 +127,7 @@ alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resour
 # using bat as a pager for --help output with a helper alias
 alias bathelp='bat --plain --language=help'
 help() {
-    "$@" --help 2>&1 | bathelp
+	"$@" --help 2>&1 | bathelp
 }
 
 # GPG stuff
@@ -130,9 +145,9 @@ if (($+commands[rstudio-server])); then
   alias rs-kill="sudo rstudio-server kill-session"
 
   rs-active-count () {
-    # Get active sessions, extract user field, remove empty line,
-    # sort to group users, count unique users, print descending
-    rstudio-server active-sessions | awk '{print $5}' | awk NF | sort | uniq -c | sort -bgr
+	# Get active sessions, extract user field, remove empty line,
+	# sort to group users, count unique users, print descending
+	rstudio-server active-sessions | awk '{print $5}' | awk NF | sort | uniq -c | sort -bgr
   }
 fi
 

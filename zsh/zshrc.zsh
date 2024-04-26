@@ -1,5 +1,8 @@
 prompt_theme="starship" # or pw10k
 
+autoload -Uz compinit
+compinit
+
 if [[ $prompt_theme = "pw10k" ]]; then
   # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
   # Initialization code that may require console input (password prompts, [y/n]

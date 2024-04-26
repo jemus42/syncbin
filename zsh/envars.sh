@@ -69,6 +69,9 @@ if (( $+commands[mcfly] )); then
   export MCFLY_PROMPT="❯"
 fi
 
+# https://github.com/carapace-sh/carapace-bin for rich completions
+(( $+commands[carapace] )) && source <(carapace _carapace)
+
 # If cargo is available
 test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH
 

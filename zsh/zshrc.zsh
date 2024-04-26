@@ -141,5 +141,4 @@ if [[ $prompt_theme = "pw10k" ]]; then
 fi
 
 # bit?
-autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/bit bit

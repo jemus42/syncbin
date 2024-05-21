@@ -84,14 +84,14 @@ function notify_jobs () {
   # https://github.com/akusei/pushover-bash
   # https://raw.githubusercontent.com/akusei/pushover-bash/main/pushover.sh
 
-  INTERVAL="${1:-30}" 
-  INTERVAL=$((INTERVAL * 60))
-  echo "Checking in an interval of $INTERVAL minutes"
+  INTERVAL_MINS="${1:-30}" 
+  INTERVAL_SECS=$((INTERVAL_MINS * 60))
+  echo "Checking in an interval of ${INTERVAL_MINS} minutes"
   
   while [ "$(sqc)" != 0 ]
   do
     echo "Nothing yet! $(date '+%F %T')"
-    sleep $INTERVAL
+    sleep ${INTERVAL_SECS}
   done
 
   echo "Done! $(date '+%F %T')"

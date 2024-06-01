@@ -36,20 +36,6 @@ local({
   options(repos = repos)
 })
 
-# if (Sys.info()[["sysname"]] == "Linux") {
-#  is_ubuntu <- try(grepl("Ubuntu", system("lsb_release -i || echo 'nope'", intern = TRUE)))
-#
-#  if (is_ubuntu) {
-#    # bionic, focal, jammy, ...
-#    ubuntu_release <- system("lsb_release -c | awk -F ':\t' '{print $2}'", intern = TRUE)
-#    rspm_url <- sprintf("https://packagemanager.rstudio.com/all/__linux__/%s/latest", ubuntu_release)
-#
-#    repos <- getOption("repos")
-#    repos[[paste0("RSPM-", ubuntu_release)]] <- rspm_url
-#    options(repos = repos)
-#  }
-# }
-
 
 # Options ---------------------------------------------------------------------------------------------------------
 # enable autocompletions for package names in require(), library()
@@ -94,7 +80,9 @@ options(
     completionProvider = list(
       resolveProvider = TRUE, triggerCharacters = list(".", ":", "$")
     )
-  )
+  ),
+  # renv ---------------------------------------------
+  renv.config.pak.enabled = TRUE
 )
 
 # mlr style for appropriate repositories only
@@ -135,13 +123,13 @@ if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
 # Does not work on Ubuntu still and it's driving me insane
 # Git credentials have brought me nothing but pain.
 # So far using the `gh` cli utility for auth seems to be ok though? I gave up.
-if (Sys.info()[["sysname"]] == "Darwin") {
-  if (requireNamespace("gitcreds", quietly = TRUE)) {
-    Sys.setenv(GITHUB_PAT = gitcreds::gitcreds_get(use_cache = FALSE)$password)
-  } else {
-    message("package 'gitcreds' not found: install.packages('gitcreds')")
-  }
-}
+# if (Sys.info()[["sysname"]] == "Darwin") {
+#  if (requireNamespace("gitcreds", quietly = TRUE)) {
+#    Sys.setenv(GITHUB_PAT = gitcreds::gitcreds_get(use_cache = FALSE)$password)
+#  } else {
+#    message("package 'gitcreds' not found: install.packages('gitcreds')")
+#  }
+#}
 
 # RS Themes -------------------------------------------------------------------------------------------------------
 if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {

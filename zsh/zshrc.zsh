@@ -61,7 +61,8 @@ test -e "${HOME}/.functions.local" && source "${HOME}/.functions.local"
 ################################
 ### Third-Party integrations ###
 ################################
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# There's a omz plugin for this, using that instead
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 ##############
 ### Prompt ###

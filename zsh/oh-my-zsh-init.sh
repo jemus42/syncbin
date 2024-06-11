@@ -48,7 +48,6 @@ plugins=(
     command-not-found
     isodate
     iterm2
-    thefuck
 )
 
 # Conditional plugins just in case? At least tmux plugin complains if tmux is not found
@@ -60,6 +59,7 @@ plugins=(
 (( $+commands[eza] )) && plugins+=(eza)
 (( $+commands[fd] )) && plugins+=(fd)
 (( $+commands[ripgrep] )) && plugins+=(ripgrep)
+(( $+commands[thefuck] )) && plugins+=(thefuck)
 
 # Platform-specific plugins
 (( $+commands[systemctl] )) && plugins+=(systemd)

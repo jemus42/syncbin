@@ -294,6 +294,8 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
     )
   }
 
+  ee$q <- function() quit(save = "no")
+
   attach(ee, warn.conflicts = FALSE)
 
   # Startup msg -----------------------------------------------------------------------------------------------------

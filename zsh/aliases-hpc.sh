@@ -54,6 +54,10 @@ function partcount () {
   sq --noheader | awk -F' ' '{print $2}' | sort | uniq -c
 }
 
+function jobcount () {
+  sq --noheader | awk -F' ' '{print $11}' | sort | uniq -c
+}
+
 function sqs () {
 
   # Set colors via ASCII escape sequences by default

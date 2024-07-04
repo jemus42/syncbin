@@ -132,5 +132,10 @@ function smax () {
   slimits | grep "${CLUSTERS}" | grep "${USER}"
 }
 
-alias smaxrunning="slimits | grep $CLUSTERS | grep ${USER} | awk '{print $6}'"
-alias smaxsubmit="slimits | grep $CLUSTERS | grep ${USER} | awk '{print $5}'"
+function btpartinfo () {
+	sinfo -p moran,teton,teton-knl,teton-cascade,beartooth
+}
+
+function btusage () {
+	chu_account -Y -a mallet > ~/account_usage.txt && cat ~/account_usage.txt
+}

@@ -1,68 +1,34 @@
 #!/bin/bash
 
-pak() {
 
-    if [[ -z "$1" ]]
-    then
-    	Rscript --quiet -e "pak::pak()"
-    fi
-    
-    if [[ -z "$2" ]]
-    then
-		Rscript --quiet -e "pak::${1}()"
-	else
-		Rscript --quiet -e "pak::${1}(\"${2}\")"
-	fi
-}
 
-install() {
-    echo "Installing $1"
-    pak pak "${1}"
-    # Add installation logic here   
-}
+if [[ -z "$1" ]]
+then
+	echo "Running pak::pak()"
+	Rscript --quiet -e "pak::pak()"
+fi
 
-install-local() {
-    echo "Installing locally"
-    pak local_install
-    # Add local installation logic here
-}
+if [[ -n "$1" ]]
+then
 
-install-local-deps() {
-	pak local_install_deps 
-}
+	result="c("
+	
+	# Loop through all positional parameters
+	for arg in "$@"
+	do
+	    # Append each argument to the result string, enclosed in single quotes and followed by a comma
+	    result+="'$arg', "
+	done
+	
+	# Remove the trailing comma and space, then add the closing parenthesis
+	result="${result%, })"
+	
+	# Print the result
+	# echo "$result"
 
-install-local-dev-deps() {
-	pak local_install_dev_deps
-}
+	printf "Installing packages: %s\n" "$*"
+	
+    Rscript --quiet -e "pak::pak(${result})"
+fi
 
-pak_local_deps() { 
-  pak local_deps 
-}
 
-pak_local_deps_explain() { 
-  pak local_deps_explain ${1}
-}
-
-case "$1" in
-    install)
-        install "$2"
-        ;;
-    install-local)
-        install-local
-        ;;
-    install-local-deps)
-        install-local-deps
-        ;;
-    install-local-dev-deps)
-        install-local-dev-deps
-        ;;
-    local-deps)
-    	pak_local_deps
-        ;;
-    local-deps-explain)
-    	pak_local_deps_explain ${2}
-    	;;
-    *)
-        echo "Invalid argument"
-        ;;
-esac

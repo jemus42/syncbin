@@ -56,7 +56,6 @@ plugins=(
 (( $+commands[tmux] )) && plugins+=(tmux)
 (( $+commands[httpie] )) && plugins+=(httpie)
 (( $+commands[rustc] )) && plugins+=(rust)
-(( $+commands[fd] )) && plugins+=(fd)
 (( $+commands[ripgrep] )) && plugins+=(ripgrep)
 (( $+commands[thefuck] )) && plugins+=(thefuck)
 

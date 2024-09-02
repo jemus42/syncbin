@@ -154,19 +154,30 @@ fi
 function whothere () {
   echo "Logged in users:"
   echo ""
+
   whoc
+
   echo "----------------------"
   echo ""
 
   echo "rstudio server sessions:"
   echo ""
+
   rs-active-count
+  
   echo "----------------------"
   echo ""
   
   echo "Processes by user:"
   echo ""
-  ps -fuxa | awk '{print $1}' | awk NF | sort | uniq -c | sort -bgr
+  # ps -fuxa | awk '{print $1}' | awk NF | sort | uniq -c | sort -bgr
+
+  for user in $(getent group emmy | awk -F: '{print $4}' | tr ',' ' '); do 
+    if who | grep -qw "$user"; then 
+      echo "$user: $(ps -u $user --no-headers | wc -l) processes"; 
+    fi 
+  done
+  
   echo "----------------------"
   echo ""
 }

@@ -170,14 +170,11 @@ function whothere () {
   
   echo "Processes by user:"
   echo ""
-  # ps -fuxa | awk '{print $1}' | awk NF | sort | uniq -c | sort -bgr
 
-  for user in $(members -p emmy); do 
-    if who | grep -qw "$user"; then 
-      echo "     $user: $(ps -u $user --no-headers | wc -l)"; 
-    fi 
-  done
-  
+	  for user in $(members -p emmy); do 
+	      echo "     $user: $(ps -u $user --no-headers | wc -l)"; 
+	  done
+	  
   echo "----------------------"
   echo ""
 }

@@ -172,9 +172,9 @@ function whothere () {
   echo ""
   # ps -fuxa | awk '{print $1}' | awk NF | sort | uniq -c | sort -bgr
 
-  for user in $(getent group emmy | awk -F: '{print $4}' | tr ',' ' '); do 
+  for user in $(members -p emmy); do 
     if who | grep -qw "$user"; then 
-      echo "$user: $(ps -u $user --no-headers | wc -l) processes"; 
+      echo "     $user: $(ps -u $user --no-headers | wc -l)"; 
     fi 
   done
   

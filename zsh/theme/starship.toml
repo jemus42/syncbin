@@ -74,7 +74,7 @@ version_format = "v${raw}"
 [custom.rpkg]
 description = "R package version"
 #command = "sed -n '/^Version:/,/([0-9]+\\.)/p' DESCRIPTION "  # shows output of command
-command = "sed -n -e '/^Version:/p' DESCRIPTION | sed -e 's/Version: //'"
+command = "sed -n -e 's/^Version: //p' DESCRIPTION"
 detect_files = ["DESCRIPTION"]
 #when = """ test "$HOME" == "$PWD" """
 #detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
@@ -88,7 +88,7 @@ disabled = false
 
 [custom.renv]
 description = "renv.lock R version"
-command = 'cat renv.lock | jq .R.Version | sed -e s/\"//g'
+command = 'jq -r ".R.Version" renv.lock'
 detect_files = ["renv.lock"]
 format = "renv [v$output]($style) "
 style = "bold bright-blue"

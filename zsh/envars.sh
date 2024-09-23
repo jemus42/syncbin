@@ -64,9 +64,10 @@ export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 # mcfly
 if (( $+commands[mcfly] )); then
 # Enabling mcfly here would have lead to later overriding of ctrl+R for some reason
-  export MCFLY_FUZZY=2
+  export MCFLY_FUZZY=4
   export MCFLY_RESULTS_SORT=LAST_RUN
   export MCFLY_PROMPT="❯"
+  export MCFLY_RESULTS=25
 fi
 
 # https://github.com/carapace-sh/carapace-bin for rich completions

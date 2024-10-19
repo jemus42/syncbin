@@ -144,6 +144,6 @@ fi
 # bit?
 complete -o nospace -C /opt/homebrew/bin/bit bit
 
-source /home/burk/.config/broot/launcher/bash/br
-
-if [ -e /home/burk/.nix-profile/etc/profile.d/nix.sh ]; then . /home/burk/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]
+  then . $HOME/.nix-profile/etc/profile.d/nix.sh
+ fi # added by Nix installer

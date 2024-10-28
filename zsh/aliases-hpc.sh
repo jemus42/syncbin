@@ -25,38 +25,43 @@ alias tl="tmux list-sessions"
 # See https://slurm.schedmd.com/squeue.html
 # and https://github.com/mllg/batchtools/blob/1196047ed5115d54bde2923848c1f3ec11fda6d2/R/clusterFunctionsSlurm.R
 
+function sqm () {
+  sq --me "$@"
+}
 
 function sq () {
-  squeue --me --format='%.13i %.12P %.12j %.8u %.10T %.10M %.10l %.6D %R %.m %.25k' --sort=T "$@"
+  squeue --format='%.13i %.12P  %.8u %.10T %.10M %.10l %.6D %R %.m %.25k' --sort=T "$@"
   # --clusters="${CLUSTERS}"
+  # job name rarely informative
+  # %.12j
 }
 
 
 #alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
-alias sqr="sq --states=R,S,CG,RS,SI,SO,ST"
-alias sqq="sq --states=PD,CF,RF,RH,RQ,SE"
+alias sqr="sqm --states=R,S,CG,RS,SI,SO,ST"
+alias sqq="sqm --states=PD,CF,RF,RH,RQ,SE"
 
 alias sqrc="sqr --noheader | wc -l"
 alias sqqc="sqq --noheader | wc -l"
-alias sqc="sq --noheader | wc -l"
+alias sqc="sqm --noheader | wc -l"
 
 # sacct aliases to check on recently completed or failed jobs
 function slac () {
-  sacct -M "$CLUSTERS" -X -u "$USER" --format=Comment,JobID,JobName%36,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
+  sacct -M "$CLUSTERS" -X --me --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
 }
 alias slacf="slac --state=OOM,DL,TO"
 alias slacoom="slac --state=OOM"
 
 function nodecount () {
-  sq --noheader | awk -F' ' '{print $9}' | sort | uniq -c
+  sqm --noheader | awk -F' ' '{print $9}' | sort | uniq -c
 }
 
 function partcount () {
-  sq --noheader | awk -F' ' '{print $2}' | sort | uniq -c
+  sqm --noheader | awk -F' ' '{print $2}' | sort | uniq -c
 }
 
 function jobcount () {
-  sq --noheader | awk -F' ' '{print $11}' | sort | uniq -c
+  sqm --noheader | awk -F' ' '{print $11}' | sort | uniq -c
 }
 
 function sqs () {

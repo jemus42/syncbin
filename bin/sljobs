@@ -1,0 +1,14 @@
+#! /usr/bin/env Rscript
+
+command = paste(
+	"squeue",
+	"--me",
+	"--format='%.18i %.16P %.8u %.10T %.10M %.9l %.6D %R %.m %.25k'"
+)
+
+tab = data.table::fread(cmd = command)
+tab$PARTITION <- ifelse(tab$PARTITION == "inv-compsci", "teton-knl", tab$PARTITION)
+
+tab |>
+  dplyr::count(STATE, COMMENT, PARTITION) |>
+  dplyr::arrange(STATE, COMMENT)

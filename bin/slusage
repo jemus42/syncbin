@@ -1,0 +1,25 @@
+#! /usr/bin/env Rscript
+
+tab = system(
+	command = paste(
+	"squeue --format='%.13i %.16P  %.8u %.10T %.10M %.10l %.6D %R %.m %.25k'"
+	),
+	intern = TRUE
+)
+
+tab = data.table::fread(text = tab, sep = " ")
+names(tab) <- tolower(names(tab))
+cli::cli_h1("Jobs per user")
+
+tab |>
+  dplyr::count(user, state, sort = TRUE) |>
+	tidyr::pivot_wider(names_from = "state", values_from = "n", values_fill = 0) |>
+	knitr::kable()
+
+cli::cli_h1("Running jobs per user by partition")
+
+tab |>
+  dplyr::filter(state == "RUNNING") |>
+  dplyr::count(user, partition, sort = TRUE) |>
+	tidyr::pivot_wider(names_from = "partition", values_from = "n", values_fill = 0) |>
+	knitr::kable()

@@ -3,7 +3,7 @@
 command = paste(
 	"squeue",
 	"--me",
-	"--format='%.18i %.16P %.8u %.10T %.10M %.9l %.6D %R %.m %.25k'"
+	"--format='%.16P %.10T %R %.m %.25k'"
 )
 
 tab = data.table::fread(cmd = command)
@@ -11,4 +11,5 @@ tab$PARTITION <- ifelse(tab$PARTITION == "inv-compsci", "teton-knl", tab$PARTITI
 
 tab |>
   dplyr::count(STATE, COMMENT, PARTITION) |>
-  dplyr::arrange(STATE, COMMENT)
+  dplyr::arrange(STATE, COMMENT) |>
+	knitr::kable()

@@ -2,7 +2,7 @@
 
 tab = system(
 	command = paste(
-	"squeue --format='%.13i %.16P  %.8u %.10T %.10M %.10l %.6D %R %.m %.25k'"
+	"squeue --format='%.16P %.8u %.10T %R %.m %.25k'"
 	),
 	intern = TRUE
 )

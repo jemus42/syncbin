@@ -53,7 +53,7 @@ alias slacf="slac --state=OOM,DL,TO"
 alias slacoom="slac --state=OOM"
 
 function nodecount () {
-  sqm --noheader | awk -F' ' '{print $9}' | sort | uniq -c
+  sqm --noheader | awk -F' ' '{print $8}' | sort | uniq -c
 }
 
 function partcount () {
@@ -61,7 +61,7 @@ function partcount () {
 }
 
 function jobcount () {
-  sqm --noheader | awk -F' ' '{print $11}' | sort | uniq -c
+  sqm --noheader | awk -F' ' '{print $10}' | sort | uniq -c
 }
 
 function sqs () {
@@ -139,7 +139,7 @@ function smax () {
 }
 
 function partinfo () {
-	sinfo -p moran,teton,teton-knl,teton-cascade,teton-hugemem,beartooth,beartooth-bigmem
+	sinfo -p moran,teton,teton-knl,teton-cascade,teton-hugemem,beartooth,beartooth-bigmem "$@"
 }
 
 function btusage () {

@@ -27,7 +27,8 @@ alias tl="tmux list-sessions"
 
 
 function sq () {
-  squeue --clusters="${CLUSTERS}" --me --format='%.13i %.12P %.12j %.8u %.10T %.10M %.10l %.6D %R %.m %.25k' --sort=T "$@"
+  squeue --me --format='%.13i %.12P %.12j %.8u %.10T %.10M %.10l %.6D %R %.m %.25k' --sort=T "$@"
+  # --clusters="${CLUSTERS}"
 }
 
 
@@ -132,8 +133,8 @@ function smax () {
   slimits | grep "${CLUSTERS}" | grep "${USER}"
 }
 
-function btpartinfo () {
-	sinfo -p moran,teton,teton-knl,teton-cascade,beartooth
+function partinfo () {
+	sinfo -p moran,teton,teton-knl,teton-cascade,teton-hugemem,beartooth,beartooth-bigmem
 }
 
 function btusage () {

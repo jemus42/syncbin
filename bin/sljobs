@@ -3,11 +3,11 @@
 command = paste(
 	"squeue",
 	"--me",
-	"--format='%.16P %.10T %R %.m %.25k'"
+	"--format='%.26P %.10T %R %.m %.25k'"
 )
 
 tab = data.table::fread(cmd = command)
-tab$PARTITION <- ifelse(tab$PARTITION == "inv-compsci", "teton-knl", tab$PARTITION)
+tab[, PARTITION := ifelse(PARTITION == "inv-compsci", "teton-knl", PARTITION)]
 
 tab |>
   dplyr::count(STATE, COMMENT, PARTITION) |>

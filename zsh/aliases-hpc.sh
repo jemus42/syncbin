@@ -30,7 +30,7 @@ function sqm () {
 }
 
 function sq () {
-  squeue --format='%.13i %.12P  %.8u %.10T %.10M %.10l %.6D %R %.m %.25k' --sort=T "$@"
+  squeue --format='%.13i %.12P %.8u %.10T %.10M %.10l %.6D %R %.m %.25k' --sort=T "$@"
   # --clusters="${CLUSTERS}"
   # job name rarely informative
   # %.12j
@@ -47,7 +47,7 @@ alias sqc="sqm --noheader | wc -l"
 
 # sacct aliases to check on recently completed or failed jobs
 function slac () {
-  sacct -M "$CLUSTERS" -X --me --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
+  sacct -M "$CLUSTERS" -X --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
 }
 alias slacf="slac --state=OOM,DL,TO"
 alias slacoom="slac --state=OOM"

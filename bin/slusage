@@ -1,6 +1,6 @@
 #! /usr/bin/env Rscript
 
-command = paste("squeue --format='%.16P %.8u %.10T %R %.m %.25k'")
+command = paste("squeue --format='%.16P %.8u %.10T %.m %.25k'")
 
 tab = data.table::fread(cmd = command)
 tab[, PARTITION := data.table::fifelse(PARTITION == "inv-compsci", "teton-knl", PARTITION)]

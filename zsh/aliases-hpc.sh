@@ -30,7 +30,7 @@ function sqm () {
 }
 
 function sq () {
-  squeue --format='%.13i %.12P %.8u %.10T %.10M %.10l %.6D %R %.m %.25k' --sort=T "$@"
+  squeue --format='%.13i %.15P %.8u %.10T %.10M %.10l %.6D %R %.m %.25k' --sort=T "$@"
   # --clusters="${CLUSTERS}"
   # job name rarely informative
   # %.12j
@@ -49,19 +49,20 @@ alias sqc="sqm --noheader | wc -l"
 function slac () {
   sacct -M "$CLUSTERS" -X --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
 }
+
 alias slacf="slac --state=OOM,DL,TO"
 alias slacoom="slac --state=OOM"
 
 function nodecount () {
-  sqm --noheader | awk -F' ' '{print $8}' | sort | uniq -c
+  squeue --me --format='%R' --noheader | sort | uniq -c | sort -bnr
 }
 
 function partcount () {
-  sqm --noheader | awk -F' ' '{print $2}' | sort | uniq -c
+  squeue --me --format='%.20P' --noheader | sort | uniq -c | sort -bn
 }
 
 function jobcount () {
-  sqm --noheader | awk -F' ' '{print $10}' | sort | uniq -c
+ squeue --me --format='%.25k' --noheader | sort | uniq -c | sort -bn
 }
 
 function sqs () {
@@ -139,7 +140,7 @@ function smax () {
 }
 
 function partinfo () {
-	sinfo -p moran,teton,teton-knl,teton-cascade,teton-hugemem,beartooth,beartooth-bigmem "$@"
+	sinfo -p mb,wildiris,moran,teton,teton-knl,teton-cascade,teton-hugemem,beartooth,beartooth-bigmem "$@"
 }
 
 function btusage () {

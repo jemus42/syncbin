@@ -16,7 +16,7 @@ function dump {
   done
 }
 
-function reload() {
+function reload () {
   echo "Updating syncbin at $SYNCBIN..."
   git -C $SYNCBIN pull origin main
   git -C $SYNCBIN submodule update --recursive
@@ -35,7 +35,7 @@ function reload() {
 ## Updating ##
 ##############
 
-function upall() {
+function upall () {
 
   case $( uname -s ) in
   Linux)
@@ -241,17 +241,6 @@ function upr {
   R -e "remotes::update_packages()"
 }
 
-function pak-install {
-  args="c("
-  for arg in "$@"
-  do
-    args="$args\"$arg\", "
-  done
-  args="${args%, })"
-  echo "Installing packages $args, ..."
-
-  R -e "pak::pkg_install($args)"
-}
 
 checkmake () {
   rg "^[^\S\t\n\r]" < Makefile

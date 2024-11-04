@@ -311,6 +311,10 @@ load_plugins {
 // Default: default
 //
 // theme "default"
+// theme "catppuccin-latte"
+// theme "catppuccin-frappe"
+// theme "catppuccin-macchiato"
+theme "catppuccin-mocha"
 
 // The name of the default layout to load on startup
 // Default: "default"

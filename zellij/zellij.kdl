@@ -253,7 +253,8 @@ on_force_close "detach"
 // Default: default
 //
 // theme "default"
-theme "catppuccin-mocha" // or latte, frappe and macchiato
+// theme "catppuccin" // or latte, frappe and macchiato
+theme "tokyo-night"
 
 // The name of the default layout to load on startup
 // Default: "default"

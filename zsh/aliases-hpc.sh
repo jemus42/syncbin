@@ -42,7 +42,7 @@ alias sqc="sqm --noheader | wc -l"
 
 # sacct aliases to check on recently completed or failed jobs
 function slac () {
-  sacct -M -X --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
+  sacct -X --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
 }
 
 alias slac1w="slac -S=now-1week"

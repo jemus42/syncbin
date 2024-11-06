@@ -30,7 +30,7 @@ function sqm () {
 }
 
 function sq () {
-  squeue --noconvert --format='%i %.15P %.8u %T %M %L %l %D %c %R %.m %.25k' --sort=T "$@"
+  squeue --noconvert --format='%i %P %.u %T %M %L %l %D %c %R %.m %k' --sort=T "$@"
 }
 
 alias sqr="sqm --states=R,S,CG,RS,SI,SO,ST"

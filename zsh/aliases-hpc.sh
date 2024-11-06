@@ -30,10 +30,7 @@ function sqm () {
 }
 
 function sq () {
-  squeue --format='%.13i %.15P %.8u %.10T %.10M %.10l %.6D %R %.m %.25k' --sort=T "$@"
-  # --clusters="${CLUSTERS}"
-  # job name rarely informative
-  # %.12j
+  squeue --noconvert --format='%.13i %.15P %.8u %.10T %M %L %l %D %c %R %.m %q %.25k' --sort=T "$@"
 }
 
 
@@ -50,19 +47,20 @@ function slac () {
   sacct -M "$CLUSTERS" -X --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
 }
 
-alias slacf="slac --state=OOM,DL,TO"
-alias slacoom="slac --state=OOM"
+alias slac1w="slac -S=now-1week"
+alias slac1d="slac -S=now-1day"
+alias slac1h="slac -S=now-1hour"
 
 function nodecount () {
   squeue --me --format='%R' --noheader | sort | uniq -c | sort -bnr
 }
 
 function partcount () {
-  squeue --me --format='%.20P' --noheader | sort | uniq -c | sort -bn
+  squeue --me --format='%P' --noheader | sort | uniq -c | sort -bn
 }
 
 function jobcount () {
- squeue --me --format='%.25k' --noheader | sort | uniq -c | sort -bn
+  squeue --me --format='%k' --noheader | sort | uniq -c | sort -bn
 }
 
 function sqs () {

@@ -110,19 +110,15 @@ alias -g P="2>&1| pygmentize -l pytb"
 alias fdir='find . -type d -name'
 alias ffile='find . -type f -name'
 
-
-vol() {osascript -e "set volume $1"}
-show() {osascript -e "tell application \"$1\" to activate"}
 alias ql="qlmanage -p"
 alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
-
-
 
 # lazygit and lazydocker if installed
 (( $+commands[lazygit] )) && alias gg='lazygit'
 (( $+commands[lazydocker] )) && alias ldo='lazydocker'
 
-(( $+commands[zellij] )) && alias zel='zellij'
+alias zel='zellij'
+alias za='zellij attach -c'
 
 # using bat as a pager for --help output with a helper alias
 alias bathelp='bat --plain --language=help'
@@ -171,10 +167,10 @@ function whothere () {
   echo "Processes by user:"
   echo ""
 
-	  for user in $(members -p emmy); do 
-	      echo "     $user: $(ps -u $user --no-headers | wc -l)"; 
-	  done
-	  
+	for user in $(members -p emmy); do 
+	  echo "     $user: $(ps -u $user --no-headers | wc -l)"; 
+	done
+	
   echo "----------------------"
   echo ""
 }

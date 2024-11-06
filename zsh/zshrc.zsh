@@ -102,22 +102,6 @@ fi
 ### At the very end: tmux ###
 #############################
 
-# Auto-attach tmux session over ssh
-# If no session exists, it makes a new one named after the host
-# https://stackoverflow.com/a/43819740/409362
-# Only runs if:
-# 0. tmux is installed (do nothing otherwise)
-# 1. Profiling is not enabled
-# 2. It's a SSH connection
-# 3. It's an interactive shell
-# if (( $+commands[tmux] )) && [ -z $zsh_prof ] && [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
-#    tmux new-session -A -s ${host_short}
-# fi
-
-# Nope, do it on demand
-# alias tmn='tmux new-session -A -s ${host_short}'
-# alias tma='tmux attach -t ${host_short}'
-
 function tmn () {
   if [ -z "${1}" ]
   then
@@ -146,4 +130,4 @@ complete -o nospace -C /opt/homebrew/bin/bit bit
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]
   then . $HOME/.nix-profile/etc/profile.d/nix.sh
- fi # added by Nix installer
+fi # added by Nix installer

@@ -6,7 +6,7 @@ format = """$os$all"""
 right_format = """$cmd_duration$conda$time"""
 
 continuation_prompt = "[❯❯](bright-green) "
-command_timeout = 1000
+command_timeout = 1500
 
 [username]
 disabled = false

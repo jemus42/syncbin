@@ -80,9 +80,7 @@ options(
     completionProvider = list(
       resolveProvider = TRUE, triggerCharacters = list(".", ":", "$")
     )
-  ),
-  # renv ---------------------------------------------
-  renv.config.pak.enabled = TRUE
+  )
 )
 
 # mlr style for appropriate repositories only
@@ -90,12 +88,11 @@ if (grepl("mlr", getwd()) || grepl("paradox", getwd())) {
   options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
 
   if (!requireNamespace("styler.mlr", quietly = TRUE)) {
-    message("styler.mlr not installed: remotes::install_github('mlr-org/styler.mlr')")
+    message("styler.mlr not installed: pak::pak('mlr-org/styler.mlr')")
   }
 }
 
 if (requireNamespace("rlang", quietly = TRUE)) {
-  # options(error = rlang::entrace)
   rlang::global_entrace()
 }
 
@@ -133,7 +130,7 @@ if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
 
 # RS Themes -------------------------------------------------------------------------------------------------------
 if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
-  # remotes::install_github("gadenbuie/rsthemes")
+  # pak::pak("gadenbuie/rsthemes")
 
   rsthemes::set_theme_light("GitHub {rsthemes}")
   rsthemes::set_theme_dark("Monokai Spacegray Eighties")

@@ -33,8 +33,6 @@ function sq () {
   squeue --noconvert --format='%.13i %.15P %.8u %.10T %M %L %l %D %c %R %.m %q %.25k' --sort=T "$@"
 }
 
-
-#alias sq="squeue --clusters=$CLUSTERS --me --format='%.18i %.9P %.12j %.8u %.8T %.10M %.9l %.6D %R %.m %.k' --sort=T"
 alias sqr="sqm --states=R,S,CG,RS,SI,SO,ST"
 alias sqq="sqm --states=PD,CF,RF,RH,RQ,SE"
 
@@ -44,7 +42,7 @@ alias sqc="sqm --noheader | wc -l"
 
 # sacct aliases to check on recently completed or failed jobs
 function slac () {
-  sacct -M "$CLUSTERS" -X --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
+  sacct -M -X --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
 }
 
 alias slac1w="slac -S=now-1week"

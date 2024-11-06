@@ -45,9 +45,9 @@ function slac () {
   sacct -X --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
 }
 
-alias slac1w="slac -S=now-1week"
-alias slac1d="slac -S=now-1day"
-alias slac1h="slac -S=now-1hour"
+alias slac1w="slac -S now-1week"
+alias slac1d="slac -S now-1day"
+alias slac1h="slac -S now-1hour"
 
 function nodecount () {
   squeue --me --format='%R' --noheader | sort | uniq -c | sort -bnr

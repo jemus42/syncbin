@@ -30,7 +30,7 @@ function sqm () {
 }
 
 function sq () {
-  squeue --noconvert --format='%.13i %.15P %.8u %.10T %M %L %l %D %c %R %.m %q %.25k' --sort=T "$@"
+  squeue --noconvert --format='%i %.15P %.8u %T %M %L %l %D %c %R %.m %.25k' --sort=T "$@"
 }
 
 alias sqr="sqm --states=R,S,CG,RS,SI,SO,ST"
@@ -50,7 +50,7 @@ alias slac1d="slac -S now-1day"
 alias slac1h="slac -S now-1hour"
 
 function nodecount () {
-  squeue --me --format='%R' --noheader | sort | uniq -c | sort -bnr
+  squeue --me --format='%R' --noheader | sort | uniq -c | sort -bn
 }
 
 function partcount () {

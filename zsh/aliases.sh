@@ -10,11 +10,8 @@ alias speedo='speedometer -l  -r eth0 -t eth0 -m $(( 1024 * 1024 * 3 / 2 ))'
 
 ## git
 alias g="git"
-alias push='git push'
-alias pull='git pull'
 alias git-reset-to-remote='git fetch && git reset --hard'
 alias git-amend='git commit --amend --no-edit'
-alias pushall='for remote in $(git remote show); do git push $remote; done'
 
 ## why not
 alias timestamp='date +%F_%T'
@@ -22,7 +19,7 @@ alias timestamp='date +%F_%T'
 alias esudo='sudo --preserve-env=PATH env'
 
 ## cleaning macos shit
-alias cleanDS="find . -name '.DS_Store' -delete; find . -name '._*' -delete"
+alias cleanDS="find . -name '.DS_Store' -print -delete; find . -name '._*' -print -delete"
 alias cleanempty="find . -type d -empty -delete"
 
 ## R, but clean

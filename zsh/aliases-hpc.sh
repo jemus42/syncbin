@@ -2,6 +2,14 @@ alias R="R --quiet --no-save"
 # alias tmn="tmux new-session -A -s hpc"
 # alias tma="tmux attach -t hpc"
 
+alias gss="git status --short"
+alias gd="git diff"
+alias gprav="git pull --rebase --autostash -v"
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
 function tmn () {
   if [ -z "${1}" ]
   then

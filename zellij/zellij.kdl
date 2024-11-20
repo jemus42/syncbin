@@ -150,9 +150,9 @@ keybinds clear-defaults=true {
     shared_except "locked" "session" {
         bind "Ctrl o" { SwitchToMode "session"; }
     }
-    shared_except "locked" "entersearch" "renametab" "renamepane" "prompt" "tmux" {
-        bind "Ctrl q" { Quit; }
-    }
+    // shared_except "locked" "entersearch" "renametab" "renamepane" "prompt" "tmux" {
+    //     bind "Ctrl q" { Quit; }
+    // }
     shared_except "locked" "scroll" {
         bind "Ctrl s" { SwitchToMode "scroll"; }
     }
@@ -330,7 +330,7 @@ theme "catppuccin-mocha"
 //   - detach (Default)
 //   - quit
 // 
-// on_force_close "quit"
+on_force_close "detach"
  
 // Configure the scroll back buffer size
 // This is the number of lines zellij stores for each pane in the scroll back

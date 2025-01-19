@@ -129,7 +129,7 @@ if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
 #}
 
 # RS Themes -------------------------------------------------------------------------------------------------------
-if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
+if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)) {
   # pak::pak("gadenbuie/rsthemes")
 
   rsthemes::set_theme_light("GitHub {rsthemes}")

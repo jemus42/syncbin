@@ -2,8 +2,8 @@
 
 # Set up default repos
 local({
-	repos <- getOption("repos")
-	repos[["CRAN"]] <- "https://cloud.r-project.org"
+  repos <- getOption("repos")
+  repos[["CRAN"]] <- "https://cloud.r-project.org"
 
   # Setting up P3M depending on platform for binaries
   p3m_url <- NULL
@@ -84,7 +84,7 @@ options(
 )
 
 # mlr style for appropriate repositories only
-if (grepl("mlr", getwd()) || grepl("paradox", getwd())) {
+if (grepl("mlr3", getwd()) || grepl("paradox", getwd())) {
   options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
 
   if (!requireNamespace("styler.mlr", quietly = TRUE)) {
@@ -143,15 +143,15 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
 #   hist <- normalizePath("~/.Rhistory", mustWork = FALSE)
 #   if (!dir.exists(dirname(hist)))
 #     dir.create(dirname(hist), recursive = TRUE)
-# 
+#
 #   if (interactive()) {
-# 	  ok <- try(utils::loadhistory(hist))
-# 	  if (inherits(ok, "try-error")) {
-# 	    message("History could not be loaded: ", hist)
-# 	  } else {
-# 	    # message("Loaded history: ", hist)
-# 	    assign(".Last", function() try(utils::savehistory(hist)), envir = .GlobalEnv)
-# 	  }
+#     ok <- try(utils::loadhistory(hist))
+#     if (inherits(ok, "try-error")) {
+#       message("History could not be loaded: ", hist)
+#     } else {
+#       # message("Loaded history: ", hist)
+#       assign(".Last", function() try(utils::savehistory(hist)), envir = .GlobalEnv)
+#     }
 #   }
 
   ee = new.env()
@@ -297,20 +297,19 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
 
   # Startup msg -----------------------------------------------------------------------------------------------------
   if (interactive()) {
-	  version     <- R.version.string
-	  date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
-	  utf8        <- l10n_info()$`UTF-8`
+    version     <- R.version.string
+    date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
+    utf8        <- l10n_info()$`UTF-8`
 
-	  if (requireNamespace("crayon", quietly = TRUE)) {
-	    utf8 <- ifelse(utf8, crayon::bgGreen("enabled"), crayon::bgRed("disabled!"))
-	    version <- crayon::bold(version)
-	  }
+    if (requireNamespace("crayon", quietly = TRUE)) {
+      utf8 <- if(!utf8) crayon::bgRed("UTF-8 is disabled!") else NULL
+      version <- crayon::bold(version)
+    }
 
-	  startup_msg <- paste0(
-	    version, " on ", date_string, "\n",
-	    "UTF-8: ", utf8
-	  )
+    startup_msg <- paste0(
+      version, " on ", date_string, "\n", utf8
+    )
 
-	  cat(startup_msg, "\n\n")
+    cat(startup_msg, "\n\n")
   }
 }

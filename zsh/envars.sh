@@ -17,7 +17,7 @@ if [[ "$(hostname)" =~ .*"blog".* ]]; then
   echo "Applying LC_LANG for beartooth"
   export LC_ALL=en_US.utf8
   export LANG=en_US.utf8
-else
+elif [[ "$(hostname)" != "ppth" ]]; then
   # Regular case that appears to work as intended
   export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
@@ -49,6 +49,8 @@ export MICRO_TRUECOLOR=1
 
 # Adding syncbinbin
 export PATH=$PATH:$HOME/bin:$SYNCBIN/bin
+
+export PATH=$HOME/.local/bin:$PATH
 
 # Load iterm2 utils if connected via iterm2
 # See also: https://iterm2.com/documentation-utilities.html

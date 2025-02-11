@@ -131,5 +131,3 @@ complete -o nospace -C /opt/homebrew/bin/bit bit
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]
   then . $HOME/.nix-profile/etc/profile.d/nix.sh
 fi # added by Nix installer
-
-source /mnt/SSD/lukas/.config/broot/launcher/bash/br

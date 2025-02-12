@@ -17,7 +17,7 @@ alias git-amend='git commit --amend --no-edit'
 alias timestamp='date +%F_%T'
 
 alias esudo='sudo --preserve-env=PATH env'
-alias smicro"sudo $(which micro)"
+alias smicro="sudo $(which micro)"
 
 ## cleaning macos shit
 alias cleanDS="find . -name '.DS_Store' -print -delete; find . -name '._*' -print -delete"

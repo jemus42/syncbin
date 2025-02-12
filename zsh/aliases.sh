@@ -17,6 +17,7 @@ alias git-amend='git commit --amend --no-edit'
 alias timestamp='date +%F_%T'
 
 alias esudo='sudo --preserve-env=PATH env'
+alias smicro"sudo $(which micro)"
 
 ## cleaning macos shit
 alias cleanDS="find . -name '.DS_Store' -print -delete; find . -name '._*' -print -delete"
@@ -50,8 +51,6 @@ alias sha256='shasum -a 256'
 alias yt="yt-dlp"
 alias yt-list="yt-dlp --list-formats"
 alias yt-channel="yt-dlp -i -o '%(uploader)s/%(playlist)s/%(title)s [%(id)s].%(ext)s'"
-#alias yt-playlist="youtube-dl -i -o '%(playlist)s/%(playlist_index)s - %(title)s_%(id)s.%(ext)s'"
-#alias yt-playlist='yt-dlp -i -o "%(uploader)s [%(channel_id)s]/%(playlist_index)s - %(title)s [%(id)s].%(ext)s"'
 alias yt-playlist='yt-dlp -i -o "%(playlist_index)s - %(title)s [%(id)s].%(ext)s"'
 alias yt-chronological="yt-dlp -i -o '%(upload_date)s -  %(title)s [%(id)s].%(ext)s'"
 
@@ -61,7 +60,7 @@ alias yt-chronological="yt-dlp -i -o '%(upload_date)s -  %(title)s [%(id)s].%(ex
 alias pdf2htmlEX='docker run -ti --rm -v "`pwd`":/pdf -w /pdf pdf2htmlex/pdf2htmlex'
 
 #### Thefuck
- (( $+commands[thefuck] )) && eval $(thefuck --alias)
+(( $+commands[thefuck] )) && eval $(thefuck --alias)
 
  #######################################################
  ## Copypasta from common-aliases plugin, with tweaks ##

@@ -89,20 +89,19 @@ alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 # exa: long by default with git
 (( $+commands[eza] )) && alias eza='eza -l --git --icons'
 
-
 alias t='tail -f'
 
 # Command line head / tail shortcuts
-alias -g H='| head'
-alias -g T='| tail'
-alias -g G='| grep'
-alias -g L="| less"
-alias -g M="| most"
-alias -g LL="2>&1 | less"
-alias -g CA="2>&1 | cat -A"
+#alias -g H='| head'
+#alias -g T='| tail'
+#alias -g G='| grep'
+#alias -g L="| less"
+#alias -g M="| most"
+#alias -g LL="2>&1 | less"
+#alias -g CA="2>&1 | cat -A"
 alias -g NE="2> /dev/null"
 alias -g NUL="> /dev/null 2>&1"
-alias -g P="2>&1| pygmentize -l pytb"
+#alias -g P="2>&1| pygmentize -l pytb"
 
 alias fdir='find . -type d -name'
 alias ffile='find . -type f -name'

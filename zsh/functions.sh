@@ -247,7 +247,7 @@ checkmake () {
  }
 
 gitit () {
-  git commit -am "$(date +%Y%m%d%H%M%S)" && git push
+  git commit -am "Formatting / typo / trivial change ($(date +%Y%m%d%H%M%S))" && git push
 }
 
 git-timetravel () {

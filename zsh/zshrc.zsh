@@ -131,3 +131,10 @@ complete -o nospace -C /opt/homebrew/bin/bit bit
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]
   then . $HOME/.nix-profile/etc/profile.d/nix.sh
 fi # added by Nix installer
+
+# bun completions
+[ -s "/Users/Lukas/.bun/_bun" ] && source "/Users/Lukas/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

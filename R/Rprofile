@@ -17,7 +17,10 @@ local({
     release <- readLines("/etc/os-release")
     release <- release[grepl("^UBUNTU_CODENAME", release)]
     release <- strsplit(release, "=")[[1]][[2]]
-    p3m_url <- sprintf("https://packagemanager.posit.co/cran/__linux__/%s/latest", release)
+    p3m_url <- sprintf(
+      "https://packagemanager.posit.co/cran/__linux__/%s/latest",
+      release
+    )
   }
 
   if (grepl("^Red Hat", os_version)) {
@@ -53,21 +56,26 @@ options(
   datatable.print.class = TRUE,
   datatable.print.keys = TRUE,
   # prompt  ----------------------------------------
-  prompt = "#> ", continue = " ↳ ",
+  prompt = "#> ",
+  continue = " ↳ ",
   # usethis  ---------------------------------------
   usethis.full_name = "Lukas Burk",
   usethis.destdir = "~/repos/github/jemus42",
-  usethis.protocol  = "https",
+  usethis.protocol = "https",
   usethis.description = list(
     `Authors@R` = utils::person(
-      "Lukas", "Burk", email = "github@quantenbrot.de",
-      role = c("aut", "cre"), comment = c(ORCID = '0000-0001-7528-3795')
+      "Lukas",
+      "Burk",
+      email = "github@quantenbrot.de",
+      role = c("aut", "cre"),
+      comment = c(ORCID = '0000-0001-7528-3795')
     ),
     License = "MIT + file LICENSE",
     Version = "0.0.0.9000"
   ),
   # blogdown  ---------------------------------------
-  servr.daemon = TRUE, blogdown.author = "Lukas",
+  servr.daemon = TRUE,
+  blogdown.author = "Lukas",
   # VSCode ------------------------------------------
   # activate RStudio Addins on command pallet
   vsc.rstudioapi = TRUE,
@@ -78,7 +86,8 @@ options(
   languageserver.server_capabilities = list(
     signatureHelpProvider = list(triggerCharacters = list("(", ",", "$")),
     completionProvider = list(
-      resolveProvider = TRUE, triggerCharacters = list(".", ":", "$")
+      resolveProvider = TRUE,
+      triggerCharacters = list(".", ":", "$")
     )
   )
 )
@@ -129,7 +138,9 @@ if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
 #}
 
 # RS Themes -------------------------------------------------------------------------------------------------------
-if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)) {
+if (
+  Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
+) {
   # pak::pak("gadenbuie/rsthemes")
 
   rsthemes::set_theme_light("GitHub {rsthemes}")
@@ -138,21 +149,20 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
 
 # Startup ---------------------------------------------------------------------------------------------------------
 .First <- function() {
-
   # Persistent history, shamelessly stolen from mllg/dotfiles
-#   hist <- normalizePath("~/.Rhistory", mustWork = FALSE)
-#   if (!dir.exists(dirname(hist)))
-#     dir.create(dirname(hist), recursive = TRUE)
-#
-#   if (interactive()) {
-#     ok <- try(utils::loadhistory(hist))
-#     if (inherits(ok, "try-error")) {
-#       message("History could not be loaded: ", hist)
-#     } else {
-#       # message("Loaded history: ", hist)
-#       assign(".Last", function() try(utils::savehistory(hist)), envir = .GlobalEnv)
-#     }
-#   }
+  #   hist <- normalizePath("~/.Rhistory", mustWork = FALSE)
+  #   if (!dir.exists(dirname(hist)))
+  #     dir.create(dirname(hist), recursive = TRUE)
+  #
+  #   if (interactive()) {
+  #     ok <- try(utils::loadhistory(hist))
+  #     if (inherits(ok, "try-error")) {
+  #       message("History could not be loaded: ", hist)
+  #     } else {
+  #       # message("Loaded history: ", hist)
+  #       assign(".Last", function() try(utils::savehistory(hist)), envir = .GlobalEnv)
+  #     }
+  #   }
 
   ee = new.env()
   ee$inspect = function(x) {
@@ -197,7 +207,6 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
   #' my_ram_heavy_function(painful = TRUE)
   #' check_mem()
   ee$check_mem = function(unit = "MB", pretty = TRUE, style = "default") {
-
     memory.mult = c(if (.Machine$sizeof.pointer == 4L) 28L else 56L, 8L)
     mem.used = sum(gc()[, 1L] * memory.mult)
 
@@ -221,11 +230,11 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
   #' @examples
   #' measure_memory({ rnorm(2^14) })
   ee$measure_memory = function(expression, ...) {
-      before = check_mem(unit = "B", pretty = FALSE)
-      eval(expression)
-      after = check_mem(unit = "B", pretty = FALSE)
-      prettyunits::pretty_bytes(after - before)
-    }
+    before = check_mem(unit = "B", pretty = FALSE)
+    eval(expression)
+    after = check_mem(unit = "B", pretty = FALSE)
+    prettyunits::pretty_bytes(after - before)
+  }
 
   ee$bm = function(..., plot = FALSE) {
     requireNamespace("bench")
@@ -233,8 +242,7 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
 
     withr::local_options(list(datatable.verbose = FALSE))
     bm = bench::mark(...)
-    if (plot)
-      print(ggplot2::autoplot(bm))
+    if (plot) print(ggplot2::autoplot(bm))
     return(bm)
   }
 
@@ -246,7 +254,6 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
   }
 
   ee$ubuntu_sysdep <- function(pkgs, nala = FALSE, add_sudo = TRUE) {
-
     reqs <- sapply(unique(pkgs), function(pkg) {
       remotes::system_requirements("ubuntu-20.04", package = pkg)
     })
@@ -263,7 +270,6 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
     }
 
     cat(reqs, sep = "\n")
-
   }
 
   ee$rstheme <- function(which = "auto") {
@@ -281,7 +287,8 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
       }
     }
 
-    switch(which,
+    switch(
+      which,
       auto = rsthemes::use_theme_auto(),
       light = rsthemes::use_theme_light(),
       dark = rsthemes::use_theme_toggle(),
@@ -297,17 +304,21 @@ if (Sys.getenv("RSTUDIO") == "1" && requireNamespace("rsthemes", quietly = TRUE)
 
   # Startup msg -----------------------------------------------------------------------------------------------------
   if (interactive()) {
-    version     <- R.version.string
+    version <- R.version.string
     date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
-    utf8        <- l10n_info()$`UTF-8`
+    utf8 <- l10n_info()$`UTF-8`
 
     if (requireNamespace("crayon", quietly = TRUE)) {
-      utf8 <- if(!utf8) crayon::bgRed("UTF-8 is disabled!") else NULL
+      utf8 <- if (!utf8) crayon::bgRed("UTF-8 is disabled!") else NULL
       version <- crayon::bold(version)
     }
 
     startup_msg <- paste0(
-      version, " on ", date_string, "\n", utf8
+      version,
+      " on ",
+      date_string,
+      "\n",
+      utf8
     )
 
     cat(startup_msg, "\n\n")

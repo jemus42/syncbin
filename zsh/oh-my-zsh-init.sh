@@ -58,6 +58,7 @@ plugins=(
 (( $+commands[rustc] )) && plugins+=(rust)
 (( $+commands[ripgrep] )) && plugins+=(ripgrep)
 (( $+commands[thefuck] )) && plugins+=(thefuck)
+(( $+commands[direnv] )) && plugins+=(direnv)
 
 # Platform-specific plugins
 (( $+commands[systemctl] )) && plugins+=(systemd)

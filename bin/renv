@@ -1,0 +1,42 @@
+#!/bin/bash
+
+usage() {
+  echo "Usage: $(basename "$0") [-s] [-r] [-i]"
+  echo "  -s    Snapshot"
+  echo "  -r    Restore (without prompt)"
+  echo "  -i    Initialize"
+  echo "  -h    Show this help"
+  exit 1
+}
+
+if [[ -z "$1" ]]
+then
+	echo "Running renv::status()"
+	Rscript --quiet -e "renv::status()"
+	exit 0
+fi
+
+
+# Parse command line options
+while getopts "srih" opt; do
+  case $opt in
+    s)
+    CMD="renv::snapshot()"
+       ;;
+    r)
+    CMD="renv::restore(prompt = FALSE)"
+      ;;
+    i)
+    CMD="renv::init()"
+      ;;
+    h)
+      usage
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      usage
+      ;;
+  esac
+done
+
+Rscript --quiet -e "$CMD"

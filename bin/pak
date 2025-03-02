@@ -1,34 +1,25 @@
 #!/bin/bash
 
-
-
 if [[ -z "$1" ]]
 then
 	echo "Running pak::pak()"
 	Rscript --quiet -e "pak::pak()"
 fi
 
-if [[ -n "$1" ]]
-then
+result="c("
 
-	result="c("
-	
-	# Loop through all positional parameters
-	for arg in "$@"
-	do
-	    # Append each argument to the result string, enclosed in single quotes and followed by a comma
-	    result+="'$arg', "
-	done
-	
-	# Remove the trailing comma and space, then add the closing parenthesis
-	result="${result%, })"
-	
-	# Print the result
-	# echo "$result"
+# Loop through all positional parameters
+for arg in "$@"
+do
+    # Append each argument to the result string, enclosed in single quotes and followed by a comma
+    result+="'$arg', "
+done
 
-	printf "Installing packages: %s\n" "$*"
-	
-    Rscript --quiet -e "pak::pak(${result})"
-fi
+# Remove the trailing comma and space, then add the closing parenthesis
+result="${result%, })"
+printf "Installing packages: %s\n" "$*"
+
+Rscript --quiet -e "pak::pak(${result})"
+
 
 

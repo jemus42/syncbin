@@ -1,5 +1,4 @@
 #! /usr/bin/env Rscript
 
-arg <- commandArgs(trailingOnly = T)
-
+arg <- commandArgs(trailingOnly = TRUE)
 rmarkdown::render(arg)

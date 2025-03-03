@@ -1,8 +1,8 @@
 #! /usr/bin/env Rscript
 
-command = paste("squeue --format='%.16P %.8u %.10T %.m %.25k'")
+command = paste("squeue --format='%.16P %.8u %.10T %.m'")
 
-tab = data.table::fread(cmd = command)
+tab = data.table::fread(cmd = command, fill = 4, header = TRUE)
 tab[, PARTITION := data.table::fifelse(PARTITION == "inv-compsci", "teton-knl", PARTITION)]
 cli::cli_h1("Jobs per user")
 

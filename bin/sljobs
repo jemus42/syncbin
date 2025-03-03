@@ -6,7 +6,7 @@ command = paste(
 	"--format='%.26P %.10T %R %.m %.25k'"
 )
 
-tab = data.table::fread(cmd = command)
+tab = data.table::fread(cmd = command, header = TRUE)
 tab[, PARTITION := ifelse(PARTITION == "inv-compsci", "teton-knl", PARTITION)]
 
 tab |>

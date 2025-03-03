@@ -4,11 +4,14 @@ command = paste("squeue --format='%.16P %.8u %.10T %.m'")
 
 tab = data.table::fread(cmd = command, fill = 4, header = TRUE)
 tab[, PARTITION := data.table::fifelse(PARTITION == "inv-compsci", "teton-knl", PARTITION)]
+
+
+
 cli::cli_h1("Jobs per user")
 
-tab |>
-  dplyr::count(USER, STATE, sort = TRUE) |>
-	tidyr::pivot_wider(names_from = "STATE", values_from = "n", values_fill = 0) |>
+tab[, .(n = .N), by = .(USER, STATE)] |>
+  data.table::dcast(USER ~ STATE, fill = 0) |>
+  dplyr::arrange(dplyr::desc(PENDING + RUNNING), USER) |>
 	knitr::kable()
 
 cli::cli_h1("Running jobs per user by partition")

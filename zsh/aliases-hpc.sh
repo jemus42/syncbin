@@ -133,7 +133,8 @@ function notify_jobs () {
 # }
 
 # resource limits https://stackoverflow.com/a/61587377/409362
-alias slimits="sacctmgr list associations"
+# alias slimits="sacctmgr list associations"
+alias slimits="sacctmgr show assoc account=mallet"
 
 function smax () {
   if [[ -z "$1" ]];

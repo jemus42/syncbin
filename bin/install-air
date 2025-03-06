@@ -1,0 +1,3 @@
+#! /bin/sh
+
+curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh

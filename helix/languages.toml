@@ -1,0 +1,8 @@
+[language-server.air]
+command = "air"
+args = ["language-server"]
+
+[[language]]
+name = "r"
+language-servers = ["air", "r"]
+auto-format = true

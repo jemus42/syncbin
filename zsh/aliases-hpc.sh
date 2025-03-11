@@ -50,12 +50,16 @@ alias sqc="sqm --noheader | wc -l"
 
 # sacct aliases to check on recently completed or failed jobs
 function slac () {
-  sacct -X --format=Comment,JobID,Partition,AllocCPUS,State%20,ExitCode,PlannedCPURAW,CPUTimeRAW,ReqMem "$@"
+  sacct -X --format=Comment,JobID,Partition,Elapsed,AllocCPUS,State%20,ExitCode,UserCPU,CPUEff,ReqMem,MaxRSS,AveRSS "$@"
 }
 
 alias slac1w="slac -S now-1week"
 alias slac1d="slac -S now-1day"
 alias slac1h="slac -S now-1hour"
+
+function slstat () {
+  sstat --format=AveCPU,AveRSS,AveVMSize,MaxRSS,MaxVMSize -j "$@"
+}
 
 function nodecount () {
   squeue --me --format='%R' --noheader | sort | uniq -c | sort -bn

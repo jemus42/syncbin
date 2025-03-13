@@ -41,6 +41,7 @@ plugins=(
     extract
     git
     git-flow
+    gitignore
     encode64
     systemadmin
     perms
@@ -56,9 +57,10 @@ plugins=(
 (( $+commands[tmux] )) && plugins+=(tmux)
 (( $+commands[httpie] )) && plugins+=(httpie)
 (( $+commands[rustc] )) && plugins+=(rust)
-(( $+commands[ripgrep] )) && plugins+=(ripgrep)
 (( $+commands[thefuck] )) && plugins+=(thefuck)
 (( $+commands[direnv] )) && plugins+=(direnv)
+(( $+commands[fzf] )) && plugins+=(fzf)
+
 
 # Platform-specific plugins
 (( $+commands[systemctl] )) && plugins+=(systemd)

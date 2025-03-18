@@ -55,6 +55,16 @@ alias yt-playlist='yt-dlp -i -o "%(playlist_index)s - %(title)s [%(id)s].%(ext)s
 alias yt-chronological="yt-dlp -i -o '%(upload_date)s -  %(title)s [%(id)s].%(ext)s'"
 
 
+# rsync like in omz plugin but without compression
+alias rsync-copy="rsync -av --progress -h"
+alias rsync-copy-safe="rsync -av --progress -h --partial"
+alias rsync-move="rsync -av --progress -h --remove-source-files"
+alias rsync-move-safe="rsync -av --progress -h --remove-source-files --partial"
+alias rsync-update="rsync -avu --progress -h"
+alias rsync-synchronize="rsync -av --delete --progress -h"
+
+
+
 # pdf2htmlEX seems handy but a pain to install regularly
 # https://github.com/pdf2htmlEX/pdf2htmlEX/wiki/Download-Docker-Image
 alias pdf2htmlEX='docker run -ti --rm -v "`pwd`":/pdf -w /pdf pdf2htmlex/pdf2htmlex'

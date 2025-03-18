@@ -37,7 +37,7 @@ export UPDATE_ZSH_DAYS=30
 # Disabled because of false-positives that were starting to get annoying
 
 plugins=(
-    rsync
+   # rsync # use custom aliases without compression
     extract
     git
     git-flow

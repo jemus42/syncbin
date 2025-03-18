@@ -72,8 +72,8 @@ if (( $+commands[mcfly] )); then
   export MCFLY_RESULTS=25
 fi
 
-# https://github.com/carapace-sh/carapace-bin for rich completions
-(( $+commands[carapace] )) && source <(carapace _carapace)
+
+(( $+commands[koji] )) && eval $(koji completions zsh)
 
 # If cargo is available
 test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH

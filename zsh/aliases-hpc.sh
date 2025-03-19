@@ -90,9 +90,9 @@ function sqs () {
     NC='\033[0m' # No Color
   fi
 
-
+  TZ="Europe/Berlin"
   echo ""
-  echo "Status as of $(date '+%F %T'):"
+  echo "Status as of $(date '+%F %T') ($TZ):"
   echo ""
   printf "${BLUE}$(sqc)${NC} jobs | ${GREEN}$(sqrc)${NC} running | ${RED}$(sqqc)${NC} queued"
   echo ""

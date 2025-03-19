@@ -1,0 +1,29 @@
+#! /usr/bin/env Rscript
+library(data.table)
+
+command = paste(
+  "sacct",
+  "-P",
+  "-X",
+  "--format=Comment,JobID,Partition,NodeList,Restarts,Elapsed,AllocCPUS,State%20,ExitCode,UserCPU,ReqMem,MaxRSS,AveRSS",
+  "-S",
+  "now-8hours"
+  #"now-1day"
+)
+
+res = data.table::fread(cmd = command, header = TRUE)
+# res
+
+totals = res[, .(.N), by = .(State)][order(State, -N)]
+
+
+for (status in c("OUT_OF_MEMORY", "FAILED", "TIMEOUT")) {
+  if (length(totals[State %in% status, N]) > 0) {
+    cli::cli_h2("Recent {status} jobs:")
+    print(knitr::kable(res[State %in% status, ]))
+    cat("\n")
+  }
+}
+
+
+totals[State %in% status, N]

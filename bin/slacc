@@ -24,6 +24,3 @@ for (status in c("OUT_OF_MEMORY", "FAILED", "TIMEOUT")) {
     cat("\n")
   }
 }
-
-
-totals[State %in% status, N]

@@ -34,7 +34,7 @@ alias tl="tmux list-sessions"
 # and https://github.com/mllg/batchtools/blob/1196047ed5115d54bde2923848c1f3ec11fda6d2/R/clusterFunctionsSlurm.R
 
 function sqm () {
-  sq --me "$@"
+  sq --me "$@" -M "${CLUSTERS}"
 }
 
 function sq () {

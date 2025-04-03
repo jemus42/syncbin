@@ -8,6 +8,6 @@
 // from the command palette or from `Zed` application menu.
 {
     "base_keymap": "VSCode",
-    "theme": "Andromeda",
+    "theme": "Catppuccin Macchiato",
     "buffer_font_size": 14
 }

@@ -1,7 +1,7 @@
 #! /usr/bin/env Rscript
 
 command = paste(
-	"squeue",
+	"squeue -M serial",
 	"--me",
 	"--format='%.26P %.10T %R %.m %.25k'"
 )

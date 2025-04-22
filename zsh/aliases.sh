@@ -82,6 +82,9 @@ alias pdf2htmlEX='docker run -ti --rm -v "`pwd`":/pdf -w /pdf pdf2htmlex/pdf2htm
 # ...but if lsd is there, use that
 (( $+commands[lsd] )) && alias ls='lsd'
 
+
+test -x "$HOME/.claude/local/claude" && alias claude="$HOME/.claude/local/claude"
+
 # ls, the common ones I use a lot shortened for rapid fire usage
 alias l='ls -lFh'     # size,show type,human readable
 alias la='ls -lAFh'   # long list,show almost all,show type,human readable

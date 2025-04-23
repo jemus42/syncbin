@@ -98,7 +98,7 @@ options(
 )
 
 
-if (!getOption("HTTPUserAgent", default = FALSE)) {
+if (getOption("HTTPUserAgent", default = "") == "") {
   options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version["platform"], R.version["arch"], R.version["os"])))
 }
 

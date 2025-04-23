@@ -97,6 +97,12 @@ options(
   )
 )
 
+
+if (!getOption("HTTPUserAgent", default = FALSE)) {
+  options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version["platform"], R.version["arch"], R.version["os"])))
+}
+
+
 # mlr style for appropriate repositories only
 if (grepl("mlr3", getwd()) || grepl("paradox", getwd())) {
   options(styler.addins_style_transformer = "styler.mlr::mlr_style()")

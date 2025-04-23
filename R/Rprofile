@@ -39,6 +39,11 @@ local({
   options(repos = repos)
 })
 
+# This doesn't hurt on most systems and help on e.g. LRZ HPC due to weird circumstances where I'd
+# otherwise install into the base R library which I do not want.
+if (Sys.getenv("R_LIBS") == "") {
+  Sys.setenv("R_LIBS" = Sys.getenv("R_LIBS_USER"))
+}
 
 # Options ---------------------------------------------------------------------------------------------------------
 # enable autocompletions for package names in require(), library()
@@ -95,10 +100,6 @@ options(
 # mlr style for appropriate repositories only
 if (grepl("mlr3", getwd()) || grepl("paradox", getwd())) {
   options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
-
-  if (!requireNamespace("styler.mlr", quietly = TRUE)) {
-    message("styler.mlr not installed: pak::pak('mlr-org/styler.mlr')")
-  }
 }
 
 if (requireNamespace("rlang", quietly = TRUE)) {
@@ -113,16 +114,6 @@ if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
 # Sys.setlocale('LC_ALL','C')
 # options(encoding = "UTF-8")
 # Also check via l10n_info()
-
-# Path fix for homebrew/arm64 ----
-# if (paste0(Sys.info()[c("sysname", "machine")], collapse = " ") == "Darwin arm64") {
-#   if (file.exists("/opt/homebrew/bin/brew")) {
-#     brew_dir <- "/opt/homebrew/bin/"
-#   } else {
-#     brew_dir <- fs::path_dir(Sys.which("brew"))
-#   }
-#   Sys.setenv(PATH = paste(Sys.getenv("PATH"), brew_dir, sep = ":"))
-# }
 
 # GitHub creds ----
 # https://usethis.r-lib.org/articles/articles/git-credentials.html#what-about-the-remotes-and-pak-packages-
@@ -145,6 +136,12 @@ if (
 
   rsthemes::set_theme_light("GitHub {rsthemes}")
   rsthemes::set_theme_dark("Monokai Spacegray Eighties")
+}
+
+# Local overrides if needed --------------------------------------------------------------------------------------
+
+if (file.exists("~/.Rprofile.local")) {
+  source("~/.Rprofile.local")
 }
 
 # Startup ---------------------------------------------------------------------------------------------------------
@@ -240,7 +237,7 @@ if (
 
   ee$ubuntu_sysdep <- function(pkgs, nala = FALSE, add_sudo = TRUE) {
     reqs <- sapply(unique(pkgs), function(pkg) {
-      remotes::system_requirements("ubuntu-20.04", package = pkg)
+      remotes::system_requirements("ubuntu-24.04", package = pkg)
     })
     reqs <- unique(unlist(reqs))
 
@@ -291,10 +288,10 @@ if (
   if (interactive()) {
     version <- R.version.string
     date_string <- format(Sys.time(), "%a %F %T %z (%Z)")
-    utf8 <- l10n_info()$`UTF-8`
+    # utf8 <- l10n_info()$`UTF-8`
 
     if (requireNamespace("crayon", quietly = TRUE)) {
-      utf8 <- if (!utf8) crayon::bgRed("UTF-8 is disabled!") else NULL
+      #utf8 <- if (!utf8) crayon::bgRed("UTF-8 is disabled!") else NULL
       version <- crayon::bold(version)
     }
 
@@ -302,8 +299,7 @@ if (
       version,
       " on ",
       date_string,
-      "\n",
-      utf8
+      "\n"
     )
 
     cat(startup_msg, "\n\n")

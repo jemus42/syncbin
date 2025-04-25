@@ -13,3 +13,5 @@ font-size = 16
 shell-integration = zsh
 background-opacity = 0.9
 background-blur-radius = 20
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+

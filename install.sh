@@ -4,15 +4,15 @@
 export SYNCBIN=$HOME/syncbin
 
 # Create .config dir if needed
-test ! -d $HOME/.config/zsh    && mkdir -p $HOME/.config/zsh
-test ! -d $HOME/.config/broot  && mkdir -p $HOME/.config/broot
-test ! -d $HOME/.config/conda  && mkdir -p $HOME/.config/conda
-test ! -d $HOME/.config/zellij && mkdir -p $HOME/.config/zellij
-test ! -d $HOME/.config/lsd    && mkdir -p $HOME/.config/lsd
-test ! -d $HOME/.config/micro  && mkdir -p $HOME/.config/micro
-test ! -d $HOME/.config/btop   && mkdir -p $HOME/.config/btop
-test ! -d $HOME/.config/bat    && mkdir -p $HOME/.config/bat
-test ! -d $HOME/.config/tmux   && mkdir -p $HOME/.config/tmux
+test ! -d $HOME/.config/zsh     && mkdir -p $HOME/.config/zsh
+test ! -d $HOME/.config/broot   && mkdir -p $HOME/.config/broot
+test ! -d $HOME/.config/conda   && mkdir -p $HOME/.config/conda
+test ! -d $HOME/.config/zellij  && mkdir -p $HOME/.config/zellij
+test ! -d $HOME/.config/lsd     && mkdir -p $HOME/.config/lsd
+test ! -d $HOME/.config/micro   && mkdir -p $HOME/.config/micro
+test ! -d $HOME/.config/btop    && mkdir -p $HOME/.config/btop
+test ! -d $HOME/.config/bat     && mkdir -p $HOME/.config/bat
+test ! -d $HOME/.config/tmux    && mkdir -p $HOME/.config/tmux
 
 # entire helix dir is stored in syncbin and lns'd to .config
 #test ! -d ~/.config/helix  && mkdir -p $HOME/.config/helix
@@ -30,6 +30,7 @@ ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
 ln -sf $SYNCBIN/zellij/zellij.kdl $HOME/.config/zellij/config.kdl
 ln -sf $SYNCBIN/btop/btop.conf $HOME/.config/btop/btop.conf
 ln -sf $SYNCBIN/bat/config $HOME/.config/bat/config
+ln -sf $SYNCBIN/ghostty $HOME/.config/ghostty
 
 ln -sf $SYNCBIN/tmux.conf $HOME/.config/tmux/tmux.conf
 

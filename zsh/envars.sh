@@ -6,10 +6,9 @@
 
 # Finding homberew early
 test -x "/opt/homebrew/bin/brew" && eval $(/opt/homebrew/bin/brew shellenv)
-# test -x "/home/linuxbrew/.linuxbrew/bin/brew" && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 # Moving linuxbrew later in the PATH to avoid conflicts on Linux
-# test -x "/home/linuxbrew/.linuxbrew/bin/brew" && export PATH="${PATH}:/home/linuxbrew/.linuxbrew/bin"
 test -x "/home/linuxbrew/.linuxbrew/bin/brew" && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+test -x "~/.linuxbrew/bin/brew" && eval $(~/.linuxbrew/bin/brew shellenv)
 
 # ENCODIIING
 if [[ "$(hostname)" =~ .*"blog".* ]]; then
@@ -63,29 +62,13 @@ export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 # Using bat as pager for man pages
 (( $+commands[bat] )) && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-# mcfly
-if (( $+commands[mcfly] )); then
-# Enabling mcfly here would have lead to later overriding of ctrl+R for some reason
-  export MCFLY_FUZZY=4
-  export MCFLY_RESULTS_SORT=LAST_RUN
-  export MCFLY_PROMPT="❯"
-  export MCFLY_RESULTS=25
-fi
-
+# if (( $+commands[mcfly] )); then
+# # Enabling mcfly here would have lead to later overriding of ctrl+R for some reason
+# fi
 
 (( $+commands[koji] )) && eval $(koji completions zsh)
 
 # If cargo is available
 test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH
 
-# RStudio without startup message
-RSTUDIO_WHICH_R='/usr/local/bin/R --quiet'
-
-# Is this mosh?
-# https://github.com/mobile-shell/mosh/issues/738#issuecomment-240961629
-ps -p $PPID | grep mosh-server > /dev/null
-if [[ "$?" == "0" ]]; then
-  export MOSH=1
-else
-  export MOSH=0
-fi
+# Carapace configuration moved to zshrc.zsh

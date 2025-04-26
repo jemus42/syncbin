@@ -1,8 +1,5 @@
 prompt_theme="starship" # or pw10k
 
-autoload -Uz compinit
-compinit
-
 if [[ $prompt_theme = "pw10k" ]]; then
   # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
   # Initialization code that may require console input (password prompts, [y/n]
@@ -11,6 +8,11 @@ if [[ $prompt_theme = "pw10k" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
   fi
 fi
+
+
+# And before omz plugins are loaded
+autoload -Uz compinit
+compinit -i
 
 #################
 ### Profiling ###
@@ -35,11 +37,6 @@ export ME=$(whoami)
 source $SYNCBIN/zsh/envars.sh
 test -e "${HOME}/.env.local" && source "${HOME}/.env.local"
 
-# Add homebrew completions
-# https://formulae.brew.sh/formula/zsh-completions
-if (( $+commands[brew] )); then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-fi
 
 ########################
 ### oh-my-zsh config ###
@@ -78,11 +75,31 @@ if [[ $prompt_theme = "starship" ]]; then
 fi
 
 # Enabling mcfly here to avoid later overriding of ctrl+R for some reason
-if (( $+commands[mcfly] )); then
-  # bindkey '^R' mcfly-history-widget
-  # eval $(mcfly init zsh)
+if (( $+commands[mcfly] ))
+then
   # https://github.com/cantino/mcfly/issues/254
   source <(mcfly init zsh)
+  export MCFLY_FUZZY=4
+  export MCFLY_RESULTS_SORT=LAST_RUN
+  export MCFLY_PROMPT="❯"
+  export MCFLY_RESULTS=25  
+fi
+
+# Load carapace after oh-my-zsh to ensure completions work properly
+if (( $+commands[carapace] ))
+then
+  export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+  zstyle ':completion:*' format $'\e[2;37mCarapacing %d\e[m'
+  
+  # Force rebuild the completion system before loading carapace
+  # rm -f ${ZDOTDIR:-$HOME}/.zcompdump
+  # rm -f ${ZDOTDIR:-$HOME}/.zcompdump.zwc
+  
+  # Load carapace completions
+  source <(carapace _carapace)
+  
+  # Ensure carapace completions take precedence
+  autoload -U compinit && compinit
 fi
 
 ########################

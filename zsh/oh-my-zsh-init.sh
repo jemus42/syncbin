@@ -2,14 +2,6 @@
 
 export ZSH=$HOME/.oh-my-zsh
 
-if (( ! $+commands[starship] )); then
-    if [[ $host_os = FreeBSD ]] && [[ $MOSH = 1 ]]; then
-        ZSH_THEME="jemus42"
-    else
-        ZSH_THEME="powerlevel10k/powerlevel10k"
-    fi
-fi
-
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$SYNCBIN/ohmyzsh_custom
 
@@ -70,8 +62,11 @@ plugins=(
 # These go at the bottom
 plugins+=(
     F-Sy-H # Supersedes zsh-syntax-highlighting
-    zsh-completions
+    # zsh-completions
     zsh-autosuggestions
 )
+
+(( $+commands[carapace] )) || plugins+=(zsh-completions)
+
 
 source $ZSH/oh-my-zsh.sh

@@ -99,6 +99,17 @@ alias lrt='ls -1Fcrt'
 alias grep='grep --color'
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 
+
+alias rgf="rg -F"
+alias rgu="rg -u"
+alias rgl="rg -l"
+alias rguu="rg -uu"
+alias rglu="rg -l -u"
+alias rgfu="rg -F -u"
+alias rgfl="rg -F -l"
+alias rgflu="rg -F -l -u"
+
+
 # exa: long by default with git
 (( $+commands[eza] )) && alias eza='eza -l --git --icons'
 

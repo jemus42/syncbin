@@ -52,6 +52,7 @@ plugins=(
 (( $+commands[thefuck] )) && plugins+=(thefuck)
 (( $+commands[direnv] )) && plugins+=(direnv)
 (( $+commands[fzf] )) && plugins+=(fzf)
+(( $+commands[rbenv] )) && plugins+=(rbenv)
 
 
 # Platform-specific plugins

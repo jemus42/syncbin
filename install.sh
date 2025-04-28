@@ -30,14 +30,14 @@ ln -sf $SYNCBIN/condarc $HOME/.config/conda/condarc
 ln -sf $SYNCBIN/zellij/zellij.kdl $HOME/.config/zellij/config.kdl
 ln -sf $SYNCBIN/btop/btop.conf $HOME/.config/btop/btop.conf
 ln -sf $SYNCBIN/bat/config $HOME/.config/bat/config
-ln -sf $SYNCBIN/ghostty $HOME/.config/ghostty
 
 ln -sf $SYNCBIN/tmux.conf $HOME/.config/tmux/tmux.conf
 
-test ! -d ~/.config/bat/themes    && ln -sf $SYNCBIN/bat/themes   $HOME/.config/bat/themes
+test ! -d ~/.config/bat/themes    && ln -sf $SYNCBIN/bat/themes    $HOME/.config/bat/themes
 test ! -d ~/.config/btop/themes   && ln -sf $SYNCBIN/btop/themes   $HOME/.config/btop/themes
 test ! -d ~/.config/zellij/themes && ln -sf $SYNCBIN/zellij/themes $HOME/.config/zellij/themes
 test ! -d ~/.config/helix         && ln -sf $SYNCBIN/helix         $HOME/.config/helix
+test ! -d ~/.config/ghostty       && ln -sf $SYNCBIN/ghostty       $HOME/.config/ghostty
 
 ln -sf $SYNCBIN/lsd.conf.yml $HOME/.config/lsd/config.yaml
 ln -sf $SYNCBIN/micro/settings.json $HOME/.config/micro/settings.json
@@ -47,8 +47,7 @@ test ! -d ~/.config/micro/syntax && ln -sf $SYNCBIN/micro/syntax $HOME/.config/m
 # Cleanup legacy zellij conf
 test -f $HOME/.config/zellij/config.yml && rm $HOME/.config/zellij/config.yml
 
-
-# Install tpb
+# Install tpm
 test ! -d $HOME/.config/tmux/plugins && mkdir -p  $HOME/.config/tmux/plugins
 test ! -d $HOME/.config/tmux/plugins/tpm && git clone --depth 1 --single-branch https://github.com/tmux-plugins/tpm $HOME/.config/tmux/plugins/tpm &
 
@@ -58,7 +57,7 @@ test -d $HOME/.config/rstudio/themes/ && ln -sf $SYNCBIN/rstudio/themes/*rstheme
 # Install OMZSH if not present
 # After this is executed, the rest of the script doesn't run anymore :(
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" &
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
 # Link ZSH theme to OMZSH custom theme dir only if already doing the OMZ thing

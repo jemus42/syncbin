@@ -1,0 +1,17 @@
+#! /bin/sh
+case $1 in
+	(up | start) sudo systemctl start openvpn-client@bips && sleep 2 ;;
+	(down | stop) sudo systemctl stop openvpn-client@bips ;;
+	(status) sudo systemctl status openvpn-client@bips ;;
+	(*) echo "Status of OpenVPN systemd unit openvpn-client@bips (see /etc/openvpn/client)"
+		echo "Usage: bips [up|down|status]"
+		echo ""
+		if systemctl is-active --quiet openvpn-client@bips
+		then
+			echo "VPN active"
+			return 0
+		else
+			echo "VPN inactive"
+			return 1
+		fi ;;
+esac

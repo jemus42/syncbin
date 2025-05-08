@@ -18,8 +18,8 @@ function dump {
 
 function reload () {
   echo "Updating syncbin at $SYNCBIN..."
-  git -C $SYNCBIN pull origin main
-  git -C $SYNCBIN submodule update --recursive
+  git -C $SYNCBIN pull --recurse-submodules origin main
+  # git -C $SYNCBIN submodule update --recursive
   echo ""
   echo "Re-installing..."
   $SYNCBIN/install.sh

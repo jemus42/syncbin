@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# bips.sh - Script to check and manage Viscosity VPN connection for "BIPS"
+
+# Function to check if Viscosity is running
+is_viscosity_running() {
+  if pgrep -q "Viscosity"; then
+    return 0  # Running
+  else
+    return 1  # Not running
+  fi
+}
+
+# Function to check if BIPS connection is active
+is_bips_connected() {
+  if ! is_viscosity_running; then
+    return 1  # Viscosity not running
+  fi
+  
+  status=$(osascript -e 'tell application "Viscosity" to get state of (connections where name is "BIPS")' 2>/dev/null)
+  if [ "$status" == "Connected" ]; then
+    return 0  # Connected
+  else
+    return 1  # Not connected
+  fi
+}
+
+# Function to connect to BIPS
+connect_bips() {
+  # Start Viscosity if not running
+  if ! is_viscosity_running; then
+    open -a Viscosity
+    sleep 2  # Give Viscosity time to start
+  fi
+  
+  # Connect to BIPS
+  osascript -e 'tell application "Viscosity" to connect "BIPS"'
+  echo "Connecting to BIPS VPN..."
+}
+
+# Function to disconnect from BIPS
+disconnect_bips() {
+  if is_viscosity_running; then
+    osascript -e 'tell application "Viscosity" to disconnect "BIPS"'
+    echo "Disconnecting from BIPS VPN..."
+  else
+    echo "Viscosity is not running."
+  fi
+}
+
+# Main script logic
+case "$1" in
+  "up")
+    if is_bips_connected; then
+      echo "BIPS VPN is already connected."
+    else
+      connect_bips
+    fi
+    ;;
+  "down")
+    if is_bips_connected; then
+      disconnect_bips
+    else
+      echo "BIPS VPN is not connected."
+    fi
+    ;;
+  *)
+    # Default: Check status
+    if ! is_viscosity_running; then
+      echo "Viscosity is not running."
+    elif is_bips_connected; then
+      echo "BIPS VPN is connected."
+    else
+      echo "BIPS VPN is not connected."
+    fi
+    ;;
+esac

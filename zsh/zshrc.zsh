@@ -79,7 +79,7 @@ if (( $+commands[mcfly] ))
 then
   # https://github.com/cantino/mcfly/issues/254
   source <(mcfly init zsh)
-  export MCFLY_FUZZY=4
+  export MCFLY_FUZZY=1
   export MCFLY_RESULTS_SORT=LAST_RUN
   export MCFLY_PROMPT="❯"
   export MCFLY_RESULTS=25  

@@ -128,13 +128,22 @@ function tmn () {
   fi
 }
 
-function tma () {
-  if [ -z "${1}" ]
-  then
-    tmux attach -t "${host_short}"
-  else
-    tmux attach -t "${1}"
-  fi
+tma () {
+    local session_name
+    if [ -z "${1}" ]; then
+        session_name="${host_short}"
+    else
+        session_name="${1}"
+    fi
+
+    if tmux list-sessions | grep -q "^${session_name}:"; then
+        # Session exists, attach to it
+        _zsh_tmux_plugin_run attach -t "${session_name}"
+    else
+        # Session does not exist, create it and then attach
+        tmux new-session -s "${session_name}"
+        _zsh_tmux_plugin_run attach -t "${session_name}"
+    fi
 }
 
 if [[ $prompt_theme = "pw10k" ]]; then

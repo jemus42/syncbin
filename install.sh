@@ -65,6 +65,7 @@ echo "📁 Creating configuration directories..."
 
 # Standard config directories
 ensure_dir "$HOME/.config/zsh"
+ensure_dir "$HOME/.config/fish"
 ensure_dir "$HOME/.config/broot"
 ensure_dir "$HOME/.config/conda"
 ensure_dir "$HOME/.config/zellij"
@@ -91,10 +92,11 @@ echo "🐚 Installing shell configurations..."
 safe_symlink "$SYNCBIN/zsh/zshrc.zsh" "$HOME/.zshrc"
 
 # Bash configuration  
+safe_symlink "$SYNCBIN/bash/bashrc" "$HOME/.bashrc"
 safe_symlink "$SYNCBIN/bash/bash_profile" "$HOME/.bash_profile"
 
-# Also link to .bashrc for systems that prefer it
-safe_symlink "$SYNCBIN/bash/bash_profile" "$HOME/.bashrc"
+# Fish configuration
+safe_symlink "$SYNCBIN/fish/config.fish" "$HOME/.config/fish/config.fish"
 
 echo
 
@@ -232,5 +234,7 @@ echo "   • Customize local settings in ~/.env.local, ~/.path.local, or ~/.func
 echo
 echo "🔗 Shell configurations available:"
 echo "   • ZSH: ~/.zshrc → $SYNCBIN/zsh/zshrc.zsh"
-echo "   • Bash: ~/.bash_profile → $SYNCBIN/bash/bash_profile"
+echo "   • Bash: ~/.bashrc → $SYNCBIN/bash/bashrc (main config)"
+echo "   •       ~/.bash_profile → $SYNCBIN/bash/bash_profile (sources .bashrc)"
+echo "   • Fish: ~/.config/fish/config.fish → $SYNCBIN/fish/config.fish"
 echo

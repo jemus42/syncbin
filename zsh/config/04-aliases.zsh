@@ -7,6 +7,11 @@ alias today='date +"%A, %B %-d, %Y"'
 alias rot13="tr 'a-zA-Z' 'n-za-mN-ZA-M'"
 alias timestamp='date +%F_%T'
 
+# Directory navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
 # Enhanced sudo
 alias esudo='sudo --preserve-env=PATH env'
 alias smicro="sudo $(which micro)"

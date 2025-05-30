@@ -7,14 +7,47 @@ alias today='date +"%A, %B %-d, %Y"'
 alias rot13="tr 'a-zA-Z' 'n-za-mN-ZA-M'"
 alias timestamp='date +%F_%T'
 
+# Directory navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
 # Enhanced sudo
 alias esudo='sudo --preserve-env=PATH env'
 alias smicro="sudo \$(which micro)"
 
-# Git shortcuts
+# Git shortcuts - Oh-My-Zsh git plugin equivalents
 alias g="git"
 alias git-reset-to-remote='git fetch && git reset --hard'
 alias git-amend='git commit --amend --no-edit'
+
+# Common git aliases
+alias ga='git add'
+alias gaa='git add --all'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gcam='git commit -a -m'
+alias gcmsg='git commit -m'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gd='git diff'
+alias gdca='git diff --cached'
+alias gf='git fetch'
+alias gfa='git fetch --all --prune'
+alias gl='git pull'
+alias glog='git log --oneline --decorate --graph'
+alias gm='git merge'
+alias gp='git push'
+alias gpr='git pull --rebase'
+alias gr='git remote'
+alias grb='git rebase'
+alias grh='git reset'
+alias grhh='git reset --hard'
+alias gs='git status'
+alias gss='git status -s'
+alias gst='git status'
 
 # macOS cleanup
 alias cleanDS="find . -name '.DS_Store' -print -delete; find . -name '._*' -print -delete"
@@ -116,3 +149,25 @@ alias za='zellij attach -c'
 # GPG utilities
 alias gpg-list-keys='gpg --list-secret-keys --keyid-format LONG'
 alias gpg-export='gpg --armor --export' # Supply key id afterwards
+
+# Systemd aliases (if systemctl is available)
+if command -v systemctl >/dev/null 2>&1; then
+    alias sc-status='systemctl status'
+    alias sc-show='systemctl show'
+    alias sc-help='systemctl help'
+    alias sc-list-units='systemctl list-units'
+    alias sc-list-unit-files='systemctl list-unit-files'
+    alias sc-list-sockets='systemctl list-sockets'
+    alias sc-list-timers='systemctl list-timers'
+    alias sc-start='sudo systemctl start'
+    alias sc-stop='sudo systemctl stop'
+    alias sc-reload='sudo systemctl reload'
+    alias sc-restart='sudo systemctl restart'
+    alias sc-enable='sudo systemctl enable'
+    alias sc-disable='sudo systemctl disable'
+    alias sc-mask='sudo systemctl mask'
+    alias sc-unmask='sudo systemctl unmask'
+    alias sc-failed='systemctl --failed'
+    alias sc-enabled='systemctl list-unit-files --state=enabled'
+    alias sc-disabled='systemctl list-unit-files --state=disabled'
+fi

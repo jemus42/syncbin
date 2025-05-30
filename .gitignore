@@ -7,3 +7,4 @@ syncbin.code-workspace
 zed/.tmp*
 zed/embeddings
 CLAUDE.local.md
+.claude

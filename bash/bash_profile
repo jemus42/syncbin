@@ -1,0 +1,20 @@
+# Bash Configuration - Modular Approach
+# Main configuration file that loads all modules in the correct order
+# 
+# Load order is critical for proper functionality:
+# 1. Early setup (bash options, history, basic env)
+# 2. Environment variables and PATH configuration  
+# 3. Aliases and functions
+# 4. Tool integrations and completions
+# 5. Prompt configuration
+# 6. Local overrides and cleanup
+
+# Get the directory where this script is located
+BASHCONFIG_DIR="${SYNCBIN:-$HOME/syncbin}/bash/config"
+
+# Load configuration modules in order
+for config_file in "$BASHCONFIG_DIR"/[0-9][0-9]-*.bash; do
+  if [[ -r "$config_file" ]]; then
+    source "$config_file"
+  fi
+done

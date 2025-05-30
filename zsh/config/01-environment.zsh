@@ -39,8 +39,9 @@ export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:$HOME/bin:$SYNCBIN/bin
 export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 
-# Cargo/Rust
+# Cargo/Rust and go
 test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH
+test -e "${HOME}/go/bin" && export PATH=$HOME/go/bin:$PATH
 
 # Pager setup
 (( $+commands[bat] )) && export MANPAGER="sh -c 'col -bx | bat -l man -p'"

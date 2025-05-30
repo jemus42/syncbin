@@ -20,7 +20,3 @@ for config_file in "$ZSHCONFIG_DIR"/[0-9][0-9]-*.zsh; do
     source "$config_file"
   fi
 done
-
-# Legacy environment file (contains items now moved to 01-environment.zsh)
-# This can be removed once migration is complete
-source $SYNCBIN/zsh/envars.sh

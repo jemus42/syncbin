@@ -6,6 +6,13 @@
 
 set -e  # Exit on any error
 
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
 # Define SYNCBIN - get absolute path of script directory
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 export SYNCBIN="${SYNCBIN:-$SCRIPT_DIR}"
@@ -18,23 +25,107 @@ case "$(uname -s)" in
     *) OS_TYPE="unknown" ;;
 esac
 
-# Helper function to create directory if it doesn't exist
-ensure_dir() {
-    [ ! -d "$1" ] && mkdir -p "$1"
+# Helper function for colored output
+print_status() {
+    local color=$1
+    local message=$2
+    printf "${color}%s${NC}\n" "$message"
 }
 
-# Helper function to create symlink safely
+# Helper function to prompt user
+prompt_user() {
+    local message=$1
+    local response
+    
+    printf "${YELLOW}%s (y/N): ${NC}" "$message"
+    read -r response
+    
+    case "$response" in
+        [yY][eE][sS]|[yY]) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+# Helper function to create backup
+create_backup() {
+    local file=$1
+    local backup="${file}.backup.$(date +%Y%m%d_%H%M%S)"
+    
+    if mv "$file" "$backup"; then
+        print_status "$GREEN" "✓ Created backup: $backup"
+        return 0
+    else
+        print_status "$RED" "✗ Failed to create backup of $file"
+        return 1
+    fi
+}
+
+# Helper function to create directory if it doesn't exist
+ensure_dir() {
+    local dir=$1
+    
+    if [ ! -d "$dir" ]; then
+        if mkdir -p "$dir"; then
+            print_status "$GREEN" "✓ Created directory: $dir"
+        else
+            print_status "$RED" "✗ Failed to create directory: $dir"
+            return 1
+        fi
+    fi
+}
+
+# Enhanced symlink function with user interaction
 safe_symlink() {
     local src="$1"
     local dest="$2"
+    local backup_created=0
     
-    if [ -f "$src" ] || [ -d "$src" ]; then
-        # Remove existing file/symlink if it exists
-        [ -e "$dest" ] || [ -L "$dest" ] && rm -rf "$dest"
-        ln -sf "$src" "$dest"
-        echo "✓ Linked $dest"
+    # Check if source exists
+    if [ ! -e "$src" ] && [ ! -L "$src" ]; then
+        print_status "$RED" "✗ Source not found: $src"
+        return 1
+    fi
+    
+    # If destination exists and is not a symlink to our source
+    if [ -e "$dest" ] || [ -L "$dest" ]; then
+        # Check if it's already the correct symlink
+        if [ -L "$dest" ] && [ "$(readlink "$dest")" = "$src" ]; then
+            print_status "$BLUE" "○ Already linked: $dest → $src"
+            return 0
+        fi
+        
+        # Ask user what to do
+        print_status "$YELLOW" "! File exists: $dest"
+        if prompt_user "Replace with symlink to $src?"; then
+            if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+                # It's a real file/directory, create backup
+                if create_backup "$dest"; then
+                    backup_created=1
+                else
+                    return 1
+                fi
+            else
+                # It's a symlink, just remove it
+                rm -f "$dest"
+            fi
+        else
+            print_status "$YELLOW" "⚠ Skipped: $dest"
+            return 0
+        fi
+    fi
+    
+    # Create the symlink
+    if ln -sf "$src" "$dest"; then
+        print_status "$GREEN" "✓ Linked: $dest → $src"
     else
-        echo "⚠ Skipping $dest (source not found: $src)"
+        print_status "$RED" "✗ Failed to create symlink: $dest"
+        # Restore backup if we created one
+        if [ $backup_created -eq 1 ]; then
+            local backup="${dest}.backup.$(date +%Y%m%d_%H%M%S)"
+            mv "$backup" "$dest"
+            print_status "$YELLOW" "⚠ Restored original file"
+        fi
+        return 1
     fi
 }
 
@@ -45,23 +136,45 @@ safe_symlink_if_missing() {
     
     if [ ! -e "$dest" ] && [ ! -L "$dest" ]; then
         if [ -f "$src" ] || [ -d "$src" ]; then
-            ln -sf "$src" "$dest"
-            echo "✓ Linked $dest"
+            if ln -sf "$src" "$dest"; then
+                print_status "$GREEN" "✓ Linked: $dest → $src"
+            else
+                print_status "$RED" "✗ Failed to create symlink: $dest"
+                return 1
+            fi
         else
-            echo "⚠ Skipping $dest (source not found: $src)"
+            print_status "$RED" "✗ Source not found: $src"
+            return 1
         fi
+    else
+        print_status "$BLUE" "○ Already exists: $dest"
     fi
 }
 
-echo "🚀 Installing syncbin configurations..."
-echo "📂 SYNCBIN: $SYNCBIN"
-echo "🖥️  OS: $OS_TYPE"
+# Introduction
+echo
+print_status "$BLUE" "======================================"
+print_status "$BLUE" "     Syncbin Installation Script      "
+print_status "$BLUE" "======================================"
+echo
+print_status "$GREEN" "📂 SYNCBIN: $SYNCBIN"
+print_status "$GREEN" "🖥️  OS: $OS_TYPE"
+echo
+
+# Confirmation prompt
+if ! prompt_user "This will set up dotfiles and configurations. Continue?"; then
+    print_status "$YELLOW" "Installation cancelled."
+    exit 0
+fi
+
+echo
+print_status "$BLUE" "Starting installation..."
 echo
 
 #########################
 ## Create directories  ##
 #########################
-echo "📁 Creating configuration directories..."
+print_status "$BLUE" "📁 Creating configuration directories..."
 
 # Standard config directories
 ensure_dir "$HOME/.config/zsh"
@@ -86,7 +199,7 @@ echo
 #########################
 ## Shell configurations ##
 #########################
-echo "🐚 Installing shell configurations..."
+print_status "$BLUE" "🐚 Installing shell configurations..."
 
 # ZSH configuration
 safe_symlink "$SYNCBIN/zsh/zshrc.zsh" "$HOME/.zshrc"
@@ -103,7 +216,7 @@ echo
 #########################
 ## Core dotfiles       ##
 #########################
-echo "⚙️  Installing core dotfiles..."
+print_status "$BLUE" "⚙️  Installing core dotfiles..."
 
 safe_symlink "$SYNCBIN/screenrc" "$HOME/.screenrc"
 safe_symlink "$SYNCBIN/zsh/theme/starship.toml" "$HOME/.config/starship.toml"
@@ -122,7 +235,7 @@ echo
 #########################
 ## R configuration     ##
 #########################
-echo "📊 Installing R configurations..."
+print_status "$BLUE" "📊 Installing R configurations..."
 
 safe_symlink "$SYNCBIN/R/Rprofile" "$HOME/.Rprofile"
 safe_symlink "$SYNCBIN/R/radian_profile" "$HOME/.radian_profile"
@@ -132,7 +245,7 @@ echo
 #########################
 ## Theme directories   ##
 #########################
-echo "🎨 Installing theme directories..."
+print_status "$BLUE" "🎨 Installing theme directories..."
 
 safe_symlink_if_missing "$SYNCBIN/bat/themes" "$HOME/.config/bat/themes"
 safe_symlink_if_missing "$SYNCBIN/btop/themes" "$HOME/.config/btop/themes"
@@ -147,7 +260,7 @@ echo
 ## Platform-specific   ##
 #########################
 if [ "$OS_TYPE" = "macos" ]; then
-    echo "🍎 Installing macOS-specific configurations..."
+    print_status "$BLUE" "🍎 Installing macOS-specific configurations..."
     
     safe_symlink "$SYNCBIN/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
     safe_symlink_if_missing "$SYNCBIN/zed" "$HOME/.config/zed"
@@ -159,7 +272,7 @@ fi
 ## RStudio themes      ##
 #########################
 if [ -d "$HOME/.config/rstudio/themes/" ]; then
-    echo "📈 Installing RStudio themes..."
+    print_status "$BLUE" "📈 Installing RStudio themes..."
     for theme in "$SYNCBIN/rstudio/themes"/*.rstheme; do
         if [ -f "$theme" ]; then
             safe_symlink "$theme" "$HOME/.config/rstudio/themes/$(basename "$theme")"
@@ -171,11 +284,21 @@ fi
 #########################
 ## Oh-My-Zsh setup     ##
 #########################
-echo "🔧 Setting up Oh-My-Zsh..."
+print_status "$BLUE" "🔧 Setting up Oh-My-Zsh..."
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    echo "Installing Oh-My-Zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
+    if prompt_user "Oh-My-Zsh not found. Install it now?"; then
+        print_status "$YELLOW" "Installing Oh-My-Zsh..."
+        if sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended; then
+            print_status "$GREEN" "✓ Oh-My-Zsh installed successfully"
+        else
+            print_status "$RED" "✗ Failed to install Oh-My-Zsh"
+        fi
+    else
+        print_status "$YELLOW" "⚠ Skipped Oh-My-Zsh installation"
+    fi
+else
+    print_status "$BLUE" "○ Oh-My-Zsh already installed"
 fi
 
 # Link ZSH theme to OMZSH custom theme dir
@@ -190,11 +313,21 @@ echo
 #########################
 ## Tmux Plugin Manager ##
 #########################
-echo "🔌 Setting up Tmux Plugin Manager..."
+print_status "$BLUE" "🔌 Setting up Tmux Plugin Manager..."
 
 if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
-    echo "Installing TPM..."
-    git clone --depth 1 --single-branch https://github.com/tmux-plugins/tpm "$HOME/.config/tmux/plugins/tpm" &
+    if prompt_user "Tmux Plugin Manager not found. Install it now?"; then
+        print_status "$YELLOW" "Installing TPM..."
+        if git clone --depth 1 --single-branch https://github.com/tmux-plugins/tpm "$HOME/.config/tmux/plugins/tpm"; then
+            print_status "$GREEN" "✓ TPM installed successfully"
+        else
+            print_status "$RED" "✗ Failed to install TPM"
+        fi
+    else
+        print_status "$YELLOW" "⚠ Skipped TPM installation"
+    fi
+else
+    print_status "$BLUE" "○ TPM already installed"
 fi
 
 echo
@@ -202,12 +335,16 @@ echo
 #########################
 ## Submodules update   ##
 #########################
-echo "📦 Updating git submodules..."
+print_status "$BLUE" "📦 Updating git submodules..."
 
 if [ -d "$SYNCBIN/.git" ]; then
-    git -C "$SYNCBIN" submodule update --init --recursive
+    if git -C "$SYNCBIN" submodule update --init --recursive; then
+        print_status "$GREEN" "✓ Submodules updated successfully"
+    else
+        print_status "$RED" "✗ Failed to update submodules"
+    fi
 else
-    echo "⚠ Not a git repository, skipping submodule update"
+    print_status "$YELLOW" "⚠ Not a git repository, skipping submodule update"
 fi
 
 echo
@@ -215,26 +352,49 @@ echo
 #########################
 ## Cleanup legacy      ##
 #########################
-echo "🧹 Cleaning up legacy configurations..."
+print_status "$BLUE" "🧹 Cleaning up legacy configurations..."
 
 # Remove old zellij config format
-[ -f "$HOME/.config/zellij/config.yml" ] && rm "$HOME/.config/zellij/config.yml"
+if [ -f "$HOME/.config/zellij/config.yml" ]; then
+    if prompt_user "Remove old zellij config format (config.yml)?"; then
+        if rm "$HOME/.config/zellij/config.yml"; then
+            print_status "$GREEN" "✓ Removed old zellij config"
+        else
+            print_status "$RED" "✗ Failed to remove old zellij config"
+        fi
+    fi
+fi
 
 echo
 
 #########################
-## Completion          ##
+## Summary             ##
 #########################
-echo "✅ Installation complete!"
+print_status "$GREEN" "======================================"
+print_status "$GREEN" "✅ Installation complete!"
+print_status "$GREEN" "======================================"
 echo
-echo "📋 Next steps:"
-echo "   • Restart your terminal or run: source ~/.zshrc (for zsh) or source ~/.bash_profile (for bash)"
-echo "   • Install additional tools as needed (starship, bat, lsd, etc.)"
-echo "   • Customize local settings in ~/.env.local, ~/.path.local, or ~/.functions.local"
+print_status "$BLUE" "📋 Next steps:"
+echo "   • Restart your terminal or run:"
+echo "     - For ZSH:  source ~/.zshrc"
+echo "     - For Bash: source ~/.bashrc"
+echo "     - For Fish: source ~/.config/fish/config.fish"
+echo "   • Install additional tools as needed:"
+echo "     - starship, bat, lsd, ripgrep, fzf, etc."
+echo "   • Customize local settings in:"
+echo "     - ~/.env.local, ~/.path.local, ~/.functions.local"
 echo
-echo "🔗 Shell configurations available:"
-echo "   • ZSH: ~/.zshrc → $SYNCBIN/zsh/zshrc.zsh"
+print_status "$BLUE" "🔗 Shell configurations installed:"
+echo "   • ZSH:  ~/.zshrc → $SYNCBIN/zsh/zshrc.zsh"
 echo "   • Bash: ~/.bashrc → $SYNCBIN/bash/bashrc (main config)"
 echo "   •       ~/.bash_profile → $SYNCBIN/bash/bash_profile (sources .bashrc)"
 echo "   • Fish: ~/.config/fish/config.fish → $SYNCBIN/fish/config.fish"
 echo
+
+# Check for any backup files created
+if ls "$HOME"/*.backup.* >/dev/null 2>&1 || ls "$HOME"/.*.backup.* >/dev/null 2>&1; then
+    echo
+    print_status "$YELLOW" "📦 Backup files were created:"
+    ls -la "$HOME"/*.backup.* "$HOME"/.*.backup.* 2>/dev/null | grep -v "^ls:"
+    echo
+fi

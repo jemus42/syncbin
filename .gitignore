@@ -6,3 +6,4 @@ syncbin.code-workspace
 .vscode/vscode-R
 zed/.tmp*
 zed/embeddings
+CLAUDE.local.md

@@ -1,35 +1,22 @@
-# Init oh-my-zsh stuff
+# Oh-My-Zsh Configuration
+# This file contains all oh-my-zsh related configuration
+# Clearly separated from other shell configuration
 
+# Oh-My-Zsh paths and settings
 export ZSH=$HOME/.oh-my-zsh
-
-# Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$SYNCBIN/ohmyzsh_custom
 
-# Reduce startup time by not giving a fuck
+# Oh-My-Zsh behavior settings
 ZSH_DISABLE_COMPFIX=true
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
 HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="false"
-
-# Red dots displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=30
-
-# Uncomment the following line to disable auto-setting terminal title.
+# COMPLETION_WAITING_DOTS="true"
 # DISABLE_AUTO_TITLE="true"
+# ENABLE_CORRECTION="true" # Disabled because of false-positives
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-# Disabled because of false-positives that were starting to get annoying
-
+# Core Oh-My-Zsh plugins
 plugins=(
-   # rsync # use custom aliases without compression
     extract
     git
     git-flow
@@ -43,7 +30,7 @@ plugins=(
     iterm2
 )
 
-# Conditional plugins just in case? At least tmux plugin complains if tmux is not found
+# Conditional plugins (only if command exists)
 (( $+commands[zoxide] )) && plugins+=(zoxide) || plugins+=(z)
 (( $+commands[gh] )) && plugins+=(gh)
 (( $+commands[tmux] )) && plugins+=(tmux)
@@ -54,20 +41,19 @@ plugins=(
 (( $+commands[fzf] )) && plugins+=(fzf)
 (( $+commands[rbenv] )) && plugins+=(rbenv)
 
-
 # Platform-specific plugins
 (( $+commands[systemctl] )) && plugins+=(systemd)
 (( $+commands[code] )) && plugins+=(vscode)
 [ $host_os = "Darwin" ] && plugins+=(macos)
 
-# These go at the bottom
+# Third-party plugins (loaded last for oh-my-zsh)
 plugins+=(
     F-Sy-H # Supersedes zsh-syntax-highlighting
-    # zsh-completions
     zsh-autosuggestions
 )
 
+# Only add zsh-completions if carapace is not available
 (( $+commands[carapace] )) || plugins+=(zsh-completions)
 
-
+# Load Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh

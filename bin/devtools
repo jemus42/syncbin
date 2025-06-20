@@ -1,42 +1,71 @@
 #!/bin/bash
 
 usage() {
-  echo "Usage: $(basename "$0") [-s] [-r] [-i]"
-  echo "  -d    Document"
-  echo "  -c    Check"
-  echo "  -t    Test"
-  echo "  -h    Show this help"
+  echo "Usage: $(basename "$0") [COMMAND|OPTION]"
+  echo ""
+  echo "Commands:"
+  echo "  check, -c       Run devtools::check()"
+  echo "  document, -d    Run devtools::document()"
+  echo "  test, -t        Run devtools::test()"
+  echo "  help, -h        Show this help"
+  echo ""
+  echo "If no command is given, runs devtools::install_dev_deps()"
   exit 1
 }
 
-if [[ -z "$1" ]]
-then
-	echo "Running devtools::install_dev_deps()"
-	Rscript --quiet -e "devtools::install_dev_deps()"
-	exit 0
+# Function to execute R command
+run_r_command() {
+  local cmd="$1"
+  echo "Running: $cmd"
+  Rscript --quiet -e "$cmd"
+}
+
+# No arguments: run install_dev_deps
+if [[ -z "$1" ]]; then
+  echo "Running devtools::install_dev_deps()"
+  Rscript --quiet -e "devtools::install_dev_deps()"
+  exit 0
 fi
 
-
-# Parse command line options
-while getopts "dcth" opt; do
-  case $opt in
-    d)
-    CMD="devtools::document()"
-       ;;
-    c)
-    CMD="devtools::check()"
-      ;;
-    t)
-    CMD="devtools::test()"
-      ;;
-    h)
-      usage
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      usage
-      ;;
-  esac
-done
-
-Rscript --quiet -e "$CMD"
+# Handle word-style commands
+case "$1" in
+  check)
+    run_r_command "devtools::check()"
+    ;;
+  document)
+    run_r_command "devtools::document()"
+    ;;
+  test)
+    run_r_command "devtools::test()"
+    ;;
+  help)
+    usage
+    ;;
+  -*)
+    # Handle flag-style options
+    while getopts "dcth" opt; do
+      case $opt in
+        d)
+          run_r_command "devtools::document()"
+          ;;
+        c)
+          run_r_command "devtools::check()"
+          ;;
+        t)
+          run_r_command "devtools::test()"
+          ;;
+        h)
+          usage
+          ;;
+        \?)
+          echo "Invalid option: -$OPTARG" >&2
+          usage
+          ;;
+      esac
+    done
+    ;;
+  *)
+    echo "Unknown command: $1" >&2
+    usage
+    ;;
+esac

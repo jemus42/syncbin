@@ -13,7 +13,7 @@ test -x "$(command -v delta)" && echo "Found delta" || brew install git-delta
 
 # The easy cases where binary == package name
 base_tools=( fd sd dust diskus broot zoxide bat exa lsd delta duf jq tldr procs micro )
-extra_tools=( yq cheat curlie dog thefuck zenith lazygit hwatch btop dua )
+extra_tools=( yq cheat dog thefuck zenith lazygit hwatch btop dua )
 docker_tools=( ctop lazydocker )
 
 for i in "${base_tools[@]}"

@@ -1,0 +1,4 @@
+#! /usr/bin/env Rscript
+
+arg <- commandArgs(trailingOnly = TRUE)
+knitr::purl(arg)

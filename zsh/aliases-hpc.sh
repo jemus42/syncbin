@@ -1,32 +1,16 @@
+# HPC-specific overrides and additions
+# Note: Git aliases and tmux functions are now in the main configs
+
+# R with HPC-friendly options
 alias R="R --quiet --no-save"
-# alias tmn="tmux new-session -A -s hpc"
-# alias tma="tmux attach -t hpc"
 
-alias gss="git status --short"
-alias gd="git diff"
-alias gprav="git pull --rebase --autostash -v"
-
+# Directory navigation (if not already defined)
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 
-function tmn () {
-  if [ -z "${1}" ]
-  then
-    tmux new-session -A -s hpc
-  else
-    tmux new-session -A -s "${1}"
-  fi
-}
-
-function tma () {
-  if [ -z "${1}" ]
-  then
-    tmux attach -t hpc
-  else
-    tmux attach -t "${1}"
-  fi
-}
+# Git aliases specific to HPC workflow
+alias gprav="git pull --rebase --autostash -v"
 
 alias tl="tmux list-sessions"
 

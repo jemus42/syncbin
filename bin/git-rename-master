@@ -1,8 +1,78 @@
-#! /bin/bash
+#!/bin/bash
 
-echo "renaming local via git branch -m master main"
+set -e
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "Error: Not in a git repository. Please run this script from the root of a git repository." >&2
+    exit 1
+fi
+
+# Check if master branch exists
+if ! git show-ref --verify --quiet refs/heads/master; then
+    echo "Error: Master branch does not exist in this repository." >&2
+    exit 1
+fi
+
+# Check if we're currently on master branch, switch if needed
+current_branch=$(git branch --show-current)
+if [ "$current_branch" != "master" ]; then
+    echo "Switching to master branch..."
+    git checkout master
+fi
+
+# Check if main branch already exists
+if git show-ref --verify --quiet refs/heads/main; then
+    echo "Error: Main branch already exists. Please resolve this manually." >&2
+    exit 1
+fi
+
+echo "Renaming local master branch to main..."
 git branch -m master main
-echo "pushing to origin via git push -u origin main"
+
+echo "Pushing main branch to origin..."
 git push -u origin main
-echo "Set default branch on https://github.com/ORG/REPO/settings/branches now, then do"
-echo "git push origin --delete master"
+
+# Check if gh CLI is available and we have a GitHub remote
+if command -v gh > /dev/null 2>&1 && git remote get-url origin | grep -q github.com; then
+    repo_info=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || echo "")
+    
+    if [ -n "$repo_info" ]; then
+        echo
+        echo "GitHub repository detected: $repo_info"
+        echo "This will:"
+        echo "  1. Set 'main' as the default branch on GitHub"
+        echo "  2. Delete the 'master' branch from GitHub"
+        echo
+        read -p "Do you want to update the GitHub repository? (y/N): " -n 1 -r
+        echo
+        
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            echo "Setting main as default branch on GitHub..."
+            gh api "repos/$repo_info" -X PATCH -f default_branch=main
+            
+            echo "Deleting master branch from GitHub..."
+            git push origin --delete master
+            
+            echo "✅ Successfully renamed master to main both locally and on GitHub!"
+        else
+            echo "⚠️  Local branch renamed to main, but GitHub was not updated."
+            echo "   You can delete the remote master branch later with:"
+            echo "   git push origin --delete master"
+        fi
+    else
+        echo "⚠️  Could not detect GitHub repository information."
+        echo "   Manual cleanup required - delete remote master branch with:"
+        echo "   git push origin --delete master"
+    fi
+else
+    if ! command -v gh > /dev/null 2>&1; then
+        echo "⚠️  GitHub CLI (gh) not found. Install it for automatic GitHub operations."
+    fi
+    echo "⚠️  Manual cleanup required:"
+    echo "   1. Set 'main' as default branch at: https://github.com/ORG/REPO/settings/branches"
+    echo "   2. Delete remote master branch with: git push origin --delete master"
+fi
+
+echo
+echo "Local master branch has been successfully renamed to main!"

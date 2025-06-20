@@ -9,5 +9,13 @@
 {
     "base_keymap": "VSCode",
     "theme": "Ayu Light",
-    "buffer_font_size": 14
+    "buffer_font_size": 14,
+    "lsp": {
+      "tinymist": {
+        "settings": {
+          "exportPdf": "onSave",
+          "outputPath": "$root/$name"
+        }
+      }
+    }
 }

@@ -57,6 +57,10 @@ options(
   # styler complains about setting the option but it's like... right there.
   styler.cache_root = "styler",
   useFancyQuotes = FALSE, # fancy quotes are annoying and lead to 'copy + paste' bugs / frustrations
+  # Partial matching warnings
+  warnPartialMatchArgs = TRUE,
+  warnPartialMatchDollar = TRUE,
+  warnPartialMatchAttr = TRUE,
   # data.table  -------------------------------------
   datatable.print.class = TRUE,
   datatable.print.keys = TRUE,

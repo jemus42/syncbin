@@ -1,25 +1,26 @@
-#!/bin/bash
+#!/usr/bin/env Rscript
 
-if [[ -z "$1" ]]
-then
-	echo "Running pak::pak()"
-	Rscript --quiet -e "pak::pak()"
-fi
+args <- commandArgs(trailingOnly = TRUE)
 
-result="c("
+# Try to read from stdin using non-blocking mode
+con <- file('stdin', open = 'r', blocking = FALSE)
+stdin_lines <- readLines(con)
+close(con)
 
-# Loop through all positional parameters
-for arg in "$@"
-do
-    # Append each argument to the result string, enclosed in single quotes and followed by a comma
-    result+="'$arg', "
-done
+# Filter out empty lines and whitespace
+stdin_lines <- stdin_lines[nzchar(trimws(stdin_lines))]
 
-# Remove the trailing comma and space, then add the closing parenthesis
-result="${result%, })"
-printf "Installing packages: %s\n" "$*"
-
-Rscript --quiet -e "pak::pak(${result})"
-
-
-
+if (length(stdin_lines) > 0) {
+  # Data was piped in via stdin
+  cli::cli_inform("Installing packages from stdin: {stdin_lines}")
+  pak::pak(stdin_lines)
+} else if (length(args) == 0) {
+  cli::cli_inform("Running pak::pak()")
+  pak::pak()
+} else if (length(args) == 1 && args[1] == ".") {
+  cli::cli_inform("Running pak::local_install(upgrade = FALSE)")
+  pak::local_install(upgrade = FALSE)
+} else {
+  cli::cli_inform("Installing packages: {args}")
+  pak::pak(args)
+}

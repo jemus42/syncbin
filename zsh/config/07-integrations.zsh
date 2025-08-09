@@ -4,7 +4,7 @@
 # McFly history search (must be loaded after oh-my-zsh to avoid ctrl+R override)
 if (( $+commands[mcfly] )); then
   source <(mcfly init zsh)
-  export MCFLY_FUZZY=1
+  export MCFLY_FUZZY=0
   export MCFLY_RESULTS_SORT=LAST_RUN
   export MCFLY_PROMPT="❯"
   export MCFLY_RESULTS=25  

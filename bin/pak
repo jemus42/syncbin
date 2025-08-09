@@ -1,5 +1,24 @@
 #!/usr/bin/env Rscript
 
+# Check if required packages are installed
+check_package <- function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    cat(paste0("Package '", pkg, "' is not installed.\n"))
+    response <- readline(paste0("Would you like to install it now? (y/n): "))
+    if (tolower(response) %in% c("y", "yes")) {
+      install.packages(pkg, repos = "https://cloud.r-project.org")
+      cat(paste0("'", pkg, "' has been installed.\n"))
+    } else {
+      cat("Cannot proceed without required packages. Exiting.\n")
+      quit(save = "no", status = 1)
+    }
+  }
+}
+
+check_package("cli")
+check_package("rlang")
+check_package("pak")
+
 args <- commandArgs(trailingOnly = TRUE)
 
 # Try to read from stdin using non-blocking mode

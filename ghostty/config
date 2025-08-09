@@ -8,7 +8,6 @@
 
 theme = catppuccin-macchiato.conf
 font-family = "FiraMono Nerd Font"
-#font-family = "MonaspiceNe Nerd Font Mono"
 font-size = 16
 shell-integration = zsh
 background-opacity = 0.9

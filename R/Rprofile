@@ -35,7 +35,9 @@ local({
     }
   }
 
-  if (!is.null(p3m_url)) repos[["P3M"]] <- p3m_url
+  if (!is.null(p3m_url)) {
+    repos[["P3M"]] <- p3m_url
+  }
   options(repos = repos)
 })
 
@@ -103,7 +105,18 @@ options(
 
 
 if (getOption("HTTPUserAgent", default = "") == "") {
-  options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version["platform"], R.version["arch"], R.version["os"])))
+  options(
+    HTTPUserAgent = sprintf(
+      "R/%s R (%s)",
+      getRversion(),
+      paste(
+        getRversion(),
+        R.version["platform"],
+        R.version["arch"],
+        R.version["os"]
+      )
+    )
+  )
 }
 
 
@@ -118,6 +131,10 @@ if (requireNamespace("rlang", quietly = TRUE)) {
 
 if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
   suppressMessages(prettycode::prettycode())
+}
+
+if (interactive() & requireNamespace("chores", quietly = TRUE)) {
+  options(.chores_chat = ellmer::chat_anthropic())
 }
 
 # Possibly fix various locale issues
@@ -234,7 +251,9 @@ if (file.exists("~/.Rprofile.local")) {
 
     withr::local_options(list(datatable.verbose = FALSE))
     bm = bench::mark(...)
-    if (plot) print(ggplot2::autoplot(bm))
+    if (plot) {
+      print(ggplot2::autoplot(bm))
+    }
     return(bm)
   }
 

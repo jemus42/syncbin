@@ -5,12 +5,9 @@
     "hidehelp": false,
     "ignorecase": false,
     "indentchar": "⇥",
-    "lsp.autocompleteDetails": false,
-    "lsp.formatOnSave": true,
     "lsp.ignoreMessages": "LS message1 to ignore|LS message 2 to ignore|...",
     "lsp.ignoreTriggerCharacters": "completion,signature",
     "lsp.server": "r=R --slave -e 'languageserver::run()',python=pyls,go=gopls,typescript=deno lsp,rust=rust-analyzer",
-    "lsp.tabcompletion": true,
     "matchbrace": false,
     "matchbraceleft": false,
     "mkparents": true,
@@ -18,5 +15,6 @@
         "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
     ],
     "pluginrepos": [],
+    "softwrap": true,
     "termtitle": true
 }

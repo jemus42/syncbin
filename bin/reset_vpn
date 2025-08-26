@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# reset_vpn - teardown all utun interfaces and flush routes on macOS
+
+set -euo pipefail
+
+echo "Bringing down all utun interfaces..."
+for i in $(ifconfig -l | tr ' ' '\n' | grep '^utun'); do
+    echo "  Bringing down $i"
+    sudo ifconfig "$i" down 2>/dev/null || true
+done
+
+echo "Flushing routing table..."
+sudo route -n flush
+
+# Optional: restart Viscosity automatically
+if pgrep -q Viscosity; then
+    echo "Restarting Viscosity..."
+    pkill Viscosity
+    sleep 2
+    open -a Viscosity
+    echo "Viscosity restarted. Please reconnect your VPN."
+else
+    echo "Viscosity not running. Start it manually to reconnect VPN."
+fi
+
+echo "VPN teardown/reset complete."

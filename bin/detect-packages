@@ -2,4 +2,6 @@
 
 # Trying to extract package names from library(pkg, ...) calls to pipe into `pak`
 
-rg "library\((\w.*\))" -o --no-heading --no-filename --no-line-number | sd "library\(" "" | sd "[,\)].*" "" | sort -u
+# rg "library\((\w.*\))" -o --no-heading --no-filename --no-line-number | sd "library\(" "" | sd "[,\)].*" "" | sort -u
+
+find . -name "*.R" -exec grep -h "library(" {} + | sed -n 's/.*library(\([^,)]*\).*/\1/p' | sort -u

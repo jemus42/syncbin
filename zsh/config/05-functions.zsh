@@ -1,22 +1,6 @@
 # Shell Functions
 # Custom functions and complex command definitions
 
-# File dump utility
-function dump {
-  for filearg in "$@"; do
-    rsync -avh --progress "${filearg}" -e ssh horst:"dump.jemu.name"
-    FILE=$(basename $filearg)
-    if [[ $ME == "Lukas" ]]; then
-      echo "https://dump.jemu.name/$FILE" | pbcopy
-    else
-      echo "https://dump.jemu.name/$FILE"
-    fi
-    echo "$(date '+%Y-%m-%d %H:%M:%S'): $FILE – http://dump.jemu.name/$FILE" >> $HOME/.dumplog
-    if (( $+commands[terminal-notifier] )); then
-      terminal-notifier -title "Filedump" -message "$FILE" -execute code $HOME/.dumplog;
-    fi
-  done
-}
 
 # Reload syncbin configuration
 function reload () {

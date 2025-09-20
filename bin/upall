@@ -62,7 +62,7 @@ Linux)
   print_section "Updating Linux packages"
   
   if command -v nala >/dev/null 2>&1; then
-    print_info "Using nala package manager"
+    print_info "Using nala for apt packages"
     sudo nala update
     sudo nala upgrade -y
     sudo nala autoremove
@@ -118,13 +118,6 @@ FreeBSD)
     sudo pkg autoremove -y
   fi
   print_success "FreeBSD packages updated"
-  
-  if command -v brew >/dev/null 2>&1; then
-    print_section "Updating Homebrew ${BREW}"
-    brew upgrade
-    brew cleanup
-    print_success "Homebrew updated"
-  fi
   ;;
   
 *)

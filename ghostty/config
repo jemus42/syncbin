@@ -17,3 +17,4 @@ keybind = global:cmd+grave_accent=toggle_quick_terminal
 quick-terminal-screen = mouse
 quick-terminal-animation-duration = 0.1
 quick-terminal-autohide = false
+keybind = shift+enter=text:\x1b\r

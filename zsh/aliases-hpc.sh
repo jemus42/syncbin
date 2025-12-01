@@ -37,6 +37,9 @@ function slac () {
   sacct -M $CLUSTERS -X --format=Comment,JobID,Partition,NodeList,Elapsed,AllocCPUS,State%20,ExitCode,UserCPU,ReqMem,MaxRSS,AveRSS "$@"
 }
 
+alias slac4w="slac -S now-4week"
+alias slac3w="slac -S now-3week"
+alias slac2w="slac -S now-2week"
 alias slac1w="slac -S now-1week"
 alias slac1d="slac -S now-1day"
 alias slac1h="slac -S now-1hour"
@@ -46,15 +49,15 @@ function slstat () {
 }
 
 function nodecount () {
-  squeue --me --format='%R' --noheader | sort | uniq -c | sort -bn
+  sqm --format='%R' --noheader | sort | uniq -c | sort -bn
 }
 
 function partcount () {
-  squeue --me --format='%P' --noheader | sort | uniq -c | sort -bn
+  sqm --format='%P' --noheader | sort | uniq -c | sort -bn
 }
 
 function jobcount () {
-  squeue --me --format='%k' --noheader | sort | uniq -c | sort -bn
+  sqm --format='%k' --noheader | sort | uniq -c | sort -bn
 }
 
 function sqs () {
@@ -121,7 +124,7 @@ function notify_jobs () {
 
 # resource limits https://stackoverflow.com/a/61587377/409362
 # alias slimits="sacctmgr list associations"
-alias slimits="sacctmgr show assoc account=mallet"
+# alias slimits="sacctmgr show assoc account=mallet"
 
 function smax () {
   if [[ -z "$1" ]];
@@ -132,9 +135,5 @@ function smax () {
 }
 
 function partinfo () {
-	sinfo -p mb,wildiris,moran,teton,teton-knl,teton-cascade,teton-hugemem,beartooth,beartooth-bigmem "$@"
-}
-
-function btusage () {
-	chu_account -Y -a mallet > ~/account_usage.txt && cat ~/account_usage.txt
+	sinfo -M "$CLUSTERS" "$@"
 }

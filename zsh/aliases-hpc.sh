@@ -37,10 +37,13 @@ function slac () {
   sacct -M "$CLUSTERS" --units=M --format=Comment,JobID,Partition,NodeList,Elapsed,End,AllocCPUS,State%20,ExitCode,UserCPU,ReqMem,MaxRSS,AveRSS "$@"
 }
 
+alias slac8w="slac -S now-8week"
 alias slac4w="slac -S now-4week"
 alias slac3w="slac -S now-3week"
 alias slac2w="slac -S now-2week"
 alias slac1w="slac -S now-1week"
+alias slac3d="slac -S now-3day"
+alias slac2d="slac -S now-2day"
 alias slac1d="slac -S now-1day"
 alias slac1h="slac -S now-1hour"
 

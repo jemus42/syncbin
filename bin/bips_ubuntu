@@ -1,17 +1,110 @@
-#! /bin/sh
-case $1 in
-	(up | start) sudo systemctl start openvpn-client@bips && sleep 2 ;;
-	(down | stop) sudo systemctl stop openvpn-client@bips ;;
-	(status) sudo systemctl status openvpn-client@bips ;;
-	(*) echo "Status of OpenVPN systemd unit openvpn-client@bips (see /etc/openvpn/client)"
-		echo "Usage: bips [up|down|status]"
+#!/bin/bash
+#
+# BIPS VPN Control Script
+# Uses NetworkManager (nmcli) instead of systemd openvpn service
+# Automatically retrieves password + OTP from pass password manager
+#
+
+set -euo pipefail
+
+VPN_NAME="BIPS_VPN_burk"
+PASS_PATH="bips/password"
+OTP_PATH="bips/otp"
+TMPFILE=""
+
+# Cleanup function - ensures temp file is always deleted
+cleanup() {
+	if [ -n "$TMPFILE" ] && [ -f "$TMPFILE" ]; then
+		rm -f "$TMPFILE"
+	fi
+}
+
+# Set trap to ensure cleanup happens on exit, error, or interrupt
+trap cleanup EXIT INT TERM
+
+# Function: Connect to VPN
+vpn_up() {
+	echo "Connecting to BIPS VPN..."
+
+	# Get password and OTP from pass
+	local pass_value otp_value
+	pass_value=$(pass "$PASS_PATH" 2>/dev/null | head -1)
+	otp_value=$(pass otp "$OTP_PATH" 2>/dev/null | grep -oE '[0-9]{6}' | head -1)
+
+	if [ -z "$pass_value" ] || [ -z "$otp_value" ]; then
+		echo "ERROR: Could not retrieve password or OTP from pass"
+		exit 1
+	fi
+
+	# Create secure temp file in RAM (never touches disk)
+	# chmod 600 = only owner (you) and root can read
+	TMPFILE=$(mktemp -p /dev/shm vpn-pass.XXXXXX)
+	chmod 600 "$TMPFILE"
+
+	# Write password + OTP to temp file
+	echo "vpn.secrets.password:${pass_value}${otp_value}" > "$TMPFILE"
+
+	# Connect to VPN
+	if sudo nmcli connection up "$VPN_NAME" passwd-file "$TMPFILE" >/dev/null 2>&1; then
+		echo "✓ VPN connected"
+	else
+		echo "✗ VPN connection failed"
+		exit 1
+	fi
+	# Note: cleanup() will be called automatically via trap
+}
+
+# Function: Disconnect from VPN
+vpn_down() {
+	echo "Disconnecting from BIPS VPN..."
+	if sudo nmcli connection down "$VPN_NAME" >/dev/null 2>&1; then
+		echo "✓ VPN disconnected"
+	else
+		echo "VPN was not connected"
+	fi
+}
+
+# Function: Show VPN status
+vpn_status() {
+	if nmcli connection show --active | grep -q "$VPN_NAME"; then
+		echo "VPN Status: ACTIVE"
 		echo ""
-		if systemctl is-active --quiet openvpn-client@bips
-		then
-			echo "VPN active"
-			return 0
-		else
-			echo "VPN inactive"
-			return 1
-		fi ;;
+		nmcli connection show --active | grep "$VPN_NAME"
+		echo ""
+		echo "VPN Interface:"
+		ip addr show tun0 2>/dev/null | grep -E "inet |tun0:" || echo "  (tun0 details unavailable)"
+	else
+		echo "VPN Status: INACTIVE"
+		exit 1
+	fi
+}
+
+# Function: Show usage/default status
+vpn_default() {
+	echo "BIPS VPN Control (NetworkManager)"
+	echo "Usage: bips_ubuntu [up|start|down|stop|status]"
+	echo ""
+	if nmcli connection show --active | grep -q "$VPN_NAME"; then
+		echo "VPN Status: ACTIVE"
+		exit 0
+	else
+		echo "VPN Status: INACTIVE"
+		exit 1
+	fi
+}
+
+# Main command dispatcher
+case "${1:-}" in
+	up | start)
+		vpn_up
+		;;
+	down | stop)
+		vpn_down
+		;;
+	status)
+		vpn_status
+		;;
+	*)
+		vpn_default
+		;;
 esac

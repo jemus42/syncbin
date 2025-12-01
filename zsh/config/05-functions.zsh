@@ -76,7 +76,7 @@ git-disk-usage () {
 }
 
 gitit () {
-  git commit -am "Formatting / typo / trivial change ($(date +%Y%m%d%H%M%S))" && git push
+  git commit -am "Formatting / typo / minor change" && git push
 }
 
 git-timetravel () {

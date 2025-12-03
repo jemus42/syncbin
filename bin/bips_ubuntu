@@ -12,6 +12,25 @@ PASS_PATH="bips/password"
 OTP_PATH="bips/otp"
 TMPFILE=""
 
+# Health check settings
+VPN_DNS="10.10.11.140"
+HEALTH_CHECK_HOST="bertha.bips.de"
+
+# Colors (disable if not a terminal)
+if [[ -t 1 ]]; then
+	GREEN='\033[0;32m'
+	RED='\033[0;31m'
+	YELLOW='\033[0;33m'
+	BOLD='\033[1m'
+	NC='\033[0m' # No Color
+else
+	GREEN=''
+	RED=''
+	YELLOW=''
+	BOLD=''
+	NC=''
+fi
+
 # Cleanup function - ensures temp file is always deleted
 cleanup() {
 	if [ -n "$TMPFILE" ] && [ -f "$TMPFILE" ]; then
@@ -19,12 +38,31 @@ cleanup() {
 	fi
 }
 
+# Health check - verify tunnel is actually working (not just locally configured)
+# Uses DNS resolution instead of ping (ICMP is blocked on the VPN network)
+# Returns 0 if routing works, 1 if stale/broken
+check_tunnel_health() {
+	dig +short +time=2 +tries=1 "$HEALTH_CHECK_HOST" @"$VPN_DNS" >/dev/null 2>&1
+}
+
 # Set trap to ensure cleanup happens on exit, error, or interrupt
 trap cleanup EXIT INT TERM
 
-# Function: Connect to VPN
+# Function: Connect to VPN (handles fresh connect and stale reconnect)
 vpn_up() {
-	echo "Connecting to BIPS VPN..."
+	# Check if already connected
+	if nmcli connection show --active | grep -q "$VPN_NAME"; then
+		if check_tunnel_health; then
+			echo -e "VPN already connected and ${GREEN}healthy${NC}"
+			return 0
+		else
+			echo -e "VPN connection is ${YELLOW}stale${NC}, reconnecting..."
+			sudo nmcli connection down "$VPN_NAME" >/dev/null 2>&1 || true
+			sleep 1
+		fi
+	else
+		echo "Connecting to BIPS VPN..."
+	fi
 
 	# Get password and OTP from pass
 	local pass_value otp_value
@@ -32,7 +70,7 @@ vpn_up() {
 	otp_value=$(pass otp "$OTP_PATH" 2>/dev/null | grep -oE '[0-9]{6}' | head -1)
 
 	if [ -z "$pass_value" ] || [ -z "$otp_value" ]; then
-		echo "ERROR: Could not retrieve password or OTP from pass"
+		echo -e "${RED}ERROR${NC}: Could not retrieve password or OTP from pass"
 		exit 1
 	fi
 
@@ -46,9 +84,16 @@ vpn_up() {
 
 	# Connect to VPN
 	if sudo nmcli connection up "$VPN_NAME" passwd-file "$TMPFILE" >/dev/null 2>&1; then
-		echo "✓ VPN connected"
+		echo -e "${GREEN}✓${NC} VPN connected"
+		# Verify tunnel is actually working
+		sleep 1
+		if check_tunnel_health; then
+			echo -e "${GREEN}✓${NC} Tunnel health: OK"
+		else
+			echo -e "${YELLOW}⚠${NC} Tunnel health: gateway unreachable (may need a moment)"
+		fi
 	else
-		echo "✗ VPN connection failed"
+		echo -e "${RED}✗${NC} VPN connection failed"
 		exit 1
 	fi
 	# Note: cleanup() will be called automatically via trap
@@ -58,7 +103,7 @@ vpn_up() {
 vpn_down() {
 	echo "Disconnecting from BIPS VPN..."
 	if sudo nmcli connection down "$VPN_NAME" >/dev/null 2>&1; then
-		echo "✓ VPN disconnected"
+		echo -e "${GREEN}✓${NC} VPN disconnected"
 	else
 		echo "VPN was not connected"
 	fi
@@ -66,29 +111,54 @@ vpn_down() {
 
 # Function: Show VPN status
 vpn_status() {
+	echo -e "${BOLD}=== BIPS VPN Status ===${NC}"
+	echo ""
+
+	# Check 1: Is nmcli reporting the connection as active?
 	if nmcli connection show --active | grep -q "$VPN_NAME"; then
-		echo "VPN Status: ACTIVE"
-		echo ""
-		nmcli connection show --active | grep "$VPN_NAME"
-		echo ""
-		echo "VPN Interface:"
-		ip addr show tun0 2>/dev/null | grep -E "inet |tun0:" || echo "  (tun0 details unavailable)"
+		echo -e "Connection: ${GREEN}ACTIVE${NC}"
 	else
-		echo "VPN Status: INACTIVE"
+		echo -e "Connection: ${RED}INACTIVE${NC}"
+		echo ""
+		echo "VPN is not connected. Run 'bips_ubuntu up' to connect."
 		exit 1
 	fi
+
+	# Check 2: Is the tunnel actually working?
+	if check_tunnel_health; then
+		echo -e "Tunnel:     ${GREEN}OK${NC} (gateway reachable)"
+	else
+		echo -e "Tunnel:     ${RED}STALE${NC} (gateway unreachable)"
+		echo ""
+		echo "The VPN appears connected but traffic is not flowing."
+		echo "Reconnect with: bips_ubuntu up"
+		exit 1
+	fi
+
+	echo ""
+	echo "VPN Interface:"
+	ip addr show tun0 2>/dev/null | grep -E "inet |tun0:" || echo "  (tun0 details unavailable)"
 }
 
 # Function: Show usage/default status
 vpn_default() {
-	echo "BIPS VPN Control (NetworkManager)"
+	echo -e "${BOLD}BIPS VPN Control (NetworkManager)${NC}"
 	echo "Usage: bips_ubuntu [up|start|down|stop|status]"
 	echo ""
+
 	if nmcli connection show --active | grep -q "$VPN_NAME"; then
-		echo "VPN Status: ACTIVE"
-		exit 0
+		echo -e "Connection: ${GREEN}ACTIVE${NC}"
+		if check_tunnel_health; then
+			echo -e "Tunnel:     ${GREEN}OK${NC}"
+			exit 0
+		else
+			echo -e "Tunnel:     ${RED}STALE${NC}"
+			echo ""
+			echo "Run 'bips_ubuntu up' to reconnect"
+			exit 1
+		fi
 	else
-		echo "VPN Status: INACTIVE"
+		echo -e "Connection: ${RED}INACTIVE${NC}"
 		exit 1
 	fi
 }

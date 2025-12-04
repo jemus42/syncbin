@@ -143,3 +143,96 @@ alias bathelp='bat --plain --language=help'
 help() {
   "$@" --help 2>&1 | bathelp
 }
+
+# WireGuard VPN helper (internal)
+# Usage: _wg_vpn <name> <display_name> <action>
+_wg_vpn() {
+  local name="$1"
+  local display_name="$2"
+  local action="$3"
+
+  # Find config file (macOS: /usr/local/etc/wireguard, Linux: /etc/wireguard)
+  local CONF=""
+  for dir in /usr/local/etc/wireguard /etc/wireguard; do
+    if [ -r "$dir/${name}.conf" ]; then
+      CONF="$dir/${name}.conf"
+      break
+    fi
+  done
+
+  if [ -z "$CONF" ]; then
+    echo "Missing config: ${name}.conf (searched /usr/local/etc/wireguard and /etc/wireguard)" >&2
+    return 1
+  fi
+
+  # Extract the server's public key from the [Peer] section
+  local PUBKEY
+  PUBKEY=$(awk '
+    BEGIN{IGNORECASE=1}
+    /^\[Peer\]$/ { inpeer=1; next }
+    inpeer && $0 ~ /^[[:space:]]*PublicKey[[:space:]]*=/ {
+      sub(/^[^=]*=[[:space:]]*/,""); gsub(/[[:space:]]+/,""); print; exit
+    }' "$CONF")
+
+  if [ -z "$PUBKEY" ]; then
+    echo "Could not read Peer PublicKey from $CONF" >&2
+    return 1
+  fi
+
+  # Helper: is tunnel up? (match by peer public key)
+  _is_up() {
+    sudo wg show 2>/dev/null | grep -q "peer: $PUBKEY"
+  }
+
+  case "$action" in
+    up)
+      if _is_up; then
+        echo "${display_name} VPN is already connected."
+      else
+        echo "Connecting ${display_name}…"
+        sudo wg-quick up "$name"
+      fi
+      ;;
+    down)
+      if _is_up; then
+        echo "Disconnecting ${display_name}…"
+        sudo wg-quick down "$name"
+      else
+        echo "${display_name} VPN is not connected."
+      fi
+      ;;
+    status|"")
+      if _is_up; then
+        sudo wg show | awk -v pk="$PUBKEY" -v dn="$display_name" '
+          /^interface:/ {iface=$2}
+          /^peer:/ {
+            if ($2 == pk) {
+              print dn " connected on " iface
+              exit
+            }
+          }'
+      else
+        echo "${display_name} VPN is not connected."
+      fi
+      ;;
+    iface)
+      sudo wg show | awk -v pk="$PUBKEY" '
+        /^interface:/ {iface=$2}
+        /^peer:/ {peer=$2}
+        peer==pk {print iface; found=1}
+        END{ if(!found) exit 1 }'
+      ;;
+    *)
+      echo "usage: ${name} [up|down|status|iface]" >&2
+      return 2
+      ;;
+  esac
+}
+
+ppth() {
+  _wg_vpn "ppth" "PPTH" "$1"
+}
+
+lifespan() {
+  _wg_vpn "lifespan" "Lifespan" "$1"
+}

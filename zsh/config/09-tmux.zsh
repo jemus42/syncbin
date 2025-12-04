@@ -20,10 +20,10 @@ tma () {
 
     if tmux list-sessions | grep -q "^${session_name}:"; then
         # Session exists, attach to it
-        _zsh_tmux_plugin_run attach -t "${session_name}"
+        command tmux attach -t "${session_name}"
     else
         # Session does not exist, create it and then attach
-        tmux new-session -s "${session_name}"
-        _zsh_tmux_plugin_run attach -t "${session_name}"
+        command tmux new-session -s "${session_name}"
+        command tmux attach -t "${session_name}"
     fi
 }

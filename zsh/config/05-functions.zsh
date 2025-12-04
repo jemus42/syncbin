@@ -229,8 +229,66 @@ _wg_vpn() {
   esac
 }
 
+# List of VPNs: name:display_name
+_WG_VPNS=(
+  "PPTH:PPTH"
+  "PPTH-all:PPTH (all)"
+  "lifespan:Lifespan"
+)
+
+wg-status() {
+  local found_any=0
+  local wg_output
+  wg_output=$(sudo wg show 2>/dev/null)
+
+  for entry in "${_WG_VPNS[@]}"; do
+    local name="${entry%%:*}"
+    local display_name="${entry#*:}"
+
+    # Find config file
+    local conf=""
+    for dir in /usr/local/etc/wireguard /etc/wireguard; do
+      if [ -r "$dir/${name}.conf" ]; then
+        conf="$dir/${name}.conf"
+        break
+      fi
+    done
+    [ -z "$conf" ] && continue
+
+    # Extract public key
+    local pubkey
+    pubkey=$(awk '
+      BEGIN{IGNORECASE=1}
+      /^\[Peer\]$/ { inpeer=1; next }
+      inpeer && $0 ~ /^[[:space:]]*PublicKey[[:space:]]*=/ {
+        sub(/^[^=]*=[[:space:]]*/,""); gsub(/[[:space:]]+/,""); print; exit
+      }' "$conf")
+    [ -z "$pubkey" ] && continue
+
+    # Check if connected
+    if echo "$wg_output" | grep -q "peer: $pubkey"; then
+      local iface
+      iface=$(echo "$wg_output" | awk -v pk="$pubkey" '
+        /^interface:/ {iface=$2}
+        /^peer:/ { if ($2 == pk) {print iface; exit} }')
+      printf "● %s (%s)\n" "$display_name" "$iface"
+      found_any=1
+    else
+      printf "○ %s\n" "$display_name"
+    fi
+  done
+
+  if [ "$found_any" -eq 0 ]; then
+    echo "No VPNs connected."
+  fi
+}
+
 ppth() {
-  _wg_vpn "ppth" "PPTH" "$1"
+  _wg_vpn "PPTH" "PPTH" "$1"
+}
+
+ppth-all() {
+  _wg_vpn "PPTH-all" "PPTH (all)" "$1"
 }
 
 lifespan() {

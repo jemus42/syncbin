@@ -197,6 +197,41 @@ fi
 echo
 
 #########################
+## Oh-My-Zsh setup     ##
+#########################
+# Install oh-my-zsh BEFORE shell symlinks, as it overwrites ~/.zshrc
+print_status "$BLUE" "🔧 Setting up Oh-My-Zsh..."
+
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    if prompt_user "Oh-My-Zsh not found. Install it now?"; then
+        print_status "$YELLOW" "Installing Oh-My-Zsh..."
+        if sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended; then
+            print_status "$GREEN" "✓ Oh-My-Zsh installed successfully"
+            # Remove the default .zshrc that oh-my-zsh creates
+            if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
+                rm -f "$HOME/.zshrc"
+                print_status "$GREEN" "✓ Removed oh-my-zsh default .zshrc (will be replaced with symlink)"
+            fi
+        else
+            print_status "$RED" "✗ Failed to install Oh-My-Zsh"
+        fi
+    else
+        print_status "$YELLOW" "⚠ Skipped Oh-My-Zsh installation"
+    fi
+else
+    print_status "$BLUE" "○ Oh-My-Zsh already installed"
+fi
+
+# Link ZSH theme to OMZSH custom theme dir
+if [ -d "$HOME/.oh-my-zsh" ]; then
+    ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+    ensure_dir "$ZSH_CUSTOM_DIR/themes"
+    safe_symlink "$SYNCBIN/zsh/theme/jemus42.zsh-theme" "$ZSH_CUSTOM_DIR/themes/jemus42.zsh-theme"
+fi
+
+echo
+
+#########################
 ## Shell configurations ##
 #########################
 print_status "$BLUE" "🐚 Installing shell configurations..."
@@ -280,35 +315,6 @@ if [ -d "$HOME/.config/rstudio/themes/" ]; then
     done
     echo
 fi
-
-#########################
-## Oh-My-Zsh setup     ##
-#########################
-print_status "$BLUE" "🔧 Setting up Oh-My-Zsh..."
-
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    if prompt_user "Oh-My-Zsh not found. Install it now?"; then
-        print_status "$YELLOW" "Installing Oh-My-Zsh..."
-        if sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended; then
-            print_status "$GREEN" "✓ Oh-My-Zsh installed successfully"
-        else
-            print_status "$RED" "✗ Failed to install Oh-My-Zsh"
-        fi
-    else
-        print_status "$YELLOW" "⚠ Skipped Oh-My-Zsh installation"
-    fi
-else
-    print_status "$BLUE" "○ Oh-My-Zsh already installed"
-fi
-
-# Link ZSH theme to OMZSH custom theme dir
-if [ -d "$HOME/.oh-my-zsh" ]; then
-    ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-    ensure_dir "$ZSH_CUSTOM_DIR/themes"
-    safe_symlink "$SYNCBIN/zsh/theme/jemus42.zsh-theme" "$ZSH_CUSTOM_DIR/themes/jemus42.zsh-theme"
-fi
-
-echo
 
 #########################
 ## Tmux Plugin Manager ##

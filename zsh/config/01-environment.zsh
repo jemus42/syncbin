@@ -24,9 +24,6 @@ fi
 # ZSH-specific directories
 test ! -d $HOME/.config/zsh && mkdir $HOME/.config/zsh
 
-# Completion dump location (don't clutter ~/)
-ZSH_COMPDUMP="${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
-
 # ZSH highlighting configuration
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 

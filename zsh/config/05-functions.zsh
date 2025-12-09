@@ -10,8 +10,8 @@ function reload () {
   echo "Re-installing..."
   $SYNCBIN/install.sh
   echo ""
-  echo "Nuking zcompdump at $ZSH_COMPDUMP..."
-  rm -f $ZSH_COMPDUMP
+  # echo "Nuking zcompdump at $ZSH_COMPDUMP..."
+  # rm -f $ZSH_COMPDUMP
   echo "Reloading ZSH via omz reload..."
   echo ""
   omz reload

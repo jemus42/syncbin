@@ -18,7 +18,7 @@ local({
     release <- release[grepl("^UBUNTU_CODENAME", release)]
     release <- strsplit(release, "=")[[1]][[2]]
     p3m_url <- sprintf(
-      "https://packagemanager.posit.co/cran/__linux__/%s/latest",
+      "https://p3m.dev/cran/__linux__/%s/latest",
       release
     )
   }
@@ -29,9 +29,9 @@ local({
     release <- strsplit(release, "=")[[1]][[2]]
     # I don't understand CentOS/Fedore/Red Hat
     if (grepl("8\\.\\d", release)) {
-      p3m_url <- "https://packagemanager.posit.co/cran/__linux__/centos8/latest"
+      p3m_url <- "https://p3m.dev/cran/__linux__/centos8/latest"
     } else if (grepl("9\\.\\d", release)) {
-      p3m_url <- "https://packagemanager.posit.co/cran/__linux__/rhel9/latest"
+      p3m_url <- "https://p3m.dev/cran/__linux__/rhel9/latest"
     }
   }
 
@@ -104,6 +104,7 @@ options(
 )
 
 
+# User agend for P3M compatibility on platforms where it's unset
 if (getOption("HTTPUserAgent", default = "") == "") {
   options(
     HTTPUserAgent = sprintf(
@@ -133,9 +134,9 @@ if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
   suppressMessages(prettycode::prettycode())
 }
 
-if (interactive() & requireNamespace("chores", quietly = TRUE)) {
-  options(.chores_chat = ellmer::chat_anthropic())
-}
+# if (interactive() & requireNamespace("chores", quietly = TRUE)) {
+#   options(.chores_chat = ellmer::chat_anthropic())
+# }
 
 # Possibly fix various locale issues
 # Sys.setlocale('LC_ALL','C')
@@ -281,32 +282,6 @@ if (file.exists("~/.Rprofile.local")) {
     }
 
     cat(reqs, sep = "\n")
-  }
-
-  ee$rstheme <- function(which = "auto") {
-    if (!requireNamespace("rsthemes")) {
-      message("rsthemes not installed, trying to install...")
-      if (!(requireNamespace("pak", quietly = TRUE))) {
-        install.packages("pak")
-      }
-      pak::pak("gadenbuie/rsthemes")
-    }
-    if (which == "auto") {
-      if (!(requireNamespace("ipapi"))) {
-        message("Need ipapi for automatic switching, trying to install...")
-        pak::pak("hrbrmstr/ipapi")
-      }
-    }
-
-    switch(
-      which,
-      auto = rsthemes::use_theme_auto(),
-      light = rsthemes::use_theme_light(),
-      dark = rsthemes::use_theme_toggle(),
-      toggle = rsthemes::use_theme_toggle(),
-      default = rsthemes::use_theme_rstudio_default(),
-      favorite = rsthemes::use_theme_favorite()
-    )
   }
 
   ee$q <- function() quit(save = "no")

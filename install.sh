@@ -6,6 +6,27 @@
 
 set -e  # Exit on any error
 
+# Parse arguments
+AUTO_YES=""
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -y|--yes)
+            AUTO_YES=1
+            shift
+            ;;
+        -h|--help)
+            echo "Usage: install.sh [-y|--yes] [-h|--help]"
+            echo "  -y, --yes   Accept all defaults (non-interactive)"
+            echo "  -h, --help  Show this help"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -36,10 +57,16 @@ print_status() {
 prompt_user() {
     local message=$1
     local response
-    
+
+    # Auto-accept in non-interactive mode
+    if [ -n "$AUTO_YES" ]; then
+        printf "${YELLOW}%s (y/N): ${GREEN}y (auto)${NC}\n" "$message"
+        return 0
+    fi
+
     printf "${YELLOW}%s (y/N): ${NC}" "$message"
     read -r response
-    
+
     case "$response" in
         [yY][eE][sS]|[yY]) return 0 ;;
         *) return 1 ;;
@@ -162,9 +189,13 @@ print_status "$GREEN" "🖥️  OS: $OS_TYPE"
 echo
 
 # Confirmation prompt
-if ! prompt_user "This will set up dotfiles and configurations. Continue?"; then
-    print_status "$YELLOW" "Installation cancelled."
-    exit 0
+if [ -z "$AUTO_YES" ]; then
+    if ! prompt_user "This will set up dotfiles and configurations. Continue?"; then
+        print_status "$YELLOW" "Installation cancelled."
+        exit 0
+    fi
+else
+    print_status "$GREEN" "Running in non-interactive mode (-y)"
 fi
 
 echo

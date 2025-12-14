@@ -25,9 +25,8 @@ syncbin/
 ├── bin/                    # Custom scripts added to PATH
 │   ├── syncbin-doctor     # Health check script
 │   └── extract            # Universal archive extraction
-├── shared/                 # Cross-shell compatible scripts
-│   ├── aliases.sh         # Bash/zsh shared aliases (docker, systemd)
-│   └── aliases.fish       # Fish version (abbreviations)
+├── common/                 # POSIX sh scripts (bash + zsh compatible)
+│   └── aliases.sh         # Git, docker, systemd aliases
 ├── carapace/               # Carapace completion system config
 │   └── specs/             # Custom completion specs (symlinked to ~/.config/carapace/specs)
 ├── R/                      # R/RStudio configuration

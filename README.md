@@ -54,9 +54,8 @@ syncbin/
 ├── zed/                   # Zed editor config
 ├── zellij/                # Zellij multiplexer config
 ├── R/                     # R/RStudio configuration
-├── shared/                # Cross-shell compatible scripts
-│   ├── aliases.sh        # Bash/zsh compatible aliases
-│   └── aliases.fish      # Fish abbreviations
+├── common/                # POSIX sh scripts (bash + zsh compatible)
+│   └── aliases.sh        # Git, docker, systemd aliases
 ├── carapace/              # Carapace completion specs
 │   └── specs/            # Custom specs (symlinked to ~/.config/carapace/specs)
 ├── bootstrap.sh           # One-line installer

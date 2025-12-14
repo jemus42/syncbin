@@ -1,8 +1,8 @@
 # Shell Aliases
 # Common command aliases and shortcuts
 
-# Load shared aliases (docker, systemd, etc.)
-[[ -r "${SYNCBIN}/shared/aliases.sh" ]] && source "${SYNCBIN}/shared/aliases.sh"
+# Load common aliases (POSIX sh - works in bash and zsh)
+[[ -r "${SYNCBIN}/common/aliases.sh" ]] && source "${SYNCBIN}/common/aliases.sh"
 
 # Basic utilities
 alias du="du -h"
@@ -19,38 +19,9 @@ alias ....="cd ../../.."
 alias esudo='sudo --preserve-env=PATH env'
 alias smicro="sudo \$(which micro)"
 
-# Git shortcuts - Oh-My-Zsh git plugin equivalents
-alias g="git"
+# Custom git shortcuts (not in oh-my-zsh)
 alias git-reset-to-remote='git fetch && git reset --hard'
 alias git-amend='git commit --amend --no-edit'
-
-# Common git aliases
-alias ga='git add'
-alias gaa='git add --all'
-alias gb='git branch'
-alias gba='git branch -a'
-alias gc='git commit -v'
-alias gca='git commit -v -a'
-alias gcam='git commit -a -m'
-alias gcmsg='git commit -m'
-alias gco='git checkout'
-alias gcb='git checkout -b'
-alias gd='git diff'
-alias gdca='git diff --cached'
-alias gf='git fetch'
-alias gfa='git fetch --all --prune'
-alias gl='git pull'
-alias glog='git log --oneline --decorate --graph'
-alias gm='git merge'
-alias gp='git push'
-alias gpr='git pull --rebase'
-alias gr='git remote'
-alias grb='git rebase'
-alias grh='git reset'
-alias grhh='git reset --hard'
-alias gs='git status'
-alias gss='git status -s'
-alias gst='git status'
 
 # macOS cleanup
 alias cleanDS="find . -name '.DS_Store' -print -delete; find . -name '._*' -print -delete"
@@ -154,4 +125,4 @@ alias za='zellij attach -c'
 alias gpg-list-keys='gpg --list-secret-keys --keyid-format LONG'
 alias gpg-export='gpg --armor --export' # Supply key id afterwards
 
-# Note: systemd and docker aliases are in shared/aliases.sh
+# Note: git, systemd, and docker aliases are in common/aliases.sh

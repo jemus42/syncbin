@@ -1,8 +1,8 @@
 # Shell Aliases
 # Common command aliases and shortcuts
 
-# Load shared aliases (bash-compatible, works in zsh too)
-[[ -r "${SYNCBIN}/shared/aliases.sh" ]] && source "${SYNCBIN}/shared/aliases.sh"
+# Load common aliases (POSIX sh - works in bash and zsh)
+[[ -r "${SYNCBIN}/common/aliases.sh" ]] && source "${SYNCBIN}/common/aliases.sh"
 
 # Basic utilities
 alias du="du -h"
@@ -19,8 +19,7 @@ alias ....="cd ../../.."
 alias esudo='sudo --preserve-env=PATH env'
 alias smicro="sudo $(which micro)"
 
-# Git shortcuts
-alias g="git"
+# Custom git shortcuts (not in oh-my-zsh)
 alias git-reset-to-remote='git fetch && git reset --hard'
 alias git-amend='git commit --amend --no-edit'
 

@@ -5,6 +5,11 @@
 # Abbreviations expand when you press space (like zsh's global aliases)
 # Aliases are traditional command substitutions
 
+# Load shared aliases (docker, systemd, etc.)
+if test -r "$SYNCBIN/shared/aliases.fish"
+    source "$SYNCBIN/shared/aliases.fish"
+end
+
 # Basic utilities
 alias du="du -h"
 alias today='date +"%A, %B %-d, %Y"'

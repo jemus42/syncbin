@@ -1,0 +1,173 @@
+# Syncbin Dependencies Manifest
+# Lists required and optional tools for the dotfiles setup
+#
+# Install hints are provided for common package managers.
+# Use `syncbin-doctor` to check which dependencies are installed.
+
+required:
+  git:
+    description: Version control (required for syncbin itself)
+    check: git --version
+    install:
+      apt: git
+      brew: git
+      pacman: git
+
+optional:
+  # Completion System
+  carapace:
+    description: Multi-shell completion system (600+ commands)
+    url: https://carapace.sh
+    check: carapace --version
+    install:
+      brew: carapace
+      nix: carapace
+    notes: Primary completion system. Custom completions are fallback.
+
+  # Shell Enhancement
+  starship:
+    description: Cross-shell prompt
+    url: https://starship.rs
+    check: starship --version
+    install:
+      brew: starship
+      cargo: starship
+      apt: starship  # via apt.cli.rs or manual
+
+  zoxide:
+    description: Smarter cd command
+    url: https://github.com/ajeetdsouza/zoxide
+    check: zoxide --version
+    install:
+      brew: zoxide
+      cargo: zoxide
+      apt: zoxide
+
+  direnv:
+    description: Directory-specific environment variables
+    url: https://direnv.net
+    check: direnv --version
+    install:
+      brew: direnv
+      apt: direnv
+
+  # Modern CLI Replacements
+  bat:
+    description: Cat clone with syntax highlighting
+    url: https://github.com/sharkdp/bat
+    check: bat --version
+    install:
+      brew: bat
+      apt: bat
+      cargo: bat
+    notes: Config at ~/.config/bat/config
+
+  eza:
+    description: Modern ls replacement (fork of exa)
+    url: https://github.com/eza-community/eza
+    check: eza --version
+    install:
+      brew: eza
+      cargo: eza
+
+  lsd:
+    description: LSDeluxe - ls with icons
+    url: https://github.com/lsd-rs/lsd
+    check: lsd --version
+    install:
+      brew: lsd
+      cargo: lsd
+    notes: Config at ~/.config/lsd/config.yaml
+
+  fd:
+    description: Simple, fast find alternative
+    url: https://github.com/sharkdp/fd
+    check: fd --version
+    install:
+      brew: fd
+      apt: fd-find
+      cargo: fd-find
+    notes: Binary may be 'fdfind' on Debian/Ubuntu
+
+  ripgrep:
+    description: Fast grep alternative
+    url: https://github.com/BurntSushi/ripgrep
+    check: rg --version
+    install:
+      brew: ripgrep
+      apt: ripgrep
+      cargo: ripgrep
+
+  fzf:
+    description: Fuzzy finder
+    url: https://github.com/junegunn/fzf
+    check: fzf --version
+    install:
+      brew: fzf
+      apt: fzf
+
+  # Terminal Multiplexer
+  tmux:
+    description: Terminal multiplexer
+    check: tmux -V
+    install:
+      brew: tmux
+      apt: tmux
+    notes: Config at ~/.config/tmux/tmux.conf. TPM for plugins.
+
+  zellij:
+    description: Modern terminal multiplexer
+    url: https://zellij.dev
+    check: zellij --version
+    install:
+      brew: zellij
+      cargo: zellij
+    notes: Config at ~/.config/zellij/config.kdl
+
+  # Editors
+  micro:
+    description: Modern terminal text editor
+    url: https://micro-editor.github.io
+    check: micro --version
+    install:
+      brew: micro
+      apt: micro
+
+  helix:
+    description: Post-modern modal text editor
+    url: https://helix-editor.com
+    check: hx --version
+    install:
+      brew: helix
+      apt: helix  # via PPA or manual
+
+  # System Monitoring
+  btop:
+    description: Resource monitor
+    url: https://github.com/aristocratos/btop
+    check: btop --version
+    install:
+      brew: btop
+      apt: btop
+
+  # Development
+  gh:
+    description: GitHub CLI
+    check: gh --version
+    install:
+      brew: gh
+      apt: gh
+
+# Framework dependencies (auto-installed by install.sh)
+frameworks:
+  oh-my-zsh:
+    description: ZSH configuration framework
+    url: https://ohmyz.sh
+    check_dir: ~/.oh-my-zsh
+    auto_install: true
+
+  tpm:
+    description: Tmux Plugin Manager
+    url: https://github.com/tmux-plugins/tpm
+    check_dir: ~/.config/tmux/plugins/tpm
+    auto_install: true

@@ -7,14 +7,11 @@ function reload () {
   echo "Updating syncbin at $SYNCBIN..."
   git -C $SYNCBIN pull --recurse-submodules origin main
   echo ""
-  echo "Re-installing..."
-  $SYNCBIN/install.sh
+  echo "Running health check..."
+  $SYNCBIN/bin/syncbin-doctor
   echo ""
-  # echo "Nuking zcompdump at $ZSH_COMPDUMP..."
-  # rm -f $ZSH_COMPDUMP
-  echo "Reloading ZSH via omz reload..."
-  echo ""
-  omz reload
+  echo "Reloading ZSH..."
+  exec zsh
 }
 
 

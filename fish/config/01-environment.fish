@@ -1,6 +1,13 @@
 # Environment Variables and Path Configuration
 # Loaded after early config
 
+# XDG Base Directory Specification
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+set -q XDG_CONFIG_HOME; or set -x XDG_CONFIG_HOME $HOME/.config
+set -q XDG_DATA_HOME; or set -x XDG_DATA_HOME $HOME/.local/share
+set -q XDG_STATE_HOME; or set -x XDG_STATE_HOME $HOME/.local/state
+set -q XDG_CACHE_HOME; or set -x XDG_CACHE_HOME $HOME/.cache
+
 # Terminal colors and encoding
 if not string match -q "*256color*" $TERM
     set -x TERM xterm-256color

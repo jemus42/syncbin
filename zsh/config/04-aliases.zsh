@@ -1,6 +1,9 @@
 # Shell Aliases
 # Common command aliases and shortcuts
 
+# Load shared aliases (bash-compatible, works in zsh too)
+[[ -r "${SYNCBIN}/shared/aliases.sh" ]] && source "${SYNCBIN}/shared/aliases.sh"
+
 # Basic utilities
 alias du="du -h"
 alias today='date +"%A, %B %-d, %Y"'

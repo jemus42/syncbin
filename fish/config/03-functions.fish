@@ -7,8 +7,8 @@ function reload
     echo "Updating syncbin at $SYNCBIN..."
     git -C "$SYNCBIN" pull --recurse-submodules origin main
     echo ""
-    echo "Re-installing..."
-    "$SYNCBIN/install.sh"
+    echo "Running health check..."
+    "$SYNCBIN/bin/syncbin-doctor"
     echo ""
     echo "Reloading Fish..."
     exec fish

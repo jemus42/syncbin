@@ -1,6 +1,9 @@
 # Shell Aliases
 # Common command aliases and shortcuts
 
+# Load shared aliases (docker, systemd, etc.)
+[[ -r "${SYNCBIN}/shared/aliases.sh" ]] && source "${SYNCBIN}/shared/aliases.sh"
+
 # Basic utilities
 alias du="du -h"
 alias today='date +"%A, %B %-d, %Y"'
@@ -150,24 +153,4 @@ alias za='zellij attach -c'
 alias gpg-list-keys='gpg --list-secret-keys --keyid-format LONG'
 alias gpg-export='gpg --armor --export' # Supply key id afterwards
 
-# Systemd aliases (if systemctl is available)
-if command -v systemctl >/dev/null 2>&1; then
-    alias sc-status='systemctl status'
-    alias sc-show='systemctl show'
-    alias sc-help='systemctl help'
-    alias sc-list-units='systemctl list-units'
-    alias sc-list-unit-files='systemctl list-unit-files'
-    alias sc-list-sockets='systemctl list-sockets'
-    alias sc-list-timers='systemctl list-timers'
-    alias sc-start='sudo systemctl start'
-    alias sc-stop='sudo systemctl stop'
-    alias sc-reload='sudo systemctl reload'
-    alias sc-restart='sudo systemctl restart'
-    alias sc-enable='sudo systemctl enable'
-    alias sc-disable='sudo systemctl disable'
-    alias sc-mask='sudo systemctl mask'
-    alias sc-unmask='sudo systemctl unmask'
-    alias sc-failed='systemctl --failed'
-    alias sc-enabled='systemctl list-unit-files --state=enabled'
-    alias sc-disabled='systemctl list-unit-files --state=disabled'
-fi
+# Note: systemd and docker aliases are in shared/aliases.sh

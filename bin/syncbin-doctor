@@ -175,9 +175,9 @@ if has_cmd carapace; then
     version=$(carapace --version 2>/dev/null | head -1 || echo "unknown")
     check_ok "carapace $version"
 
-    # Check carapace specs directory
+    # Check carapace specs directory (use -L to follow symlinks)
     if [ -d "$HOME/.config/carapace/specs" ]; then
-        spec_count=$(find "$HOME/.config/carapace/specs" -name "*.yaml" 2>/dev/null | wc -l | tr -d ' ')
+        spec_count=$(find -L "$HOME/.config/carapace/specs" -name "*.yaml" -type f 2>/dev/null | wc -l | tr -d ' ')
         if [ "$spec_count" -gt 0 ]; then
             check_ok "carapace custom specs ($spec_count)"
         else

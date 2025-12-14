@@ -43,6 +43,11 @@ if test -r "$FISHCONFIG_DIR/06-prompt.fish"
     source "$FISHCONFIG_DIR/06-prompt.fish"
 end
 
+# Source completions configuration
+if test -r "$FISHCONFIG_DIR/07-completions.fish"
+    source "$FISHCONFIG_DIR/07-completions.fish"
+end
+
 # Source local overrides last
 if test -r "$FISHCONFIG_DIR/99-local.fish"
     source "$FISHCONFIG_DIR/99-local.fish"

@@ -1,75 +1,156 @@
 #compdef pandoc
 
-typeset -A opt_args
-local context state line
+# Dynamic pandoc completion that queries pandoc for current formats/options
+# This ensures completions stay up-to-date with the installed pandoc version
 
-_arguments -s -S \
-    '(-f+ --from=+)'{-r+,--read=+}'[Specify input format.]:FORMAT:(native json markdown textile rst html docbook latex)'\
-    '(-r+,--read=+)'{-f+,--from=+}'[Specify input format.]:FORMAT:(native json markdown textile rst html docbook latex)'\
-    '(-t+ --to=+)'{-w+,--write=+}'[Specify output format.]:FORMAT:(native json plain markdown rst html html5 latex beamer context man mediawiki textile org texinfo docbook opendocument odt docx epub asciidoc slidy slideous dzslides s5 rtf)'\
-    '(-w+ --write=+)'{-t+,--to=+}'[Specify output format.]:FORMAT:(native json plain markdown rst html html5 latex beamer context man mediawiki textile org texinfo docbook opendocument odt docx epub asciidoc slidy slideous dzslides s5 rtf)'\
-    {-o+,--output=+}'[Write output to FILE instead of stdout.]:FILE:_files'\
-    '--data-dir=+[Specify the user data directory to search for pandoc data files.]:DIRECTORY:_files -/'\
-    {-v,--version}'[Print version.]'\
-    {-h,--help}'[Show usage message.]'\
-    '--strict[Use strict markdown syntax,with no pandoc extensions or variants.]'\
-    {-R,--parse-raw}'[Parse untranslatable HTML codes and LaTeX environments as raw HTML or LaTeX,instead of ignoring them. ]'\
-    {-S,--smart}'[Produce typographically correct output.]'\
-    '--old-dashes[Selects the pandoc <= 1.8.2.1 behavior for parsing smart dashes.]'\
-    '--base-header-level=+[pecify the base level for headers (defaults to 1)]:NUMBER:'\
-    '--indented-code-classes=+[Specify classes to use for indented code blocks.]:CLASSES:'\
-    '--normalize[Normalize the document after reading.]'\
-    {-p,--preserve-tabs}'[Preserve tabs instead of converting them to spaces (the default).]'\
-    '--tab-stop=+[Specify the number of spaces per tab (default is 4).]:NUMBER:'\
-    {-s,--standalone}'[Produce output with an appropriate header and footer.]'\
-    '--template=+[Use FILE as a custom template for the generated document.]:FILE:_files'\
-    {-V+,--variable=+}'[Set the template variable KEY to the value VAL when rendering the document in standalone mode.]:KEY[=VAL]:'\
-    {-D+,--print-default-template=+}'[Print the default template for an output FORMAT.]:FORMAT:(native json plain markdown rst html html5 latex beamer context man mediawiki textile org texinfo docbook opendocument odt docx epub asciidoc slidy slideous dzslides s5 rtf)'\
-    '--no-wrap[Disable text wrapping in output. By default,text is wrapped appropriately for the output format.]'\
-    '--columns=+[Specify length of lines in characters (for text wrapping).]:NUMBER:'\
-    {--toc,--table-of-contents}'[Include an automatically generated table of contents in the output document. ]'\
-    '--no-highlight[Disables syntax highlighting for code blocks and inlines,even when a language attribute is given.]'\
-    '--highlight-style[Specifies the coloring style to be used in highlighted source code.]:STYLE:(pygments kate monochrome espresso zenburn haddock tango)'\
-    {-H,--include-in-header}'[Include contents of FILE, verbatim, at the end of the header.]:FILE:_files'\
-    {-B,--include-before-body}'[Include contents of FILE, verbatim, at the beginning of the document body.]:FILE:_files'\
-    {-A,--include-after-body}'[Include contents of FILE, verbatim, at the end of the document body.]:FILE:'\
-    '--self-contained[Produce a standalone HTML file with no external dependencies.]'\
-    '--offline[Deprecated synonym for --self-contained.]'\
-    {-5,--html5}'[Produce HTML5 instead of HTML4. ]'\
-    '--ascii[Use only ascii characters in output.]'\
-    '--reference-links[Use reference-style links, rather than inline links, in writing markdown or reStructuredText. ]'\
-    '--atx-headers[Use ATX style headers in markdown output. ]'\
-    '--chapters[Treat top-level headers as chapters in LaTeX, ConTeXt, and DocBook output.]'\
-    {-N,--number-sections}'[Number section headings in LaTeX, ConTeXt, or HTML output.]'\
-    '--no-tex-ligatures[Do not convert quotation marks,apostrophes,and dashes to the TeX ligatures when writing LaTeX or ConTeXt. ]'\
-    '--listings[Use listings package for LaTeX code blocks]'\
-    {-i,--incremental}'[Make list items in slide shows display incrementally (one by one). ]'\
-    '--slide-level=+[Specifies that headers with the specified level create slides (for beamer,s5,slidy,slideous,dzslides). ]:NUMBER:'\
-    '--section-divs[Wrap sections in <div> tags (or <section> tags in HTML5),and attach identifiers to the enclosing <div> (or <section>) rather than the header itself. ]'\
-    '--email-obfuscation=+[Specify a method for obfuscating mailto: links in HTML documents.]:METHOD:(none javascript references)'\
-    '--id-prefix=+[Specify a prefix to be added to all automatically generated identifiers in HTML output. ]:STRING:'\
-    {-T,--title-prefix=+}'[Specify STRING as a prefix at the beginning of the title that appears in the HTML header.]:STRING:'\
-    {-c,--css}'[Link to a CSS style sheet.]:URL:'\
-    '--reference-odt=+[Use the specified file as a style reference in producing an ODT. ]:FILE:_files'\
-    '--reference-docx=+[Use the specified file as a style reference in producing an DOCX. ]:FILE:_files'\
-    '--epub-stylesheet=+[Use the specified CSS file to style the EPUB. If no stylesheet is specified,pandoc will look for a file epub.]:FILE:_files'\
-    '--epub-cover-image=+[Use the specified image as the EPUB cover. ]:FILE:_files'\
-    '--epub-metadata=+[Look in the specified XML file for metadata for the EPUB. ]:FILE:_files:'\
-    '--epub-embed-font=+[Embed the specified font in the EPUB. ]:FILE:_files'\
-    '--bibliography=+[Specify bibliography database to be used in resolving citations.]:FILE:_files'\
-    '--csl=+[Specify CSL style to be used in formatting citations and the bibliography. ]:FILE:_files'\
-    '--citation-abbreviations=+[Specify a file containing abbreviations for journal titles and other bibliographic fields.]:FILE:_files'\
-    '--natbib[Use natbib for citations in LaTeX output.]'\
-    '--biblatex[Use biblatex for citations in LaTeX output.]'\
-    {-m+,--latexmathml=+}'[Use the LaTeXMathML script to display embedded TeX math in HTML output. ]:URL:'\
-    '--mathml=+[Convert TeX math to MathML (in docbook as well as html and html5).]:URL:'\
-    '--jsmath=+[Use jsMath to display embedded TeX math in HTML output.]:URL:'\
-    '--mathjax=+[Use MathJax to display embedded TeX math in HTML output.]'\
-    '--gladtex[Enclose TeX math in <eq> tags in HTML output.]'\
-    '--mimetex=+[Render TeX math using the mimeTeX CGI script.]:URL:'\
-    '--webtex=+[Render TeX formulas using an external script that converts TeX formulas to images.]:URL:'\
-    '--dump-args[Print information about command-line arguments to stdout,then exit.]'\
-    '--ignore-args[Ignore command-line arguments.]'\
-    && return 0
+_pandoc_input_formats() {
+  local -a formats
+  formats=(${(f)"$(pandoc --list-input-formats 2>/dev/null)"})
+  _describe -t formats 'input format' formats
+}
 
-    return 1
+_pandoc_output_formats() {
+  local -a formats
+  formats=(${(f)"$(pandoc --list-output-formats 2>/dev/null)"})
+  _describe -t formats 'output format' formats
+}
+
+_pandoc_highlight_styles() {
+  local -a styles
+  styles=(${(f)"$(pandoc --list-highlight-styles 2>/dev/null)"})
+  _describe -t styles 'highlight style' styles
+}
+
+_pandoc_extensions() {
+  local -a extensions
+  extensions=(${(f)"$(pandoc --list-extensions 2>/dev/null)"})
+  _describe -t extensions 'extension' extensions
+}
+
+_pandoc_pdf_engines() {
+  local -a engines
+  engines=(
+    'pdflatex:Traditional TeX to PDF'
+    'lualatex:LuaTeX-based PDF generation'
+    'xelatex:XeTeX-based PDF generation'
+    'latexmk:Automated LaTeX document generation'
+    'tectonic:Modern TeX engine'
+    'wkhtmltopdf:WebKit HTML to PDF'
+    'weasyprint:CSS-based PDF generation'
+    'pagedjs-cli:Paged.js PDF rendering'
+    'prince:Prince XML PDF generation'
+    'context:ConTeXt PDF generation'
+    'pdfroff:groff PDF output'
+    'typst:Typst PDF generation'
+  )
+  _describe -t engines 'PDF engine' engines
+}
+
+_pandoc() {
+  local curcontext="$curcontext" state line
+  typeset -A opt_args
+
+  _arguments -s -S \
+    '(-f --from -r --read)'{-f+,--from=,-r+,--read=}'[Input format]:format:_pandoc_input_formats' \
+    '(-t --to -w --write)'{-t+,--to=,-w+,--write=}'[Output format]:format:_pandoc_output_formats' \
+    '(-o --output)'{-o+,--output=}'[Output file]:file:_files' \
+    '--data-dir=[User data directory]:directory:_files -/' \
+    '(-M --metadata)'{-M+,--metadata=}'[Set metadata field]:key=value:' \
+    '--metadata-file=[YAML metadata file]:file:_files -g "*.y(a|)ml"' \
+    '(-d --defaults)'{-d+,--defaults=}'[Defaults file]:file:_files -g "*.y(a|)ml"' \
+    '--file-scope[Parse each file individually]' \
+    '--sandbox[Run in sandbox mode]' \
+    '(-s --standalone)'{-s,--standalone}'[Produce standalone document]' \
+    '--template=[Custom template]:file:_files' \
+    '(-V --variable)'{-V+,--variable=}'[Set template variable]:key=value:' \
+    '--wrap=[Text wrapping]:policy:(auto none preserve)' \
+    '--ascii[Use ASCII characters only]' \
+    '--toc[Include table of contents]' \
+    '--table-of-contents[Include table of contents]' \
+    '--toc-depth=[TOC depth]:number:(1 2 3 4 5 6)' \
+    '(-N --number-sections)'{-N,--number-sections}'[Number section headings]' \
+    '--number-offset=[Starting number for sections]:number:' \
+    '--top-level-division=[Top-level division type]:type:(default section chapter part)' \
+    '--extract-media=[Extract media to directory]:directory:_files -/' \
+    '--resource-path=[Search path for resources]:path:_files -/' \
+    '(-H --include-in-header)'{-H+,--include-in-header=}'[Include in header]:file:_files' \
+    '(-B --include-before-body)'{-B+,--include-before-body=}'[Include before body]:file:_files' \
+    '(-A --include-after-body)'{-A+,--include-after-body=}'[Include after body]:file:_files' \
+    '--no-highlight[Disable syntax highlighting]' \
+    '--highlight-style=[Highlighting style]:style:_pandoc_highlight_styles' \
+    '--syntax-definition=[Syntax definition file]:file:_files -g "*.xml"' \
+    '--dpi=[DPI for pixel conversion]:dpi:' \
+    '--eol=[Line endings]:style:(crlf lf native)' \
+    '--columns=[Line width for wrapping]:columns:' \
+    '(-p --preserve-tabs)'{-p,--preserve-tabs}'[Preserve tabs]' \
+    '--tab-stop=[Tab stop width]:width:(1 2 4 8)' \
+    '--pdf-engine=[PDF generation engine]:engine:_pandoc_pdf_engines' \
+    '--pdf-engine-opt=[PDF engine option]:option:' \
+    '--reference-doc=[Reference document]:file:_files' \
+    '--self-contained[Deprecated: use --embed-resources]' \
+    '--embed-resources[Embed external resources]' \
+    '--request-header=[HTTP request header]:header:' \
+    '--no-check-certificate[Skip certificate verification]' \
+    '--abbreviations=[Abbreviations file]:file:_files' \
+    '--indented-code-classes=[Classes for indented code]:classes:' \
+    '--default-image-extension=[Default image extension]:extension:(png jpg svg pdf eps)' \
+    '(-F --filter)'{-F+,--filter=}'[External filter]:filter:_files -g "*"' \
+    '(-L --lua-filter)'{-L+,--lua-filter=}'[Lua filter]:file:_files -g "*.lua"' \
+    '--shift-heading-level-by=[Shift heading levels]:offset:' \
+    '--track-changes=[Track changes mode]:mode:(accept reject all)' \
+    '--strip-comments[Strip HTML comments]' \
+    '--reference-links[Use reference-style links]' \
+    '--reference-location=[Reference link location]:location:(block section document)' \
+    '--markdown-headings=[Markdown heading style]:style:(setext atx)' \
+    '--list-tables[Use list tables for RST]' \
+    '--listings[Use listings package for LaTeX]' \
+    '(-i --incremental)'{-i,--incremental}'[Incremental lists in slides]' \
+    '--slide-level=[Heading level for slides]:level:(1 2 3 4 5 6)' \
+    '--section-divs[Wrap sections in divs]' \
+    '--html-q-tags[Use q tags for quotes]' \
+    '--email-obfuscation=[Email obfuscation]:method:(none javascript references)' \
+    '--id-prefix=[Prefix for identifiers]:prefix:' \
+    '(-T --title-prefix)'{-T+,--title-prefix=}'[Title prefix]:prefix:' \
+    '(-c --css)'{-c+,--css=}'[CSS stylesheet]:url:_files -g "*.css"' \
+    '--epub-subdirectory=[EPUB subdirectory]:directory:' \
+    '--epub-cover-image=[EPUB cover image]:file:_files -g "*.{png,jpg,jpeg,gif,svg}"' \
+    '--epub-title-page=[EPUB title page]:boolean:(true false)' \
+    '--epub-metadata=[EPUB metadata file]:file:_files -g "*.xml"' \
+    '--epub-embed-font=[Embed font in EPUB]:file:_files -g "*.{ttf,otf,woff}"' \
+    '--split-level=[Chunked HTML split level]:level:(1 2 3 4 5 6)' \
+    '--chunk-template=[Chunked HTML template]:template:' \
+    '--epub-chapter-level=[EPUB chapter level]:level:(1 2 3 4 5 6)' \
+    '--ipynb-output=[Jupyter output handling]:mode:(all none best)' \
+    '(-C --citeproc)'{-C,--citeproc}'[Process citations]' \
+    '--bibliography=[Bibliography file]:file:_files -g "*.{bib,bibtex,copac,json,yaml,enl,xml,wos,medline,mods,ris,nbib}"' \
+    '--csl=[CSL style file]:file:_files -g "*.csl"' \
+    '--citation-abbreviations=[Citation abbreviations]:file:_files -g "*.json"' \
+    '--natbib[Use natbib for citations]' \
+    '--biblatex[Use biblatex for citations]' \
+    '--mathml[Use MathML for math]' \
+    '--webtex=[Use web service for math]:url:' \
+    '--mathjax=[Use MathJax for math]:url:' \
+    '--katex=[Use KaTeX for math]:url:' \
+    '--gladtex[Use gladtex for math]' \
+    '--trace[Enable tracing]' \
+    '--dump-args[Print command line arguments]' \
+    '--ignore-args[Ignore command line arguments]' \
+    '--verbose[Verbose output]' \
+    '--quiet[Suppress warnings]' \
+    '--fail-if-warnings[Exit with error on warnings]' \
+    '--log=[Log file]:file:_files' \
+    '--bash-completion[Generate bash completion]' \
+    '--list-input-formats[List input formats]' \
+    '--list-output-formats[List output formats]' \
+    '--list-extensions=[List extensions for format]:format:_pandoc_input_formats' \
+    '--list-highlight-languages[List highlighting languages]' \
+    '--list-highlight-styles[List highlighting styles]' \
+    '(-D --print-default-template)'{-D+,--print-default-template=}'[Print default template]:format:_pandoc_output_formats' \
+    '--print-default-data-file=[Print default data file]:file:' \
+    '--print-highlight-style=[Print highlight style]:style:_pandoc_highlight_styles' \
+    '(-v --version)'{-v,--version}'[Show version]' \
+    '(-h --help)'{-h,--help}'[Show help]' \
+    '*:input file:_files'
+}
+
+_pandoc "$@"

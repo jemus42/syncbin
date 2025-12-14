@@ -94,6 +94,7 @@ alias rgflu="rg -F -l -u"
 (( $+commands[eza] )) && alias eza='eza -l --git --icons'
 
 # File operations
+alias x='extract'  # Universal archive extraction
 alias t='tail -f'
 alias -g NE="2> /dev/null"
 alias -g NUL="> /dev/null 2>&1"

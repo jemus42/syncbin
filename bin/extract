@@ -1,0 +1,246 @@
+#!/usr/bin/env bash
+# extract - Universal archive extraction utility
+# Handles most archive formats automatically based on file extension
+# Based on oh-my-zsh extract plugin with modifications
+
+set -e
+
+usage() {
+  cat >&2 <<'EOF'
+Usage: extract [-r|--remove] <file> [file ...]
+
+Extract archives based on file extension.
+Supports: tar, gz, bz2, xz, zst, zip, rar, 7z, deb, rpm, and more.
+
+Options:
+    -r, --remove    Remove archive after successful extraction
+    -h, --help      Show this help message
+EOF
+}
+
+if [ $# -eq 0 ]; then
+  usage
+  exit 1
+fi
+
+remove_archive=0
+files=()
+
+# Parse arguments
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -r|--remove)
+      remove_archive=1
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -*)
+      echo "extract: unknown option '$1'" >&2
+      usage
+      exit 1
+      ;;
+    *)
+      files+=("$1")
+      shift
+      ;;
+  esac
+done
+
+if [ ${#files[@]} -eq 0 ]; then
+  echo "extract: no files specified" >&2
+  usage
+  exit 1
+fi
+
+for file in "${files[@]}"; do
+  if [ ! -f "$file" ]; then
+    echo "extract: '$file' is not a valid file" >&2
+    continue
+  fi
+
+  success=0
+  full_path="$(cd "$(dirname "$file")" && pwd)/$(basename "$file")"
+
+  # Get extract directory name (filename without extension)
+  extract_dir="$(basename "$file")"
+  # Remove common extensions
+  extract_dir="${extract_dir%.tar.gz}"
+  extract_dir="${extract_dir%.tar.bz2}"
+  extract_dir="${extract_dir%.tar.xz}"
+  extract_dir="${extract_dir%.tar.zst}"
+  extract_dir="${extract_dir%.tar.lz}"
+  extract_dir="${extract_dir%.tar.lz4}"
+  extract_dir="${extract_dir%.tgz}"
+  extract_dir="${extract_dir%.tbz}"
+  extract_dir="${extract_dir%.tbz2}"
+  extract_dir="${extract_dir%.txz}"
+  extract_dir="${extract_dir%.tzst}"
+  extract_dir="${extract_dir%.tar}"
+  extract_dir="${extract_dir%.gz}"
+  extract_dir="${extract_dir%.bz2}"
+  extract_dir="${extract_dir%.xz}"
+  extract_dir="${extract_dir%.zst}"
+  extract_dir="${extract_dir%.lzma}"
+  extract_dir="${extract_dir%.zip}"
+  extract_dir="${extract_dir%.rar}"
+  extract_dir="${extract_dir%.7z}"
+  extract_dir="${extract_dir%.deb}"
+  extract_dir="${extract_dir%.rpm}"
+  extract_dir="${extract_dir%.Z}"
+
+  # Add random suffix if directory exists
+  if [ -e "$extract_dir" ]; then
+    extract_dir="${extract_dir}-$(date +%s)-$$"
+  fi
+
+  mkdir -p "$extract_dir"
+  echo "extract: extracting to $extract_dir" >&2
+
+  # Convert filename to lowercase for matching
+  file_lower="$(echo "$file" | tr '[:upper:]' '[:lower:]')"
+
+  (
+    cd "$extract_dir" || exit 1
+
+    case "$file_lower" in
+      *.tar.gz|*.tgz)
+        if command -v pigz >/dev/null 2>&1; then
+          tar -I pigz -xvf "$full_path"
+        else
+          tar xzvf "$full_path"
+        fi
+        ;;
+      *.tar.bz2|*.tbz|*.tbz2)
+        if command -v pbzip2 >/dev/null 2>&1; then
+          tar -I pbzip2 -xvf "$full_path"
+        else
+          tar xjvf "$full_path"
+        fi
+        ;;
+      *.tar.xz|*.txz)
+        tar xJvf "$full_path"
+        ;;
+      *.tar.zst|*.tzst)
+        if tar --zstd --help >/dev/null 2>&1; then
+          tar --zstd -xvf "$full_path"
+        else
+          zstdcat "$full_path" | tar xvf -
+        fi
+        ;;
+      *.tar.lz)
+        tar --lzip -xvf "$full_path"
+        ;;
+      *.tar.lz4)
+        lz4 -dc "$full_path" | tar xvf -
+        ;;
+      *.tar)
+        tar xvf "$full_path"
+        ;;
+      *.gz)
+        if command -v pigz >/dev/null 2>&1; then
+          pigz -dck "$full_path" > "$(basename "$file" .gz)"
+        else
+          gunzip -ck "$full_path" > "$(basename "$file" .gz)"
+        fi
+        ;;
+      *.bz2)
+        if command -v pbzip2 >/dev/null 2>&1; then
+          pbzip2 -dck "$full_path" > "$(basename "$file" .bz2)"
+        else
+          bunzip2 -ck "$full_path" > "$(basename "$file" .bz2)"
+        fi
+        ;;
+      *.xz)
+        unxz -ck "$full_path" > "$(basename "$file" .xz)"
+        ;;
+      *.zst)
+        unzstd -c "$full_path" > "$(basename "$file" .zst)"
+        ;;
+      *.lzma)
+        unlzma -ck "$full_path" > "$(basename "$file" .lzma)"
+        ;;
+      *.z)
+        uncompress -c "$full_path" > "$(basename "$file" .Z)"
+        ;;
+      *.zip|*.jar|*.war|*.ear|*.apk|*.ipa|*.xpi|*.whl|*.vsix)
+        unzip "$full_path"
+        ;;
+      *.rar)
+        # Prefer unrar, fall back to 7z
+        if command -v unrar >/dev/null 2>&1; then
+          unrar x "$full_path"
+        elif command -v 7z >/dev/null 2>&1; then
+          7z x "$full_path"
+        elif command -v 7za >/dev/null 2>&1; then
+          7za x "$full_path"
+        else
+          echo "extract: need 'unrar' or '7z' to extract rar files" >&2
+          exit 1
+        fi
+        ;;
+      *.7z)
+        if command -v 7z >/dev/null 2>&1; then
+          7z x "$full_path"
+        elif command -v 7za >/dev/null 2>&1; then
+          7za x "$full_path"
+        else
+          echo "extract: need '7z' to extract 7z files" >&2
+          exit 1
+        fi
+        ;;
+      *.deb)
+        ar x "$full_path"
+        # Extract inner tarballs if present
+        for inner in control.tar.* data.tar.*; do
+          [ -f "$inner" ] && tar xf "$inner" && rm -f "$inner"
+        done
+        rm -f debian-binary
+        ;;
+      *.rpm)
+        rpm2cpio "$full_path" | cpio -idmv
+        ;;
+      *.cpio)
+        cpio -idmvF "$full_path"
+        ;;
+      *.cab|*.exe)
+        cabextract "$full_path"
+        ;;
+      *)
+        echo "extract: '$file' - unknown archive format" >&2
+        exit 1
+        ;;
+    esac
+  )
+  success=$?
+
+  # If extraction successful, check if we should simplify directory structure
+  if [ $success -eq 0 ]; then
+    # Count items in extract directory
+    item_count=$(ls -A "$extract_dir" 2>/dev/null | wc -l)
+
+    # If only one item and it's a directory, move contents up
+    if [ "$item_count" -eq 1 ]; then
+      single_item="$(ls -A "$extract_dir")"
+      if [ -d "$extract_dir/$single_item" ]; then
+        # Check if we can move it up without conflict
+        if [ ! -e "$single_item" ]; then
+          mv "$extract_dir/$single_item" .
+          rmdir "$extract_dir"
+          echo "extract: simplified to $single_item" >&2
+        fi
+      fi
+    fi
+
+    # Remove archive if requested
+    if [ $remove_archive -eq 1 ]; then
+      rm -f "$full_path"
+      echo "extract: removed $file" >&2
+    fi
+  else
+    # Clean up failed extraction
+    rmdir "$extract_dir" 2>/dev/null
+  fi
+done

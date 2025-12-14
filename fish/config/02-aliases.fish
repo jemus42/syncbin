@@ -250,6 +250,7 @@ if command -v eza >/dev/null 2>&1
 end
 
 # File operations
+alias x='extract'  # Universal archive extraction
 alias t='tail -f'
 alias fdir='find . -type d -name'
 alias ffile='find . -type f -name'

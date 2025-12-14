@@ -220,6 +220,7 @@ ensure_dir "$HOME/.config/btop"
 ensure_dir "$HOME/.config/bat"
 ensure_dir "$HOME/.config/tmux"
 ensure_dir "$HOME/.config/tmux/plugins"
+ensure_dir "$HOME/.config/carapace"
 
 # Platform-specific directories
 if [ "$OS_TYPE" = "macos" ]; then
@@ -320,6 +321,7 @@ safe_symlink_if_missing "$SYNCBIN/zellij/themes" "$HOME/.config/zellij/themes"
 safe_symlink_if_missing "$SYNCBIN/helix" "$HOME/.config/helix"
 safe_symlink_if_missing "$SYNCBIN/ghostty" "$HOME/.config/ghostty"
 safe_symlink_if_missing "$SYNCBIN/micro/syntax" "$HOME/.config/micro/syntax"
+safe_symlink_if_missing "$SYNCBIN/carapace/specs" "$HOME/.config/carapace/specs"
 
 echo
 

@@ -23,10 +23,13 @@ syncbin/
 │   ├── plugins/           # zsh-completions, zsh-autosuggestions, F-Sy-H, etc.
 │   └── themes/            # powerlevel10k
 ├── bin/                    # Custom scripts added to PATH
-│   └── syncbin-doctor     # Health check script
+│   ├── syncbin-doctor     # Health check script
+│   └── extract            # Universal archive extraction
 ├── shared/                 # Cross-shell compatible scripts
 │   ├── aliases.sh         # Bash/zsh shared aliases (docker, systemd)
 │   └── aliases.fish       # Fish version (abbreviations)
+├── carapace/               # Carapace completion system config
+│   └── specs/             # Custom completion specs (symlinked to ~/.config/carapace/specs)
 ├── R/                      # R/RStudio configuration
 ├── alacritty/             # Alacritty terminal config
 ├── ghostty/               # Ghostty terminal config
@@ -70,7 +73,7 @@ All three shells (zsh, bash, fish) use a **modular configuration** approach:
 
 **Configuration:**
 - Enabled in `*/config/*-completions.*` for each shell
-- Custom specs: `~/.config/carapace/specs/*.yaml`
+- Custom specs: `carapace/specs/*.yaml` (symlinked to `~/.config/carapace/specs/`)
 - Bridges completions from zsh/fish/bash/inshellisense
 
 **Smart Fallback:**
@@ -80,7 +83,7 @@ Custom completions in `{zsh,bash,fish}/completions/` only load for commands cara
 
 **Option 1: Carapace spec (preferred - works for all shells)**
 ```yaml
-# ~/.config/carapace/specs/mycmd.yaml
+# $SYNCBIN/carapace/specs/mycmd.yaml
 # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
 name: mycmd
 description: My command

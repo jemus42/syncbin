@@ -57,6 +57,8 @@ syncbin/
 ├── shared/                # Cross-shell compatible scripts
 │   ├── aliases.sh        # Bash/zsh compatible aliases
 │   └── aliases.fish      # Fish abbreviations
+├── carapace/              # Carapace completion specs
+│   └── specs/            # Custom specs (symlinked to ~/.config/carapace/specs)
 ├── bootstrap.sh           # One-line installer
 ├── install.sh             # Main installation script
 └── dependencies.yaml      # Tool dependencies manifest
@@ -125,7 +127,7 @@ for commands carapace doesn't support.
 
 **Adding completions:**
 
-1. **Carapace spec (preferred):** `~/.config/carapace/specs/mycmd.yaml`
+1. **Carapace spec (preferred):** `carapace/specs/mycmd.yaml` (synced across machines)
 2. **Shell-specific:** `zsh/completions/_mycmd`, `bash/completions/mycmd.bash`,
    `fish/completions/mycmd.fish`
 
@@ -135,6 +137,7 @@ for commands carapace doesn't support.
 | ---------------- | --------------------------------------------- |
 | `reload`         | Pull latest syncbin, run doctor, reload shell |
 | `syncbin-doctor` | Health check for the installation             |
+| `extract` / `x`  | Universal archive extraction (tar, zip, 7z, rar, etc.) |
 
 ## Dependencies
 

@@ -1,0 +1,269 @@
+# yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+name: nala
+description: Commandline frontend for the apt package manager
+flags:
+  --version: Show program's version number and exit
+  --license: Read the GPLv3 license
+  --install-completion=: Install completion for specified shell
+  --show-completion=: Show completion for specified shell
+  -h, --help: Show help message and exit
+completion:
+  flag:
+    install-completion: ["bash", "zsh", "fish", "powershell", "pwsh"]
+    show-completion: ["bash", "zsh", "fish", "powershell", "pwsh"]
+commands:
+  - name: install
+    description: Install packages
+    flags:
+      --purge: Purge packages that would be removed
+      --debug: Print debug information
+      --raw-dpkg: Force nala not to format dpkg output
+      -d, --download-only: Only download packages
+      -t, --target-release=: Set release to install from
+      --remove-essential: Allow removal of essential packages
+      -y, --assume-yes: Automatically answer yes
+      -n, --assume-no: Automatically answer no
+      --simple: Show condensed transaction summary
+      --no-simple: Show standard transaction summary
+      -o, --option=: Set apt/nala/dpkg options
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      --autoremove: Auto-remove unneeded packages
+      --no-autoremove: Do not auto-remove packages
+      --update: Update package list first
+      --no-update: Do not update package list
+      --install-recommends: Install recommended packages
+      --no-install-recommends: Do not install recommended packages
+      --install-suggests: Install suggested packages
+      --no-install-suggests: Do not install suggested packages
+      --fix-broken: Attempt to fix broken packages
+      --no-fix-broken: Do not fix broken packages
+    completion:
+      positional:
+        - ["$carapace.bridge.CarapaceBin(apt)", "$files([.deb])"]
+
+  - name: remove
+    description: Remove packages
+    flags:
+      --purge: Purge package config files
+      --debug: Print debug information
+      --raw-dpkg: Force nala not to format dpkg output
+      -y, --assume-yes: Automatically answer yes
+      -n, --assume-no: Automatically answer no
+      --simple: Show condensed transaction summary
+      --no-simple: Show standard transaction summary
+      -o, --option=: Set apt/nala/dpkg options
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      --autoremove: Auto-remove unneeded packages
+      --no-autoremove: Do not auto-remove packages
+      --update: Update package list first
+      --no-update: Do not update package list
+    completion:
+      positional:
+        - ["$carapace.bridge.CarapaceBin(apt)"]
+
+  - name: purge
+    description: Purge packages
+    flags:
+      --debug: Print debug information
+      --raw-dpkg: Force nala not to format dpkg output
+      -y, --assume-yes: Automatically answer yes
+      -n, --assume-no: Automatically answer no
+      --simple: Show condensed transaction summary
+      --no-simple: Show standard transaction summary
+      -o, --option=: Set apt/nala/dpkg options
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      --autoremove: Auto-remove unneeded packages
+      --no-autoremove: Do not auto-remove packages
+      --update: Update package list first
+      --no-update: Do not update package list
+    completion:
+      positional:
+        - ["$carapace.bridge.CarapaceBin(apt)"]
+
+  - name: update
+    description: Update package list
+    flags:
+      --debug: Print debug information
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+
+  - name: upgrade
+    description: Upgrade packages (no removals)
+    flags:
+      --purge: Purge packages that would be removed
+      --debug: Print debug information
+      --raw-dpkg: Force nala not to format dpkg output
+      -d, --download-only: Only download packages
+      --exclude=: Exclude packages from upgrade
+      --remove-essential: Allow removal of essential packages
+      -y, --assume-yes: Automatically answer yes
+      -n, --assume-no: Automatically answer no
+      --simple: Show condensed transaction summary
+      --no-simple: Show standard transaction summary
+      -o, --option=: Set apt/nala/dpkg options
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      --autoremove: Auto-remove unneeded packages
+      --no-autoremove: Do not auto-remove packages
+      --update: Update package list first
+      --no-update: Do not update package list
+      --full: Perform full-upgrade
+      --no-full: Do not perform full-upgrade
+
+  - name: full-upgrade
+    description: Upgrade system (may remove packages)
+    flags:
+      --purge: Purge packages that would be removed
+      --debug: Print debug information
+      --raw-dpkg: Force nala not to format dpkg output
+      -d, --download-only: Only download packages
+      --exclude=: Exclude packages from upgrade
+      --remove-essential: Allow removal of essential packages
+      -y, --assume-yes: Automatically answer yes
+      -n, --assume-no: Automatically answer no
+      --simple: Show condensed transaction summary
+      --no-simple: Show standard transaction summary
+      -o, --option=: Set apt/nala/dpkg options
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      --autoremove: Auto-remove unneeded packages
+      --no-autoremove: Do not auto-remove packages
+      --update: Update package list first
+      --no-update: Do not update package list
+
+  - name: fetch
+    description: Fetch fast mirrors
+    flags:
+      --debug: Print debug information
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      --debian: Fetch Debian mirrors
+      --ubuntu: Fetch Ubuntu mirrors
+      --devuan: Fetch Devuan mirrors
+      -c, --country=: Specify country for mirrors
+      --foss: Exclude non-free repos
+      --sources: Add source repos
+      --fetches=: Number of mirrors to fetch
+      --auto: Run non-interactively
+      -y, --assume-yes: Automatically answer yes
+      --https-only: Only use HTTPS mirrors
+
+  - name: history
+    description: Show transaction history
+    flags:
+      --installed: Show only explicitly installed packages
+      --debug: Print debug information
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+    commands:
+      - name: info
+        description: Show transaction details
+        flags:
+          -h, --help: Show help
+        completion:
+          positional:
+            - ["last", "1", "2", "3", "4", "5"]
+      - name: redo
+        description: Redo a transaction
+        flags:
+          -h, --help: Show help
+          -y, --assume-yes: Automatically answer yes
+          -n, --assume-no: Automatically answer no
+        completion:
+          positional:
+            - ["last", "1", "2", "3", "4", "5"]
+      - name: undo
+        description: Undo a transaction
+        flags:
+          -h, --help: Show help
+          -y, --assume-yes: Automatically answer yes
+          -n, --assume-no: Automatically answer no
+        completion:
+          positional:
+            - ["last", "1", "2", "3", "4", "5"]
+      - name: clear
+        description: Clear transaction history
+        flags:
+          -h, --help: Show help
+          -y, --assume-yes: Automatically answer yes
+
+  - name: search
+    description: Search package names and descriptions
+    flags:
+      --debug: Print debug information
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      -n, --names: Search only package names
+      -i, --installed: Search only installed packages
+      -N, --nala-installed: Search only Nala-installed packages
+      -f, --full: Show full package descriptions
+      -A, --all-versions: Show all versions
+      -a, --all-arches: Show all architectures
+
+  - name: show
+    description: Show package details
+    flags:
+      --debug: Print debug information
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      -a, --all-versions: Show all versions
+    completion:
+      positional:
+        - ["$carapace.bridge.CarapaceBin(apt)"]
+
+  - name: list
+    description: List packages
+    flags:
+      --debug: Print debug information
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      -i, --installed: List installed packages
+      -N, --nala-installed: List Nala-installed packages
+      -u, --upgradable: List upgradable packages
+      -a, --all-versions: Show all versions
+    completion:
+      positional:
+        - ["$carapace.bridge.CarapaceBin(apt)"]
+
+  - name: clean
+    description: Clear downloaded package files
+    flags:
+      --debug: Print debug information
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      --lists: Remove package lists
+      --fetch: Remove fetch lists
+
+  - name: autopurge
+    description: Autopurge unneeded packages
+    flags:
+      --debug: Print debug information
+      --raw-dpkg: Force nala not to format dpkg output
+      -y, --assume-yes: Automatically answer yes
+      -n, --assume-no: Automatically answer no
+      --simple: Show condensed transaction summary
+      --no-simple: Show standard transaction summary
+      -o, --option=: Set apt/nala/dpkg options
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      --update: Update package list first
+      --no-update: Do not update package list
+
+  - name: autoremove
+    description: Autoremove unneeded packages
+    flags:
+      --purge: Purge config files
+      --debug: Print debug information
+      --raw-dpkg: Force nala not to format dpkg output
+      -y, --assume-yes: Automatically answer yes
+      -n, --assume-no: Automatically answer no
+      --simple: Show condensed transaction summary
+      --no-simple: Show standard transaction summary
+      -o, --option=: Set apt/nala/dpkg options
+      -v, --verbose: Print extra information
+      -h, --help: Show help
+      --update: Update package list first
+      --no-update: Do not update package list

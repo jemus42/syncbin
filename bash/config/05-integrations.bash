@@ -15,6 +15,11 @@ if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
   . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
+# fzf fuzzy finder (if available)
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --bash)"
+fi
+
 # Bash completion (if available)
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then

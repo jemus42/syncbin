@@ -31,14 +31,9 @@ if command -v git >/dev/null 2>&1; then
   alias gbsr='git bisect reset'
   alias gbss='git bisect start'
 
-  # Commit
+  # Commit (note: aliases with ! like gc! don't work in bash, use oh-my-zsh for those)
   alias gc='git commit -v'
-  alias gc!='git commit -v --amend'
-  alias gcn!='git commit -v --no-edit --amend'
   alias gca='git commit -v -a'
-  alias gca!='git commit -v -a --amend'
-  alias gcan!='git commit -v -a --no-edit --amend'
-  alias gcans!='git commit -v -a -s --no-edit --amend'
   alias gcam='git commit -a -m'
   alias gcsm='git commit -s -m'
   alias gcas='git commit -a -s'
@@ -80,7 +75,6 @@ if command -v git >/dev/null 2>&1; then
   alias gp='git push'
   alias gpd='git push --dry-run'
   alias gpf='git push --force-with-lease'
-  alias gpf!='git push --force'
   alias gpoat='git push origin --all && git push origin --tags'
   alias gpu='git push upstream'
   alias gpv='git push -v'

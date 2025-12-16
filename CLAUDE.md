@@ -10,7 +10,7 @@ syncbin/
 │   ├── zshrc.zsh          # Main entry point (symlinked to ~/.zshrc)
 │   ├── config/            # Modular configs loaded in order (00-*.zsh to 99-*.zsh)
 │   ├── completions/       # Custom zsh completions (_command format)
-│   └── theme/             # Prompt themes (p10k, starship configs)
+│   └── theme/             # Prompt themes (p10k, jemus42 zsh theme)
 ├── bash/                   # Bash configuration
 │   ├── bashrc             # Main entry point
 │   ├── config/            # Modular configs (00-*.bash to 99-*.bash)
@@ -38,6 +38,7 @@ syncbin/
 ├── btop/                  # Btop system monitor config
 ├── bat/                   # Bat (cat replacement) config
 ├── zellij/                # Zellij terminal multiplexer config
+├── starship/              # Starship prompt configs and themes
 ├── bootstrap.sh           # One-line installer script
 ├── install.sh             # Main installation script
 ├── dependencies.yaml      # Tool dependencies manifest

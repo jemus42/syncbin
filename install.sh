@@ -287,7 +287,7 @@ echo
 print_status "$BLUE" "⚙️  Installing core dotfiles..."
 
 safe_symlink "$SYNCBIN/screenrc" "$HOME/.screenrc"
-safe_symlink "$SYNCBIN/zsh/theme/starship.toml" "$HOME/.config/starship.toml"
+safe_symlink "$SYNCBIN/starship/starship.toml" "$HOME/.config/starship.toml"
 safe_symlink "$SYNCBIN/broot_conf.hjson" "$HOME/.config/broot/conf.hjson"
 safe_symlink "$SYNCBIN/condarc" "$HOME/.config/conda/condarc"
 safe_symlink "$SYNCBIN/zellij/zellij.kdl" "$HOME/.config/zellij/config.kdl"

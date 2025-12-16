@@ -1,0 +1,198 @@
+#!/usr/bin/env bash
+
+# Interactive starship theme picker
+# Allows trying themes temporarily or setting them as default
+
+set -e
+
+SYNCBIN="${SYNCBIN:-$HOME/syncbin}"
+STARSHIP_DIR="$SYNCBIN/starship"
+CONFIG_PATH="$HOME/.config/starship.toml"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+print_status() {
+    printf "${1}%s${NC}\n" "$2"
+}
+
+# Check dependencies
+if ! command -v starship >/dev/null 2>&1; then
+    print_status "$RED" "Error: starship is not installed"
+    echo "Install with: curl -sS https://starship.rs/install.sh | sh -s -- -y"
+    exit 1
+fi
+
+if ! command -v fzf >/dev/null 2>&1; then
+    print_status "$RED" "Error: fzf is not installed"
+    echo "Install fzf first (e.g., brew install fzf)"
+    exit 1
+fi
+
+# Build theme list
+build_theme_list() {
+    local themes=()
+
+    # Add local themes
+    if [ -d "$STARSHIP_DIR" ]; then
+        while IFS= read -r file; do
+            local name=$(basename "$file" .toml)
+            themes+=("local:$name:$file")
+        done < <(find "$STARSHIP_DIR" -name "*.toml" -type f | sort)
+    fi
+
+    # Add official presets
+    while IFS= read -r preset; do
+        themes+=("preset:$preset")
+    done < <(starship preset --list 2>/dev/null || echo "")
+
+    printf '%s\n' "${themes[@]}"
+}
+
+# Format theme for fzf display
+format_theme() {
+    local type=$(echo "$1" | cut -d: -f1)
+    local name=$(echo "$1" | cut -d: -f2)
+
+    if [ "$type" = "local" ]; then
+        printf "${CYAN}[local]${NC} %s" "$name"
+    else
+        printf "${YELLOW}[preset]${NC} %s" "$name"
+    fi
+}
+
+# Preview theme
+preview_theme() {
+    local entry="$1"
+    local type=$(echo "$entry" | cut -d: -f1)
+    local name=$(echo "$entry" | cut -d: -f2)
+
+    if [ "$type" = "local" ]; then
+        local path=$(echo "$entry" | cut -d: -f3)
+        cat "$path"
+    else
+        starship preset "$name" 2>/dev/null || echo "# Preview not available"
+    fi
+}
+
+# Main menu
+show_menu() {
+    local selected
+
+    print_status "$BLUE" "╭─────────────────────────────────────╮"
+    print_status "$BLUE" "│   Starship Theme Picker             │"
+    print_status "$BLUE" "╰─────────────────────────────────────╯"
+    echo
+
+    # Use fzf to select theme with preview
+    selected=$(build_theme_list | fzf \
+        --ansi \
+        --height=80% \
+        --layout=reverse \
+        --border \
+        --prompt="Select theme > " \
+        --preview="$0 --preview {}" \
+        --preview-window=right:60%:wrap \
+        --header="Local themes from $STARSHIP_DIR | Official starship presets" \
+        | cat)
+
+    if [ -z "$selected" ]; then
+        print_status "$YELLOW" "No theme selected"
+        exit 0
+    fi
+
+    echo
+    print_status "$GREEN" "Selected: $(echo "$selected" | cut -d: -f2)"
+    echo
+
+    # Ask what to do
+    echo "What would you like to do?"
+    echo "  1) Try in a new shell (temporary)"
+    echo "  2) Set as default (update ~/.config/starship.toml symlink)"
+    echo "  3) Cancel"
+    echo
+    read -p "Choice [1-3]: " choice
+
+    case "$choice" in
+        1)
+            try_theme "$selected"
+            ;;
+        2)
+            set_default "$selected"
+            ;;
+        *)
+            print_status "$YELLOW" "Cancelled"
+            exit 0
+            ;;
+    esac
+}
+
+# Try theme in new shell
+try_theme() {
+    local entry="$1"
+    local type=$(echo "$entry" | cut -d: -f1)
+    local name=$(echo "$entry" | cut -d: -f2)
+    local temp_config="/tmp/starship-preview-$$.toml"
+
+    if [ "$type" = "local" ]; then
+        local path=$(echo "$entry" | cut -d: -f3)
+        cp "$path" "$temp_config"
+    else
+        starship preset "$name" -o "$temp_config" 2>/dev/null
+    fi
+
+    print_status "$GREEN" "Launching new shell with theme: $name"
+    print_status "$CYAN" "Exit the shell to return (Ctrl+D or 'exit')"
+    echo
+
+    STARSHIP_CONFIG="$temp_config" "$SHELL"
+
+    rm -f "$temp_config"
+    print_status "$BLUE" "Returned to original theme"
+}
+
+# Set as default
+set_default() {
+    local entry="$1"
+    local type=$(echo "$entry" | cut -d: -f1)
+    local name=$(echo "$entry" | cut -d: -f2)
+
+    if [ "$type" = "local" ]; then
+        local path=$(echo "$entry" | cut -d: -f3)
+
+        # Remove existing symlink/file
+        rm -f "$CONFIG_PATH"
+
+        # Create symlink
+        ln -s "$path" "$CONFIG_PATH"
+        print_status "$GREEN" "✓ Set default theme: $name"
+        print_status "$BLUE" "  ~/.config/starship.toml → $path"
+    else
+        # For presets, write to config file
+        if [ -L "$CONFIG_PATH" ]; then
+            print_status "$YELLOW" "Warning: Removing symlink at $CONFIG_PATH"
+            rm -f "$CONFIG_PATH"
+        fi
+
+        starship preset "$name" -o "$CONFIG_PATH"
+        print_status "$GREEN" "✓ Set default theme: $name (preset)"
+        print_status "$YELLOW" "  Note: This is now a regular file, not a symlink"
+    fi
+
+    echo
+    print_status "$CYAN" "Restart your shell or run 'exec \$SHELL' to apply"
+}
+
+# Handle preview mode (called internally by fzf)
+if [ "$1" = "--preview" ]; then
+    preview_theme "$2"
+    exit 0
+fi
+
+# Run main menu
+show_menu

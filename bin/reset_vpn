@@ -13,14 +13,20 @@ echo "Flushing routing table..."
 sudo route -n flush
 
 # Optional: restart Viscosity automatically
-if pgrep -q Viscosity; then
-    echo "Restarting Viscosity..."
-    pkill Viscosity
-    sleep 2
-    open -a Viscosity
-    echo "Viscosity restarted. Please reconnect your VPN."
-else
-    echo "Viscosity not running. Start it manually to reconnect VPN."
-fi
+# if pgrep -q Viscosity; then
+#     echo "Restarting Viscosity..."
+#     pkill Viscosity
+#     sleep 2
+#     open -a Viscosity
+#     echo "Viscosity restarted. Please reconnect your VPN."
+# else
+#     echo "Viscosity not running. Start it manually to reconnect VPN."
+# fi
 
-echo "VPN teardown/reset complete."
+echo "Clearing DNS servers and search domains..."
+sudo networksetup -setdnsservers "Wi-Fi" Empty
+sudo networksetup -setsearchdomains "Wi-Fi" Empty
+sudo dscacheutil -flushcache
+# sudo killall -HUP mDNSResponder
+
+echo "VPN/DNS reset complete."

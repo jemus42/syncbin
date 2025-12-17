@@ -5,12 +5,12 @@ format = """$os$all"""
 
 right_format = """$cmd_duration$conda$time"""
 
-continuation_prompt = "[❯❯](bright-green) "
+continuation_prompt = "[❯❯](green) "
 command_timeout = 1500
 
 [username]
 disabled = false
-style_user = "bold green"
+style_user = "bold cyan"
 show_always = true
 format = "[$user]($style) "
 
@@ -18,7 +18,7 @@ format = "[$user]($style) "
 ssh_only = true
 style = "bright-red"
 disabled = false
-format = "[$hostname]($style) "
+format = "[$hostname]($style)  "
 
 [directory]
 truncate_to_repo = false # true
@@ -42,7 +42,7 @@ bash_indicator = "[bash ❯](bold white)"
 fish_indicator = "[🐟 ❯](blue)"
 powershell_indicator = "ps_"
 #zsh_indicator = "[➜ ](bright-green)"
-zsh_indicator = "[❯](bright-green)"
+zsh_indicator = "[❯](green)"
 unknown_indicator = "mystery shell"
 
 [shlvl]
@@ -64,23 +64,24 @@ format = " 🕙 [\\[$time\\]]($style)"
 [rlang]
 disabled = false
 format = "w/ [$symbol($version)](bold bright-blue) "
-symbol = "R "
+# symbol = "R "
+symbol = "󰫿 "
 # Disable .Rprofile detection due to home dir
 #detect_files = ["DESCRIPTION", "renv.lock"]
 #detect_files = ["!$HOME/.Rprofile"] # no longer needed it seems
 #detect_extensions = ["Rd", "Rmd", "Rproj"]
-version_format = "v${raw}"
+version_format = "${raw}"
 
-[custom.rpkg]
-description = "R package version"
-#command = "sed -n '/^Version:/,/([0-9]+\\.)/p' DESCRIPTION "  # shows output of command
-command = "sed -n -e 's/^Version: //p' DESCRIPTION"
-detect_files = ["DESCRIPTION"]
-#when = """ test "$HOME" == "$PWD" """
-#detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
-format = "📦 [v$output]($style) "
-style = "bold bright-blue"
-disabled = true
+# [custom.rpkg]
+# description = "R package version"
+# #command = "sed -n '/^Version:/,/([0-9]+\\.)/p' DESCRIPTION "  # shows output of command
+# command = "sed -n -e 's/^Version: //p' DESCRIPTION"
+# detect_files = ["DESCRIPTION"]
+# #when = """ test "$HOME" == "$PWD" """
+# #detect_extensions = ["R", "Rd", "Rmd", "Rproj"]
+# format = "📦 [v$output]($style) "
+# style = "bold bright-blue"
+# disabled = true
 
 # package module appears to also pick up DESCRIPTION files so no need for custom module
 [package]
@@ -90,8 +91,17 @@ disabled = false
 description = "renv.lock R version"
 command = 'jq -r ".R.Version" renv.lock'
 detect_files = ["renv.lock"]
-format = "renv [v$output]($style) "
+format = "renv [$output]($style) "
 style = "bold bright-blue"
+
+[custom.rproject]
+description = "rproject version for rv"
+command = "awk -F'\"' '/r_version/{print $2}' rproject.toml"
+detect_files = ["rproject.toml"]
+format = "rv [$output]($style) "
+style = "bold bright-blue"
+
+
 
 [conda]
 format = "[$symbol$environment]($style)"

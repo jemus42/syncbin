@@ -17,7 +17,7 @@ export UPDATE_ZSH_DAYS=30
 
 # Core Oh-My-Zsh plugins
 plugins=(
-    extract
+    # extract
     git
     git-flow
     gitignore

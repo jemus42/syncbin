@@ -6,13 +6,16 @@
 # Additionally, each config option is also explained in detail
 # on Ghostty's website, at https://ghostty.org/docs/config.
 
-theme = catppuccin-macchiato.conf
+# theme = Sonokai
+theme = Tinacious Design Dark
+# theme = Monokai Remastered
+
 font-family = "FiraMono Nerd Font"
 font-size = 16
 shell-integration = zsh
 background-opacity = 0.9
 background-blur-radius = 20
-quick-terminal-size = 66%, 95%
+quick-terminal-size = 66%, 97%
 keybind = global:cmd+grave_accent=toggle_quick_terminal
 
 quick-terminal-screen = mouse

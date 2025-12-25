@@ -38,7 +38,7 @@ error_symbol = "[✖](bold red) "
 [shell]
 disabled = false
 format = "$indicator"
-bash_indicator = "[$ ❯](bold white)"
+bash_indicator = "[b ❯](bold white)"
 fish_indicator = "[🐟 ❯](blue)"
 powershell_indicator = "ps_"
 #zsh_indicator = "[➜ ](bright-green)"

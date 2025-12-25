@@ -18,7 +18,7 @@ format = "[$user]($style) "
 ssh_only = true
 style = "bright-red"
 disabled = false
-format = "[$hostname]($style)  "
+format = "[$hostname]($style) "
 
 [directory]
 truncate_to_repo = false # true
@@ -38,7 +38,7 @@ error_symbol = "[✖](bold red) "
 [shell]
 disabled = false
 format = "$indicator"
-bash_indicator = "[bash ❯](bold white)"
+bash_indicator = "[$ ❯](bold white)"
 fish_indicator = "[🐟 ❯](blue)"
 powershell_indicator = "ps_"
 #zsh_indicator = "[➜ ](bright-green)"

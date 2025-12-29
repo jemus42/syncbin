@@ -4,6 +4,9 @@
     "Alt-f": "command:format",
     "Alt-k": "command:hover",
     "Alt-r": "command:references",
+    "Ctrl-#": "command:InsertArrow",
+    "Ctrl-P": "command:InsertPipe",
+    "Ctrl-r": "lua:rrepl.sendLine",
     "CtrlSpace": "command:lspcompletion",
     "CtrlUnderscore": "lua:comment.comment",
     "F5": "lua:wc.wordCount"

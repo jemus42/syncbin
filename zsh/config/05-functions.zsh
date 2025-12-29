@@ -11,7 +11,7 @@ function reload () {
   $SYNCBIN/bin/syncbin-doctor
   echo ""
   echo "Reloading ZSH..."
-  exec zsh
+  omz reload
 }
 
 

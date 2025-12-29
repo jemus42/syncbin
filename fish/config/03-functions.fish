@@ -132,11 +132,6 @@ function aria
     aria2c --seed-time=0 --max-concurrent-downloads=5 $argv
 end
 
-# Development environment
-function prefer-conda
-    set -x PATH "$HOME/Library/r-miniconda/bin" $PATH
-end
-
 # LaTeX cleanup
 function cleantex
     rm -rf ./*.out ./*.dvi ./*.log ./*.aux ./*.bbl ./*.blg ./*.ind ./*.idx ./*.ilg ./*.lof ./*.lot ./*.toc ./*.nav ./*.snm ./*.vrb ./*.fls ./*.fdb_latexmk ./*.synctex.gz ./*-concordance.tex

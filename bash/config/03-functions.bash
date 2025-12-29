@@ -97,11 +97,6 @@ aria() {
   aria2c --seed-time=0 --max-concurrent-downloads=5 "$@"
 }
 
-# Development environment
-prefer-conda() {
-  export PATH="$HOME/Library/r-miniconda/bin:$PATH"
-}
-
 # LaTeX cleanup
 cleantex() {
   rm -rf ./*.out ./*.dvi ./*.log ./*.aux ./*.bbl ./*.blg ./*.ind ./*.idx ./*.ilg ./*.lof ./*.lot ./*.toc ./*.nav ./*.snm ./*.vrb ./*.fls ./*.fdb_latexmk ./*.synctex.gz ./*-concordance.tex

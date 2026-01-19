@@ -23,20 +23,12 @@ local({
     )
   }
 
-  if (grepl("^Red Hat", os_version)) {
-    release <- readLines("/etc/os-release")
-    release <- release[grepl("^VERSION_ID", release)]
-    release <- strsplit(release, "=")[[1]][[2]]
-    # I don't understand CentOS/Fedore/Red Hat
-    if (grepl("8\\.\\d", release)) {
-      p3m_url <- "https://p3m.dev/cran/__linux__/centos8/latest"
-    } else if (grepl("9\\.\\d", release)) {
-      p3m_url <- "https://p3m.dev/cran/__linux__/rhel9/latest"
-    }
+  if (grepl("^Rocky Linux", os_version)) {
+     p3m_url <- sprintf("https://p3m.dev/cran/latest/bin/linux/rhel9-%s/%s", R.version["arch"], substr(getRversion(), 1, 3))
   }
 
   if (!is.null(p3m_url)) {
-    repos[["P3M"]] <- p3m_url
+    repos[["CRAN"]] <- p3m_url
   }
   options(repos = repos)
 })

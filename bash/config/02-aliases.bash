@@ -17,7 +17,7 @@ alias ....="cd ../../.."
 
 # Enhanced sudo
 alias esudo='sudo --preserve-env=PATH env'
-alias smicro="sudo \$(which micro)"
+command -v micro >/dev/null 2>&1 && alias smicro="sudo \$(which micro)"
 
 # Custom git shortcuts (not in oh-my-zsh)
 alias git-reset-to-remote='git fetch && git reset --hard'

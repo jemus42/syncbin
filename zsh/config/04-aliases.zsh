@@ -59,9 +59,6 @@ alias pdf2htmlEX='docker run -ti --rm -v "`pwd`":/pdf -w /pdf pdf2htmlex/pdf2htm
 (( $+commands[gls] )) && alias ls='gls --color=tty'
 (( $+commands[lsd] )) && alias ls='lsd'
 
-# Claude AI
-test -x "$HOME/.claude/local/claude" && alias claude="$HOME/.claude/local/claude"
-
 # Detailed ls aliases
 alias l='ls -lFh'     # size,show type,human readable
 alias la='ls -lAFh'   # long list,show almost all,show type,human readable

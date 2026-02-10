@@ -4,9 +4,10 @@
 # XDG-compliant local configs: ~/.config/syncbin/
 #   - env           : Environment variables (KEY=value per line)
 #   - path          : PATH additions (one directory per line)
+#   - *.sh          : POSIX-compatible configs (sourced by both bash and zsh)
 #   - *.bash        : Bash-specific configs (all files sourced)
 #
-# For experimentation, just drop a new .bash file in ~/.config/syncbin/
+# For experimentation, just drop a new .bash or .sh file in ~/.config/syncbin/
 
 SYNCBIN_LOCAL="${XDG_CONFIG_HOME:-$HOME/.config}/syncbin"
 
@@ -23,6 +24,13 @@ if [[ -r "$SYNCBIN_LOCAL/path" ]]; then
     [[ -z "$path_entry" || "$path_entry" == \#* ]] && continue
     [[ -d "$path_entry" ]] && export PATH="$path_entry:$PATH"
   done < "$SYNCBIN_LOCAL/path"
+fi
+
+# Source all .sh files from XDG location (shared with zsh)
+if [[ -d "$SYNCBIN_LOCAL" ]]; then
+  for f in "$SYNCBIN_LOCAL"/*.sh; do
+    [[ -r "$f" ]] && source "$f"
+  done
 fi
 
 # Source all .bash files from XDG location

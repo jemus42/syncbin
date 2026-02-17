@@ -20,10 +20,3 @@ for config_file in "$ZSHCONFIG_DIR"/[0-9][0-9]-*.zsh; do
     source "$config_file"
   fi
 done
-
-# bun completions
-[ -s "/Users/Lukas/.bun/_bun" ] && source "/Users/Lukas/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"

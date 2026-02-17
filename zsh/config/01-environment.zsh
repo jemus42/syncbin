@@ -43,9 +43,16 @@ export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:$HOME/bin:$SYNCBIN/bin
 export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 
-# Cargo/Rust and go
+# Cargo/Rust and Go
 test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH
 test -e "${HOME}/go/bin" && export PATH=$HOME/go/bin:$PATH
+
+# Bun
+export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+if test -d "${BUN_INSTALL}/bin"; then
+  export PATH=$BUN_INSTALL/bin:$PATH
+  [[ -s "${BUN_INSTALL}/_bun" ]] && source "${BUN_INSTALL}/_bun"
+fi
 
 # Pager setup
 (( $+commands[bat] )) && export MANPAGER="sh -c 'col -bx | bat -l man -p'"

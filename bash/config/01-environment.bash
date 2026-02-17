@@ -45,6 +45,12 @@ export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH
 test -e "${HOME}/go/bin" && export PATH=$HOME/go/bin:$PATH
 
+# Bun
+export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+if test -d "${BUN_INSTALL}/bin"; then
+  export PATH=$BUN_INSTALL/bin:$PATH
+fi
+
 # Pager setup
 if command -v bat >/dev/null 2>&1; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"

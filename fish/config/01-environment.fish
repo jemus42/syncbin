@@ -62,6 +62,12 @@ if test -e $HOME/go/bin
     fish_add_path $HOME/go/bin
 end
 
+# Bun
+set -q BUN_INSTALL; or set -x BUN_INSTALL $HOME/.bun
+if test -d $BUN_INSTALL/bin
+    fish_add_path $BUN_INSTALL/bin
+end
+
 # Pager setup
 if command -v bat >/dev/null 2>&1
     set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"

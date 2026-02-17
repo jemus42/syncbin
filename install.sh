@@ -291,7 +291,6 @@ safe_symlink "$SYNCBIN/starship/starship.toml" "$HOME/.config/starship.toml"
 safe_symlink "$SYNCBIN/broot_conf.hjson" "$HOME/.config/broot/conf.hjson"
 safe_symlink "$SYNCBIN/condarc" "$HOME/.config/conda/condarc"
 safe_symlink "$SYNCBIN/zellij/zellij.kdl" "$HOME/.config/zellij/config.kdl"
-safe_symlink "$SYNCBIN/btop/btop.conf" "$HOME/.config/btop/btop.conf"
 safe_symlink "$SYNCBIN/bat/config" "$HOME/.config/bat/config"
 safe_symlink "$SYNCBIN/tmux.conf" "$HOME/.config/tmux/tmux.conf"
 safe_symlink "$SYNCBIN/lsd.conf.yml" "$HOME/.config/lsd/config.yaml"
@@ -393,6 +392,26 @@ echo
 ## Cleanup legacy      ##
 #########################
 print_status "$BLUE" "🧹 Cleaning up legacy configurations..."
+
+# Replace btop.conf symlink with a regular file
+if [ -L "$HOME/.config/btop/btop.conf" ]; then
+    btop_target="$(readlink "$HOME/.config/btop/btop.conf")"
+    case "$btop_target" in
+        *syncbin*)
+            if [ -f "$btop_target" ]; then
+                # Symlink target still exists, copy content
+                cp "$btop_target" "$HOME/.config/btop/btop.conf.tmp"
+                rm "$HOME/.config/btop/btop.conf"
+                mv "$HOME/.config/btop/btop.conf.tmp" "$HOME/.config/btop/btop.conf"
+                print_status "$GREEN" "✓ Converted btop.conf symlink to regular file"
+            else
+                # Symlink target is gone, just remove the dangling symlink
+                rm "$HOME/.config/btop/btop.conf"
+                print_status "$YELLOW" "⚠ Removed dangling btop.conf symlink"
+            fi
+            ;;
+    esac
+fi
 
 # Remove old zellij config format
 if [ -f "$HOME/.config/zellij/config.yml" ]; then

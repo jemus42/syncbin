@@ -6,6 +6,9 @@
 
 set -e  # Exit on any error
 
+# Track backup files created during this run
+BACKUP_FILES=""
+
 # Parse arguments
 AUTO_YES=""
 while [ $# -gt 0 ]; do
@@ -79,6 +82,8 @@ create_backup() {
     local backup="${file}.backup.$(date +%Y%m%d_%H%M%S)"
     
     if mv "$file" "$backup"; then
+        BACKUP_FILES="$BACKUP_FILES
+$backup"
         print_status "$GREEN" "✓ Created backup: $backup"
         return 0
     else
@@ -451,10 +456,12 @@ echo "   •       ~/.bash_profile → $SYNCBIN/bash/bash_profile (sources .bash
 echo "   • Fish: ~/.config/fish/config.fish → $SYNCBIN/fish/config.fish"
 echo
 
-# Check for any backup files created
-if ls "$HOME"/*.backup.* >/dev/null 2>&1 || ls "$HOME"/.*.backup.* >/dev/null 2>&1; then
+# Report backup files created during this run
+if [ -n "$BACKUP_FILES" ]; then
     echo
     print_status "$YELLOW" "📦 Backup files were created:"
-    ls -la "$HOME"/*.backup.* "$HOME"/.*.backup.* 2>/dev/null | grep -v "^ls:"
+    echo "$BACKUP_FILES" | while IFS= read -r f; do
+        [ -n "$f" ] && echo "   $f"
+    done
     echo
 fi

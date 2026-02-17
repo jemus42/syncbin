@@ -30,7 +30,7 @@ _syncbin_custom_completions
 unfunction _syncbin_custom_completions 2>/dev/null
 
 # Reinitialize completions
-autoload -U compinit && compinit
+autoload -U compinit && compinit -d "$ZSH_COMPDUMP"
 
 # SSH host completion from known_hosts
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'

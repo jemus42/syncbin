@@ -46,10 +46,8 @@ utils::rc.settings(ipck = TRUE)
 options(
   menu.graphics = FALSE,
   max.print = 100, # Orig: 1000; Less risk of console flood
-  Ncpus = max(1L, parallel::detectCores() - 1L), # CPU core detection, ensure minimum of 1
-  mc.cores = max(1L, parallel::detectCores() - 1L),
-  # styler complains about setting the option but it's like... right there.
-  styler.cache_root = "styler",
+  # Ncpus = max(1L, parallel::detectCores() - 1L), # CPU core detection, ensure minimum of 1
+  # mc.cores = max(1L, parallel::detectCores() - 1L),
   useFancyQuotes = FALSE, # fancy quotes are annoying and lead to 'copy + paste' bugs / frustrations
   # Partial matching warnings
   warnPartialMatchArgs = TRUE,
@@ -96,7 +94,7 @@ options(
 )
 
 
-# User agend for P3M compatibility on platforms where it's unset
+# User agent for P3M compatibility on platforms where it's unset
 if (getOption("HTTPUserAgent", default = "") == "") {
   options(
     HTTPUserAgent = sprintf(
@@ -114,9 +112,9 @@ if (getOption("HTTPUserAgent", default = "") == "") {
 
 
 # mlr style for appropriate repositories only
-if (grepl("mlr3", getwd()) || grepl("paradox", getwd())) {
-  options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
-}
+#  if (grepl("mlr3", getwd()) || grepl("paradox", getwd())) {
+#    options(styler.addins_style_transformer = "styler.mlr::mlr_style()")
+# }
 
 if (requireNamespace("rlang", quietly = TRUE)) {
   rlang::global_entrace()
@@ -125,15 +123,6 @@ if (requireNamespace("rlang", quietly = TRUE)) {
 if (interactive() & requireNamespace("prettycode", quietly = TRUE)) {
   suppressMessages(prettycode::prettycode())
 }
-
-# if (interactive() & requireNamespace("chores", quietly = TRUE)) {
-#   options(.chores_chat = ellmer::chat_anthropic())
-# }
-
-# Possibly fix various locale issues
-# Sys.setlocale('LC_ALL','C')
-# options(encoding = "UTF-8")
-# Also check via l10n_info()
 
 # GitHub creds ----
 # https://usethis.r-lib.org/articles/articles/git-credentials.html#what-about-the-remotes-and-pak-packages-

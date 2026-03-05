@@ -47,6 +47,9 @@ export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH
 test -e "${HOME}/go/bin" && export PATH=$HOME/go/bin:$PATH
 
+# opencode
+test -d "${HOME}/.opencode/bin" && export PATH=$HOME/.opencode/bin:$PATH
+
 # Bun
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
 if test -d "${BUN_INSTALL}/bin"; then

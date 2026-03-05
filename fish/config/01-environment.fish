@@ -62,6 +62,11 @@ if test -e $HOME/go/bin
     fish_add_path $HOME/go/bin
 end
 
+# opencode
+if test -d $HOME/.opencode/bin
+    fish_add_path $HOME/.opencode/bin
+end
+
 # Bun
 set -q BUN_INSTALL; or set -x BUN_INSTALL $HOME/.bun
 if test -d $BUN_INSTALL/bin

@@ -11,6 +11,10 @@ if command -v mcfly >/dev/null 2>&1
 end
 
 # Nix package manager
+# Rocky Linux needs LOCALE_ARCHIVE set before nix is loaded
+if test -f /etc/os-release; and grep -q '^ID="rocky"' /etc/os-release 2>/dev/null
+    set -x LOCALE_ARCHIVE /usr/lib/locale/locale-archive
+end
 if test -e $HOME/.nix-profile/etc/profile.d/nix.sh
     # Fish doesn't have a direct equivalent, use bash source
     function nix-env-init

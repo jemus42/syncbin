@@ -45,6 +45,27 @@ check_tunnel_health() {
 	dig +short +time=2 +tries=1 "$HEALTH_CHECK_HOST" @"$VPN_DNS" >/dev/null 2>&1
 }
 
+# Get VPN uptime as human-readable string
+# Uses the connection timestamp from nmcli (epoch when it was last activated)
+get_vpn_uptime() {
+	local timestamp
+	timestamp=$(nmcli -g connection.timestamp connection show "$VPN_NAME" 2>/dev/null)
+	if [ -z "$timestamp" ] || [ "$timestamp" = "0" ]; then
+		echo "unknown"
+		return
+	fi
+	local now elapsed h m
+	now=$(date +%s)
+	elapsed=$((now - timestamp))
+	h=$((elapsed / 3600))
+	m=$(((elapsed % 3600) / 60))
+	if [ "$h" -gt 0 ]; then
+		printf "%dh %dm" "$h" "$m"
+	else
+		printf "%dm" "$m"
+	fi
+}
+
 # Set trap to ensure cleanup happens on exit, error, or interrupt
 trap cleanup EXIT INT TERM
 
@@ -53,7 +74,7 @@ vpn_up() {
 	# Check if already connected
 	if nmcli connection show --active | grep -q "$VPN_NAME"; then
 		if check_tunnel_health; then
-			echo -e "VPN already connected and ${GREEN}healthy${NC}"
+			echo -e "VPN already connected and ${GREEN}healthy${NC} (up $(get_vpn_uptime))"
 			return 0
 		else
 			echo -e "VPN connection is ${YELLOW}stale${NC}, reconnecting..."
@@ -116,7 +137,7 @@ vpn_status() {
 
 	# Check 1: Is nmcli reporting the connection as active?
 	if nmcli connection show --active | grep -q "$VPN_NAME"; then
-		echo -e "Connection: ${GREEN}ACTIVE${NC}"
+		echo -e "Connection: ${GREEN}ACTIVE${NC} (up $(get_vpn_uptime))"
 	else
 		echo -e "Connection: ${RED}INACTIVE${NC}"
 		echo ""
@@ -147,7 +168,7 @@ vpn_default() {
 	echo ""
 
 	if nmcli connection show --active | grep -q "$VPN_NAME"; then
-		echo -e "Connection: ${GREEN}ACTIVE${NC}"
+		echo -e "Connection: ${GREEN}ACTIVE${NC} (up $(get_vpn_uptime))"
 		if check_tunnel_health; then
 			echo -e "Tunnel:     ${GREEN}OK${NC}"
 			exit 0

@@ -73,7 +73,7 @@ git-disk-usage () {
 }
 
 gitit () {
-  git commit -am "Formatting / typo / minor change" && git push
+  git commit -am "Iterate" && git push
 }
 
 git-timetravel () {

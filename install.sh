@@ -312,6 +312,15 @@ print_status "$BLUE" "📊 Installing R configurations..."
 safe_symlink "$SYNCBIN/R/Rprofile" "$HOME/.Rprofile"
 safe_symlink "$SYNCBIN/R/radian_profile" "$HOME/.radian_profile"
 
+# arf (R console) - platform-specific config location
+if [ "$OS_TYPE" = "macos" ]; then
+    ARF_CONFIG_DIR="$HOME/Library/Application Support/arf"
+else
+    ARF_CONFIG_DIR="$HOME/.config/arf"
+fi
+ensure_dir "$ARF_CONFIG_DIR"
+safe_symlink "$SYNCBIN/R/arf.toml" "$ARF_CONFIG_DIR/arf.toml"
+
 echo
 
 #########################

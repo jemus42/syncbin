@@ -1,0 +1,111 @@
+#:schema https://raw.githubusercontent.com/eitsupi/arf/main/artifacts/arf.schema.json
+# arf configuration file
+#
+# Documentation: https://github.com/eitsupi/arf
+
+[startup]
+r_source = "auto"
+show_banner = true
+
+[startup.mode]
+reprex = false
+autoformat = false
+
+[editor]
+mode = "emacs"
+auto_match = true
+highlight_matching_bracket = false
+auto_suggestions = "all"
+
+[editor.key_map]
+Alt-Hyphen = " <- "
+Alt-p = " |> "
+
+[prompt]
+format = "\n{status}R {version}> "
+continuation = " ↳  "
+shell_format = "\n[{shell}] {cwd_short} ❯ "
+mode_indicator = "prefix"
+
+[prompt.indicators]
+reprex = "[reprex] "
+autoformat = "[format] "
+
+[prompt.status]
+override_prompt_color = false
+
+[prompt.status.symbol]
+success = ""
+error = "✗ "
+
+[prompt.vi.symbol]
+insert = "[I] "
+normal = "[N] "
+non_vi = ""
+
+[completion]
+enabled = true
+timeout_ms = 50
+debounce_ms = 100
+max_height = 10
+auto_paren_limit = 50
+
+[history]
+menu_max_height = 15
+disabled = false
+
+[r]
+auto_width = true
+
+[mode.reprex]
+comment = "#> "
+
+[colors.r]
+comment = "DarkGray"
+string = "Green"
+number = "LightMagenta"
+keyword = "LightBlue"
+constant = "LightCyan"
+operator = "Yellow"
+punctuation = "Default"
+identifier = "Default"
+matching_bracket = "LightYellow"
+
+[colors.meta]
+command = "Magenta"
+
+[colors.prompt]
+main = "Cyan"
+continuation = "LightGreen"
+shell = "LightRed"
+indicator = "Yellow"
+duration = "Yellow"
+
+[colors.prompt.status]
+success = "LightGreen"
+error = "LightRed"
+
+[colors.prompt.vi]
+insert = "LightGreen"
+normal = "LightYellow"
+non_vi = "Default"
+
+[experimental.history_forget]
+enabled = false
+delay = 2
+on_exit_only = false
+
+[experimental.prompt_spinner]
+frames = ""
+color = "Cyan"
+
+[experimental.prompt_duration]
+format = "{value} "
+threshold_ms = 2000
+
+[experimental.r_completion]
+fuzzy = false
+package_functions = [
+    "library",
+    "require",
+]

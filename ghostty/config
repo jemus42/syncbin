@@ -13,7 +13,7 @@ theme = Tinacious Design Dark
 font-family = "FiraMono Nerd Font"
 font-size = 16
 shell-integration = zsh
-background-opacity = 0.9
+background-opacity = 1
 background-blur-radius = 20
 quick-terminal-size = 66%, 97%
 keybind = global:cmd+grave_accent=toggle_quick_terminal

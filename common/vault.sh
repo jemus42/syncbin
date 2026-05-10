@@ -4,7 +4,52 @@
 # Vault: Obsidian-based knowledge management, synced via git
 
 export VAULT="${VAULT:-$HOME/vault}"
+VAULT_REMOTE="ssh://git@codeberg.org/lksbrk/obsidian-vault-jemsu.git"
 
+# ── Dispatcher ────────────────────────────────────────────────────────────────
+# v <cmd> [args...]  →  vault-<cmd> [args...]
+v() {
+  case "$1" in
+    init)    shift; vault-init "$@" ;;
+    note|n)  shift; vault-note "$@" ;;
+    sync|s)  shift; vault-sync "$@" ;;
+    status|st) shift; vault-status "$@" ;;
+    grep|g)  shift; vault-grep "$@" ;;
+    cd)      cd "$VAULT" ;;
+    *)
+      echo "v — vault commands"
+      echo ""
+      echo "  v init          Clone vault to $VAULT"
+      echo "  v note [title]  Capture note to ingress (alias: v n)"
+      echo "  v sync          Pull + commit + push (alias: v s)"
+      echo "  v status        Git status (alias: v st)"
+      echo "  v grep <pat>    Search notes (alias: v g)"
+      echo "  v cd            cd into vault"
+      return 1
+      ;;
+  esac
+}
+
+# ── Init ──────────────────────────────────────────────────────────────────────
+# Clone vault to ~/vault (or $VAULT)
+vault-init() {
+  if [ -d "$VAULT/.git" ] || [ -L "$VAULT/.git" ]; then
+    echo "Vault already exists at $VAULT"
+    vault-status
+    return 0
+  fi
+
+  if [ -e "$VAULT" ]; then
+    echo "$VAULT exists but is not a vault (no .git)" >&2
+    return 1
+  fi
+
+  echo "Cloning vault to $VAULT..."
+  git clone "$VAULT_REMOTE" "$VAULT" && \
+    echo "Done. Vault ready at $VAULT"
+}
+
+# ── Note ──────────────────────────────────────────────────────────────────────
 # Quick note capture into ingress
 # Usage: vault-note "title"           → opens $EDITOR
 #        vault-note "title" "content" → writes directly
@@ -12,7 +57,7 @@ export VAULT="${VAULT:-$HOME/vault}"
 vault-note() {
   if [ ! -d "$VAULT/ingress" ]; then
     echo "Vault not found at $VAULT/ingress" >&2
-    echo "Set \$VAULT or clone to ~/vault" >&2
+    echo "Run: v init" >&2
     return 1
   fi
 
@@ -24,7 +69,6 @@ vault-note() {
   local file="$VAULT/ingress/${slug}.md"
 
   if [ -n "$2" ]; then
-    # Direct write mode
     cat > "$file" <<EOF
 ---
 title: "$title"
@@ -38,7 +82,6 @@ $2
 EOF
     echo "Created: $file"
   else
-    # Editor mode — create template, open editor
     cat > "$file" <<EOF
 ---
 title: "$title"
@@ -53,6 +96,7 @@ EOF
   fi
 }
 
+# ── Sync ──────────────────────────────────────────────────────────────────────
 # Pull + push vault changes
 vault-sync() {
   if [ ! -d "$VAULT/.git" ] && [ ! -L "$VAULT/.git" ]; then
@@ -69,7 +113,7 @@ vault-sync() {
   echo "Done."
 }
 
-# Show vault status
+# ── Status ────────────────────────────────────────────────────────────────────
 vault-status() {
   if [ ! -d "$VAULT/.git" ] && [ ! -L "$VAULT/.git" ]; then
     echo "No git repo at $VAULT" >&2
@@ -82,10 +126,10 @@ vault-status() {
   git -C "$VAULT" status -s
 }
 
-# Search vault notes by content
+# ── Grep ──────────────────────────────────────────────────────────────────────
 vault-grep() {
   if [ -z "$1" ]; then
-    echo "Usage: vault-grep <pattern>" >&2
+    echo "Usage: v grep <pattern>" >&2
     return 1
   fi
 

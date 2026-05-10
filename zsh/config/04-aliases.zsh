@@ -4,6 +4,9 @@
 # Load common aliases (POSIX sh - works in bash and zsh)
 [[ -r "${SYNCBIN}/common/aliases.sh" ]] && source "${SYNCBIN}/common/aliases.sh"
 
+# Load vault integration (knowledge base shell functions)
+[[ -r "${SYNCBIN}/common/vault.sh" ]] && source "${SYNCBIN}/common/vault.sh"
+
 # Basic utilities
 alias du="du -h"
 alias today='date +"%A, %B %-d, %Y"'

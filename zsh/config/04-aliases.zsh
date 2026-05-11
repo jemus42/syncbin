@@ -87,7 +87,7 @@ alias rgfl="rg -F -l"
 alias rgflu="rg -F -l -u"
 
 # fzf
-(( $+commands[eza] )) && alias fmake='fzf-make'
+(( $+commands[fzf-make] )) && alias fmake='fzf-make'
 
 # Enhanced directory listing
 (( $+commands[eza] )) && alias eza='eza -l --git --icons'

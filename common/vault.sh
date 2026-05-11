@@ -15,6 +15,8 @@ v() {
     sync|s)  shift; vault-sync "$@" ;;
     status|st) shift; vault-status "$@" ;;
     grep|g)  shift; vault-grep "$@" ;;
+    find|f)  shift; vault-find "$@" ;;
+    search)  shift; vault-search "$@" ;;
     cd)      cd "$VAULT" ;;
     *)
       echo "v — vault commands"
@@ -24,6 +26,8 @@ v() {
       echo "  v sync          Pull + commit + push (alias: v s)"
       echo "  v status        Git status (alias: v st)"
       echo "  v grep <pat>    Search notes (alias: v g)"
+      echo "  v find          Browse notes with fzf (alias: v f)"
+      echo "  v search        Search note contents with fzf"
       echo "  v cd            cd into vault"
       return 1
       ;;
@@ -138,4 +142,99 @@ vault-grep() {
   else
     grep -r --include='*.md' "$@" "$VAULT"
   fi
+}
+
+# ── Find ─────────────────────────────────────────────────────────────────────
+# Browse vault notes by filename with fzf, open selection in $EDITOR
+vault-find() {
+  if ! command -v fzf >/dev/null 2>&1; then
+    echo "fzf required for vault-find" >&2
+    return 1
+  fi
+  if [ ! -d "$VAULT" ]; then
+    echo "Vault not found at $VAULT" >&2
+    return 1
+  fi
+
+  local preview_cmd
+  if command -v glow >/dev/null 2>&1; then
+    preview_cmd='glow --style dark -- "$VAULT"/{}'
+  elif command -v bat >/dev/null 2>&1; then
+    preview_cmd='bat --color=always --style=plain -- "$VAULT"/{}'
+  else
+    preview_cmd='cat -- "$VAULT"/{}'
+  fi
+
+  local initial_query="${1:-}"
+
+  local selected
+  if command -v fd >/dev/null 2>&1; then
+    selected=$(fd --type f --extension md --exclude .git --exclude .obsidian . "$VAULT" | \
+      sed "s|^$VAULT/||" | \
+      fzf --scheme=path \
+          --preview "$preview_cmd" \
+          --preview-window=right:60% \
+          --bind 'ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' \
+          --header='ctrl-d/u: scroll preview' \
+          --prompt="vault> " \
+          --query="$initial_query") || return 0
+  else
+    selected=$(find "$VAULT" -name '*.md' -not -path '*/.git/*' -not -path '*/.obsidian/*' -type f | \
+      sed "s|^$VAULT/||" | \
+      sort | \
+      fzf --scheme=path \
+          --preview "$preview_cmd" \
+          --preview-window=right:60% \
+          --bind 'ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' \
+          --header='ctrl-d/u: scroll preview' \
+          --prompt="vault> " \
+          --query="$initial_query") || return 0
+  fi
+
+  ${EDITOR:-vi} "$VAULT/$selected"
+}
+
+# ── Search ───────────────────────────────────────────────────────────────────
+# Search vault note contents with ripgrep + fzf, open selection in $EDITOR
+vault-search() {
+  if ! command -v fzf >/dev/null 2>&1; then
+    echo "fzf required for vault-search" >&2
+    return 1
+  fi
+  if ! command -v rg >/dev/null 2>&1; then
+    echo "ripgrep (rg) required for vault-search" >&2
+    return 1
+  fi
+  if [ ! -d "$VAULT" ]; then
+    echo "Vault not found at $VAULT" >&2
+    return 1
+  fi
+
+  local initial_query="${1:-}"
+
+  local result
+  result=$(rg --type md --line-number --color=never --smart-case \
+    "${initial_query:-.}" "$VAULT" 2>/dev/null | \
+    sed "s|^$VAULT/||" | \
+    fzf --exact \
+        --delimiter=: \
+        --preview 'bat --color=always --style=plain --highlight-line {2} -- "$VAULT"/{1} 2>/dev/null || cat -- "$VAULT"/{1}' \
+        --preview-window=right:60%:+{2}-10 \
+        --bind 'ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' \
+        --header='ctrl-d/u: scroll preview' \
+        --prompt="search> " \
+        --query="$initial_query") || return 0
+
+  local file
+  file=$(printf '%s' "$result" | cut -d: -f1)
+  local line
+  line=$(printf '%s' "$result" | cut -d: -f2)
+
+  # Open at the matching line if editor supports it
+  case "${EDITOR:-vi}" in
+    *vim*|*nvim*) ${EDITOR:-vi} "+$line" "$VAULT/$file" ;;
+    *hx*|*helix*) ${EDITOR:-vi} "$VAULT/$file:$line" ;;
+    *micro*)      ${EDITOR:-vi} "$VAULT/$file" -startpos "$line,0" ;;
+    *)            ${EDITOR:-vi} "$VAULT/$file" ;;
+  esac
 }

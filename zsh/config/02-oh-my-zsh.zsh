@@ -47,6 +47,8 @@ plugins=(
 [ $host_os = "Darwin" ] && plugins+=(macos)
 
 # Third-party plugins (loaded last for oh-my-zsh)
+# fzf-tab must come before autosuggestions and syntax highlighting
+(( $+commands[fzf] )) && plugins+=(fzf-tab)
 plugins+=(
     F-Sy-H # Supersedes zsh-syntax-highlighting
     zsh-autosuggestions

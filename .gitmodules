@@ -7,3 +7,6 @@
 [submodule "ohmyzsh_custom/plugins/F-Sy-H"]
 	path = ohmyzsh_custom/plugins/F-Sy-H
 	url = https://github.com/z-shell/F-Sy-H.git
+[submodule "ohmyzsh_custom/plugins/fzf-tab"]
+	path = ohmyzsh_custom/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab

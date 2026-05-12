@@ -12,11 +12,5 @@ export host_short="$(uname -n)"
 export host_os="$(uname -s)"
 export ME=$(whoami)
 
-# Move zcompdump out of $HOME into XDG cache dir
-ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
-[[ -d "${ZSH_COMPDUMP:h}" ]] || mkdir -p "${ZSH_COMPDUMP:h}"
-export ZSH_COMPDUMP
-
-# Early completion initialization (before omz plugins are loaded)
-autoload -Uz compinit
-compinit -i -d "$ZSH_COMPDUMP"
+# ZSH_COMPDUMP is set in zshenv (earliest possible, before any compinit)
+# compinit is handled by oh-my-zsh (02) — don't call it here

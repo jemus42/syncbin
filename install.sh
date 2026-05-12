@@ -276,6 +276,7 @@ print_status "$BLUE" "🐚 Installing shell configurations..."
 
 # ZSH configuration
 safe_symlink "$SYNCBIN/zsh/zshrc.zsh" "$HOME/.zshrc"
+safe_symlink "$SYNCBIN/zsh/zshenv" "$HOME/.zshenv"
 
 # Bash configuration  
 safe_symlink "$SYNCBIN/bash/bashrc" "$HOME/.bashrc"

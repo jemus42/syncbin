@@ -19,7 +19,7 @@ Lives at `~/syncbin`, symlinked into place by `install.sh`.
 
 | File | Purpose | Key side effects |
 |------|---------|-----------------|
-| `00-early.zsh` | Profiling setup, prompt theme selection (starship/p10k), p10k instant prompt, basic env vars | Sets `SYNCBIN`, `host_short`, `host_os`, `ME`. Initializes compinit. |
+| `00-early.zsh` | Profiling setup, basic env vars | Sets `SYNCBIN`, `host_short`, `host_os`, `ME`. Initializes compinit. |
 | `01-environment.zsh` | XDG dirs, terminal encoding, Homebrew detection, locale, PATH, editor selection | Sets `XDG_*`, `EDITOR`, `MANPAGER`. Adds ~/.local/bin, ~/.cargo/bin, ~/go/bin, $SYNCBIN/bin to PATH. |
 | `02-oh-my-zsh.zsh` | OMZ framework init, plugin loading | Conditional plugins based on command availability. Loads F-Sy-H, zsh-autosuggestions. |
 | `03-completions.zsh` | Carapace setup, custom completion fallback, SSH host completion | Sets `CARAPACE_BRIDGES`. Adds zsh/completions to fpath only for commands carapace doesn't handle. |
@@ -27,7 +27,7 @@ Lives at `~/syncbin`, symlinked into place by `install.sh`.
 | `05-functions.zsh` | Custom shell functions | Domains: reload, media processing, git utilities, LaTeX cleanup, R management, WireGuard VPN helpers. |
 | `06-rstudio-server.zsh` | RStudio Server aliases and functions | Only relevant on servers running rstudio-server. |
 | `07-integrations.zsh` | McFly history search, Nix package manager | Conditional on command availability. |
-| `08-prompt.zsh` | Starship init or p10k config sourcing | Depends on `prompt_theme` set in 00-early.zsh. |
+| `08-prompt.zsh` | Starship prompt init | Loads starship if available. |
 | `09-tmux.zsh` | tmn (new session), tma (attach/create) | Tmux session management helpers. |
 | `99-local.zsh` | XDG local overrides, legacy file support, path dedup | Sources ~/.config/syncbin/{env,path,*.sh,*.zsh}. Supports deprecated ~/.env.local etc. |
 
@@ -96,7 +96,7 @@ grep "^alias dk" common/aliases.sh        # Find docker aliases
 | VPN/WireGuard | `zsh/config/05-functions.zsh` (bottom half) | same pattern in bash | Search for `_wg_vpn`, `ppth`, `lifespan` |
 | R/RStudio | `*/config/*-rstudio-server.*`, `R/` | `05-functions` (upr, rstudio launcher) | `grep -r "rstudio\|Rproj\|upr" */config/` |
 | Media processing | `zsh/config/05-functions.zsh` | `bin/` scripts | Search for `compavc`, `gif2mp4`, `ffsilent`, `pdfcombine` |
-| Prompt | `starship/starship.toml` | `zsh/theme/p10k.zsh` | Read starship.toml for active config |
+| Prompt | `starship/starship.toml` | — | Read starship.toml for active config |
 | Terminal emulators | `ghostty/config` | `alacritty/alacritty.yml` | Each is self-contained |
 | Editors | `helix/`, `micro/`, `zed/` | — | Each directory is independent |
 | Bin scripts | `bin/` | — | `ls bin/` and read individual scripts |
@@ -181,7 +181,7 @@ This clones the repo (shallow) to ~/syncbin and runs install.sh.
 **Health check:** `syncbin-doctor` verifies symlinks, submodules, dependencies, completions.
 
 **Git submodules (Oh-My-Zsh plugins/themes):**
-- zsh-completions, zsh-autosuggestions, zsh-syntax-highlighting, F-Sy-H, powerlevel10k
+- zsh-completions, zsh-autosuggestions, F-Sy-H
 - Update all: `git submodule update --remote --merge`
 
 ## Patterns & Conventions

@@ -149,7 +149,5 @@ See `dependencies.yaml` for full list. Key tools:
 
 - https://github.com/mathiasbynens/dotfiles
 - [Oh-My-Zsh](https://github.com/ohmyzsh/ohmyzsh)
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
-- [zsh-users](https://github.com/zsh-users) (completions, autosuggestions,
-  syntax-highlighting)
+- [zsh-users](https://github.com/zsh-users) (completions, autosuggestions)
 - [Carapace](https://carapace.sh)

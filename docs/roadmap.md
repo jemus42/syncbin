@@ -26,7 +26,7 @@ Last reviewed: 2026-05-09
 | `alacritty/alacritty.yml` | — | Replaced by ghostty? | Pending review |
 | `micro/` | — | Replaced by helix? | Pending review |
 | `zed/` | — | Still in use? | Pending review |
-| `ohmyzsh_custom/plugins/zsh-syntax-highlighting` | — | Superseded by F-Sy-H | Can remove submodule |
+| `ohmyzsh_custom/plugins/zsh-syntax-highlighting` | — | Superseded by F-Sy-H | Removed |
 | `bin/slacc`, `bin/sljobs`, `bin/slusage` | — | HPC-specific, still needed? | Pending review |
 | `screenrc` | — | tmux/zellij replaced screen | Likely removable |
 
@@ -64,7 +64,8 @@ Last reviewed: 2026-05-09
 - Audit `bin/` scripts — identify unused, document purpose of keepers
 - Consolidate R REPL config (arf.toml vs radian_profile — pick primary?)
 - Remove deprecated legacy override file loading from 99-local.*
-- Remove zsh-syntax-highlighting submodule (F-Sy-H supersedes it)
+- ~~Remove zsh-syntax-highlighting submodule~~ (done)
+- ~~Remove powerlevel10k submodule and p10k config~~ (done)
 
 ## Decisions Log
 

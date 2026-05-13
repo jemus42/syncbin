@@ -311,7 +311,6 @@ echo
 print_status "$BLUE" "📊 Installing R configurations..."
 
 safe_symlink "$SYNCBIN/R/Rprofile" "$HOME/.Rprofile"
-safe_symlink "$SYNCBIN/R/radian_profile" "$HOME/.radian_profile"
 
 # arf (R console) - platform-specific config location
 if [ "$OS_TYPE" = "macos" ]; then

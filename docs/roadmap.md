@@ -1,17 +1,19 @@
 # Syncbin Roadmap & Status
 
-Last reviewed: 2026-05-09
+Last reviewed: 2026-05-13
 
 ## Actively Used
 
 - zsh config — daily, all machines
 - bash config — servers, fallback environments
 - starship prompt — cross-shell, all machines
-- ghostty terminal — primary terminal on macOS
-- helix editor — primary terminal editor
+- iTerm2 — primary terminal on macOS (hotkey window)
+- ghostty terminal — secondary terminal, exploring
+- micro editor — primary terminal editor
 - bat, btop, zellij — daily tools
 - carapace completions — all shells
-- R config (Rprofile, arf.toml, radian_profile) — daily R development
+- fzf-tab — fzf-powered completion menu (zsh)
+- R config (Rprofile, arf.toml) — daily R development
 - WireGuard VPN helpers — regular use
 - common aliases (git, docker, systemd) — daily
 - bin/ utilities (extract, syncbin-doctor, upall) — regular use
@@ -20,13 +22,11 @@ Last reviewed: 2026-05-09
 
 | Item | Last meaningful edit | Reason | Status |
 |------|---------------------|--------|--------|
-| `rstudio/` | — | Replaced by Positron | Pending review |
-| `R/ColorScheme` | — | RStudio-specific | Pending review |
+| `rstudio/` | — | Replaced by Positron, but themes useful as reference for porting | Keep themes |
+| `R/ColorScheme` | — | RStudio-specific, but useful theme reference | Keep as reference |
 | `*/config/*-rstudio-server.*` | — | Still needed on servers? | Pending review |
-| `alacritty/alacritty.yml` | — | Replaced by ghostty? | Pending review |
-| `micro/` | — | Replaced by helix? | Pending review |
+| `alacritty/alacritty.yml` | — | Never adopted beyond early beta curiosity | Can remove |
 | `zed/` | — | Still in use? | Pending review |
-| `ohmyzsh_custom/plugins/zsh-syntax-highlighting` | — | Superseded by F-Sy-H | Removed |
 | `bin/slacc`, `bin/sljobs`, `bin/slusage` | — | HPC-specific, still needed? | Pending review |
 | `screenrc` | — | tmux/zellij replaced screen | Likely removable |
 
@@ -62,14 +62,18 @@ Last reviewed: 2026-05-09
 
 ### Cleanup Tasks
 - Audit `bin/` scripts — identify unused, document purpose of keepers
-- Consolidate R REPL config (arf.toml vs radian_profile — pick primary?)
-- Remove deprecated legacy override file loading from 99-local.*
+- ~~Consolidate R REPL config~~ radian removed, arf.toml is primary
+- ~~Remove deprecated legacy override file loading from 99-local.*~~ (done)
 - ~~Remove zsh-syntax-highlighting submodule~~ (done)
 - ~~Remove powerlevel10k submodule and p10k config~~ (done)
+- ~~Remove radian_profile~~ (done)
 
 ## Decisions Log
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
+| 2026-05-13 | Remove radian_profile | radian is dead, unused for years |
+| 2026-05-13 | Remove legacy override files (~/.env.local etc) | ~/.config/syncbin/ mechanism replaced them |
+| 2026-05-13 | Keep rstudio/ themes as reference | Useful for porting monokai spacegray eighties to other editors |
+| 2026-05-13 | Add fzf-tab, fix compinit | fzf-powered completions, reduced startup from 3x compinit to 1x |
 | 2026-05-09 | Create architecture.md + roadmap.md | AI agents need structured reference beyond CLAUDE.md |
-| — | (template for future entries) | — |

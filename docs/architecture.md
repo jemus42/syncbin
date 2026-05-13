@@ -29,7 +29,7 @@ Lives at `~/syncbin`, symlinked into place by `install.sh`.
 | `07-integrations.zsh` | McFly history search, Nix package manager | Conditional on command availability. |
 | `08-prompt.zsh` | Starship prompt init | Loads starship if available. |
 | `09-tmux.zsh` | tmn (new session), tma (attach/create) | Tmux session management helpers. |
-| `99-local.zsh` | XDG local overrides, legacy file support, path dedup | Sources ~/.config/syncbin/{env,path,*.sh,*.zsh}. Supports deprecated ~/.env.local etc. |
+| `99-local.zsh` | XDG local overrides, path dedup | Sources ~/.config/syncbin/{env,path,*.sh,*.zsh}. |
 
 **Conditional loading pattern:**
 ```zsh
@@ -157,8 +157,6 @@ Machine-specific config lives in `~/.config/syncbin/` (not tracked by git).
 - Employer-specific aliases → `work.zsh` or `work.sh`
 - Experiments → `experiments.zsh`
 - Anything that should sync across machines → tracked in syncbin
-
-**Legacy (deprecated, still functional):** `~/.env.local`, `~/.path.local`, `~/.functions.local`
 
 ## Installation & Bootstrap
 

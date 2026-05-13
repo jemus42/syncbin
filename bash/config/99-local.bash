@@ -40,12 +40,6 @@ if [[ -d "$SYNCBIN_LOCAL" ]]; then
   done
 fi
 
-# Legacy support: load old ~/.*local files if they exist
-# TODO: Migrate these to ~/.config/syncbin/ and remove
-[[ -r "${HOME}/.env.local" ]] && source "${HOME}/.env.local"
-[[ -r "${HOME}/.path.local" ]] && source "${HOME}/.path.local"
-[[ -r "${HOME}/.functions.local" ]] && source "${HOME}/.functions.local"
-
 # Load HPC-specific aliases if available (bash-compatible)
 [[ -r "${SYNCBIN}/zsh/aliases-hpc.sh" ]] && source "${SYNCBIN}/zsh/aliases-hpc.sh"
 

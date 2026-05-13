@@ -1,0 +1,49 @@
+#!/bin/sh
+# Discover local Claude skills not yet tracked in syncbin and integrate them.
+# Finds skills in ~/.claude/skills/ that aren't symlinks (i.e., locally created),
+# copies them to syncbin, and replaces originals with symlinks.
+#
+# Usage: claude-sync-skills
+
+SKILL_SRC="$HOME/.claude/skills"
+SKILL_DST="${SYNCBIN:-$HOME/syncbin}/claude/skills"
+
+if [ ! -d "$SKILL_SRC" ]; then
+  echo "No skills directory at $SKILL_SRC"
+  exit 0
+fi
+
+if [ ! -d "$SKILL_DST" ]; then
+  echo "Syncbin skills directory not found at $SKILL_DST"
+  echo "Run install.sh first or set SYNCBIN"
+  exit 1
+fi
+
+found=0
+for skill_dir in "$SKILL_SRC"/*/; do
+  [ -d "$skill_dir" ] || continue
+  [ -L "${skill_dir%/}" ] && continue  # skip existing symlinks
+
+  skill_name=$(basename "$skill_dir")
+
+  if [ -d "$SKILL_DST/$skill_name" ]; then
+    echo "skip: $skill_name (already in syncbin)"
+    continue
+  fi
+
+  echo "found: $skill_name (local only)"
+  cp -r "$skill_dir" "$SKILL_DST/$skill_name"
+  rm -rf "$skill_dir"
+  ln -s "$SKILL_DST/$skill_name" "${skill_dir%/}"
+  echo "  -> moved to syncbin, replaced with symlink"
+  found=$((found + 1))
+done
+
+if [ "$found" -eq 0 ]; then
+  echo "All skills already synced."
+else
+  echo ""
+  echo "$found skill(s) integrated into syncbin."
+  echo "Commit with:"
+  echo "  cd ${SYNCBIN:-$HOME/syncbin} && git add claude/skills/ && git commit -m 'feat: add new claude skills'"
+fi

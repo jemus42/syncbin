@@ -207,26 +207,37 @@ stow_package() {
         return 0
     fi
     # Dry-run to detect conflicts
+    local stow_output
+    stow_output=$(stow -d "$SYNCBIN/packages" -t "$HOME" -n "$pkg" 2>&1 || true)
     local conflicts
-    conflicts=$(stow -d "$SYNCBIN/packages" -t "$HOME" -n "$pkg" 2>&1 | grep "existing target is" || true)
+    conflicts=$(echo "$stow_output" | grep "existing target" || true)
     if [ -n "$conflicts" ]; then
         print_status "$YELLOW" "! Conflicts detected for $pkg:"
         echo "$conflicts" | while IFS= read -r line; do
+            # Extract the conflicting path (works for both "not owned by stow" and "neither a link nor a directory")
             local target
-            target=$(echo "$line" | sed 's/.*existing target is neither a link nor a directory: //')
-            if [ -n "$target" ] && [ -e "$HOME/$target" ]; then
-                if prompt_user "  Back up and replace $HOME/$target?"; then
-                    create_backup "$HOME/$target"
-                else
-                    print_status "$YELLOW" "  ⚠ Skipped: $target"
+            target=$(echo "$line" | sed -e 's/.*existing target is not owned by stow: //' -e 's/.*existing target is neither a link nor a directory: //')
+            target=$(echo "$target" | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
+            if [ -n "$target" ]; then
+                echo "    → $target"
+                if [ -e "$HOME/$target" ] || [ -L "$HOME/$target" ]; then
+                    if prompt_user "  Back up and replace $HOME/$target?"; then
+                        create_backup "$HOME/$target"
+                    else
+                        print_status "$YELLOW" "  ⚠ Skipped: $target"
+                    fi
                 fi
             fi
         done
     fi
-    if stow -d "$SYNCBIN/packages" -t "$HOME" "$pkg" 2>/dev/null; then
+    if stow -d "$SYNCBIN/packages" -t "$HOME" "$pkg" 2>&1; then
         print_status "$GREEN" "✓ Stowed: $pkg"
     else
         print_status "$RED" "✗ Failed to stow: $pkg"
+        # Show what went wrong
+        stow -d "$SYNCBIN/packages" -t "$HOME" -n "$pkg" 2>&1 | grep -v "^$" | while IFS= read -r line; do
+            echo "    $line"
+        done
         return 1
     fi
 }

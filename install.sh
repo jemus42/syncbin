@@ -83,7 +83,7 @@ prompt_user() {
     fi
 
     printf "${YELLOW}%s (y/N): ${NC}" "$message"
-    read -r response
+    read -r response < /dev/tty
 
     case "$response" in
         [yY][eE][sS]|[yY]) return 0 ;;

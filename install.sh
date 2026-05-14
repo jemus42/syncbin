@@ -18,10 +18,15 @@ while [ $# -gt 0 ]; do
             shift
             ;;
         -h|--help)
-            echo "Usage: install.sh [-y|--yes] [-h|--help]"
+            echo "Usage: install.sh [-y|--yes] [--unstow] [-h|--help]"
             echo "  -y, --yes   Accept all defaults (non-interactive)"
+            echo "  --unstow    Remove all stowed symlinks"
             echo "  -h, --help  Show this help"
             exit 0
+            ;;
+        --unstow)
+            UNSTOW=1
+            shift
             ;;
         *)
             echo "Unknown option: $1"
@@ -48,6 +53,16 @@ case "$(uname -s)" in
     FreeBSD) OS_TYPE="freebsd" ;;
     *) OS_TYPE="unknown" ;;
 esac
+
+# Check for stow
+if ! command -v stow >/dev/null 2>&1; then
+    printf "${RED}GNU stow is required but not installed.${NC}\n"
+    case "$OS_TYPE" in
+        macos)  echo "  Install: brew install stow" ;;
+        linux)  echo "  Install: apt install stow  OR  dnf install stow" ;;
+    esac
+    exit 1
+fi
 
 # Helper function for colored output
 print_status() {
@@ -183,6 +198,45 @@ safe_symlink_if_missing() {
     fi
 }
 
+# Stow a package from packages/ into $HOME
+stow_package() {
+    local pkg="$1"
+    local pkg_dir="$SYNCBIN/packages/$pkg"
+    if [ ! -d "$pkg_dir" ]; then
+        print_status "$YELLOW" "⚠ Package not found: $pkg"
+        return 0
+    fi
+    # Dry-run to detect conflicts
+    local conflicts
+    conflicts=$(stow -d "$SYNCBIN/packages" -t "$HOME" -n "$pkg" 2>&1 | grep "existing target is" || true)
+    if [ -n "$conflicts" ]; then
+        print_status "$YELLOW" "! Conflicts detected for $pkg:"
+        echo "$conflicts" | while IFS= read -r line; do
+            local target
+            target=$(echo "$line" | sed 's/.*existing target is neither a link nor a directory: //')
+            if [ -n "$target" ] && [ -e "$HOME/$target" ]; then
+                if prompt_user "  Back up and replace $HOME/$target?"; then
+                    create_backup "$HOME/$target"
+                else
+                    print_status "$YELLOW" "  ⚠ Skipped: $target"
+                fi
+            fi
+        done
+    fi
+    if stow -d "$SYNCBIN/packages" -t "$HOME" "$pkg" 2>/dev/null; then
+        print_status "$GREEN" "✓ Stowed: $pkg"
+    else
+        print_status "$RED" "✗ Failed to stow: $pkg"
+        return 1
+    fi
+}
+
+# Unstow a package
+unstow_package() {
+    local pkg="$1"
+    stow -d "$SYNCBIN/packages" -t "$HOME" -D "$pkg" 2>/dev/null
+}
+
 # Introduction
 echo
 print_status "$BLUE" "======================================"
@@ -207,30 +261,29 @@ echo
 print_status "$BLUE" "Starting installation..."
 echo
 
+# Handle unstow
+if [ "$UNSTOW" = 1 ]; then
+    print_status "$BLUE" "Unstowing all packages..."
+    for pkg in shell prompt bin bat btop zellij tmux helix micro broot conda lsd carapace claude r; do
+        unstow_package "$pkg"
+    done
+    if [ "$OS_TYPE" = "macos" ]; then
+        for pkg in alacritty ghostty zed; do
+            unstow_package "$pkg"
+        done
+    fi
+    print_status "$GREEN" "All packages unstowed."
+    exit 0
+fi
+
 #########################
 ## Create directories  ##
 #########################
 print_status "$BLUE" "📁 Creating configuration directories..."
 
-# Standard config directories
-ensure_dir "$HOME/.config/zsh"
-ensure_dir "$HOME/.config/fish"
+ensure_dir "$HOME/.config"
+ensure_dir "$HOME/.local/bin"
 ensure_dir "$HOME/.config/syncbin"  # Local overrides directory
-ensure_dir "$HOME/.config/broot"
-ensure_dir "$HOME/.config/conda"
-ensure_dir "$HOME/.config/zellij"
-ensure_dir "$HOME/.config/lsd"
-ensure_dir "$HOME/.config/micro"
-ensure_dir "$HOME/.config/btop"
-ensure_dir "$HOME/.config/bat"
-ensure_dir "$HOME/.config/tmux"
-ensure_dir "$HOME/.config/tmux/plugins"
-ensure_dir "$HOME/.config/carapace"
-
-# Platform-specific directories
-if [ "$OS_TYPE" = "macos" ]; then
-    ensure_dir "$HOME/.config/alacritty"
-fi
 
 echo
 
@@ -260,101 +313,49 @@ else
     print_status "$BLUE" "○ Oh-My-Zsh already installed"
 fi
 
-# Link ZSH theme to OMZSH custom theme dir
-if [ -d "$HOME/.oh-my-zsh" ]; then
-    ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-    ensure_dir "$ZSH_CUSTOM_DIR/themes"
-    safe_symlink "$SYNCBIN/zsh/theme/jemus42.zsh-theme" "$ZSH_CUSTOM_DIR/themes/jemus42.zsh-theme"
-fi
-
 echo
 
 #########################
-## Shell configurations ##
+## Stow packages       ##
 #########################
-print_status "$BLUE" "🐚 Installing shell configurations..."
+print_status "$BLUE" "📦 Stowing configuration packages..."
 
-# ZSH configuration
-safe_symlink "$SYNCBIN/zsh/zshrc.zsh" "$HOME/.zshrc"
-safe_symlink "$SYNCBIN/zsh/zshenv" "$HOME/.zshenv"
-
-# Bash configuration  
-safe_symlink "$SYNCBIN/bash/bashrc" "$HOME/.bashrc"
-safe_symlink "$SYNCBIN/bash/bash_profile" "$HOME/.bash_profile"
-
-# Fish configuration
-safe_symlink "$SYNCBIN/fish/config.fish" "$HOME/.config/fish/config.fish"
-
-echo
-
-#########################
-## Core dotfiles       ##
-#########################
-print_status "$BLUE" "⚙️  Installing core dotfiles..."
-
-safe_symlink "$SYNCBIN/screenrc" "$HOME/.screenrc"
-safe_symlink "$SYNCBIN/starship/starship.toml" "$HOME/.config/starship.toml"
-safe_symlink "$SYNCBIN/broot_conf.hjson" "$HOME/.config/broot/conf.hjson"
-safe_symlink "$SYNCBIN/condarc" "$HOME/.config/conda/condarc"
-safe_symlink "$SYNCBIN/zellij/zellij.kdl" "$HOME/.config/zellij/config.kdl"
-safe_symlink "$SYNCBIN/bat/config" "$HOME/.config/bat/config"
-safe_symlink "$SYNCBIN/tmux.conf" "$HOME/.config/tmux/tmux.conf"
-safe_symlink "$SYNCBIN/lsd.conf.yml" "$HOME/.config/lsd/config.yaml"
-safe_symlink "$SYNCBIN/micro/settings.json" "$HOME/.config/micro/settings.json"
-safe_symlink "$SYNCBIN/micro/bindings.json" "$HOME/.config/micro/bindings.json"
-
-echo
-
-#########################
-## R configuration     ##
-#########################
-print_status "$BLUE" "📊 Installing R configurations..."
-
-safe_symlink "$SYNCBIN/R/Rprofile" "$HOME/.Rprofile"
-
-# arf (R console) - platform-specific config location
-if [ "$OS_TYPE" = "macos" ]; then
-    ARF_CONFIG_DIR="$HOME/Library/Application Support/arf"
-else
-    ARF_CONFIG_DIR="$HOME/.config/arf"
-fi
-ensure_dir "$ARF_CONFIG_DIR"
-safe_symlink "$SYNCBIN/R/arf.toml" "$ARF_CONFIG_DIR/arf.toml"
-
-echo
-
-#########################
-## Theme directories   ##
-#########################
-print_status "$BLUE" "🎨 Installing theme directories..."
-
-safe_symlink_if_missing "$SYNCBIN/bat/themes" "$HOME/.config/bat/themes"
-safe_symlink_if_missing "$SYNCBIN/btop/themes" "$HOME/.config/btop/themes"
-safe_symlink_if_missing "$SYNCBIN/zellij/themes" "$HOME/.config/zellij/themes"
-safe_symlink_if_missing "$SYNCBIN/helix" "$HOME/.config/helix"
-safe_symlink_if_missing "$SYNCBIN/ghostty" "$HOME/.config/ghostty"
-safe_symlink_if_missing "$SYNCBIN/micro/syntax" "$HOME/.config/micro/syntax"
-safe_symlink_if_missing "$SYNCBIN/carapace/specs" "$HOME/.config/carapace/specs"
-
-echo
-
-#########################
-## Claude Code         ##
-#########################
-print_status "$BLUE" "🤖 Installing Claude Code configurations..."
-
-ensure_dir "$HOME/.claude"
-ensure_dir "$HOME/.claude/skills"
-safe_symlink "$SYNCBIN/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-
-# Symlink each skill directory
-for skill_dir in "$SYNCBIN"/claude/skills/*/; do
-    [ -d "$skill_dir" ] || continue
-    skill_name=$(basename "$skill_dir")
-    safe_symlink "$skill_dir" "$HOME/.claude/skills/$skill_name"
+# Core packages (all platforms)
+for pkg in shell prompt bin bat btop zellij tmux helix micro broot conda lsd carapace claude r; do
+    stow_package "$pkg"
 done
 
-# Patch statusline into settings.json (non-destructive, only touches statusLine key)
+echo
+
+#########################
+## Platform-specific   ##
+#########################
+if [ "$OS_TYPE" = "macos" ]; then
+    print_status "$BLUE" "🍎 Stowing macOS-specific packages..."
+    for pkg in alacritty ghostty zed; do
+        stow_package "$pkg"
+    done
+    echo
+fi
+
+#########################
+## Post-stow hooks     ##
+#########################
+print_status "$BLUE" "🔧 Running post-stow hooks..."
+
+# macOS: arf.toml lives at ~/Library/Application Support/arf/
+if [ "$OS_TYPE" = "macos" ]; then
+    arf_xdg="$HOME/.config/arf/arf.toml"
+    arf_macos_dir="$HOME/Library/Application Support/arf"
+    if [ -L "$arf_xdg" ]; then
+        ensure_dir "$arf_macos_dir"
+        mv "$arf_xdg" "$arf_macos_dir/arf.toml"
+        rmdir "$HOME/.config/arf" 2>/dev/null
+        print_status "$GREEN" "✓ Moved arf.toml symlink to macOS location"
+    fi
+fi
+
+# Claude Code: patch statusline into settings.json
 if command -v jq >/dev/null 2>&1; then
     settings_file="$HOME/.claude/settings.json"
     statusline_cmd="bash \"$SYNCBIN/claude/statusline.sh\""
@@ -369,7 +370,6 @@ if command -v jq >/dev/null 2>&1; then
             print_status "$YELLOW" "⚠ Failed to patch statusline (jq error)"
         fi
     else
-        # Create minimal settings.json with just statusline
         printf '{"statusLine":{"type":"command","command":"%s","refreshInterval":5}}\n' "$statusline_cmd" > "$settings_file"
         print_status "$GREEN" "✓ Created settings.json with statusline"
     fi
@@ -377,32 +377,17 @@ else
     print_status "$YELLOW" "⚠ jq not found — skipping statusline patch (install jq to enable)"
 fi
 
-echo
-
-#########################
-## Platform-specific   ##
-#########################
-if [ "$OS_TYPE" = "macos" ]; then
-    print_status "$BLUE" "🍎 Installing macOS-specific configurations..."
-    
-    safe_symlink "$SYNCBIN/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
-    safe_symlink_if_missing "$SYNCBIN/zed" "$HOME/.config/zed"
-    
-    echo
-fi
-
-#########################
-## RStudio themes      ##
-#########################
-if [ -d "$HOME/.config/rstudio/themes/" ]; then
+# RStudio themes (conditional)
+if [ -d "$HOME/.config/rstudio/themes/" ] && [ -d "$SYNCBIN/rstudio/themes" ]; then
     print_status "$BLUE" "📈 Installing RStudio themes..."
     for theme in "$SYNCBIN/rstudio/themes"/*.rstheme; do
         if [ -f "$theme" ]; then
             safe_symlink "$theme" "$HOME/.config/rstudio/themes/$(basename "$theme")"
         fi
     done
-    echo
 fi
+
+echo
 
 #########################
 ## Tmux Plugin Manager ##
@@ -498,12 +483,18 @@ echo "     - starship, bat, lsd, ripgrep, fzf, etc."
 echo "   • Customize local settings in ~/.config/syncbin/:"
 echo "     - env (environment variables), path (PATH additions)"
 echo "     - *.zsh, *.bash, *.fish (shell-specific configs)"
+echo "   • Unstow individual packages: install.sh --unstow"
 echo
-print_status "$BLUE" "🔗 Shell configurations installed:"
-echo "   • ZSH:  ~/.zshrc → $SYNCBIN/zsh/zshrc.zsh"
-echo "   • Bash: ~/.bashrc → $SYNCBIN/bash/bashrc (main config)"
-echo "   •       ~/.bash_profile → $SYNCBIN/bash/bash_profile (sources .bashrc)"
-echo "   • Fish: ~/.config/fish/config.fish → $SYNCBIN/fish/config.fish"
+print_status "$BLUE" "🔗 Packages stowed via GNU stow:"
+echo "   • shell: ~/.zshrc, ~/.bashrc, ~/.config/fish/, ~/.config/zsh/, ~/.config/bash/"
+echo "   • prompt: ~/.config/starship.toml"
+echo "   • bin: ~/.local/bin/*"
+echo "   • Tools: bat, btop, zellij, tmux, helix, micro, broot, conda, lsd, carapace"
+echo "   • claude: ~/.claude/CLAUDE.md, ~/.claude/skills/"
+echo "   • r: ~/.Rprofile, ~/.config/arf/"
+if [ "$OS_TYPE" = "macos" ]; then
+    echo "   • macOS: alacritty, ghostty, zed"
+fi
 echo
 
 # Report backup files created during this run

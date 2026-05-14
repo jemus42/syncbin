@@ -347,11 +347,19 @@ print_status "$BLUE" "🔧 Running post-stow hooks..."
 if [ "$OS_TYPE" = "macos" ]; then
     arf_xdg="$HOME/.config/arf/arf.toml"
     arf_macos_dir="$HOME/Library/Application Support/arf"
-    if [ -L "$arf_xdg" ]; then
+    if [ -e "$arf_xdg" ]; then
         ensure_dir "$arf_macos_dir"
-        mv "$arf_xdg" "$arf_macos_dir/arf.toml"
-        rmdir "$HOME/.config/arf" 2>/dev/null
-        print_status "$GREEN" "✓ Moved arf.toml symlink to macOS location"
+        # Stow may fold the directory — unstow arf part of r package,
+        # then create a direct symlink at macOS location
+        ln -sf "$SYNCBIN/packages/r/.config/arf/arf.toml" "$arf_macos_dir/arf.toml"
+        # Remove the stow-created XDG path
+        if [ -L "$HOME/.config/arf" ]; then
+            rm "$HOME/.config/arf"
+        elif [ -L "$arf_xdg" ]; then
+            rm "$arf_xdg"
+            rmdir "$HOME/.config/arf" 2>/dev/null
+        fi
+        print_status "$GREEN" "✓ Linked arf.toml to macOS location"
     fi
 fi
 

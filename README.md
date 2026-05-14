@@ -31,41 +31,53 @@ syncbin-doctor
 
 ```
 syncbin/
-├── zsh/                    # Zsh configuration (primary shell)
-│   ├── zshrc.zsh          # Main entry point (~/.zshrc)
-│   ├── config/            # Modular configs (00-*.zsh to 99-*.zsh)
-│   └── completions/       # Custom completions (_command format)
-├── bash/                   # Bash configuration
-│   ├── bashrc             # Main entry point (~/.bashrc)
-│   ├── config/            # Modular configs (00-*.bash to 99-*.bash)
-│   └── completions/       # Custom completions (command.bash)
-├── fish/                   # Fish configuration
-│   ├── config.fish        # Main entry point
-│   ├── config/            # Modular configs (00-*.fish to 99-*.fish)
-│   └── completions/       # Custom completions (command.fish)
-├── ohmyzsh_custom/        # Oh-My-Zsh plugins (git submodules)
-├── bin/                   # Custom scripts (added to PATH)
-├── alacritty/             # Alacritty terminal config
-├── ghostty/               # Ghostty terminal config
-├── bat/                   # Bat config and themes
-├── btop/                  # Btop system monitor config
-├── helix/                 # Helix editor config
-├── micro/                 # Micro editor config
-├── zed/                   # Zed editor config
-├── zellij/                # Zellij multiplexer config
-├── R/                     # R/RStudio configuration
-├── common/                # POSIX sh scripts (bash + zsh compatible)
-│   └── aliases.sh        # Git, docker, systemd aliases
-├── carapace/              # Carapace completion specs
-│   └── specs/            # Custom specs (symlinked to ~/.config/carapace/specs)
-├── bootstrap.sh           # One-line installer
-├── install.sh             # Main installation script
-└── dependencies.yaml      # Tool dependencies manifest
+├── packages/                # Stow packages (mirrored into $HOME)
+│   ├── shell/              # Zsh, bash, fish configs
+│   │   ├── .zshrc          # → ~/.zshrc
+│   │   ├── .bashrc         # → ~/.bashrc
+│   │   └── .config/        # → ~/.config/{zsh,bash,fish,syncbin}/
+│   ├── prompt/             # → ~/.config/starship.toml
+│   ├── bin/                # → ~/.local/bin/*
+│   ├── bat/                # → ~/.config/bat/
+│   ├── btop/               # → ~/.config/btop/
+│   ├── zellij/             # → ~/.config/zellij/
+│   ├── tmux/               # → ~/.config/tmux/
+│   ├── helix/              # → ~/.config/helix/
+│   ├── ghostty/            # → ~/.config/ghostty/
+│   ├── micro/              # → ~/.config/micro/
+│   ├── broot/              # → ~/.config/broot/
+│   ├── conda/              # → ~/.config/conda/
+│   ├── lsd/                # → ~/.config/lsd/
+│   ├── carapace/           # → ~/.config/carapace/specs/
+│   ├── claude/             # → ~/.claude/CLAUDE.md, ~/.claude/skills/
+│   ├── r/                  # → ~/.Rprofile, ~/.config/arf/
+│   ├── alacritty/          # → ~/.config/alacritty/ (macOS)
+│   └── zed/                # → ~/.config/zed/ (macOS)
+├── ohmyzsh_custom/         # Oh-My-Zsh plugins (git submodules)
+├── claude/                 # statusline.sh, r-project-template.md
+├── starship/               # Theme variants
+├── install.sh              # Installation (uses stow)
+├── bootstrap.sh            # One-line installer
+└── dependencies.yaml       # Tool manifest
+```
+
+## Stow Package System
+
+Configs are organized in `packages/` where each package mirrors the home directory structure.
+`install.sh` uses [GNU stow](https://www.gnu.org/software/stow/) to create symlinks:
+
+```bash
+# Install all packages
+./install.sh
+
+# Remove all symlinks
+./install.sh --unstow
 ```
 
 ## Shell Configuration
 
-All three shells use a **modular configuration** approach with numbered files:
+All three shells use a **modular configuration** approach with numbered files
+in `packages/shell/.config/{zsh,bash,fish}/config/`:
 
 ```
 config/
@@ -121,14 +133,15 @@ alias foo='echo bar'
 ## Completion System
 
 [Carapace](https://carapace.sh) is the primary completion system (600+
-commands). Custom completions in `*/completions/` directories serve as fallback
-for commands carapace doesn't support.
+commands). Custom completions in `packages/shell/.config/*/completions/` directories
+serve as fallback for commands carapace doesn't support.
 
 **Adding completions:**
 
-1. **Carapace spec (preferred):** `carapace/specs/mycmd.yaml` (synced across machines)
-2. **Shell-specific:** `zsh/completions/_mycmd`, `bash/completions/mycmd.bash`,
-   `fish/completions/mycmd.fish`
+1. **Carapace spec (preferred):** `packages/carapace/.config/carapace/specs/mycmd.yaml` (synced across machines)
+2. **Shell-specific:** `packages/shell/.config/zsh/completions/_mycmd`,
+   `packages/shell/.config/bash/completions/mycmd.bash`,
+   `packages/shell/.config/fish/completions/mycmd.fish`
 
 ## Key Commands
 
@@ -142,7 +155,7 @@ for commands carapace doesn't support.
 
 See `dependencies.yaml` for full list. Key tools:
 
-- **Required:** git
+- **Required:** git, stow
 - **Recommended:** carapace, starship, bat, eza/lsd, fd, ripgrep, fzf, zoxide
 
 ## Credits

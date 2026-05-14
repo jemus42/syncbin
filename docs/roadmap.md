@@ -64,7 +64,7 @@ Last reviewed: 2026-05-13
 **Open questions:**
 - Credential helper paths are machine-specific (full path to `gh`/`glab`) — conditional includes? template?
 - Signing key config varies per machine
-- Should wait for stow migration to land first (affects symlink approach)
+- Stow migration landed (2026-05-14) — new configs should use `packages/git/` structure
 
 ### Positron
 **Goal:** Track Positron editor configuration like other tools.
@@ -74,6 +74,11 @@ Last reviewed: 2026-05-13
 - Track keybindings, settings.json?
 - Where in syncbin structure? (`positron/`? `editors/positron/`?)
 - Overlap with VS Code settings format — share or separate?
+
+### Stow Migration
+**Status:** Done (2026-05-14)
+
+Replaced manual symlink management with GNU stow. Configs reorganized into `packages/` directory with home-directory-mirroring structure. `install.sh` calls `stow` per-package instead of `safe_symlink`. Non-symlink operations (OMZ, submodules, TPM, Claude settings.json patch) remain in install.sh.
 
 ### Completion System Expansion
 - Add carapace specs for frequently-used tools without good completions
@@ -92,6 +97,7 @@ Last reviewed: 2026-05-13
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
+| 2026-05-14 | Stow migration | Replaced manual symlink management with GNU stow. Configs reorganized into packages/ with home-directory-mirroring structure. |
 | 2026-05-13 | Remove radian_profile | radian is dead, unused for years |
 | 2026-05-13 | Remove legacy override files (~/.env.local etc) | ~/.config/syncbin/ mechanism replaced them |
 | 2026-05-13 | Keep rstudio/ themes as reference | Useful for porting monokai spacegray eighties to other editors |

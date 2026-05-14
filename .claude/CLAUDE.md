@@ -1,6 +1,6 @@
 # Syncbin — Agent Instructions
 
-Personal dotfiles at ~/syncbin, symlinked into place. Cross-machine sync for macOS, Ubuntu, Rocky Linux.
+Personal dotfiles at ~/syncbin. Configs live in `packages/` and are stowed into `$HOME` via GNU stow. Cross-machine sync for macOS, Ubuntu, Rocky Linux.
 
 ## Priorities
 
@@ -12,9 +12,10 @@ Personal dotfiles at ~/syncbin, symlinked into place. Cross-machine sync for mac
 ## Rules
 
 - Machine-specific config goes in `~/.config/syncbin/`, never in tracked files
-- Completions: prefer carapace spec (`carapace/specs/`) over shell-specific
+- Completions: prefer carapace spec (`packages/carapace/.config/carapace/specs/`) over shell-specific
 - Source files end with newline
 - Use `command -v` checks before depending on optional tools
+- New tool configs go in `packages/<tool>/` mirroring the home directory structure; add to stow loop in `install.sh`
 - Check `docs/roadmap.md` before adding or removing features/tools
 
 ## References

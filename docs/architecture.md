@@ -3,7 +3,7 @@
 ## Overview
 
 Personal dotfiles and shell configuration for cross-machine synchronization.
-Lives at `~/syncbin`, symlinked into place by `install.sh`.
+Lives at `~/syncbin`, managed via GNU stow, organized in `packages/`.
 
 **Target platforms:** macOS (primary dev), Ubuntu (servers/workstations), Rocky Linux (HPC)
 **Shell priority:** zsh (primary) > bash (supported) > fish (experimental, low priority)
@@ -13,17 +13,17 @@ Lives at `~/syncbin`, symlinked into place by `install.sh`.
 
 ### ZSH (Primary Shell)
 
-**Entry point:** `zsh/zshrc.zsh` — sets `ZSHCONFIG_DIR` and glob-sources `zsh/config/[0-9][0-9]-*.zsh` in order.
+**Entry point:** `packages/shell/.zshrc` — sets `ZSHCONFIG_DIR` from `~/.config/zsh/config` and glob-sources `~/.config/zsh/config/[0-9][0-9]-*.zsh` in order.
 
 **Load order:**
 
 | File | Purpose | Key side effects |
 |------|---------|-----------------|
 | `00-early.zsh` | Profiling setup, basic env vars | Sets `SYNCBIN`, `host_short`, `host_os`, `ME`. Initializes compinit. |
-| `01-environment.zsh` | XDG dirs, terminal encoding, Homebrew detection, locale, PATH, editor selection | Sets `XDG_*`, `EDITOR`, `MANPAGER`. Adds ~/.local/bin, ~/.cargo/bin, ~/go/bin, $SYNCBIN/bin to PATH. |
+| `01-environment.zsh` | XDG dirs, terminal encoding, Homebrew detection, locale, PATH, editor selection | Sets `XDG_*`, `EDITOR`, `MANPAGER`. Adds ~/.local/bin, ~/.cargo/bin, ~/go/bin to PATH. |
 | `02-oh-my-zsh.zsh` | OMZ framework init, plugin loading | Conditional plugins based on command availability. Loads F-Sy-H, zsh-autosuggestions. |
-| `03-completions.zsh` | Carapace setup, custom completion fallback, SSH host completion | Sets `CARAPACE_BRIDGES`. Adds zsh/completions to fpath only for commands carapace doesn't handle. |
-| `04-aliases.zsh` | Sources common/aliases.sh, adds zsh-specific aliases | Alias domains: ls, grep, rsync, yt-dlp, docker, file operations, macOS utilities. |
+| `03-completions.zsh` | Carapace setup, custom completion fallback, SSH host completion | Sets `CARAPACE_BRIDGES`. Adds ~/.config/zsh/completions to fpath only for commands carapace doesn't handle. |
+| `04-aliases.zsh` | Sources ~/.config/syncbin/aliases.sh, adds zsh-specific aliases | Alias domains: ls, grep, rsync, yt-dlp, docker, file operations, macOS utilities. |
 | `05-functions.zsh` | Custom shell functions | Domains: reload, media processing, git utilities, LaTeX cleanup, R management, WireGuard VPN helpers. |
 | `06-rstudio-server.zsh` | RStudio Server aliases and functions | Only relevant on servers running rstudio-server. |
 | `07-integrations.zsh` | McFly history search, Nix package manager | Conditional on command availability. |
@@ -47,7 +47,7 @@ command -v carapace &>/dev/null && { ... }
 
 ### Bash (Differences from ZSH)
 
-Same modular loader pattern: `bash/bashrc` sources `bash/config/[0-9][0-9]-*.bash`.
+Same modular loader pattern: `packages/shell/.bashrc` sources from `~/.config/bash/config/[0-9][0-9]-*.bash`.
 
 Key differences:
 - No Oh-My-Zsh — uses system bash-completion (`/usr/share/bash-completion/`)
@@ -60,11 +60,11 @@ Files are intentionally parallel to zsh — same numbered prefixes for same conc
 
 ### Fish (Brief)
 
-**Entry point:** `fish/config.fish` — explicit `source` calls (no glob, fish limitation).
+**Entry point:** `packages/shell/.config/fish/config.fish` — explicit `source` calls (no glob, fish limitation).
 
 Key differences from zsh/bash:
 - Uses `abbreviations` instead of aliases (expand on space, visible in history)
-- `01-common-aliases.fish`: translates common/aliases.sh to fish abbreviations
+- `01-common-aliases.fish`: translates aliases to fish abbreviations
 - `fish_add_path` instead of PATH manipulation
 - Different syntax for conditionals (`if test ...` not `[[ ... ]]`)
 
@@ -72,7 +72,7 @@ Key differences from zsh/bash:
 
 ## Cross-Shell Shared Code
 
-**`common/aliases.sh`** — POSIX-compatible, sourced by both zsh and bash.
+**`packages/shell/.config/syncbin/aliases.sh`** — POSIX-compatible, installed to `~/.config/syncbin/aliases.sh`, sourced by both zsh and bash.
 
 Contains 200+ aliases organized by domain:
 - Git (~80 aliases): gco, gst, gd, gl, gp, grb, gsta, etc.
@@ -81,25 +81,25 @@ Contains 200+ aliases organized by domain:
 
 **How to find specific aliases:**
 ```bash
-grep "^alias gco" common/aliases.sh       # Find specific alias
-grep "^# " common/aliases.sh              # Find section headers
-grep "^alias dk" common/aliases.sh        # Find docker aliases
+grep "^alias gco" packages/shell/.config/syncbin/aliases.sh   # Find specific alias
+grep "^# " packages/shell/.config/syncbin/aliases.sh          # Find section headers
+grep "^alias dk" packages/shell/.config/syncbin/aliases.sh    # Find docker aliases
 ```
 
 ## Functional Domains
 
 | Domain | Primary location | Secondary | How to explore |
 |--------|-----------------|-----------|----------------|
-| Git aliases | `common/aliases.sh` | — | `grep "^alias g" common/aliases.sh` |
-| Docker/systemd | `common/aliases.sh` | — | `grep "^alias d\|^alias sc\|^alias jc" common/aliases.sh` |
-| Shell functions | `zsh/config/05-functions.zsh` | `bash/config/03-functions.bash` | Read the file; functions are well-named |
-| VPN/WireGuard | `zsh/config/05-functions.zsh` (bottom half) | same pattern in bash | Search for `_wg_vpn`, `ppth`, `lifespan` |
-| R/RStudio | `*/config/*-rstudio-server.*`, `R/` | `05-functions` (upr, rstudio launcher) | `grep -r "rstudio\|Rproj\|upr" */config/` |
-| Media processing | `zsh/config/05-functions.zsh` | `bin/` scripts | Search for `compavc`, `gif2mp4`, `ffsilent`, `pdfcombine` |
+| Git aliases | `packages/shell/.config/syncbin/aliases.sh` | — | `grep "^alias g" packages/shell/.config/syncbin/aliases.sh` |
+| Docker/systemd | `packages/shell/.config/syncbin/aliases.sh` | — | `grep "^alias d\|^alias sc\|^alias jc" packages/shell/.config/syncbin/aliases.sh` |
+| Shell functions | `packages/shell/.config/zsh/config/05-functions.zsh` | `packages/shell/.config/bash/config/03-functions.bash` | Read the file; functions are well-named |
+| VPN/WireGuard | `packages/shell/.config/zsh/config/05-functions.zsh` (bottom half) | same pattern in bash | Search for `_wg_vpn`, `ppth`, `lifespan` |
+| R/RStudio | `*/config/*-rstudio-server.*`, `packages/r/` | `05-functions` (upr, rstudio launcher) | `grep -r "rstudio\|Rproj\|upr" packages/shell/` |
+| Media processing | `packages/shell/.config/zsh/config/05-functions.zsh` | `packages/bin/` scripts | Search for `compavc`, `gif2mp4`, `ffsilent`, `pdfcombine` |
 | Prompt | `starship/starship.toml` | — | Read starship.toml for active config |
-| Terminal emulators | `ghostty/config` | `alacritty/alacritty.yml` | Each is self-contained |
-| Editors | `helix/`, `micro/`, `zed/` | — | Each directory is independent |
-| Bin scripts | `bin/` | — | `ls bin/` and read individual scripts |
+| Terminal emulators | `packages/ghostty/.config/ghostty/config` | `packages/alacritty/` | Each is self-contained |
+| Editors | `packages/helix/`, `packages/micro/`, `packages/zed/` | — | Each directory is independent |
+| Bin scripts | `packages/bin/.local/bin/` | — | `ls packages/bin/.local/bin/` and read individual scripts |
 
 ## Completion System
 
@@ -107,18 +107,18 @@ grep "^alias dk" common/aliases.sh        # Find docker aliases
 
 ```
 Command typed → carapace handles it? → YES → carapace provides completions
-                                      → NO  → shell-specific completion loaded from */completions/
+                                      → NO  → shell-specific completion loaded from ~/.config/*/completions/
 ```
 
 **Carapace setup:**
 - Enabled in `*/config/*-completions.*` for each shell
 - `CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'` bridges completions across shells
-- Custom specs: `carapace/specs/*.yaml` (symlinked to `~/.config/carapace/specs/`)
+- Custom specs: `packages/carapace/.config/carapace/specs/*.yaml` (stowed to `~/.config/carapace/specs/`)
 
 **Fallback logic (zsh example from 03-completions.zsh):**
 ```zsh
 # Only add custom completions for commands carapace doesn't support
-for comp_file in $SYNCBIN/zsh/completions/_*; do
+for comp_file in ~/.config/zsh/completions/_*; do
   cmd_name=${comp_file:t:s/_//}
   carapace --list | grep -q "^${cmd_name} " || fpath=($comp_file:h $fpath)
 done
@@ -127,14 +127,14 @@ done
 **Adding a new completion:**
 
 1. **Preferred: Carapace spec** (works for all shells)
-   - Create `carapace/specs/mycmd.yaml`
+   - Create `packages/carapace/.config/carapace/specs/mycmd.yaml`
    - Schema: `https://carapace.sh/schemas/command.json`
    - Test: `carapace mycmd --run ''`
 
 2. **Shell-specific fallback** (if carapace can't handle it)
-   - zsh: `zsh/completions/_mycmd`
-   - bash: `bash/completions/mycmd.bash`
-   - fish: `fish/completions/mycmd.fish`
+   - zsh: `packages/shell/.config/zsh/completions/_mycmd` (stowed to `~/.config/zsh/completions/_mycmd`)
+   - bash: `packages/shell/.config/bash/completions/mycmd.bash`
+   - fish: `packages/shell/.config/fish/completions/mycmd.fish`
 
 **Current custom completions:** nala, pandoc (both as carapace spec + shell fallback)
 
@@ -168,13 +168,14 @@ This clones the repo (shallow) to ~/syncbin and runs install.sh.
 
 **install.sh does:**
 1. Detects OS (macOS/Linux/FreeBSD)
-2. Creates symlinks with prompts and backups:
-   - `~/.zshrc` → `zsh/zshrc.zsh`
-   - `~/.bashrc` → `bash/bashrc`
-   - `~/.bash_profile` → `bash/bash_profile`
-   - Various `~/.config/*` → tool config dirs
+2. Uses GNU stow to install each package from `packages/`:
+   - Runs `stow_package` for each package directory (shell, prompt, bin, bat, btop, etc.)
+   - Each package mirrors the home directory structure, so stow creates the correct symlinks
 3. Updates git submodules
-4. Supports `-y` flag for non-interactive use
+4. Post-stow hooks:
+   - macOS: copies arf.toml to ~/.config/arf/ (stow can't handle platform-conditional files)
+   - Claude: patches settings.json with statusline script path via jq
+5. Supports `--unstow` flag to remove all symlinks
 
 **Health check:** `syncbin-doctor` verifies symlinks, submodules, dependencies, completions.
 
@@ -206,28 +207,27 @@ command -v bat &>/dev/null && alias cat='bat'
 - State in `$XDG_STATE_HOME` (~/.local/state/)
 
 **PATH construction order** (first match wins):
-1. ~/.local/bin (user-local binaries)
+1. ~/.local/bin (user-local binaries, including syncbin scripts)
 2. ~/bin (personal scripts)
-3. $SYNCBIN/bin (syncbin utilities)
-4. ~/.cargo/bin, ~/go/bin (language toolchains)
-5. System paths
+3. ~/.cargo/bin, ~/go/bin (language toolchains)
+4. System paths
 
 Deduplicated at end of 99-local.zsh with `typeset -aU path`.
 
 ## Adding Things
 
 ### New cross-shell alias
-1. Add to `common/aliases.sh` (POSIX-compatible syntax)
+1. Add to `packages/shell/.config/syncbin/aliases.sh` (POSIX-compatible syntax)
 2. Both zsh and bash pick it up automatically on next reload
 
 ### New zsh-only alias
-1. Add to `zsh/config/04-aliases.zsh`
-2. Consider: should bash have it too? If yes → common/aliases.sh instead
+1. Add to `packages/shell/.config/zsh/config/04-aliases.zsh`
+2. Consider: should bash have it too? If yes → aliases.sh instead
 
 ### New function (zsh primary, bash if cross-shell needed)
-1. Add to `zsh/config/05-functions.zsh`
-2. If needed in bash: also add to `bash/config/03-functions.bash`
-3. Fish: optionally `fish/config/03-functions.fish` (low priority)
+1. Add to `packages/shell/.config/zsh/config/05-functions.zsh`
+2. If needed in bash: also add to `packages/shell/.config/bash/config/03-functions.bash`
+3. Fish: optionally `packages/shell/.config/fish/config/03-functions.fish` (low priority)
 
 ### New tool integration
 1. Determine load order requirement (usually 07-integrations or adjacent)
@@ -235,12 +235,12 @@ Deduplicated at end of 99-local.zsh with `typeset -aU path`.
 3. Add to `dependencies.yaml` under appropriate section
 
 ### New completion (carapace spec)
-1. Create `carapace/specs/mycmd.yaml`
+1. Create `packages/carapace/.config/carapace/specs/mycmd.yaml`
 2. Use schema: `https://carapace.sh/schemas/command.json`
 3. Test: `carapace mycmd --run ''`
-4. Symlink handled by install.sh (specs dir → ~/.config/carapace/specs/)
+4. Symlink handled by stow (specs dir → ~/.config/carapace/specs/)
 
 ### New editor/tool config directory
-1. Create directory at repo root: `toolname/`
-2. Add symlink mapping to `install.sh`
+1. Create `packages/toolname/.config/toolname/` mirroring the home directory structure
+2. Add package to the `stow_package` loop in `install.sh`
 3. Document in architecture.md if non-obvious

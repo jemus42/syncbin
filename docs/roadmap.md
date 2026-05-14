@@ -38,13 +38,19 @@ Last reviewed: 2026-05-13
 ## Future Directions
 
 ### Claude / AI Agent Config Syncing
-**Goal:** Centrally manage Claude skills, plugins, and settings to sync across devices and project contexts.
+**Status:** Partially implemented (2026-05-09)
 
-**Open questions:**
-- Store in syncbin (e.g., `claude/` directory with symlinks to ~/.claude/)?
-- Or separate repo with its own lifecycle?
-- Which parts are machine-specific vs shared? (skills: shared, auth: local)
-- How to handle project-specific vs global CLAUDE.md instructions?
+**Done:**
+- Global CLAUDE.md tracked in syncbin, symlinked to ~/.claude/
+- Custom skills tracked in syncbin/claude/skills/, symlinked
+- Shared statusline script, patched into settings.json via jq
+- `claude-sync-skills` script for discovering and integrating skills from other machines
+- R project template for reuse in project CLAUDE.md files
+
+**Deferred (requires private repo or separate solution):**
+- settings.json full sync (contains machine-specific paths, plugin permissions)
+- additionalDirectories paths are machine-specific
+- Plugin config requires node.js (not available on all machines, e.g., HPC cluster)
 
 ### Positron
 **Goal:** Track Positron editor configuration like other tools.

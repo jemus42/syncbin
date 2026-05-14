@@ -339,6 +339,47 @@ safe_symlink_if_missing "$SYNCBIN/carapace/specs" "$HOME/.config/carapace/specs"
 echo
 
 #########################
+## Claude Code         ##
+#########################
+print_status "$BLUE" "🤖 Installing Claude Code configurations..."
+
+ensure_dir "$HOME/.claude"
+ensure_dir "$HOME/.claude/skills"
+safe_symlink "$SYNCBIN/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+
+# Symlink each skill directory
+for skill_dir in "$SYNCBIN"/claude/skills/*/; do
+    [ -d "$skill_dir" ] || continue
+    skill_name=$(basename "$skill_dir")
+    safe_symlink "$skill_dir" "$HOME/.claude/skills/$skill_name"
+done
+
+# Patch statusline into settings.json (non-destructive, only touches statusLine key)
+if command -v jq >/dev/null 2>&1; then
+    settings_file="$HOME/.claude/settings.json"
+    statusline_cmd="bash \"$SYNCBIN/claude/statusline.sh\""
+    if [ -f "$settings_file" ]; then
+        tmp=$(mktemp)
+        if jq --arg cmd "$statusline_cmd" '.statusLine = {"type": "command", "command": $cmd, "refreshInterval": 5}' \
+            "$settings_file" > "$tmp" 2>/dev/null; then
+            mv "$tmp" "$settings_file"
+            print_status "$GREEN" "✓ Patched statusline in settings.json"
+        else
+            rm -f "$tmp"
+            print_status "$YELLOW" "⚠ Failed to patch statusline (jq error)"
+        fi
+    else
+        # Create minimal settings.json with just statusline
+        printf '{"statusLine":{"type":"command","command":"%s","refreshInterval":5}}\n' "$statusline_cmd" > "$settings_file"
+        print_status "$GREEN" "✓ Created settings.json with statusline"
+    fi
+else
+    print_status "$YELLOW" "⚠ jq not found — skipping statusline patch (install jq to enable)"
+fi
+
+echo
+
+#########################
 ## Platform-specific   ##
 #########################
 if [ "$OS_TYPE" = "macos" ]; then

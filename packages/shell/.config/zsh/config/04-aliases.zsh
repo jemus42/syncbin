@@ -2,10 +2,10 @@
 # Common command aliases and shortcuts
 
 # Load common aliases (POSIX sh - works in bash and zsh)
-[[ -r "${SYNCBIN}/common/aliases.sh" ]] && source "${SYNCBIN}/common/aliases.sh"
+[[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/syncbin/aliases.sh" ]] && source "${XDG_CONFIG_HOME:-$HOME/.config}/syncbin/aliases.sh"
 
 # Load vault integration (knowledge base shell functions)
-[[ -r "${SYNCBIN}/common/vault.sh" ]] && source "${SYNCBIN}/common/vault.sh"
+[[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/syncbin/vault.sh" ]] && source "${XDG_CONFIG_HOME:-$HOME/.config}/syncbin/vault.sh"
 
 # Basic utilities
 alias du="du -h"

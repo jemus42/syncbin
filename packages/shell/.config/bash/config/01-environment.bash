@@ -38,8 +38,6 @@ fi
 
 # PATH setup
 export PATH=$HOME/.local/bin:$PATH
-export PATH=$PATH:$HOME/bin:$SYNCBIN/bin
-export PATH=$PATH:$SYNCBIN/bin/iterm2-utils
 
 # Cargo/Rust and Go
 test -e "${HOME}/.cargo/bin" && export PATH=$HOME/.cargo/bin:$PATH

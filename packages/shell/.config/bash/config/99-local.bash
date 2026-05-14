@@ -40,9 +40,6 @@ if [[ -d "$SYNCBIN_LOCAL" ]]; then
   done
 fi
 
-# Load HPC-specific aliases if available (bash-compatible)
-[[ -r "${SYNCBIN}/zsh/aliases-hpc.sh" ]] && source "${SYNCBIN}/zsh/aliases-hpc.sh"
-
 # Additional tool integrations
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 [[ -d "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"

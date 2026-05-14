@@ -11,7 +11,7 @@ fi
 # Custom completions as fallback for commands carapace doesn't support
 # Only add to fpath if the command isn't handled by carapace
 _syncbin_custom_completions() {
-  local comp_dir="${SYNCBIN:-$HOME/syncbin}/zsh/completions"
+  local comp_dir="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/completions"
   [[ -d "$comp_dir" ]] || return
 
   for comp_file in "$comp_dir"/_*; do

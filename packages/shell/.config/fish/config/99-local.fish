@@ -64,9 +64,3 @@ if test -r "$HOME/.functions.local"
     end
 end
 
-# Load HPC-specific aliases if available
-if test -r "$SYNCBIN/zsh/aliases-hpc.sh"
-    if command -v bass >/dev/null 2>&1
-        bass source "$SYNCBIN/zsh/aliases-hpc.sh"
-    end
-end

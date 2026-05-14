@@ -8,7 +8,7 @@ if command -v carapace >/dev/null 2>&1; then
 fi
 
 # Source custom completions as fallback for commands carapace doesn't support
-BASH_COMPLETIONS_DIR="${SYNCBIN:-$HOME/syncbin}/bash/completions"
+BASH_COMPLETIONS_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/bash/completions"
 if [[ -d "$BASH_COMPLETIONS_DIR" ]]; then
   _carapace_list=""
   if command -v carapace >/dev/null 2>&1; then

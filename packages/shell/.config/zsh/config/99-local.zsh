@@ -40,9 +40,6 @@ if [[ -d "$SYNCBIN_LOCAL" ]]; then
   done
 fi
 
-# Load HPC-specific aliases (bash-compatible, works in zsh too)
-[[ -r "${SYNCBIN}/zsh/aliases-hpc.sh" ]] && source "${SYNCBIN}/zsh/aliases-hpc.sh"
-
 # Path deduplication
 typeset -aU path
 

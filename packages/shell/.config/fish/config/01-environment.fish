@@ -51,8 +51,6 @@ end
 
 # Add custom paths
 fish_add_path -p $HOME/.local/bin
-fish_add_path $HOME/bin $SYNCBIN/bin
-fish_add_path $SYNCBIN/bin/iterm2-utils
 
 # Cargo/Rust and Go
 if test -e $HOME/.cargo/bin

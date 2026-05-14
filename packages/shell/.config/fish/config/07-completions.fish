@@ -11,12 +11,7 @@ end
 # Fish sources .fish files from fish_complete_path automatically,
 # so we selectively add only files for commands carapace doesn't handle
 function __syncbin_load_custom_completions
-    if test -n "$SYNCBIN"
-        set -l comp_dir "$SYNCBIN/fish/completions"
-    else
-        set -l comp_dir "$HOME/syncbin/fish/completions"
-    end
-
+    set -l comp_dir "$HOME/.config/fish/completions"
     test -d "$comp_dir"; or return
 
     # Get list of commands carapace handles

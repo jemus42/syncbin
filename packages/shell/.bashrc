@@ -10,7 +10,7 @@
 # 6. Local overrides and cleanup
 
 # Get the directory where this script is located
-BASHCONFIG_DIR="${SYNCBIN:-$HOME/syncbin}/bash/config"
+BASHCONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/bash/config"
 
 # Load configuration modules in order
 for config_file in "$BASHCONFIG_DIR"/[0-9][0-9]-*.bash; do

@@ -2,11 +2,7 @@
 # Main configuration file that loads all modules in the correct order
 
 # Get the directory where this script is located
-if test -n "$SYNCBIN"
-    set FISHCONFIG_DIR "$SYNCBIN/fish/config"
-else
-    set FISHCONFIG_DIR "$HOME/syncbin/fish/config"
-end
+set FISHCONFIG_DIR "$HOME/.config/fish/config"
 
 # Source early config first to set up basic environment
 if test -r "$FISHCONFIG_DIR/00-early.fish"

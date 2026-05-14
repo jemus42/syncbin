@@ -12,7 +12,7 @@
 # 8. Local overrides and cleanup
 
 # Get the directory where this script is located
-ZSHCONFIG_DIR="${SYNCBIN:-$HOME/syncbin}/zsh/config"
+ZSHCONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/config"
 
 # Load configuration modules in order
 for config_file in "$ZSHCONFIG_DIR"/[0-9][0-9]-*.zsh; do

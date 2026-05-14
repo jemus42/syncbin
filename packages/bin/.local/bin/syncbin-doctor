@@ -131,10 +131,25 @@ fi
 #########################
 print_header "Shell Configuration Symlinks"
 
-check_symlink "$HOME/.zshrc" "$SYNCBIN/zsh/zshrc.zsh" "ZSH config (~/.zshrc)"
-check_symlink "$HOME/.bashrc" "$SYNCBIN/bash/bashrc" "Bash config (~/.bashrc)"
-check_symlink "$HOME/.bash_profile" "$SYNCBIN/bash/bash_profile" "Bash profile (~/.bash_profile)"
-check_symlink "$HOME/.config/fish/config.fish" "$SYNCBIN/fish/config.fish" "Fish config"
+# Stow creates relative symlinks — just check existence and that they're symlinks
+check_stow_link() {
+    local link="$1"
+    local name="$2"
+    if [ -L "$link" ] && [ -e "$link" ]; then
+        check_ok "$name"
+    elif [ -L "$link" ]; then
+        check_err "$name: broken symlink"
+    elif [ -e "$link" ]; then
+        check_warn "$name: exists but not a symlink (run install.sh)"
+    else
+        check_err "$name: missing"
+    fi
+}
+
+check_stow_link "$HOME/.zshrc" "ZSH config (~/.zshrc)"
+check_stow_link "$HOME/.bashrc" "Bash config (~/.bashrc)"
+check_stow_link "$HOME/.bash_profile" "Bash profile (~/.bash_profile)"
+check_stow_link "$HOME/.config/fish/config.fish" "Fish config"
 
 #########################
 ## Oh-My-Zsh
@@ -163,6 +178,12 @@ if has_cmd git; then
     check_ok "git $(git --version | cut -d' ' -f3)"
 else
     check_err "git not found"
+fi
+
+if has_cmd stow; then
+    check_ok "stow $(stow --version 2>&1 | head -1 | grep -o '[0-9].*')"
+else
+    check_err "stow not found (required for install.sh)"
 fi
 
 #########################
@@ -249,8 +270,7 @@ done
 #########################
 print_header "Shell Completions"
 
-# ZSH completions
-zsh_comp_dir="$SYNCBIN/zsh/completions"
+zsh_comp_dir="$HOME/.config/zsh/completions"
 if [ -d "$zsh_comp_dir" ]; then
     zsh_comp_count=$(find "$zsh_comp_dir" -name "_*" -type f 2>/dev/null | wc -l | tr -d ' ')
     check_ok "ZSH custom completions ($zsh_comp_count)"
@@ -258,8 +278,7 @@ else
     check_info "No ZSH custom completions directory"
 fi
 
-# Bash completions
-bash_comp_dir="$SYNCBIN/bash/completions"
+bash_comp_dir="$HOME/.config/bash/completions"
 if [ -d "$bash_comp_dir" ]; then
     bash_comp_count=$(find "$bash_comp_dir" -name "*.bash" -type f 2>/dev/null | wc -l | tr -d ' ')
     check_ok "Bash custom completions ($bash_comp_count)"
@@ -267,8 +286,7 @@ else
     check_info "No Bash custom completions directory"
 fi
 
-# Fish completions
-fish_comp_dir="$SYNCBIN/fish/completions"
+fish_comp_dir="$HOME/.config/fish/completions"
 if [ -d "$fish_comp_dir" ]; then
     fish_comp_count=$(find "$fish_comp_dir" -name "*.fish" -type f 2>/dev/null | wc -l | tr -d ' ')
     check_ok "Fish custom completions ($fish_comp_count)"

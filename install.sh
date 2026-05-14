@@ -272,6 +272,64 @@ echo
 print_status "$BLUE" "Starting installation..."
 echo
 
+# Detect and remove pre-stow-migration symlinks
+# These point to $SYNCBIN/{zsh,bash,fish,...} (old layout) instead of $SYNCBIN/packages/ (new)
+migrate_old_symlinks() {
+    local found=0
+    local old_links=""
+
+    # Known locations where old install.sh created symlinks
+    for link in \
+        "$HOME/.zshrc" "$HOME/.zshenv" "$HOME/.bashrc" "$HOME/.bash_profile" \
+        "$HOME/.screenrc" "$HOME/.Rprofile" \
+        "$HOME/.config/fish/config.fish" "$HOME/.config/starship.toml" \
+        "$HOME/.config/bat/config" "$HOME/.config/bat/themes" \
+        "$HOME/.config/btop/themes" "$HOME/.config/zellij/config.kdl" \
+        "$HOME/.config/zellij/themes" "$HOME/.config/tmux/tmux.conf" \
+        "$HOME/.config/lsd/config.yaml" "$HOME/.config/micro/settings.json" \
+        "$HOME/.config/micro/bindings.json" "$HOME/.config/micro/syntax" \
+        "$HOME/.config/broot/conf.hjson" "$HOME/.config/conda/condarc" \
+        "$HOME/.config/helix" "$HOME/.config/ghostty" \
+        "$HOME/.config/carapace/specs" "$HOME/.config/alacritty/alacritty.yml" \
+        "$HOME/.config/zed" \
+        "$HOME/.oh-my-zsh/custom/themes/jemus42.zsh-theme" \
+        "$HOME/.claude/CLAUDE.md" \
+        "$HOME/.claude/skills/jamesian" "$HOME/.claude/skills/review" "$HOME/.claude/skills/vault-ingest"
+    do
+        if [ -L "$link" ]; then
+            local target
+            target=$(readlink "$link")
+            # Check if it points into syncbin but NOT into packages/ (old-style)
+            case "$target" in
+                *syncbin/packages/*) ;; # Already stow-managed, skip
+                *syncbin/*)
+                    found=1
+                    old_links="$old_links $link"
+                    ;;
+            esac
+        fi
+    done
+
+    if [ "$found" -eq 1 ]; then
+        print_status "$YELLOW" "🔄 Detected pre-stow-migration symlinks:"
+        for link in $old_links; do
+            echo "    $link → $(readlink "$link")"
+        done
+        echo
+        if prompt_user "Remove old symlinks? (stow will recreate them with new paths)"; then
+            for link in $old_links; do
+                rm -f "$link"
+            done
+            print_status "$GREEN" "✓ Removed old symlinks"
+        else
+            print_status "$YELLOW" "⚠ Kept old symlinks — stow may report conflicts"
+        fi
+        echo
+    fi
+}
+
+migrate_old_symlinks
+
 # Handle unstow
 if [ "$UNSTOW" = 1 ]; then
     print_status "$BLUE" "Unstowing all packages..."

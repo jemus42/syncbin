@@ -52,6 +52,20 @@ Last reviewed: 2026-05-13
 - additionalDirectories paths are machine-specific
 - Plugin config requires node.js (not available on all machines, e.g., HPC cluster)
 
+### Git Config Syncing
+**Status:** Planned
+
+**Goal:** Track global gitignore and gitconfig in syncbin, symlinked into place.
+
+**Scope:**
+- Global gitignore (OS junk like .DS_Store, LaTeX artifacts like *.aux — conservative)
+- Global gitconfig with identity, preferred settings (git-delta as diff pager, etc.)
+
+**Open questions:**
+- Credential helper paths are machine-specific (full path to `gh`/`glab`) — conditional includes? template?
+- Signing key config varies per machine
+- Should wait for stow migration to land first (affects symlink approach)
+
 ### Positron
 **Goal:** Track Positron editor configuration like other tools.
 

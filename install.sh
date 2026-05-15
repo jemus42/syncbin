@@ -54,6 +54,9 @@ case "$(uname -s)" in
     *) OS_TYPE="unknown" ;;
 esac
 
+# Suppress Perl locale warnings from stow on systems with incomplete locale setup
+export PERL_BADLANG=0
+
 # Check for stow
 if ! command -v stow >/dev/null 2>&1; then
     printf "${RED}GNU stow is required but not installed.${NC}\n"

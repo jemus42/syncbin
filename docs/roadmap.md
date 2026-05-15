@@ -1,6 +1,6 @@
 # Syncbin Roadmap & Status
 
-Last reviewed: 2026-05-13
+Last reviewed: 2026-05-15
 
 ## Actively Used
 
@@ -44,8 +44,13 @@ Last reviewed: 2026-05-13
 - Global CLAUDE.md tracked in syncbin, symlinked to ~/.claude/
 - Custom skills tracked in syncbin/claude/skills/, symlinked
 - Shared statusline script, patched into settings.json via jq
+- Statusline shows: model, context bar, cost, rate limits (5h/7d), git branch, cwd
 - `claude-sync-skills` script for discovering and integrating skills from other machines
 - R project template for reuse in project CLAUDE.md files
+
+**Statusline candidates (available in JSON, not yet shown):**
+- Effort level indicator (skipped — not actionable from statusline)
+- Session diff stats (+lines/-lines)
 
 **Deferred (requires private repo or separate solution):**
 - settings.json full sync (contains machine-specific paths, plugin permissions)
@@ -76,9 +81,9 @@ Last reviewed: 2026-05-13
 - Overlap with VS Code settings format — share or separate?
 
 ### Stow Migration
-**Status:** Done (2026-05-14)
+**Status:** Done (2026-05-14), verified on all platforms (2026-05-15)
 
-Replaced manual symlink management with GNU stow. Configs reorganized into `packages/` directory with home-directory-mirroring structure. `install.sh` calls `stow` per-package instead of `safe_symlink`. Non-symlink operations (OMZ, submodules, TPM, Claude settings.json patch) remain in install.sh.
+Replaced manual symlink management with GNU stow. Configs reorganized into `packages/` directory with home-directory-mirroring structure. `install.sh` calls `stow` per-package instead of `safe_symlink`. Non-symlink operations (OMZ, submodules, TPM, Claude settings.json patch) remain in install.sh. Auto-detects and offers removal of pre-migration symlinks. Tested on macOS, Ubuntu, Rocky Linux (HPC).
 
 ### Completion System Expansion
 - Add carapace specs for frequently-used tools without good completions
@@ -97,6 +102,7 @@ Replaced manual symlink management with GNU stow. Configs reorganized into `pack
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
+| 2026-05-15 | Stow migration verified | Tested on macOS, Ubuntu (toefte, bertha), Rocky Linux (bipc HPC). Auto-migration of old symlinks works. |
 | 2026-05-14 | Stow migration | Replaced manual symlink management with GNU stow. Configs reorganized into packages/ with home-directory-mirroring structure. |
 | 2026-05-13 | Remove radian_profile | radian is dead, unused for years |
 | 2026-05-13 | Remove legacy override files (~/.env.local etc) | ~/.config/syncbin/ mechanism replaced them |

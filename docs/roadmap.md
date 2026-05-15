@@ -17,6 +17,7 @@ Last reviewed: 2026-05-15
 - WireGuard VPN helpers — regular use
 - common aliases (git, docker, systemd) — daily
 - bin/ utilities (extract, syncbin-doctor, upall) — regular use
+- git config (gitconfig, gitignore, delta pager) — all machines
 
 ## Stale / Archival Candidates
 
@@ -25,10 +26,10 @@ Last reviewed: 2026-05-15
 | `rstudio/` | — | Replaced by Positron, but themes useful as reference for porting | Keep themes |
 | `R/ColorScheme` | — | RStudio-specific, but useful theme reference | Keep as reference |
 | `*/config/*-rstudio-server.*` | — | Still needed on servers? | Pending review |
-| `alacritty/alacritty.yml` | — | Never adopted beyond early beta curiosity | Can remove |
+| ~~`alacritty/`~~ | — | Removed 2026-05-15 | Done |
 | `zed/` | — | Still in use? | Pending review |
 | `bin/slacc`, `bin/sljobs`, `bin/slusage` | — | HPC-specific, still needed? | Pending review |
-| `screenrc` | — | tmux/zellij replaced screen | Likely removable |
+| ~~`screenrc`~~ | — | Removed 2026-05-15 | Done |
 
 ## Low Priority / Experimental
 
@@ -58,18 +59,9 @@ Last reviewed: 2026-05-15
 - Plugin config requires node.js (not available on all machines, e.g., HPC cluster)
 
 ### Git Config Syncing
-**Status:** Planned
+**Status:** Done (2026-05-15)
 
-**Goal:** Track global gitignore and gitconfig in syncbin, symlinked into place.
-
-**Scope:**
-- Global gitignore (OS junk like .DS_Store, LaTeX artifacts like *.aux — conservative)
-- Global gitconfig with identity, preferred settings (git-delta as diff pager, etc.)
-
-**Open questions:**
-- Credential helper paths are machine-specific (full path to `gh`/`glab`) — conditional includes? template?
-- Signing key config varies per machine
-- Stow migration landed (2026-05-14) — new configs should use `packages/git/` structure
+Migrated `~/.gitconfig` to XDG-compliant `~/.config/git/config`, tracked in `packages/git/` via stow. Cleaned 13-year-old config: removed legit aliases, git-media filter, stale workflows. Machine-specific bits (credential helpers, GPG signing key, gpg program path) live in `~/.config/syncbin/gitconfig-local` via git's native `[include]`. Template at `docs/gitconfig-local.example`. Global gitignore at `~/.config/git/ignore` (XDG auto-discovery, no `core.excludesfile` needed). GPG strategy: one key per machine, each added to GitHub/GitLab.
 
 ### Positron
 **Goal:** Track Positron editor configuration like other tools.
@@ -102,6 +94,7 @@ Replaced manual symlink management with GNU stow. Configs reorganized into `pack
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
+| 2026-05-15 | Git config syncing | Migrated ~/.gitconfig to XDG packages/git/ via stow. Machine-specific bits (credentials, GPG) in ~/.config/syncbin/gitconfig-local via [include]. Removed legit aliases, git-media filter, stale config. |
 | 2026-05-15 | Stow migration verified | Tested on macOS, Ubuntu (toefte, bertha), Rocky Linux (bipc HPC). Auto-migration of old symlinks works. |
 | 2026-05-14 | Stow migration | Replaced manual symlink management with GNU stow. Configs reorganized into packages/ with home-directory-mirroring structure. |
 | 2026-05-13 | Remove radian_profile | radian is dead, unused for years |

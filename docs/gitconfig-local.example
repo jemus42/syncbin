@@ -1,0 +1,21 @@
+# Machine-local git config — copy to ~/.config/syncbin/gitconfig-local
+# Not tracked by syncbin. Each machine maintains its own.
+# Included automatically by the tracked gitconfig via [include].
+
+[credential "https://github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+# GitLab / self-hosted — uncomment and adjust as needed:
+# [credential "https://srvgit.example.com"]
+# 	helper = !/path/to/glab auth git-credential
+
+[credential]
+	helper = osxkeychain  # or: store (Linux)
+
+[gpg]
+	program = /opt/homebrew/bin/gpg  # or: /usr/bin/gpg
+
+[user]
+	signingkey = <YOUR_KEY_ID>

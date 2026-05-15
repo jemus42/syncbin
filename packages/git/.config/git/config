@@ -1,0 +1,51 @@
+[user]
+	name = Lukas Burk
+	email = git@quantenbrot.de
+[push]
+	default = simple
+	autoSetupRemote = true
+[pull]
+	ff = only
+[init]
+	defaultBranch = main
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	colorMoved = default
+[branch]
+	sort = -committerdate
+[fetch]
+	prune = true
+[submodule]
+	recurse = true
+[core]
+	editor = micro
+	untrackedCache = true
+[pager]
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
+[delta]
+	plus-style = "syntax #012800"
+	minus-style = "syntax #340001"
+	syntax-theme = Monokai Extended
+	navigate = true
+	features = line-numbers decorations
+[interactive]
+	diffFilter = delta --color-only
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
+[commit]
+	gpgsign = true
+[tag]
+	forceSignAnnotated = true
+[alias]
+	adog = log --all --decorate --oneline --graph
+	recent = !git for-each-ref --sort='-authordate:iso8601' --format='%(authordate:relative)%09%(refname:short)' refs/heads | head -15
+	pushall = !git remote | xargs -L1 -I R git push R
+[include]
+	path = ~/.config/syncbin/gitconfig-local

@@ -284,7 +284,8 @@ migrate_old_symlinks() {
     # Known locations where old install.sh created symlinks
     for link in \
         "$HOME/.zshrc" "$HOME/.zshenv" "$HOME/.bashrc" "$HOME/.bash_profile" \
-        "$HOME/.screenrc" "$HOME/.Rprofile" \
+        "$HOME/.Rprofile" \
+        "$HOME/.gitconfig" "$HOME/.gitignore_global" \
         "$HOME/.config/fish/config.fish" "$HOME/.config/starship.toml" \
         "$HOME/.config/bat/config" "$HOME/.config/bat/themes" \
         "$HOME/.config/btop/themes" "$HOME/.config/zellij/config.kdl" \
@@ -293,7 +294,7 @@ migrate_old_symlinks() {
         "$HOME/.config/micro/bindings.json" "$HOME/.config/micro/syntax" \
         "$HOME/.config/broot/conf.hjson" "$HOME/.config/conda/condarc" \
         "$HOME/.config/helix" "$HOME/.config/ghostty" \
-        "$HOME/.config/carapace/specs" "$HOME/.config/alacritty/alacritty.yml" \
+        "$HOME/.config/carapace/specs" \
         "$HOME/.config/zed" \
         "$HOME/.oh-my-zsh/custom/themes/jemus42.zsh-theme" \
         "$HOME/.claude/CLAUDE.md" \
@@ -336,11 +337,11 @@ migrate_old_symlinks
 # Handle unstow
 if [ "$UNSTOW" = 1 ]; then
     print_status "$BLUE" "Unstowing all packages..."
-    for pkg in shell prompt bin bat btop zellij tmux helix micro broot conda lsd carapace claude r; do
+    for pkg in shell prompt bin bat btop zellij tmux helix micro broot conda lsd carapace claude r git; do
         unstow_package "$pkg"
     done
     if [ "$OS_TYPE" = "macos" ]; then
-        for pkg in alacritty ghostty zed; do
+        for pkg in ghostty zed; do
             unstow_package "$pkg"
         done
     fi
@@ -393,7 +394,7 @@ echo
 print_status "$BLUE" "📦 Stowing configuration packages..."
 
 # Core packages (all platforms)
-for pkg in shell prompt bin bat btop zellij tmux helix micro broot conda lsd carapace claude r; do
+for pkg in shell prompt bin bat btop zellij tmux helix micro broot conda lsd carapace claude r git; do
     stow_package "$pkg"
 done
 
@@ -404,7 +405,7 @@ echo
 #########################
 if [ "$OS_TYPE" = "macos" ]; then
     print_status "$BLUE" "🍎 Stowing macOS-specific packages..."
-    for pkg in alacritty ghostty zed; do
+    for pkg in ghostty zed; do
         stow_package "$pkg"
     done
     echo
@@ -455,6 +456,14 @@ if command -v jq >/dev/null 2>&1; then
     fi
 else
     print_status "$YELLOW" "⚠ jq not found — skipping statusline patch (install jq to enable)"
+fi
+
+# Git: remind about machine-local config
+if [ ! -f "$HOME/.config/syncbin/gitconfig-local" ]; then
+    print_status "$YELLOW" "⚠ No machine-local git config found."
+    echo "    Create one from the template:"
+    echo "    cp $SYNCBIN/docs/gitconfig-local.example ~/.config/syncbin/gitconfig-local"
+    echo "    Then edit with your credential helpers, GPG key, etc."
 fi
 
 # RStudio themes (conditional)
@@ -571,9 +580,10 @@ echo "   • prompt: ~/.config/starship.toml"
 echo "   • bin: ~/.local/bin/*"
 echo "   • Tools: bat, btop, zellij, tmux, helix, micro, broot, conda, lsd, carapace"
 echo "   • claude: ~/.claude/CLAUDE.md, ~/.claude/skills/"
+echo "   • git: ~/.config/git/config, ~/.config/git/ignore"
 echo "   • r: ~/.Rprofile, ~/.config/arf/"
 if [ "$OS_TYPE" = "macos" ]; then
-    echo "   • macOS: alacritty, ghostty, zed"
+    echo "   • macOS: ghostty, zed"
 fi
 echo
 

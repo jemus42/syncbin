@@ -1,0 +1,17 @@
+# OS junk
+*~
+.DS_Store
+Thumbs.db
+
+# R artifacts
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+
+# LaTeX artifacts
+*.aux
+
+# Claude Code local files
+**/.claude/settings.local.json
+**/CLAUDE.local.md

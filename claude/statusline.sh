@@ -81,5 +81,4 @@ fi
 # Format context percentage
 ctx_fmt=$(printf '%.0f%%' "$ctx_pct")
 
-printf "%s │ ${bar_color}%s${reset} %s │ %s%s%s%s" \
-  "$model" "$bar" "$ctx_fmt" "$cost_fmt" "$rate_fmt" "$branch" "$cwd_fmt"
+printf "%b" "${model} │ ${bar_color}${bar}${reset} ${ctx_fmt} │ ${cost_fmt}${rate_fmt}${branch}${cwd_fmt}"

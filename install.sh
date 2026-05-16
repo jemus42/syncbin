@@ -6,6 +6,11 @@
 
 set -e  # Exit on any error
 
+# Pin umask: shared-group machines (e.g. bertha, group "emmy") default to 002,
+# making mkdir/stow create group-writable dirs. zsh compinit then rejects
+# group-writable completion dirs ("insecure directories"). 022 keeps them 755.
+umask 022
+
 # Track backup files created during this run
 BACKUP_FILES=""
 
@@ -456,6 +461,17 @@ if command -v jq >/dev/null 2>&1; then
     fi
 else
     print_status "$YELLOW" "⚠ jq not found — skipping statusline patch (install jq to enable)"
+fi
+
+# zsh compinit: completion dirs must not be group/other-writable, or compinit
+# aborts ("insecure directories"). Stow creates ~/.config/zsh as a real dir;
+# on shared-group machines (umask 002) pre-umask-pin installs left it 775.
+# Fix the dir itself + any real (non-symlink) subdirs; symlink entries point
+# into syncbin packages (already 755) so are left alone.
+zsh_cfg="$HOME/.config/zsh"
+if [ -d "$zsh_cfg" ] && [ ! -L "$zsh_cfg" ]; then
+    find "$zsh_cfg" -type d ! -path "*/.*" -exec chmod g-w,o-w {} +
+    print_status "$GREEN" "✓ Hardened zsh completion dir perms (compinit)"
 fi
 
 # Git: remind about machine-local config

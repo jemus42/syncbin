@@ -7,6 +7,9 @@
 # Load vault integration (knowledge base shell functions)
 [[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/syncbin/vault.sh" ]] && source "${XDG_CONFIG_HOME:-$HOME/.config}/syncbin/vault.sh"
 
+# Load syncbin utility wrapper
+[[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/syncbin/sb.sh" ]] && source "${XDG_CONFIG_HOME:-$HOME/.config}/syncbin/sb.sh"
+
 # Basic utilities
 alias du="du -h"
 alias today='date +"%A, %B %-d, %Y"'
